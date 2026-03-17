@@ -323,9 +323,9 @@ Non esiste un calendario fisso per questo aggiornamento. ISTAT pubblica un [cale
 
 ### Perché non fonti alternative?
 
-I dati 2024 esistono: il **Sole 24 Ore** li pubblica annualmente nel suo [Indice della criminalità](https://lab24.ilsole24ore.com/indice-della-criminalita/), ottenendoli in esclusiva dalla banca dati interforze del Ministero dell'Interno. Ma questi dati **non sono scaricabili** in formato strutturato.
+Il **Sole 24 Ore** pubblica annualmente un [Indice della criminalità](https://lab24.ilsole24ore.com/indice-della-criminalita/) con dati ottenuti in esclusiva dalla banca dati interforze del Ministero dell'Interno, tipicamente in anticipo rispetto a ISTAT. Tuttavia questi dati **non sono scaricabili** in formato strutturato.
 
-Il **Ministero dell'Interno** pubblica dati aggregati aperti (licenza CC-BY) su [dati-coll.dfp.gov.it](https://dati-coll.dfp.gov.it/dataset/?tags=delitti&tags=denunce&tags=capoluogo&organization=min-interni&license_id=CC-BY-4.0&res_format=JSON), ma a febbraio 2026 il dataset risulta fermo al 2022. La banca dati CED/SDI interforze resta riservata alle forze dell'ordine.
+Il **Ministero dell'Interno** pubblica dati aggregati aperti (licenza CC-BY) su [dati-coll.dfp.gov.it](https://dati-coll.dfp.gov.it/dataset/?tags=delitti&tags=denunce&tags=capoluogo&organization=min-interni&license_id=CC-BY-4.0&res_format=JSON), ma a marzo 2026 il dataset risulta fermo al 2022. La banca dati CED/SDI interforze resta riservata alle forze dell'ordine.
 
 Di fatto, **l'unica fonte pubblica** con dati strutturati per provincia e tipologia di reato è ISTAT, con il suo ritardo di circa 2 anni. Questa è una **scelta deliberata** dell'architettura informativa italiana sulla criminalità, non un limite tecnico.
 
