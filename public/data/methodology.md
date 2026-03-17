@@ -4,17 +4,18 @@
 
 I dati provengono dal portale ufficiale ISTAT ([esploradati.istat.it](https://esploradati.istat.it/databrowser/)), sezione "Giustizia e sicurezza":
 
-1. **Delitti denunciati dalle forze di polizia all'autorità giudiziaria** (periodo 2014-2023)
+1. **Delitti denunciati dalle forze di polizia all'autorità giudiziaria** (periodo 2014-2024)
    - 56 tipologie di reato dettagliate
    - Dato nazionale aggregato per anno
-   
-2. **Percezione di sicurezza delle famiglie** - Indagine Multiscopo ISTAT (2014-2023)
+
+2. **Percezione di sicurezza delle famiglie** - Indagine Multiscopo ISTAT (2014-2024)
    - Indicatore: "Famiglie per presenza di alcuni problemi nella zona in cui abitano: rischio di criminalità: molto e abbastanza"
    - Espresso in percentuale di famiglie che percepiscono rischio
+   - Dato 2024 (26.6%) da Noi Italia 2025 (fonte indiretta: indicatore BES derivato dall'indagine Multiscopo)
 
 3. **Popolazione residente** - ISTAT
    - Ricostruzione intercensuaria 2002-2019
-   - POSAS (Popolazione residente al 1° gennaio) 2020-2023
+   - DCIS_POPRES1 (Popolazione residente al 1° gennaio) 2019-2025
 
 4. **Autori e vittime di delitto** (DCCV_AUTVITTPS, periodo 2007-2022)
    - Autori denunciati/arrestati (DF_7) e vittime di delitto (DF_8)
@@ -98,7 +99,7 @@ La propensione a denunciare varia per:
 - **Gravità del reato**: crimini gravi più probabilmente denunciati
 - **Utilità pratica**: denunce per assicurazione vs rassegnazione per piccoli furti
 
-**Esempio critico**: l'aumento delle denunce per violenze sessuali (+46.4% in numeri assoluti dal 2014 al 2023, da 4.257 a 6.231) riflette principalmente l'effetto di campagne come #MeToo e maggiore fiducia nelle autorità, NON necessariamente un aumento delle violenze reali. Questo è un risultato positivo: il numero oscuro si sta riducendo.
+**Esempio critico**: l'aumento delle denunce per violenze sessuali (+60.4% in numeri assoluti dal 2014 al 2024, da 4.257 a 6.831) riflette principalmente l'effetto di campagne come #MeToo e maggiore fiducia nelle autorità, NON necessariamente un aumento delle violenze reali. Questo è un risultato positivo: il numero oscuro si sta riducendo.
 
 ### Anno di riferimento
 
@@ -117,7 +118,7 @@ Tutti i tassi sono calcolati per abitanti per permettere confronti temporali cor
 
 Formula: `Tasso = (Numero delitti / Popolazione) × 1000 (o 100.000)`
 
-La normalizzazione è essenziale perché la **popolazione italiana è diminuita** da 60.3 milioni (2014) a 59.0 milioni (2023).
+La normalizzazione è essenziale perché la **popolazione italiana è diminuita** da 60.3 milioni (2014) a 59.0 milioni (2024).
 
 ## Categorie di reato
 
@@ -127,7 +128,7 @@ I 56 tipi di delitto ISTAT sono stati aggregati in 6 macro-categorie per leggibi
 
 1. **Furti**: tutti i furti (con strappo, destrezza, abitazioni, auto, moto, esercizi commerciali, ecc.)
 2. **Rapine**: rapine in abitazione, banca, uffici postali, esercizi commerciali, pubblica via
-3. **Violenze contro la persona**: omicidi (tutti i tipi), tentati omicidi, percosse, lesioni, minacce, sequestri, ingiurie, violenze sessuali, atti con minori, sfruttamento prostituzione
+3. **Violenze contro la persona**: omicidi volontari (inclusi infanticidi, per mafia, per rapina, terrorismo, strage), tentati omicidi, percosse, lesioni, minacce, sequestri, ingiurie, violenze sessuali, atti con minori, pornografia minorile, corruzione di minorenne, sfruttamento prostituzione. Nota: gli omicidi colposi (stradali e non) sono classificati in "Altro" perché non sono violenza intenzionale
 4. **Truffe e Frodi**: truffe informatiche, delitti informatici, contraffazione marchi, violazione proprietà intellettuale
 5. **Droga**: normativa stupefacenti
 6. **Altro**: danneggiamenti, incendi, criminalità organizzata (mafia, riciclaggio, usura, estorsioni), ricettazione, contrabbando
@@ -285,7 +286,7 @@ Italia equivalente: ~€9 milioni/anno
 I dati territoriali provengono dallo **stesso dataset ISTAT** dei delitti nazionali, filtrati per codice NUTS regionale e provinciale. La popolazione per la normalizzazione proviene da due fonti ISTAT complementari:
 
 - **2014-2018**: demo.istat.it (Ricostruzione intercensuaria)
-- **2019-2023**: esploradati.istat.it (Popolazione residente al 1° gennaio)
+- **2019-2025**: esploradati.istat.it (DCIS_POPRES1, Popolazione residente al 1° gennaio)
 
 **Trentino-Alto Adige**: nel dataset ISTAT i delitti sono separati in Bolzano (ITD1) e Trento (ITD2). Vengono sommati in ITD12 per il confronto con il GeoJSON regionale (openpolis).
 
@@ -315,8 +316,7 @@ I confini regionali provengono dal dataset [openpolis/geojson-italy](https://git
 
 ISTAT pubblica i dati sui delitti denunciati con un **ritardo strutturale di circa 2 anni** rispetto all'anno di riferimento. I dati provengono dalla banca dati interforze del Ministero dell'Interno (SDI/SSD) e vengono elaborati e strutturati dall'ISTAT prima della pubblicazione su [esploradati.istat.it](https://esploradati.istat.it/databrowser/#/it/dw/categories/IT1,Z0840JUS,1.0/JUS_CRIMINAL/DCCV_DELITTIPS/IT1,73_67_DF_DCCV_DELITTIPS_1,1.0).
 
-- **Dati 2023**: pubblicati su esploradati.istat.it tra fine 2025 e inizio 2026 (attualmente in uso in questa dashboard)
-- **Dati 2024**: attesi indicativamente nel **2026-2027**
+- **Dati 2024**: pubblicati su esploradati.istat.it a inizio 2026 (attualmente in uso in questa dashboard)
 - **Dati 2025**: attesi indicativamente nel **2027-2028**
 
 Non esiste un calendario fisso per questo aggiornamento. ISTAT pubblica un [calendario settimanale delle diffusioni](https://www.istat.it/calendario/) che vale la pena monitorare. Schede qualità: [delitti denunciati da PdS, CC e GdF](https://www.istat.it/scheda-qualita/delitti-denunciati-allautorita-giudiziaria-da-polizia-di-stato-arma-dei-carabinieri-e-guardia-di-finanza/), [delitti con azione penale](https://www.istat.it/scheda-qualita/delitti-denunciati-per-i-quali-lautorita-giudiziaria-ha-iniziato-lazione-penale/).

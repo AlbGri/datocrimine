@@ -48,7 +48,7 @@ export default function DatiECodice() {
                   <br />
                   <span className="text-xs">Delitti denunciati per provincia</span>
                 </td>
-                <td className="py-2 pr-4">2014-2023</td>
+                <td className="py-2 pr-4">2014-2024</td>
                 <td className="py-2">Home, Analisi Territoriale, Allarme Sociale</td>
               </tr>
               <tr className="border-b">
@@ -73,16 +73,16 @@ export default function DatiECodice() {
                   <br />
                   <span className="text-xs">Percezione sicurezza famiglie</span>
                 </td>
-                <td className="py-2 pr-4">2014-2023</td>
+                <td className="py-2 pr-4">2014-2024</td>
                 <td className="py-2">Home (percezione vs dati)</td>
               </tr>
               <tr className="border-b">
                 <td className="py-2 pr-4">
-                  POSAS / Ricostruzione intercensuaria
+                  DCIS_POPRES1 / Ricostruzione intercensuaria
                   <br />
                   <span className="text-xs">Popolazione residente</span>
                 </td>
-                <td className="py-2 pr-4">2014-2023</td>
+                <td className="py-2 pr-4">2014-2025</td>
                 <td className="py-2">Normalizzazione tassi per abitante</td>
               </tr>
             </tbody>
@@ -110,6 +110,17 @@ export default function DatiECodice() {
             </thead>
             <tbody className="text-muted-foreground">
               <tr className="border-b">
+                <td className="py-2 pr-4 font-mono text-xs">generate_delittips.py</td>
+                <td className="py-2 pr-4 text-xs">
+                  CSV raw ISTAT DELITTIPS + popolazione
+                </td>
+                <td className="py-2 text-xs">
+                  6 CSV in data/processed/,
+                  reati_allarme_sociale_regioni.json,
+                  reati_allarme_sociale_province.json
+                </td>
+              </tr>
+              <tr className="border-b">
                 <td className="py-2 pr-4 font-mono text-xs">csv_to_json.py</td>
                 <td className="py-2 pr-4 text-xs">
                   6 CSV in data/processed/
@@ -118,16 +129,6 @@ export default function DatiECodice() {
                   delitti_italia.json, delitti_regioni.json,
                   delitti_province.json, delitti_categorie.json,
                   percezione_vs_dati.json, reati_allarme_sociale.json
-                </td>
-              </tr>
-              <tr className="border-b">
-                <td className="py-2 pr-4 font-mono text-xs">generate_allarme_regioni.py</td>
-                <td className="py-2 pr-4 text-xs">
-                  CSV raw ISTAT delitti
-                </td>
-                <td className="py-2 text-xs">
-                  reati_allarme_sociale_regioni.json,
-                  reati_allarme_sociale_province.json
                 </td>
               </tr>
               <tr className="border-b">
@@ -163,8 +164,8 @@ npm run dev
 
 # Rigenerare JSON (richiede conda + environment osservatorio)
 conda activate osservatorio
+python scripts/generate_delittips.py
 python scripts/csv_to_json.py
-python scripts/generate_allarme_regioni.py
 python scripts/generate_autori_vittime.py`}</code>
         </pre>
         <p className="text-sm text-muted-foreground">

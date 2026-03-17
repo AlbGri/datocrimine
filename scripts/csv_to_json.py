@@ -17,27 +17,27 @@ log = logging.getLogger(__name__)
 
 # Mapping CSV -> nome output JSON + colonne float da arrotondare
 CSV_CONFIG = {
-    "delitti_italia_normalizzato_2014_2023.csv": {
+    "delitti_italia_normalizzato.csv": {
         "output": "delitti_italia.json",
         "round": {"Tasso_per_1000": 2},
     },
-    "delitti_categorie_normalizzato_2014_2023.csv": {
+    "delitti_categorie_normalizzato.csv": {
         "output": "delitti_categorie.json",
         "round": {"Tasso_per_1000": 2},
     },
-    "delitti_regioni_normalizzato_2014_2023.csv": {
+    "delitti_regioni_normalizzato.csv": {
         "output": "delitti_regioni.json",
         "round": {"Tasso_per_1000": 2},
     },
-    "delitti_province_normalizzato_2014_2023.csv": {
+    "delitti_province_normalizzato.csv": {
         "output": "delitti_province.json",
         "round": {"Tasso_per_1000": 2},
     },
-    "reati_allarme_sociale_2014_2023.csv": {
+    "reati_allarme_sociale.csv": {
         "output": "reati_allarme_sociale.json",
         "round": {"Tasso_per_100k": 2},
     },
-    "percezione_vs_dati_2014_2023.csv": {
+    "percezione_vs_dati.csv": {
         "output": "percezione_vs_dati.json",
         "round": {"Tasso_per_1000": 2, "Percezione_pct": 1},
     },

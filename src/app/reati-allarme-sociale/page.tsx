@@ -17,11 +17,11 @@ const REATI = [
   "Sequestri di persona",
 ];
 
-const ANNI = Array.from({ length: 10 }, (_, i) => 2014 + i);
+const ANNI = Array.from({ length: 11 }, (_, i) => 2014 + i);
 
 export default function ReatiAllarmeSociale() {
   const [reato, setReato] = useState(REATI[0]);
-  const [anno, setAnno] = useState(2023);
+  const [anno, setAnno] = useState(2024);
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-4 sm:py-8 space-y-6 sm:space-y-10">
@@ -85,7 +85,7 @@ export default function ReatiAllarmeSociale() {
 
       <section className="space-y-3">
         <h2 className="text-xl sm:text-2xl font-semibold text-primary">
-          Trend Nazionale: {reato} (2014-2023)
+          Trend Nazionale: {reato} (2014-2024)
         </h2>
         <ChartAllarmeTrendNazionale reatoSelezionato={reato} />
       </section>
@@ -103,7 +103,7 @@ export default function ReatiAllarmeSociale() {
 
       <section className="space-y-3">
         <h2 className="text-xl sm:text-2xl font-semibold text-primary">
-          Trend Regionale: {reato} (2014-2023)
+          Trend Regionale: {reato} (2014-2024)
         </h2>
         <ChartAllarmeTrendRegione reato={reato} />
       </section>
@@ -121,7 +121,7 @@ export default function ReatiAllarmeSociale() {
 
       <section className="space-y-3">
         <h2 className="text-xl sm:text-2xl font-semibold text-primary">
-          Trend Provinciale: {reato} (2014-2023)
+          Trend Provinciale: {reato} (2014-2024)
         </h2>
         <ChartAllarmeTrendProvincia reato={reato} />
       </section>

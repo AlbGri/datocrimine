@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   description: "Dati e analisi sulla criminalit\u00e0 in Italia con fonti ufficiali ISTAT",
   openGraph: {
     title: "Osservatorio Criminalit\u00e0",
-    description: "Dati e analisi sulla criminalit\u00e0 in Italia 2014-2023 con fonti ufficiali ISTAT",
+    description: "Dati e analisi sulla criminalit\u00e0 in Italia 2014-2024 con fonti ufficiali ISTAT",
     type: "website",
     locale: "it_IT",
     url: "https://albgri.github.io/osservatorio-criminalita-next",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Osservatorio Criminalit\u00e0",
-    description: "Dati e analisi sulla criminalit\u00e0 in Italia 2014-2023 con fonti ufficiali ISTAT",
+    description: "Dati e analisi sulla criminalit\u00e0 in Italia 2014-2024 con fonti ufficiali ISTAT",
     images: ["https://albgri.github.io/osservatorio-criminalita-next/og-image.png"],
   },
 };

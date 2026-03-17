@@ -197,7 +197,7 @@ export function ChartTabellaProvince({ anno }: Props) {
               <th className={`text-right ${thClass}`} onClick={() => handleSort("Tasso_per_1000")}>
                 Tasso {anno}{sortIcon("Tasso_per_1000")}
               </th>
-              <th className={`text-right ${thClass}`} onClick={() => handleSort("variazione")} title="Media 2014-2016 vs 2021-2023">
+              <th className={`text-right ${thClass}`} onClick={() => handleSort("variazione")} title="Media 2014-2016 vs 2022-2024">
                 {TRIENNALE_LABEL}{sortIcon("variazione")}
               </th>
               <th className={`text-right ${thClass}`} onClick={() => handleSort("Delitti")}>

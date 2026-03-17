@@ -154,7 +154,7 @@ export function ChartAllarmeTrendProvincia({ reato }: Props) {
         </div>
       </div>
 
-      <ChartFullscreenWrapper ariaDescription={`Grafico trend ${reato} per ${selectedProvincia} vs media ${selectedRegione}, 2014-2023`}>
+      <ChartFullscreenWrapper ariaDescription={`Grafico trend ${reato} per ${selectedProvincia} vs media ${selectedRegione}, 2014-2024`}>
         <Plot
           data={[
             {

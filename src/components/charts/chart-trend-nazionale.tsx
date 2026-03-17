@@ -139,7 +139,7 @@ export function ChartTrendNazionale() {
         </div>
       )}
 
-      <ChartFullscreenWrapper ariaDescription={isTipologia ? "Grafico trend delitti per tipologia in Italia dal 2014 al 2023: furti in calo, truffe in crescita costante" : "Grafico trend tasso delitti denunciati per 1.000 abitanti in Italia dal 2014 al 2023"}>
+      <ChartFullscreenWrapper ariaDescription={isTipologia ? "Grafico trend delitti per tipologia in Italia dal 2014 al 2024: furti in calo, truffe in crescita costante" : "Grafico trend tasso delitti denunciati per 1.000 abitanti in Italia dal 2014 al 2024"}>
         <Plot
           data={isTipologia ? traceTipologia : traceTotale}
           layout={{

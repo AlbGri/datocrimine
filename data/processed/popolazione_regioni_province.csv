@@ -1,4 +1,16 @@
 REF_AREA,Territorio,Anno,Popolazione,livello
+IT,Italia,2014,60345917,italia
+IT,Italia,2015,60295497,italia
+IT,Italia,2016,60163712,italia
+IT,Italia,2017,60066734,italia
+IT,Italia,2018,59937769,italia
+IT,Italia,2019,59816673,italia
+IT,Italia,2020,59641488,italia
+IT,Italia,2021,59236213,italia
+IT,Italia,2022,59030133,italia
+IT,Italia,2023,58997201,italia
+IT,Italia,2024,58971230,italia
+IT,Italia,2025,58943464,italia
 IT108,Monza e della Brianza,2014,858244,provincia
 IT108,Monza e della Brianza,2015,860065,provincia
 IT108,Monza e della Brianza,2016,861122,provincia
@@ -9,6 +21,8 @@ IT108,Monza e della Brianza,2020,870193,provincia
 IT108,Monza e della Brianza,2021,870113,provincia
 IT108,Monza e della Brianza,2022,870407,provincia
 IT108,Monza e della Brianza,2023,873606,provincia
+IT108,Monza e della Brianza,2024,876792,provincia
+IT108,Monza e della Brianza,2025,879303,provincia
 IT109,Fermo,2014,176030,provincia
 IT109,Fermo,2015,175758,provincia
 IT109,Fermo,2016,174778,provincia
@@ -19,6 +33,8 @@ IT109,Fermo,2020,171737,provincia
 IT109,Fermo,2021,169710,provincia
 IT109,Fermo,2022,168294,provincia
 IT109,Fermo,2023,167824,provincia
+IT109,Fermo,2024,167345,provincia
+IT109,Fermo,2025,166957,provincia
 IT110,Barletta-Andria-Trani,2014,393804,provincia
 IT110,Barletta-Andria-Trani,2015,393704,provincia
 IT110,Barletta-Andria-Trani,2016,392171,provincia
@@ -29,6 +45,8 @@ IT110,Barletta-Andria-Trani,2020,384801,provincia
 IT110,Barletta-Andria-Trani,2021,381091,provincia
 IT110,Barletta-Andria-Trani,2022,380616,provincia
 IT110,Barletta-Andria-Trani,2023,379509,provincia
+IT110,Barletta-Andria-Trani,2024,377929,provincia
+IT110,Barletta-Andria-Trani,2025,377093,provincia
 IT111,Sud Sardegna,2014,360601,provincia
 IT111,Sud Sardegna,2015,358627,provincia
 IT111,Sud Sardegna,2016,355986,provincia
@@ -39,6 +57,8 @@ IT111,Sud Sardegna,2020,344195,provincia
 IT111,Sud Sardegna,2021,338264,provincia
 IT111,Sud Sardegna,2022,337178,provincia
 IT111,Sud Sardegna,2023,334198,provincia
+IT111,Sud Sardegna,2024,331817,provincia
+IT111,Sud Sardegna,2025,329556,provincia
 ITC11,Torino,2014,2285336,provincia
 ITC11,Torino,2015,2275771,provincia
 ITC11,Torino,2016,2268360,provincia
@@ -49,6 +69,8 @@ ITC11,Torino,2020,2230946,provincia
 ITC11,Torino,2021,2219206,provincia
 ITC11,Torino,2022,2208370,provincia
 ITC11,Torino,2023,2204632,provincia
+ITC11,Torino,2024,2204837,provincia
+ITC11,Torino,2025,2204276,provincia
 ITC12,Vercelli,2014,176707,provincia
 ITC12,Vercelli,2015,175540,provincia
 ITC12,Vercelli,2016,174247,provincia
@@ -59,6 +81,8 @@ ITC12,Vercelli,2020,169390,provincia
 ITC12,Vercelli,2021,166584,provincia
 ITC12,Vercelli,2022,166083,provincia
 ITC12,Vercelli,2023,165892,provincia
+ITC12,Vercelli,2024,165704,provincia
+ITC12,Vercelli,2025,165910,provincia
 ITC13,Biella,2014,181750,provincia
 ITC13,Biella,2015,180633,provincia
 ITC13,Biella,2016,179121,provincia
@@ -69,6 +93,8 @@ ITC13,Biella,2020,174170,provincia
 ITC13,Biella,2021,170724,provincia
 ITC13,Biella,2022,170027,provincia
 ITC13,Biella,2023,169106,provincia
+ITC13,Biella,2024,168583,provincia
+ITC13,Biella,2025,168328,provincia
 ITC14,Verbano-Cusio-Ossola,2014,160906,provincia
 ITC14,Verbano-Cusio-Ossola,2015,160240,provincia
 ITC14,Verbano-Cusio-Ossola,2016,159292,provincia
@@ -79,6 +105,8 @@ ITC14,Verbano-Cusio-Ossola,2020,156320,provincia
 ITC14,Verbano-Cusio-Ossola,2021,154926,provincia
 ITC14,Verbano-Cusio-Ossola,2022,154249,provincia
 ITC14,Verbano-Cusio-Ossola,2023,154038,provincia
+ITC14,Verbano-Cusio-Ossola,2024,153762,provincia
+ITC14,Verbano-Cusio-Ossola,2025,153283,provincia
 ITC15,Novara,2014,370255,provincia
 ITC15,Novara,2015,369393,provincia
 ITC15,Novara,2016,368071,provincia
@@ -89,6 +117,8 @@ ITC15,Novara,2020,364980,provincia
 ITC15,Novara,2021,362925,provincia
 ITC15,Novara,2022,361916,provincia
 ITC15,Novara,2023,362502,provincia
+ITC15,Novara,2024,363482,provincia
+ITC15,Novara,2025,364140,provincia
 ITC16,Cuneo,2014,592800,provincia
 ITC16,Cuneo,2015,592331,provincia
 ITC16,Cuneo,2016,590522,provincia
@@ -99,6 +129,8 @@ ITC16,Cuneo,2020,586113,provincia
 ITC16,Cuneo,2021,581798,provincia
 ITC16,Cuneo,2022,580155,provincia
 ITC16,Cuneo,2023,580736,provincia
+ITC16,Cuneo,2024,581631,provincia
+ITC16,Cuneo,2025,581526,provincia
 ITC17,Asti,2014,220111,provincia
 ITC17,Asti,2015,218708,provincia
 ITC17,Asti,2016,216756,provincia
@@ -109,6 +141,8 @@ ITC17,Asti,2020,212010,provincia
 ITC17,Asti,2021,209390,provincia
 ITC17,Asti,2022,208286,provincia
 ITC17,Asti,2023,207951,provincia
+ITC17,Asti,2024,207239,provincia
+ITC17,Asti,2025,207203,provincia
 ITC18,Alessandria,2014,433059,provincia
 ITC18,Alessandria,2015,430946,provincia
 ITC18,Alessandria,2016,427857,provincia
@@ -119,6 +153,8 @@ ITC18,Alessandria,2020,417288,provincia
 ITC18,Alessandria,2021,409392,provincia
 ITC18,Alessandria,2022,407264,provincia
 ITC18,Alessandria,2023,406494,provincia
+ITC18,Alessandria,2024,406385,provincia
+ITC18,Alessandria,2025,407202,provincia
 ITC20,Valle d'Aosta / Vallée d'Aoste,2014,128245,provincia
 ITC20,Valle d'Aosta / Vallée d'Aoste,2015,127972,provincia
 ITC20,Valle d'Aosta / Vallée d'Aoste,2016,127030,provincia
@@ -129,6 +165,8 @@ ITC20,Valle d'Aosta / Vallée d'Aoste,2020,125034,provincia
 ITC20,Valle d'Aosta / Vallée d'Aoste,2021,124089,provincia
 ITC20,Valle d'Aosta / Vallée d'Aoste,2022,123360,provincia
 ITC20,Valle d'Aosta / Vallée d'Aoste,2023,123130,provincia
+ITC20,Valle d'Aosta / Vallée d'Aoste,2024,122877,provincia
+ITC20,Valle d'Aosta / Vallée d'Aoste,2025,122532,provincia
 ITC31,Imperia,2014,216226,provincia
 ITC31,Imperia,2015,214981,provincia
 ITC31,Imperia,2016,213022,provincia
@@ -139,6 +177,8 @@ ITC31,Imperia,2020,209382,provincia
 ITC31,Imperia,2021,209244,provincia
 ITC31,Imperia,2022,208670,provincia
 ITC31,Imperia,2023,208792,provincia
+ITC31,Imperia,2024,208800,provincia
+ITC31,Imperia,2025,209348,provincia
 ITC32,Savona,2014,282258,provincia
 ITC32,Savona,2015,280806,provincia
 ITC32,Savona,2016,278768,provincia
@@ -149,6 +189,8 @@ ITC32,Savona,2020,271832,provincia
 ITC32,Savona,2021,269752,provincia
 ITC32,Savona,2022,268038,provincia
 ITC32,Savona,2023,267366,provincia
+ITC32,Savona,2024,267621,provincia
+ITC32,Savona,2025,267064,provincia
 ITC33,Genova,2014,860560,provincia
 ITC33,Genova,2015,853201,provincia
 ITC33,Genova,2016,846211,provincia
@@ -159,6 +201,8 @@ ITC33,Genova,2020,826194,provincia
 ITC33,Genova,2021,823612,provincia
 ITC33,Genova,2022,817402,provincia
 ITC33,Genova,2023,816606,provincia
+ITC33,Genova,2024,817628,provincia
+ITC33,Genova,2025,818812,provincia
 ITC34,La Spezia,2014,221278,provincia
 ITC34,La Spezia,2015,220439,provincia
 ITC34,La Spezia,2016,219741,provincia
@@ -169,6 +213,8 @@ ITC34,La Spezia,2020,217418,provincia
 ITC34,La Spezia,2021,215887,provincia
 ITC34,La Spezia,2022,215117,provincia
 ITC34,La Spezia,2023,214872,provincia
+ITC34,La Spezia,2024,215091,provincia
+ITC34,La Spezia,2025,214919,provincia
 ITC41,Varese,2014,885120,provincia
 ITC41,Varese,2015,885922,provincia
 ITC41,Varese,2016,885308,provincia
@@ -179,6 +225,8 @@ ITC41,Varese,2020,884876,provincia
 ITC41,Varese,2021,880093,provincia
 ITC41,Varese,2022,877668,provincia
 ITC41,Varese,2023,879731,provincia
+ITC41,Varese,2024,880257,provincia
+ITC41,Varese,2025,882592,provincia
 ITC42,Como,2014,596740,provincia
 ITC42,Como,2015,597842,provincia
 ITC42,Como,2016,597433,provincia
@@ -189,6 +237,8 @@ ITC42,Como,2020,597642,provincia
 ITC42,Como,2021,596456,provincia
 ITC42,Como,2022,594941,provincia
 ITC42,Como,2023,597117,provincia
+ITC42,Como,2024,597949,provincia
+ITC42,Como,2025,598191,provincia
 ITC43,Lecco,2014,337883,provincia
 ITC43,Lecco,2015,337162,provincia
 ITC43,Lecco,2016,335812,provincia
@@ -199,6 +249,8 @@ ITC43,Lecco,2020,334961,provincia
 ITC43,Lecco,2021,333569,provincia
 ITC43,Lecco,2022,332457,provincia
 ITC43,Lecco,2023,332775,provincia
+ITC43,Lecco,2024,333270,provincia
+ITC43,Lecco,2025,333747,provincia
 ITC44,Sondrio,2014,182348,provincia
 ITC44,Sondrio,2015,181859,provincia
 ITC44,Sondrio,2016,181469,provincia
@@ -209,6 +261,8 @@ ITC44,Sondrio,2020,180425,provincia
 ITC44,Sondrio,2021,178798,provincia
 ITC44,Sondrio,2022,178784,provincia
 ITC44,Sondrio,2023,178795,provincia
+ITC44,Sondrio,2024,178873,provincia
+ITC44,Sondrio,2025,179100,provincia
 ITC45,Milano,2014,3163522,provincia
 ITC45,Milano,2015,3186367,provincia
 ITC45,Milano,2016,3200447,provincia
@@ -219,6 +273,8 @@ ITC45,Milano,2020,3265327,provincia
 ITC45,Milano,2021,3241813,provincia
 ITC45,Milano,2022,3214630,provincia
 ITC45,Milano,2023,3228006,provincia
+ITC45,Milano,2024,3245459,provincia
+ITC45,Milano,2025,3246455,provincia
 ITC46,Bergamo,2014,1104999,provincia
 ITC46,Bergamo,2015,1105724,provincia
 ITC46,Bergamo,2016,1104383,provincia
@@ -229,6 +285,8 @@ ITC46,Bergamo,2020,1108126,provincia
 ITC46,Bergamo,2021,1103556,provincia
 ITC46,Bergamo,2022,1102997,provincia
 ITC46,Bergamo,2023,1106303,provincia
+ITC46,Bergamo,2024,1110427,provincia
+ITC46,Bergamo,2025,1114780,provincia
 ITC47,Brescia,2014,1255637,provincia
 ITC47,Brescia,2015,1255890,provincia
 ITC47,Brescia,2016,1253852,provincia
@@ -239,6 +297,8 @@ ITC47,Brescia,2020,1255437,provincia
 ITC47,Brescia,2021,1255709,provincia
 ITC47,Brescia,2022,1253157,provincia
 ITC47,Brescia,2023,1257326,provincia
+ITC47,Brescia,2024,1260955,provincia
+ITC47,Brescia,2025,1265884,provincia
 ITC48,Pavia,2014,544765,provincia
 ITC48,Pavia,2015,544841,provincia
 ITC48,Pavia,2016,543875,provincia
@@ -249,6 +309,8 @@ ITC48,Pavia,2020,540376,provincia
 ITC48,Pavia,2021,535801,provincia
 ITC48,Pavia,2022,534506,provincia
 ITC48,Pavia,2023,536406,provincia
+ITC48,Pavia,2024,538632,provincia
+ITC48,Pavia,2025,541949,provincia
 ITC49,Lodi,2014,227647,provincia
 ITC49,Lodi,2015,227637,provincia
 ITC49,Lodi,2016,226999,provincia
@@ -259,6 +321,8 @@ ITC49,Lodi,2020,227412,provincia
 ITC49,Lodi,2021,227343,provincia
 ITC49,Lodi,2022,227327,provincia
 ITC49,Lodi,2023,228136,provincia
+ITC49,Lodi,2024,229473,provincia
+ITC49,Lodi,2025,230250,provincia
 ITC4A,Cremona,2014,360160,provincia
 ITC4A,Cremona,2015,359489,provincia
 ITC4A,Cremona,2016,358243,provincia
@@ -269,6 +333,8 @@ ITC4A,Cremona,2020,355908,provincia
 ITC4A,Cremona,2021,352242,provincia
 ITC4A,Cremona,2022,351654,provincia
 ITC4A,Cremona,2023,352189,provincia
+ITC4A,Cremona,2024,352965,provincia
+ITC4A,Cremona,2025,353923,provincia
 ITC4B,Mantova,2014,412704,provincia
 ITC4B,Mantova,2015,411971,provincia
 ITC4B,Mantova,2016,409504,provincia
@@ -279,6 +345,8 @@ ITC4B,Mantova,2020,406919,provincia
 ITC4B,Mantova,2021,406061,provincia
 ITC4B,Mantova,2022,404476,provincia
 ITC4B,Mantova,2023,406119,provincia
+ITC4B,Mantova,2024,407002,provincia
+ITC4B,Mantova,2025,407744,provincia
 ITD10,Bolzano / Bozen,2014,515389,provincia
 ITD10,Bolzano / Bozen,2015,517994,provincia
 ITD10,Bolzano / Bozen,2016,520252,provincia
@@ -289,6 +357,8 @@ ITD10,Bolzano / Bozen,2020,532644,provincia
 ITD10,Bolzano / Bozen,2021,534912,provincia
 ITD10,Bolzano / Bozen,2022,532616,provincia
 ITD10,Bolzano / Bozen,2023,534147,provincia
+ITD10,Bolzano / Bozen,2024,537533,provincia
+ITD10,Bolzano / Bozen,2025,539679,provincia
 ITD20,Trento,2014,536813,provincia
 ITD20,Trento,2015,538188,provincia
 ITD20,Trento,2016,539513,provincia
@@ -299,6 +369,8 @@ ITD20,Trento,2020,545425,provincia
 ITD20,Trento,2021,542166,provincia
 ITD20,Trento,2022,540958,provincia
 ITD20,Trento,2023,542996,provincia
+ITD20,Trento,2024,545169,provincia
+ITD20,Trento,2025,546573,provincia
 ITD31,Verona,2014,917081,provincia
 ITD31,Verona,2015,918450,provincia
 ITD31,Verona,2016,918050,provincia
@@ -309,6 +381,8 @@ ITD31,Verona,2020,924742,provincia
 ITD31,Verona,2021,927810,provincia
 ITD31,Verona,2022,924024,provincia
 ITD31,Verona,2023,925656,provincia
+ITD31,Verona,2024,926970,provincia
+ITD31,Verona,2025,928622,provincia
 ITD32,Vicenza,2014,866418,provincia
 ITD32,Vicenza,2015,865350,provincia
 ITD32,Vicenza,2016,862551,provincia
@@ -319,6 +393,8 @@ ITD32,Vicenza,2020,855297,provincia
 ITD32,Vicenza,2021,854962,provincia
 ITD32,Vicenza,2022,852139,provincia
 ITD32,Vicenza,2023,852779,provincia
+ITD32,Vicenza,2024,853610,provincia
+ITD32,Vicenza,2025,854163,provincia
 ITD33,Belluno,2014,207418,provincia
 ITD33,Belluno,2015,205906,provincia
 ITD33,Belluno,2016,204687,provincia
@@ -329,6 +405,8 @@ ITD33,Belluno,2020,201309,provincia
 ITD33,Belluno,2021,199704,provincia
 ITD33,Belluno,2022,198676,provincia
 ITD33,Belluno,2023,198105,provincia
+ITD33,Belluno,2024,197788,provincia
+ITD33,Belluno,2025,197708,provincia
 ITD34,Treviso,2014,884463,provincia
 ITD34,Treviso,2015,883548,provincia
 ITD34,Treviso,2016,881315,provincia
@@ -339,6 +417,8 @@ ITD34,Treviso,2020,883522,provincia
 ITD34,Treviso,2021,880417,provincia
 ITD34,Treviso,2022,877890,provincia
 ITD34,Treviso,2023,878828,provincia
+ITD34,Treviso,2024,879388,provincia
+ITD34,Treviso,2025,879255,provincia
 ITD35,Venezia,2014,854685,provincia
 ITD35,Venezia,2015,854245,provincia
 ITD35,Venezia,2016,852177,provincia
@@ -349,6 +429,8 @@ ITD35,Venezia,2020,848829,provincia
 ITD35,Venezia,2021,843545,provincia
 ITD35,Venezia,2022,836916,provincia
 ITD35,Venezia,2023,835895,provincia
+ITD35,Venezia,2024,835405,provincia
+ITD35,Venezia,2025,834306,provincia
 ITD36,Padova,2014,932899,provincia
 ITD36,Padova,2015,934138,provincia
 ITD36,Padova,2016,932928,provincia
@@ -359,6 +441,8 @@ ITD36,Padova,2020,933700,provincia
 ITD36,Padova,2021,932629,provincia
 ITD36,Padova,2022,929198,provincia
 ITD36,Padova,2023,930349,provincia
+ITD36,Padova,2024,931607,provincia
+ITD36,Padova,2025,932284,provincia
 ITD37,Rovigo,2014,242748,provincia
 ITD37,Rovigo,2015,241057,provincia
 ITD37,Rovigo,2016,238940,provincia
@@ -369,6 +453,8 @@ ITD37,Rovigo,2020,231734,provincia
 ITD37,Rovigo,2021,230763,provincia
 ITD37,Rovigo,2022,228902,provincia
 ITD37,Rovigo,2023,227941,provincia
+ITD37,Rovigo,2024,227448,provincia
+ITD37,Rovigo,2025,227134,provincia
 ITD41,Pordenone,2014,312862,provincia
 ITD41,Pordenone,2015,312003,provincia
 ITD41,Pordenone,2016,310755,provincia
@@ -379,6 +465,8 @@ ITD41,Pordenone,2020,310502,provincia
 ITD41,Pordenone,2021,310634,provincia
 ITD41,Pordenone,2022,309473,provincia
 ITD41,Pordenone,2023,310133,provincia
+ITD41,Pordenone,2024,310763,provincia
+ITD41,Pordenone,2025,310742,provincia
 ITD42,Udine,2014,538692,provincia
 ITD42,Udine,2015,537054,provincia
 ITD42,Udine,2016,534391,provincia
@@ -389,6 +477,8 @@ ITD42,Udine,2020,526474,provincia
 ITD42,Udine,2021,521117,provincia
 ITD42,Udine,2022,518442,provincia
 ITD42,Udine,2023,517376,provincia
+ITD42,Udine,2024,517143,provincia
+ITD42,Udine,2025,516323,provincia
 ITD43,Gorizia,2014,140222,provincia
 ITD43,Gorizia,2015,139904,provincia
 ITD43,Gorizia,2016,139234,provincia
@@ -399,6 +489,8 @@ ITD43,Gorizia,2020,137795,provincia
 ITD43,Gorizia,2021,139070,provincia
 ITD43,Gorizia,2022,137899,provincia
 ITD43,Gorizia,2023,138034,provincia
+ITD43,Gorizia,2024,138314,provincia
+ITD43,Gorizia,2025,138427,provincia
 ITD44,Trieste,2014,233208,provincia
 ITD44,Trieste,2015,232703,provincia
 ITD44,Trieste,2016,231828,provincia
@@ -409,6 +501,8 @@ ITD44,Trieste,2020,231445,provincia
 ITD44,Trieste,2021,230689,provincia
 ITD44,Trieste,2022,228833,provincia
 ITD44,Trieste,2023,228705,provincia
+ITD44,Trieste,2024,228396,provincia
+ITD44,Trieste,2025,227792,provincia
 ITD51,Piacenza,2014,288231,provincia
 ITD51,Piacenza,2015,287469,provincia
 ITD51,Piacenza,2016,286412,provincia
@@ -419,6 +513,8 @@ ITD51,Piacenza,2020,286433,provincia
 ITD51,Piacenza,2021,283742,provincia
 ITD51,Piacenza,2022,283435,provincia
 ITD51,Piacenza,2023,284220,provincia
+ITD51,Piacenza,2024,285389,provincia
+ITD51,Piacenza,2025,286452,provincia
 ITD52,Parma,2014,442271,provincia
 ITD52,Parma,2015,443892,provincia
 ITD52,Parma,2016,446764,provincia
@@ -429,6 +525,8 @@ ITD52,Parma,2020,454873,provincia
 ITD52,Parma,2021,449628,provincia
 ITD52,Parma,2022,448916,provincia
 ITD52,Parma,2023,451688,provincia
+ITD52,Parma,2024,454149,provincia
+ITD52,Parma,2025,455713,provincia
 ITD53,Reggio nell'Emilia,2014,530584,provincia
 ITD53,Reggio nell'Emilia,2015,529306,provincia
 ITD53,Reggio nell'Emilia,2016,529643,provincia
@@ -439,6 +537,8 @@ ITD53,Reggio nell'Emilia,2020,529609,provincia
 ITD53,Reggio nell'Emilia,2021,527140,provincia
 ITD53,Reggio nell'Emilia,2022,525586,provincia
 ITD53,Reggio nell'Emilia,2023,526990,provincia
+ITD53,Reggio nell'Emilia,2024,528877,provincia
+ITD53,Reggio nell'Emilia,2025,530740,provincia
 ITD54,Modena,2014,699006,provincia
 ITD54,Modena,2015,700222,provincia
 ITD54,Modena,2016,700166,provincia
@@ -449,6 +549,8 @@ ITD54,Modena,2020,707119,provincia
 ITD54,Modena,2021,703696,provincia
 ITD54,Modena,2022,701751,provincia
 ITD54,Modena,2023,704332,provincia
+ITD54,Modena,2024,706445,provincia
+ITD54,Modena,2025,708340,provincia
 ITD55,Bologna,2014,998967,provincia
 ITD55,Bologna,2015,1002098,provincia
 ITD55,Bologna,2016,1005022,provincia
@@ -459,6 +561,8 @@ ITD55,Bologna,2020,1021501,provincia
 ITD55,Bologna,2021,1015608,provincia
 ITD55,Bologna,2022,1010812,provincia
 ITD55,Bologna,2023,1014124,provincia
+ITD55,Bologna,2024,1017536,provincia
+ITD55,Bologna,2025,1020193,provincia
 ITD56,Ferrara,2014,354362,provincia
 ITD56,Ferrara,2015,353293,provincia
 ITD56,Ferrara,2016,350704,provincia
@@ -469,6 +573,8 @@ ITD56,Ferrara,2020,344510,provincia
 ITD56,Ferrara,2021,342061,provincia
 ITD56,Ferrara,2022,339573,provincia
 ITD56,Ferrara,2023,339287,provincia
+ITD56,Ferrara,2024,339664,provincia
+ITD56,Ferrara,2025,339612,provincia
 ITD57,Ravenna,2014,391295,provincia
 ITD57,Ravenna,2015,390424,provincia
 ITD57,Ravenna,2016,389996,provincia
@@ -479,6 +585,8 @@ ITD57,Ravenna,2020,387970,provincia
 ITD57,Ravenna,2021,386643,provincia
 ITD57,Ravenna,2022,385631,provincia
 ITD57,Ravenna,2023,386355,provincia
+ITD57,Ravenna,2024,387229,provincia
+ITD57,Ravenna,2025,387205,provincia
 ITD58,Forlì-Cesena,2014,395737,provincia
 ITD58,Forlì-Cesena,2015,394957,provincia
 ITD58,Forlì-Cesena,2016,393717,provincia
@@ -489,6 +597,8 @@ ITD58,Forlì-Cesena,2020,395306,provincia
 ITD58,Forlì-Cesena,2021,392642,provincia
 ITD58,Forlì-Cesena,2022,391293,provincia
 ITD58,Forlì-Cesena,2023,391648,provincia
+ITD58,Forlì-Cesena,2024,392812,provincia
+ITD58,Forlì-Cesena,2025,393367,provincia
 ITD59,Rimini,2014,331788,provincia
 ITD59,Rimini,2015,332716,provincia
 ITD59,Rimini,2016,333056,provincia
@@ -499,6 +609,8 @@ ITD59,Rimini,2020,336798,provincia
 ITD59,Rimini,2021,337777,provincia
 ITD59,Rimini,2022,338369,provincia
 ITD59,Rimini,2023,338934,provincia
+ITD59,Rimini,2024,339837,provincia
+ITD59,Rimini,2025,340376,provincia
 ITE11,Massa-Carrara,2014,200083,provincia
 ITE11,Massa-Carrara,2015,198797,provincia
 ITE11,Massa-Carrara,2016,196689,provincia
@@ -509,6 +621,8 @@ ITE11,Massa-Carrara,2020,191685,provincia
 ITE11,Massa-Carrara,2021,189836,provincia
 ITE11,Massa-Carrara,2022,188483,provincia
 ITE11,Massa-Carrara,2023,187583,provincia
+ITE11,Massa-Carrara,2024,186982,provincia
+ITE11,Massa-Carrara,2025,186783,provincia
 ITE12,Lucca,2014,393038,provincia
 ITE12,Lucca,2015,391332,provincia
 ITE12,Lucca,2016,388297,provincia
@@ -519,6 +633,8 @@ ITE12,Lucca,2020,382543,provincia
 ITE12,Lucca,2021,383957,provincia
 ITE12,Lucca,2022,382464,provincia
 ITE12,Lucca,2023,382184,provincia
+ITE12,Lucca,2024,381826,provincia
+ITE12,Lucca,2025,381390,provincia
 ITE13,Pistoia,2014,291254,provincia
 ITE13,Pistoia,2015,291267,provincia
 ITE13,Pistoia,2016,290612,provincia
@@ -529,6 +645,8 @@ ITE13,Pistoia,2020,291697,provincia
 ITE13,Pistoia,2021,290245,provincia
 ITE13,Pistoia,2022,289414,provincia
 ITE13,Pistoia,2023,289759,provincia
+ITE13,Pistoia,2024,289889,provincia
+ITE13,Pistoia,2025,289925,provincia
 ITE14,Firenze,2014,1003893,provincia
 ITE14,Firenze,2015,1005814,provincia
 ITE14,Firenze,2016,1005359,provincia
@@ -539,6 +657,8 @@ ITE14,Firenze,2020,995517,provincia
 ITE14,Firenze,2021,998431,provincia
 ITE14,Firenze,2022,987260,provincia
 ITE14,Firenze,2023,988194,provincia
+ITE14,Firenze,2024,988785,provincia
+ITE14,Firenze,2025,988068,provincia
 ITE15,Prato,2014,253550,provincia
 ITE15,Prato,2015,252588,provincia
 ITE15,Prato,2016,253400,provincia
@@ -549,6 +669,8 @@ ITE15,Prato,2020,257073,provincia
 ITE15,Prato,2021,265269,provincia
 ITE15,Prato,2022,258123,provincia
 ITE15,Prato,2023,259244,provincia
+ITE15,Prato,2024,259921,provincia
+ITE15,Prato,2025,259657,provincia
 ITE16,Livorno,2014,339683,provincia
 ITE16,Livorno,2015,338374,provincia
 ITE16,Livorno,2016,336860,provincia
@@ -559,6 +681,8 @@ ITE16,Livorno,2020,331877,provincia
 ITE16,Livorno,2021,328996,provincia
 ITE16,Livorno,2022,327262,provincia
 ITE16,Livorno,2023,326605,provincia
+ITE16,Livorno,2024,326315,provincia
+ITE16,Livorno,2025,325749,provincia
 ITE17,Pisa,2014,420380,provincia
 ITE17,Pisa,2015,421062,provincia
 ITE17,Pisa,2016,419784,provincia
@@ -569,6 +693,8 @@ ITE17,Pisa,2020,418122,provincia
 ITE17,Pisa,2021,417983,provincia
 ITE17,Pisa,2022,417041,provincia
 ITE17,Pisa,2023,417170,provincia
+ITE17,Pisa,2024,417674,provincia
+ITE17,Pisa,2025,418439,provincia
 ITE18,Arezzo,2014,346567,provincia
 ITE18,Arezzo,2015,345706,provincia
 ITE18,Arezzo,2016,343761,provincia
@@ -579,6 +705,8 @@ ITE18,Arezzo,2020,339172,provincia
 ITE18,Arezzo,2021,336501,provincia
 ITE18,Arezzo,2022,334926,provincia
 ITE18,Arezzo,2023,334052,provincia
+ITE18,Arezzo,2024,333344,provincia
+ITE18,Arezzo,2025,333240,provincia
 ITE19,Siena,2014,270705,provincia
 ITE19,Siena,2015,269912,provincia
 ITE19,Siena,2016,268679,provincia
@@ -589,6 +717,8 @@ ITE19,Siena,2020,265179,provincia
 ITE19,Siena,2021,263801,provincia
 ITE19,Siena,2022,261209,provincia
 ITE19,Siena,2023,260557,provincia
+ITE19,Siena,2024,259992,provincia
+ITE19,Siena,2025,259460,provincia
 ITE1A,Grosseto,2014,225140,provincia
 ITE1A,Grosseto,2015,224192,provincia
 ITE1A,Grosseto,2016,222981,provincia
@@ -599,6 +729,8 @@ ITE1A,Grosseto,2020,219690,provincia
 ITE1A,Grosseto,2021,217846,provincia
 ITE1A,Grosseto,2022,217009,provincia
 ITE1A,Grosseto,2023,216633,provincia
+ITE1A,Grosseto,2024,215802,provincia
+ITE1A,Grosseto,2025,215005,provincia
 ITE21,Perugia,2014,661638,provincia
 ITE21,Perugia,2015,658819,provincia
 ITE21,Perugia,2016,655997,provincia
@@ -609,6 +741,8 @@ ITE21,Perugia,2020,646710,provincia
 ITE21,Perugia,2021,645506,provincia
 ITE21,Perugia,2022,640482,provincia
 ITE21,Perugia,2023,639224,provincia
+ITE21,Perugia,2024,637222,provincia
+ITE21,Perugia,2025,636188,provincia
 ITE22,Terni,2014,230461,provincia
 ITE22,Terni,2015,229469,provincia
 ITE22,Terni,2016,228095,provincia
@@ -619,6 +753,8 @@ ITE22,Terni,2020,223455,provincia
 ITE22,Terni,2021,219946,provincia
 ITE22,Terni,2022,218330,provincia
 ITE22,Terni,2023,217183,provincia
+ITE22,Terni,2024,215846,provincia
+ITE22,Terni,2025,215285,provincia
 ITE31,Pesaro e Urbino,2014,362931,provincia
 ITE31,Pesaro e Urbino,2015,361969,provincia
 ITE31,Pesaro e Urbino,2016,360203,provincia
@@ -629,6 +765,8 @@ ITE31,Pesaro e Urbino,2020,356497,provincia
 ITE31,Pesaro e Urbino,2021,353272,provincia
 ITE31,Pesaro e Urbino,2022,349818,provincia
 ITE31,Pesaro e Urbino,2023,349529,provincia
+ITE31,Pesaro e Urbino,2024,349882,provincia
+ITE31,Pesaro e Urbino,2025,349558,provincia
 ITE32,Ancona,2014,477487,provincia
 ITE32,Ancona,2015,476111,provincia
 ITE32,Ancona,2016,474334,provincia
@@ -639,6 +777,8 @@ ITE32,Ancona,2020,467451,provincia
 ITE32,Ancona,2021,464419,provincia
 ITE32,Ancona,2022,461687,provincia
 ITE32,Ancona,2023,461655,provincia
+ITE32,Ancona,2024,461629,provincia
+ITE32,Ancona,2025,461503,provincia
 ITE33,Macerata,2014,321356,provincia
 ITE33,Macerata,2015,320894,provincia
 ITE33,Macerata,2016,319057,provincia
@@ -649,6 +789,8 @@ ITE33,Macerata,2020,310815,provincia
 ITE33,Macerata,2021,307410,provincia
 ITE33,Macerata,2022,304986,provincia
 ITE33,Macerata,2023,303828,provincia
+ITE33,Macerata,2024,302993,provincia
+ITE33,Macerata,2025,302030,provincia
 ITE34,Ascoli Piceno,2014,211674,provincia
 ITE34,Ascoli Piceno,2015,211137,provincia
 ITE34,Ascoli Piceno,2016,210070,provincia
@@ -659,6 +801,8 @@ ITE34,Ascoli Piceno,2020,206172,provincia
 ITE34,Ascoli Piceno,2021,203425,provincia
 ITE34,Ascoli Piceno,2022,202365,provincia
 ITE34,Ascoli Piceno,2023,201462,provincia
+ITE34,Ascoli Piceno,2024,200897,provincia
+ITE34,Ascoli Piceno,2025,200497,provincia
 ITE41,Viterbo,2014,317858,provincia
 ITE41,Viterbo,2015,317302,provincia
 ITE41,Viterbo,2016,315682,provincia
@@ -669,6 +813,8 @@ ITE41,Viterbo,2020,309795,provincia
 ITE41,Viterbo,2021,308830,provincia
 ITE41,Viterbo,2022,308737,provincia
 ITE41,Viterbo,2023,308158,provincia
+ITE41,Viterbo,2024,307686,provincia
+ITE41,Viterbo,2025,307405,provincia
 ITE42,Rieti,2014,158024,provincia
 ITE42,Rieti,2015,157477,provincia
 ITE42,Rieti,2016,156869,provincia
@@ -679,6 +825,8 @@ ITE42,Rieti,2020,152497,provincia
 ITE42,Rieti,2021,151335,provincia
 ITE42,Rieti,2022,151143,provincia
 ITE42,Rieti,2023,150457,provincia
+ITE42,Rieti,2024,149988,provincia
+ITE42,Rieti,2025,149766,provincia
 ITE43,Roma,2014,4194085,provincia
 ITE43,Roma,2015,4216217,provincia
 ITE43,Roma,2016,4236445,provincia
@@ -689,6 +837,8 @@ ITE43,Roma,2020,4253314,provincia
 ITE43,Roma,2021,4231451,provincia
 ITE43,Roma,2022,4216874,provincia
 ITE43,Roma,2023,4227059,provincia
+ITE43,Roma,2024,4225409,provincia
+ITE43,Roma,2025,4222648,provincia
 ITE44,Latina,2014,560527,provincia
 ITE44,Latina,2015,562493,provincia
 ITE44,Latina,2016,563643,provincia
@@ -699,6 +849,8 @@ ITE44,Latina,2020,562592,provincia
 ITE44,Latina,2021,566224,provincia
 ITE44,Latina,2022,567439,provincia
 ITE44,Latina,2023,566996,provincia
+ITE44,Latina,2024,566873,provincia
+ITE44,Latina,2025,566698,provincia
 ITE45,Frosinone,2014,493461,provincia
 ITE45,Frosinone,2015,491410,provincia
 ITE45,Frosinone,2016,488869,provincia
@@ -709,6 +861,8 @@ ITE45,Frosinone,2020,477502,provincia
 ITE45,Frosinone,2021,472559,provincia
 ITE45,Frosinone,2022,470689,provincia
 ITE45,Frosinone,2023,467866,provincia
+ITE45,Frosinone,2024,464789,provincia
+ITE45,Frosinone,2025,462661,provincia
 ITF11,L'Aquila,2014,305639,provincia
 ITF11,L'Aquila,2015,304136,provincia
 ITF11,L'Aquila,2016,302311,provincia
@@ -719,6 +873,8 @@ ITF11,L'Aquila,2020,294838,provincia
 ITF11,L'Aquila,2021,290811,provincia
 ITF11,L'Aquila,2022,288956,provincia
 ITF11,L'Aquila,2023,287806,provincia
+ITF11,L'Aquila,2024,286832,provincia
+ITF11,L'Aquila,2025,286706,provincia
 ITF12,Teramo,2014,310157,provincia
 ITF12,Teramo,2015,309674,provincia
 ITF12,Teramo,2016,308326,provincia
@@ -729,6 +885,8 @@ ITF12,Teramo,2020,303900,provincia
 ITF12,Teramo,2021,301104,provincia
 ITF12,Teramo,2022,299646,provincia
 ITF12,Teramo,2023,299071,provincia
+ITF12,Teramo,2024,299274,provincia
+ITF12,Teramo,2025,300049,provincia
 ITF13,Pescara,2014,322271,provincia
 ITF13,Pescara,2015,321830,provincia
 ITF13,Pescara,2016,320710,provincia
@@ -739,6 +897,8 @@ ITF13,Pescara,2020,316363,provincia
 ITF13,Pescara,2021,313882,provincia
 ITF13,Pescara,2022,313631,provincia
 ITF13,Pescara,2023,313110,provincia
+ITF13,Pescara,2024,312246,provincia
+ITF13,Pescara,2025,311876,provincia
 ITF14,Chieti,2014,391851,provincia
 ITF14,Chieti,2015,390196,provincia
 ITF14,Chieti,2016,387947,provincia
@@ -749,6 +909,8 @@ ITF14,Chieti,2020,378840,provincia
 ITF14,Chieti,2021,375215,provincia
 ITF14,Chieti,2022,373717,provincia
 ITF14,Chieti,2023,372640,provincia
+ITF14,Chieti,2024,371219,provincia
+ITF14,Chieti,2025,370487,provincia
 ITF21,Isernia,2014,86839,provincia
 ITF21,Isernia,2015,86489,provincia
 ITF21,Isernia,2016,86069,provincia
@@ -759,6 +921,8 @@ ITF21,Isernia,2020,83154,provincia
 ITF21,Isernia,2021,81415,provincia
 ITF21,Isernia,2022,80564,provincia
 ITF21,Isernia,2023,79912,provincia
+ITF21,Isernia,2024,79236,provincia
+ITF21,Isernia,2025,78755,provincia
 ITF22,Campobasso,2014,226058,provincia
 ITF22,Campobasso,2015,224909,provincia
 ITF22,Campobasso,2016,223957,provincia
@@ -769,6 +933,8 @@ ITF22,Campobasso,2020,217362,provincia
 ITF22,Campobasso,2021,212879,provincia
 ITF22,Campobasso,2022,211586,provincia
 ITF22,Campobasso,2023,210724,provincia
+ITF22,Campobasso,2024,209988,provincia
+ITF22,Campobasso,2025,209059,provincia
 ITF31,Caserta,2014,917923,provincia
 ITF31,Caserta,2015,918110,provincia
 ITF31,Caserta,2016,917423,provincia
@@ -779,6 +945,8 @@ ITF31,Caserta,2020,913666,provincia
 ITF31,Caserta,2021,901903,provincia
 ITF31,Caserta,2022,905045,provincia
 ITF31,Caserta,2023,906074,provincia
+ITF31,Caserta,2024,906522,provincia
+ITF31,Caserta,2025,908451,provincia
 ITF32,Benevento,2014,283431,provincia
 ITF32,Benevento,2015,281563,provincia
 ITF32,Benevento,2016,279778,provincia
@@ -789,6 +957,8 @@ ITF32,Benevento,2020,272318,provincia
 ITF32,Benevento,2021,266716,provincia
 ITF32,Benevento,2022,265055,provincia
 ITF32,Benevento,2023,263125,provincia
+ITF32,Benevento,2024,261419,provincia
+ITF32,Benevento,2025,259809,provincia
 ITF33,Napoli,2014,3078259,provincia
 ITF33,Napoli,2015,3075600,provincia
 ITF33,Napoli,2016,3071681,provincia
@@ -799,6 +969,8 @@ ITF33,Napoli,2020,3034410,provincia
 ITF33,Napoli,2021,2986745,provincia
 ITF33,Napoli,2022,2988376,provincia
 ITF33,Napoli,2023,2980338,provincia
+ITF33,Napoli,2024,2970974,provincia
+ITF33,Napoli,2025,2963633,provincia
 ITF34,Avellino,2014,429901,provincia
 ITF34,Avellino,2015,426909,provincia
 ITF34,Avellino,2016,423372,provincia
@@ -809,6 +981,8 @@ ITF34,Avellino,2020,410369,provincia
 ITF34,Avellino,2021,402929,provincia
 ITF34,Avellino,2022,401451,provincia
 ITF34,Avellino,2023,398932,provincia
+ITF34,Avellino,2024,396973,provincia
+ITF34,Avellino,2025,395072,provincia
 ITF35,Salerno,2014,1103254,provincia
 ITF35,Salerno,2015,1102188,provincia
 ITF35,Salerno,2016,1098529,provincia
@@ -819,6 +993,8 @@ ITF35,Salerno,2020,1081380,provincia
 ITF35,Salerno,2021,1065967,provincia
 ITF35,Salerno,2022,1064493,provincia
 ITF35,Salerno,2023,1061067,provincia
+ITF35,Salerno,2024,1058018,provincia
+ITF35,Salerno,2025,1055372,provincia
 ITF41,Foggia,2014,632597,provincia
 ITF41,Foggia,2015,629554,provincia
 ITF41,Foggia,2016,625294,provincia
@@ -829,6 +1005,8 @@ ITF41,Foggia,2020,606904,provincia
 ITF41,Foggia,2021,602394,provincia
 ITF41,Foggia,2022,599028,provincia
 ITF41,Foggia,2023,595682,provincia
+ITF41,Foggia,2024,593078,provincia
+ITF41,Foggia,2025,590263,provincia
 ITF42,Bari,2014,1256495,provincia
 ITF42,Bari,2015,1253461,provincia
 ITF42,Bari,2016,1249699,provincia
@@ -839,6 +1017,8 @@ ITF42,Bari,2020,1230205,provincia
 ITF42,Bari,2021,1230158,provincia
 ITF42,Bari,2022,1226784,provincia
 ITF42,Bari,2023,1225048,provincia
+ITF42,Bari,2024,1221682,provincia
+ITF42,Bari,2025,1219545,provincia
 ITF43,Taranto,2014,584796,provincia
 ITF43,Taranto,2015,582400,provincia
 ITF43,Taranto,2016,579310,provincia
@@ -849,6 +1029,8 @@ ITF43,Taranto,2020,563995,provincia
 ITF43,Taranto,2021,561958,provincia
 ITF43,Taranto,2022,559892,provincia
 ITF43,Taranto,2023,556692,provincia
+ITF43,Taranto,2024,553501,provincia
+ITF43,Taranto,2025,550436,provincia
 ITF44,Brindisi,2014,401494,provincia
 ITF44,Brindisi,2015,399338,provincia
 ITF44,Brindisi,2016,396312,provincia
@@ -859,6 +1041,8 @@ ITF44,Brindisi,2020,385235,provincia
 ITF44,Brindisi,2021,381946,provincia
 ITF44,Brindisi,2022,381273,provincia
 ITF44,Brindisi,2023,379522,provincia
+ITF44,Brindisi,2024,377240,provincia
+ITF44,Brindisi,2025,375567,provincia
 ITF45,Lecce,2014,808602,provincia
 ITF45,Lecce,2015,804812,provincia
 ITF45,Lecce,2016,800949,provincia
@@ -869,6 +1053,8 @@ ITF45,Lecce,2020,782165,provincia
 ITF45,Lecce,2021,776230,provincia
 ITF45,Lecce,2022,775348,provincia
 ITF45,Lecce,2023,771230,provincia
+ITF45,Lecce,2024,767231,provincia
+ITF45,Lecce,2025,764491,provincia
 ITF51,Potenza,2014,375370,provincia
 ITF51,Potenza,2015,373323,provincia
 ITF51,Potenza,2016,370854,provincia
@@ -879,6 +1065,8 @@ ITF51,Potenza,2020,358401,provincia
 ITF51,Potenza,2021,352490,provincia
 ITF51,Potenza,2022,349616,provincia
 ITF51,Potenza,2023,346475,provincia
+ITF51,Potenza,2024,343252,provincia
+ITF51,Potenza,2025,340909,provincia
 ITF52,Matera,2014,200444,provincia
 ITF52,Matera,2015,199913,provincia
 ITF52,Matera,2016,199033,provincia
@@ -889,6 +1077,8 @@ ITF52,Matera,2020,194853,provincia
 ITF52,Matera,2021,192640,provincia
 ITF52,Matera,2022,191552,provincia
 ITF52,Matera,2023,191102,provincia
+ITF52,Matera,2024,189981,provincia
+ITF52,Matera,2025,189095,provincia
 ITF61,Cosenza,2014,713368,provincia
 ITF61,Cosenza,2015,710806,provincia
 ITF61,Cosenza,2016,706823,provincia
@@ -899,6 +1089,8 @@ ITF61,Cosenza,2020,690503,provincia
 ITF61,Cosenza,2021,676119,provincia
 ITF61,Cosenza,2022,674543,provincia
 ITF61,Cosenza,2023,672432,provincia
+ITF61,Cosenza,2024,670368,provincia
+ITF61,Cosenza,2025,669535,provincia
 ITF62,Crotone,2014,172000,provincia
 ITF62,Crotone,2015,171969,provincia
 ITF62,Crotone,2016,171985,provincia
@@ -909,6 +1101,8 @@ ITF62,Crotone,2020,168581,provincia
 ITF62,Crotone,2021,164059,provincia
 ITF62,Crotone,2022,163553,provincia
 ITF62,Crotone,2023,162749,provincia
+ITF62,Crotone,2024,161902,provincia
+ITF62,Crotone,2025,161898,provincia
 ITF63,Catanzaro,2014,360340,provincia
 ITF63,Catanzaro,2015,359072,provincia
 ITF63,Catanzaro,2016,357926,provincia
@@ -919,6 +1113,8 @@ ITF63,Catanzaro,2020,349344,provincia
 ITF63,Catanzaro,2021,344439,provincia
 ITF63,Catanzaro,2022,343673,provincia
 ITF63,Catanzaro,2023,342021,provincia
+ITF63,Catanzaro,2024,340659,provincia
+ITF63,Catanzaro,2025,339741,provincia
 ITF64,Vibo Valentia,2014,161634,provincia
 ITF64,Vibo Valentia,2015,160684,provincia
 ITF64,Vibo Valentia,2016,159824,provincia
@@ -929,6 +1125,8 @@ ITF64,Vibo Valentia,2020,154715,provincia
 ITF64,Vibo Valentia,2021,152193,provincia
 ITF64,Vibo Valentia,2022,151558,provincia
 ITF64,Vibo Valentia,2023,150709,provincia
+ITF64,Vibo Valentia,2024,150486,provincia
+ITF64,Vibo Valentia,2025,150516,provincia
 ITF65,Reggio di Calabria,2014,550884,provincia
 ITF65,Reggio di Calabria,2015,549202,provincia
 ITF65,Reggio di Calabria,2016,546527,provincia
@@ -939,6 +1137,8 @@ ITF65,Reggio di Calabria,2020,530967,provincia
 ITF65,Reggio di Calabria,2021,523791,provincia
 ITF65,Reggio di Calabria,2022,522127,provincia
 ITF65,Reggio di Calabria,2023,518699,provincia
+ITF65,Reggio di Calabria,2024,515153,provincia
+ITF65,Reggio di Calabria,2025,512956,provincia
 ITG11,Trapani,2014,433677,provincia
 ITG11,Trapani,2015,432813,provincia
 ITG11,Trapani,2016,431516,provincia
@@ -949,6 +1149,8 @@ ITG11,Trapani,2020,421256,provincia
 ITG11,Trapani,2021,418277,provincia
 ITG11,Trapani,2022,417220,provincia
 ITG11,Trapani,2023,415006,provincia
+ITG11,Trapani,2024,412946,provincia
+ITG11,Trapani,2025,411393,provincia
 ITG12,Palermo,2014,1256483,provincia
 ITG12,Palermo,2015,1255334,provincia
 ITG12,Palermo,2016,1250836,provincia
@@ -959,6 +1161,8 @@ ITG12,Palermo,2020,1222988,provincia
 ITG12,Palermo,2021,1208819,provincia
 ITG12,Palermo,2022,1208991,provincia
 ITG12,Palermo,2023,1204189,provincia
+ITG12,Palermo,2024,1200253,provincia
+ITG12,Palermo,2025,1198738,provincia
 ITG13,Messina,2014,645599,provincia
 ITG13,Messina,2015,641243,provincia
 ITG13,Messina,2016,635610,provincia
@@ -969,6 +1173,8 @@ ITG13,Messina,2020,613887,provincia
 ITG13,Messina,2021,603980,provincia
 ITG13,Messina,2022,603229,provincia
 ITG13,Messina,2023,600180,provincia
+ITG13,Messina,2024,598071,provincia
+ITG13,Messina,2025,596147,provincia
 ITG14,Agrigento,2014,447397,provincia
 ITG14,Agrigento,2015,445117,provincia
 ITG14,Agrigento,2016,441375,provincia
@@ -979,6 +1185,8 @@ ITG14,Agrigento,2020,423488,provincia
 ITG14,Agrigento,2021,416181,provincia
 ITG14,Agrigento,2022,415887,provincia
 ITG14,Agrigento,2023,413177,provincia
+ITG14,Agrigento,2024,410508,provincia
+ITG14,Agrigento,2025,408401,provincia
 ITG15,Caltanissetta,2014,272007,provincia
 ITG15,Caltanissetta,2015,270972,provincia
 ITG15,Caltanissetta,2016,268749,provincia
@@ -989,6 +1197,8 @@ ITG15,Caltanissetta,2020,255931,provincia
 ITG15,Caltanissetta,2021,253688,provincia
 ITG15,Caltanissetta,2022,251715,provincia
 ITG15,Caltanissetta,2023,249431,provincia
+ITG15,Caltanissetta,2024,247118,provincia
+ITG15,Caltanissetta,2025,245421,provincia
 ITG16,Enna,2014,171480,provincia
 ITG16,Enna,2015,169922,provincia
 ITG16,Enna,2016,168273,provincia
@@ -999,6 +1209,8 @@ ITG16,Enna,2020,160161,provincia
 ITG16,Enna,2021,157690,provincia
 ITG16,Enna,2022,156730,provincia
 ITG16,Enna,2023,154940,provincia
+ITG16,Enna,2024,153556,provincia
+ITG16,Enna,2025,152544,provincia
 ITG17,Catania,2014,1094665,provincia
 ITG17,Catania,2015,1093911,provincia
 ITG17,Catania,2016,1091100,provincia
@@ -1009,6 +1221,8 @@ ITG17,Catania,2020,1072634,provincia
 ITG17,Catania,2021,1074089,provincia
 ITG17,Catania,2022,1077515,provincia
 ITG17,Catania,2023,1074434,provincia
+ITG17,Catania,2024,1071813,provincia
+ITG17,Catania,2025,1070169,provincia
 ITG18,Ragusa,2014,317335,provincia
 ITG18,Ragusa,2015,317146,provincia
 ITG18,Ragusa,2016,317324,provincia
@@ -1019,6 +1233,8 @@ ITG18,Ragusa,2020,315601,provincia
 ITG18,Ragusa,2021,314910,provincia
 ITG18,Ragusa,2022,316142,provincia
 ITG18,Ragusa,2023,317793,provincia
+ITG18,Ragusa,2024,319236,provincia
+ITG18,Ragusa,2025,321300,provincia
 ITG19,Siracusa,2014,403111,provincia
 ITG19,Siracusa,2015,401808,provincia
 ITG19,Siracusa,2016,399617,provincia
@@ -1029,6 +1245,8 @@ ITG19,Siracusa,2020,389344,provincia
 ITG19,Siracusa,2021,386071,provincia
 ITG19,Siracusa,2022,385900,provincia
 ITG19,Siracusa,2023,384866,provincia
+ITG19,Siracusa,2024,383858,provincia
+ITG19,Siracusa,2025,383277,provincia
 ITG25,Sassari,2014,488789,provincia
 ITG25,Sassari,2015,488917,provincia
 ITG25,Sassari,2016,488904,provincia
@@ -1039,6 +1257,8 @@ ITG25,Sassari,2020,484407,provincia
 ITG25,Sassari,2021,476357,provincia
 ITG25,Sassari,2022,476516,provincia
 ITG25,Sassari,2023,474739,provincia
+ITG25,Sassari,2024,473493,provincia
+ITG25,Sassari,2025,471957,provincia
 ITG26,Nuoro,2014,214391,provincia
 ITG26,Nuoro,2015,213365,provincia
 ITG26,Nuoro,2016,211644,provincia
@@ -1049,6 +1269,8 @@ ITG26,Nuoro,2020,205205,provincia
 ITG26,Nuoro,2021,201517,provincia
 ITG26,Nuoro,2022,200376,provincia
 ITG26,Nuoro,2023,198520,provincia
+ITG26,Nuoro,2024,197090,provincia
+ITG26,Nuoro,2025,195331,provincia
 ITG27,Cagliari,2014,426740,provincia
 ITG27,Cagliari,2015,426678,provincia
 ITG27,Cagliari,2016,426011,provincia
@@ -1059,6 +1281,8 @@ ITG27,Cagliari,2020,422840,provincia
 ITG27,Cagliari,2021,421488,provincia
 ITG27,Cagliari,2022,421688,provincia
 ITG27,Cagliari,2023,420364,provincia
+ITG27,Cagliari,2024,418962,provincia
+ITG27,Cagliari,2025,417532,provincia
 ITG28,Oristano,2014,162007,provincia
 ITG28,Oristano,2015,161055,provincia
 ITG28,Oristano,2016,159947,provincia
@@ -1069,6 +1293,8 @@ ITG28,Oristano,2020,154974,provincia
 ITG28,Oristano,2021,152418,provincia
 ITG28,Oristano,2022,151655,provincia
 ITG28,Oristano,2023,150325,provincia
+ITG28,Oristano,2024,149091,provincia
+ITG28,Oristano,2025,148005,provincia
 ITC1,Piemonte,2014,4420924,regione
 ITC1,Piemonte,2015,4403562,regione
 ITC1,Piemonte,2016,4384226,regione
@@ -1079,6 +1305,8 @@ ITC1,Piemonte,2020,4311217,regione
 ITC1,Piemonte,2021,4274945,regione
 ITC1,Piemonte,2022,4256350,regione
 ITC1,Piemonte,2023,4251351,regione
+ITC1,Piemonte,2024,4251623,regione
+ITC1,Piemonte,2025,4251868,regione
 ITC2,Valle d'Aosta / Vallée d'Aoste,2014,128245,regione
 ITC2,Valle d'Aosta / Vallée d'Aoste,2015,127972,regione
 ITC2,Valle d'Aosta / Vallée d'Aoste,2016,127030,regione
@@ -1089,6 +1317,8 @@ ITC2,Valle d'Aosta / Vallée d'Aoste,2020,125034,regione
 ITC2,Valle d'Aosta / Vallée d'Aoste,2021,124089,regione
 ITC2,Valle d'Aosta / Vallée d'Aoste,2022,123360,regione
 ITC2,Valle d'Aosta / Vallée d'Aoste,2023,123130,regione
+ITC2,Valle d'Aosta / Vallée d'Aoste,2024,122877,regione
+ITC2,Valle d'Aosta / Vallée d'Aoste,2025,122532,regione
 ITC3,Liguria,2014,1580322,regione
 ITC3,Liguria,2015,1569427,regione
 ITC3,Liguria,2016,1557742,regione
@@ -1099,6 +1329,8 @@ ITC3,Liguria,2020,1524826,regione
 ITC3,Liguria,2021,1518495,regione
 ITC3,Liguria,2022,1509227,regione
 ITC3,Liguria,2023,1507636,regione
+ITC3,Liguria,2024,1509140,regione
+ITC3,Liguria,2025,1510143,regione
 ITC4,Lombardia,2014,9929769,regione
 ITC4,Lombardia,2015,9954769,regione
 ITC4,Lombardia,2016,9958447,regione
@@ -1109,11 +1341,8 @@ ITC4,Lombardia,2020,10027602,regione
 ITC4,Lombardia,2021,9981554,regione
 ITC4,Lombardia,2022,9943004,regione
 ITC4,Lombardia,2023,9976509,regione
-ITCD,Nord,2019,27626522,regione
-ITCD,Nord,2020,27616216,regione
-ITCD,Nord,2021,27486438,regione
-ITCD,Nord,2022,27373273,regione
-ITCD,Nord,2023,27417148,regione
+ITC4,Lombardia,2024,10012054,regione
+ITC4,Lombardia,2025,10033918,regione
 ITD1,Provincia Autonoma Bolzano / Bozen,2014,515389,regione
 ITD1,Provincia Autonoma Bolzano / Bozen,2015,517994,regione
 ITD1,Provincia Autonoma Bolzano / Bozen,2016,520252,regione
@@ -1124,6 +1353,8 @@ ITD1,Provincia Autonoma Bolzano / Bozen,2020,532644,regione
 ITD1,Provincia Autonoma Bolzano / Bozen,2021,534912,regione
 ITD1,Provincia Autonoma Bolzano / Bozen,2022,532616,regione
 ITD1,Provincia Autonoma Bolzano / Bozen,2023,534147,regione
+ITD1,Provincia Autonoma Bolzano / Bozen,2024,537533,regione
+ITD1,Provincia Autonoma Bolzano / Bozen,2025,539679,regione
 ITD2,Provincia Autonoma Trento,2014,536813,regione
 ITD2,Provincia Autonoma Trento,2015,538188,regione
 ITD2,Provincia Autonoma Trento,2016,539513,regione
@@ -1134,6 +1365,8 @@ ITD2,Provincia Autonoma Trento,2020,545425,regione
 ITD2,Provincia Autonoma Trento,2021,542166,regione
 ITD2,Provincia Autonoma Trento,2022,540958,regione
 ITD2,Provincia Autonoma Trento,2023,542996,regione
+ITD2,Provincia Autonoma Trento,2024,545169,regione
+ITD2,Provincia Autonoma Trento,2025,546573,regione
 ITD3,Veneto,2014,4905712,regione
 ITD3,Veneto,2015,4902694,regione
 ITD3,Veneto,2016,4890648,regione
@@ -1144,6 +1377,8 @@ ITD3,Veneto,2020,4879133,regione
 ITD3,Veneto,2021,4869830,regione
 ITD3,Veneto,2022,4847745,regione
 ITD3,Veneto,2023,4849553,regione
+ITD3,Veneto,2024,4852216,regione
+ITD3,Veneto,2025,4853472,regione
 ITD4,Friuli-Venezia Giulia,2014,1224984,regione
 ITD4,Friuli-Venezia Giulia,2015,1221664,regione
 ITD4,Friuli-Venezia Giulia,2016,1216208,regione
@@ -1154,6 +1389,8 @@ ITD4,Friuli-Venezia Giulia,2020,1206216,regione
 ITD4,Friuli-Venezia Giulia,2021,1201510,regione
 ITD4,Friuli-Venezia Giulia,2022,1194647,regione
 ITD4,Friuli-Venezia Giulia,2023,1194248,regione
+ITD4,Friuli-Venezia Giulia,2024,1194616,regione
+ITD4,Friuli-Venezia Giulia,2025,1193284,regione
 ITD5,Emilia-Romagna,2014,4432241,regione
 ITD5,Emilia-Romagna,2015,4434377,regione
 ITD5,Emilia-Romagna,2016,4435480,regione
@@ -1164,6 +1401,8 @@ ITD5,Emilia-Romagna,2020,4464119,regione
 ITD5,Emilia-Romagna,2021,4438937,regione
 ITD5,Emilia-Romagna,2022,4425366,regione
 ITD5,Emilia-Romagna,2023,4437578,regione
+ITD5,Emilia-Romagna,2024,4451938,regione
+ITD5,Emilia-Romagna,2025,4461998,regione
 ITE1,Toscana,2014,3744293,regione
 ITE1,Toscana,2015,3739044,regione
 ITE1,Toscana,2016,3726422,regione
@@ -1174,6 +1413,8 @@ ITE1,Toscana,2020,3692555,regione
 ITE1,Toscana,2021,3692865,regione
 ITE1,Toscana,2022,3663191,regione
 ITE1,Toscana,2023,3661981,regione
+ITE1,Toscana,2024,3660530,regione
+ITE1,Toscana,2025,3657716,regione
 ITE2,Umbria,2014,892099,regione
 ITE2,Umbria,2015,888288,regione
 ITE2,Umbria,2016,884092,regione
@@ -1184,6 +1425,8 @@ ITE2,Umbria,2020,870165,regione
 ITE2,Umbria,2021,865452,regione
 ITE2,Umbria,2022,858812,regione
 ITE2,Umbria,2023,856407,regione
+ITE2,Umbria,2024,853068,regione
+ITE2,Umbria,2025,851473,regione
 ITE3,Marche,2014,1549478,regione
 ITE3,Marche,2015,1545869,regione
 ITE3,Marche,2016,1538442,regione
@@ -1194,6 +1437,8 @@ ITE3,Marche,2020,1512672,regione
 ITE3,Marche,2021,1498236,regione
 ITE3,Marche,2022,1487150,regione
 ITE3,Marche,2023,1484298,regione
+ITE3,Marche,2024,1482746,regione
+ITE3,Marche,2025,1480545,regione
 ITE4,Lazio,2014,5723955,regione
 ITE4,Lazio,2015,5744899,regione
 ITE4,Lazio,2016,5761508,regione
@@ -1204,6 +1449,8 @@ ITE4,Lazio,2020,5755700,regione
 ITE4,Lazio,2021,5730399,regione
 ITE4,Lazio,2022,5714882,regione
 ITE4,Lazio,2023,5720536,regione
+ITE4,Lazio,2024,5714745,regione
+ITE4,Lazio,2025,5709178,regione
 ITF1,Abruzzo,2014,1329918,regione
 ITF1,Abruzzo,2015,1325836,regione
 ITF1,Abruzzo,2016,1319294,regione
@@ -1214,6 +1461,8 @@ ITF1,Abruzzo,2020,1293941,regione
 ITF1,Abruzzo,2021,1281012,regione
 ITF1,Abruzzo,2022,1275950,regione
 ITF1,Abruzzo,2023,1272627,regione
+ITF1,Abruzzo,2024,1269571,regione
+ITF1,Abruzzo,2025,1269118,regione
 ITF2,Molise,2014,312897,regione
 ITF2,Molise,2015,311398,regione
 ITF2,Molise,2016,310026,regione
@@ -1224,6 +1473,8 @@ ITF2,Molise,2020,300516,regione
 ITF2,Molise,2021,294294,regione
 ITF2,Molise,2022,292150,regione
 ITF2,Molise,2023,290636,regione
+ITF2,Molise,2024,289224,regione
+ITF2,Molise,2025,287814,regione
 ITF3,Campania,2014,5812768,regione
 ITF3,Campania,2015,5804370,regione
 ITF3,Campania,2016,5790783,regione
@@ -1234,6 +1485,8 @@ ITF3,Campania,2020,5712143,regione
 ITF3,Campania,2021,5624260,regione
 ITF3,Campania,2022,5624420,regione
 ITF3,Campania,2023,5609536,regione
+ITF3,Campania,2024,5593906,regione
+ITF3,Campania,2025,5582337,regione
 ITF4,Puglia,2014,4077788,regione
 ITF4,Puglia,2015,4063269,regione
 ITF4,Puglia,2016,4043735,regione
@@ -1244,6 +1497,8 @@ ITF4,Puglia,2020,3953305,regione
 ITF4,Puglia,2021,3933777,regione
 ITF4,Puglia,2022,3922941,regione
 ITF4,Puglia,2023,3907683,regione
+ITF4,Puglia,2024,3890661,regione
+ITF4,Puglia,2025,3877395,regione
 ITF5,Basilicata,2014,575814,regione
 ITF5,Basilicata,2015,573236,regione
 ITF5,Basilicata,2016,569887,regione
@@ -1254,6 +1509,8 @@ ITF5,Basilicata,2020,553254,regione
 ITF5,Basilicata,2021,545130,regione
 ITF5,Basilicata,2022,541168,regione
 ITF5,Basilicata,2023,537577,regione
+ITF5,Basilicata,2024,533233,regione
+ITF5,Basilicata,2025,530004,regione
 ITF6,Calabria,2014,1958226,regione
 ITF6,Calabria,2015,1951733,regione
 ITF6,Calabria,2016,1943085,regione
@@ -1264,11 +1521,8 @@ ITF6,Calabria,2020,1894110,regione
 ITF6,Calabria,2021,1860601,regione
 ITF6,Calabria,2022,1855454,regione
 ITF6,Calabria,2023,1846610,regione
-ITFG,Mezzogiorno,2019,20321667,regione
-ITFG,Mezzogiorno,2020,20194180,regione
-ITFG,Mezzogiorno,2021,19962823,regione
-ITFG,Mezzogiorno,2022,19932825,regione
-ITFG,Mezzogiorno,2023,19856831,regione
+ITF6,Calabria,2024,1838568,regione
+ITF6,Calabria,2025,1834646,regione
 ITG1,Sicilia,2014,5041754,regione
 ITG1,Sicilia,2015,5028266,regione
 ITG1,Sicilia,2016,5004400,regione
@@ -1279,6 +1533,8 @@ ITG1,Sicilia,2020,4875290,regione
 ITG1,Sicilia,2021,4833705,regione
 ITG1,Sicilia,2022,4833329,regione
 ITG1,Sicilia,2023,4814016,regione
+ITG1,Sicilia,2024,4797359,regione
+ITG1,Sicilia,2025,4787390,regione
 ITG2,Sardegna,2014,1652528,regione
 ITG2,Sardegna,2015,1648642,regione
 ITG2,Sardegna,2016,1642492,regione
@@ -1289,3 +1545,5 @@ ITG2,Sardegna,2020,1611621,regione
 ITG2,Sardegna,2021,1590044,regione
 ITG2,Sardegna,2022,1587413,regione
 ITG2,Sardegna,2023,1578146,regione
+ITG2,Sardegna,2024,1570453,regione
+ITG2,Sardegna,2025,1562381,regione

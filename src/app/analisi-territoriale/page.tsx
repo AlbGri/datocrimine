@@ -7,11 +7,11 @@ import { ChartTrendRegione } from "@/components/charts/chart-trend-regione";
 import { ChartTabellaProvince } from "@/components/charts/chart-tabella-province";
 import { ChartTrendProvincia } from "@/components/charts/chart-trend-provincia";
 
-const ANNI = Array.from({ length: 10 }, (_, i) => 2014 + i);
+const ANNI = Array.from({ length: 11 }, (_, i) => 2014 + i);
 const PLAY_INTERVAL_MS = 1500;
 
 export default function AnalisiTerritoriale() {
-  const [anno, setAnno] = useState(2023);
+  const [anno, setAnno] = useState(2024);
   const [playing, setPlaying] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -106,7 +106,7 @@ export default function AnalisiTerritoriale() {
 
       <section className="space-y-3">
         <h2 className="text-xl sm:text-2xl font-semibold text-primary">
-          Trend Regionale (2014-2023)
+          Trend Regionale (2014-2024)
         </h2>
         <ChartTrendRegione />
       </section>
@@ -124,7 +124,7 @@ export default function AnalisiTerritoriale() {
 
       <section className="space-y-3">
         <h2 className="text-xl sm:text-2xl font-semibold text-primary">
-          Trend Provinciale (2014-2023)
+          Trend Provinciale (2014-2024)
         </h2>
         <ChartTrendProvincia />
       </section>

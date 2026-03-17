@@ -69,7 +69,7 @@ export function ChartAllarmeTrendNazionale({ reatoSelezionato }: Props) {
   if (!data) return null;
 
   return (
-    <ChartFullscreenWrapper ariaDescription={`Grafico trend nazionale reati allarme sociale 2014-2023, evidenziato: ${reatoSelezionato}`}>
+    <ChartFullscreenWrapper ariaDescription={`Grafico trend nazionale reati allarme sociale 2014-2024, evidenziato: ${reatoSelezionato}`}>
       <Plot
         data={traces}
         layout={{

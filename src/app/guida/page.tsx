@@ -115,7 +115,7 @@ export default function Guida() {
           <li>
             <strong>Dati 2007-2022</strong>: la sezione Persone Denunciate
             copre un arco temporale diverso (2007-2022) rispetto alle altre
-            sezioni (2014-2023), perch&eacute; proviene da un dataset ISTAT
+            sezioni (2014-2024), perch&eacute; proviene da un dataset ISTAT
             separato (DCCV_AUTVITTPS)
           </li>
         </ul>

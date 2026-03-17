@@ -48,14 +48,22 @@ next-env.d.ts
 
 # dati raw e notebook (troppo grandi per git, rigenerabili da fonti ISTAT)
 data/raw/delitti_2014_2023_istat.csv
+data/raw/delittips/
+data/raw/check_updates.json
 data/raw/popolazione/
 data/raw/geojson_regioni_italia.geojson
 data/raw/autvittps/
 data/raw/Vittime di delitto*
 notebooks/
 scripts/download_autvittps.py
+scripts/download_delittips.py
+scripts/download_popolazione.py
+scripts/check_istat_updates.py
 
 # docs privati
 docs/STATO_PROGETTO.md
 docs/FONTI_DATI.md
 docs/CONDIVISIONE.md
+
+# audit
+audit/

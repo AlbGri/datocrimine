@@ -53,7 +53,7 @@ export function ChartPercezioneVsDati() {
         </AlertDescription>
       </Alert>
 
-      <ChartFullscreenWrapper ariaDescription="Grafico percezione insicurezza vs tasso delitti denunciati dal 2014 al 2023: la percezione segue dinamiche diverse dai dati reali">
+      <ChartFullscreenWrapper ariaDescription="Grafico percezione insicurezza vs tasso delitti denunciati dal 2014 al 2024: la percezione segue dinamiche diverse dai dati reali">
         <Plot
           data={[
             {
@@ -127,7 +127,7 @@ export function ChartPercezioneVsDati() {
       <div className="grid grid-cols-3 gap-2 sm:gap-3">
         <Card>
           <CardContent className="py-2 sm:pt-4 sm:pb-2 text-center">
-            <p className="text-xs sm:text-sm text-muted-foreground">Delta Percezione 2014-2023</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">Delta Percezione 2014-2024</p>
             <p className="text-lg sm:text-2xl font-bold">{varPercezione.toFixed(1)} punti %</p>
           </CardContent>
         </Card>
