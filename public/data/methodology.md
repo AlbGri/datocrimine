@@ -319,7 +319,7 @@ ISTAT pubblica i dati sui delitti denunciati con un **ritardo strutturale di cir
 - **Dati 2024**: pubblicati su esploradati.istat.it a inizio 2026 (attualmente in uso in questa dashboard)
 - **Dati 2025**: attesi indicativamente nel **2027-2028**
 
-Non esiste un calendario fisso per questo aggiornamento. ISTAT pubblica un [calendario settimanale delle diffusioni](https://www.istat.it/calendario/) che vale la pena monitorare. Schede qualità: [delitti denunciati da PdS, CC e GdF](https://www.istat.it/scheda-qualita/delitti-denunciati-allautorita-giudiziaria-da-polizia-di-stato-arma-dei-carabinieri-e-guardia-di-finanza/), [delitti con azione penale](https://www.istat.it/scheda-qualita/delitti-denunciati-per-i-quali-lautorita-giudiziaria-ha-iniziato-lazione-penale/).
+Non esiste un calendario fisso per questo aggiornamento. ISTAT pubblica un [calendario settimanale delle diffusioni](https://www.istat.it/attivita-e-servizi-per-tipo-di-utenti/giornalisti/appuntamenti/calendario-delle-diffusioni-e-degli-eventi/) che vale la pena monitorare. Schede qualità: [delitti denunciati da PdS, CC e GdF](https://www.istat.it/scheda-qualita/delitti-denunciati-allautorita-giudiziaria-da-polizia-di-stato-arma-dei-carabinieri-e-guardia-di-finanza/), [delitti con azione penale](https://www.istat.it/scheda-qualita/delitti-denunciati-per-i-quali-lautorita-giudiziaria-ha-iniziato-lazione-penale/).
 
 ### Perché non fonti alternative?
 
