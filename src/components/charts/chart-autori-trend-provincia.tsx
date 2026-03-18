@@ -26,7 +26,8 @@ export function ChartAutoriTrendProvincia({ dataType }: Props) {
   const { data, loading, error } = useFetchData<ProvinciaRecord[]>(
     "/data/autori_vittime_province.json"
   );
-  const [codiceReato, setCodiceReato] = useState("CULPINJU");
+  const VICTIM_DEFAULT = "CULPINJU";
+  const [codiceReato, setCodiceReato] = useState(VICTIM_DEFAULT);
   const [regioneSelezionata, setRegioneSelezionata] = useState("");
 
   // Solo reati con dati multi-anno (escludi TOT che ha solo 2022)

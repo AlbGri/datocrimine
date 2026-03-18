@@ -24,7 +24,7 @@ interface RegioneRecord {
   pct_minori: number | null;
 }
 
-type Metrica = "pct_stranieri" | "tasso";
+type Metrica = "pct_stranieri" | "pct_minori" | "tasso";
 
 interface Props {
   dataType: "OFFEND" | "VICTIM";
@@ -38,6 +38,7 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
   const [codiceReato, setCodiceReato] = useState("TOT");
   const [anno, setAnno] = useState(2022);
   const [metrica, setMetrica] = useState<Metrica>("pct_stranieri");
+  const VICTIM_DEFAULT = "CULPINJU";
 
   const reatiDisponibili = useMemo(() => {
     if (!data) return [];
@@ -60,6 +61,7 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
 
   const effectiveReato = useMemo(() => {
     if (reatiDisponibili.some((r) => r.codice === codiceReato)) return codiceReato;
+    if (reatiDisponibili.some((r) => r.codice === VICTIM_DEFAULT)) return VICTIM_DEFAULT;
     return reatiDisponibili[0]?.codice ?? "TOT";
   }, [codiceReato, reatiDisponibili]);
 
@@ -91,8 +93,16 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
       r.anno === effectiveAnno
   );
 
+  // Verifica disponibilita' % minori per il filtro corrente
+  const hasMinori = filtered.some((r) => r.pct_minori !== null);
+  const effectiveMetrica = metrica === "pct_minori" && !hasMinori ? "pct_stranieri" : metrica;
+
   const getValue = (r: RegioneRecord) =>
-    metrica === "tasso" ? (r.tasso ?? 0) : r.pct_stranieri;
+    effectiveMetrica === "tasso"
+      ? (r.tasso ?? 0)
+      : effectiveMetrica === "pct_minori"
+        ? (r.pct_minori ?? 0)
+        : r.pct_stranieri;
 
   const sorted = [...filtered].sort((a, b) => getValue(a) - getValue(b));
   const nomi = sorted.map((r) => r.regione);
@@ -100,16 +110,19 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
 
   // Media ponderata nazionale
   let media = 0;
-  if (metrica === "pct_stranieri") {
+  if (effectiveMetrica === "pct_stranieri") {
     const totSum = filtered.reduce((s, r) => s + r.totale, 0);
     const strSum = filtered.reduce((s, r) => s + r.stranieri, 0);
     media = totSum > 0 ? (strSum / totSum) * 100 : 0;
+  } else if (effectiveMetrica === "pct_minori") {
+    const withMinori = filtered.filter((r) => r.pct_minori !== null);
+    const totSum = withMinori.reduce((s, r) => s + r.totale, 0);
+    const minSum = withMinori.reduce((s, r) => s + r.minori, 0);
+    media = totSum > 0 ? (minSum / totSum) * 100 : 0;
   } else {
-    // Media tasso = somma delitti / somma popolazione * 100k (approssimata dalla media pesata)
     const tassiNonNull = filtered.filter((r) => r.tasso !== null);
     if (tassiNonNull.length > 0) {
       const totDel = tassiNonNull.reduce((s, r) => s + r.totale, 0);
-      // Stima popolazione da tasso: pop = totale / tasso * 100000
       const totPop = tassiNonNull.reduce(
         (s, r) => s + (r.tasso! > 0 ? (r.totale / r.tasso!) * 100_000 : 0),
         0
@@ -118,9 +131,13 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
     }
   }
 
-  const etichettaMetrica =
-    metrica === "tasso" ? "Tasso per 100k ab." : "% stranieri";
-  const decimali = metrica === "tasso" ? 1 : 1;
+  const METRICA_LABELS: Record<Metrica, string> = {
+    pct_stranieri: "% stranieri",
+    pct_minori: "% minori",
+    tasso: "Tasso per 100k ab.",
+  };
+  const etichettaMetrica = METRICA_LABELS[effectiveMetrica];
+  const decimali = 1;
 
   const maxVal = Math.max(...valori, 0.1);
   const colors = valori.map((v) => {
@@ -177,6 +194,9 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
             className="border rounded-md px-3 py-2 text-sm bg-background"
           >
             <option value="pct_stranieri">% stranieri</option>
+            <option value="pct_minori" disabled={!hasMinori}>
+              % minori{!hasMinori ? " (non disponibile)" : ""}
+            </option>
             <option value="tasso">Tasso per 100k ab.</option>
           </select>
         </div>
@@ -193,15 +213,18 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
               x: valori,
               orientation: "h" as const,
               marker: { color: colors },
-              text: valori.map((v) => v.toFixed(decimali) + (metrica === "pct_stranieri" ? "%" : "")),
+              text: valori.map((v) => v.toFixed(decimali) + (effectiveMetrica !== "tasso" ? "%" : "")),
               textposition: "outside" as const,
               hovertemplate:
-                metrica === "pct_stranieri"
+                effectiveMetrica === "pct_stranieri"
                   ? "<b>%{y}</b><br>Stranieri: %{x:.1f}%<br>Totale: %{customdata[0]}<br>Stranieri: %{customdata[1]}<extra></extra>"
-                  : "<b>%{y}</b><br>Tasso: %{x:.1f} per 100k<br>Totale: %{customdata[0]}<extra></extra>",
+                  : effectiveMetrica === "pct_minori"
+                    ? "<b>%{y}</b><br>Minori: %{x:.1f}%<br>Totale: %{customdata[0]}<br>Minori: %{customdata[2]}<extra></extra>"
+                    : "<b>%{y}</b><br>Tasso: %{x:.1f} per 100k<br>Totale: %{customdata[0]}<extra></extra>",
               customdata: sorted.map((r) => [
                 r.totale.toLocaleString("it-IT"),
                 r.stranieri.toLocaleString("it-IT"),
+                r.minori.toLocaleString("it-IT"),
               ]),
             },
           ]}

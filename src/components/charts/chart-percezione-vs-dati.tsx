@@ -9,6 +9,7 @@ import {
   COVID_SHAPES,
   COVID_ANNOTATIONS,
   AXIS_FIXED,
+  AXIS_YEAR,
 } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -76,7 +77,7 @@ export function ChartPercezioneVsDati() {
             },
           ]}
           layout={{
-            xaxis: { ...AXIS_FIXED, title: { text: "Anno" } },
+            xaxis: { ...AXIS_YEAR, title: { text: "Anno" } },
             yaxis: { ...AXIS_FIXED,
               title: { text: "% Percezione rischio", font: { color: COLORS.secondary, size: 12 } },
               tickfont: { color: COLORS.secondary },

@@ -10,6 +10,7 @@ import {
   COVID_SHAPES,
   COVID_ANNOTATIONS,
   AXIS_FIXED,
+  AXIS_YEAR,
   varTriennale,
   TRIENNALE_PERIODI,
 } from "@/lib/config";
@@ -109,7 +110,7 @@ export function ChartTrendRegione() {
             plot_bgcolor: "white",
             paper_bgcolor: "white",
             height: CHART_HEIGHT_SMALL,
-            xaxis: { ...AXIS_FIXED, title: { text: "Anno" } },
+            xaxis: { ...AXIS_YEAR, title: { text: "Anno" } },
             yaxis: { ...AXIS_FIXED, title: { text: "Tasso per 1000 ab.", font: { size: 12 } } },
             legend: {
               x: 0,

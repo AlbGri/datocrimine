@@ -10,6 +10,7 @@ import {
   COVID_SHAPES,
   COVID_ANNOTATIONS,
   AXIS_FIXED,
+  AXIS_YEAR,
 } from "@/lib/config";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 
@@ -30,9 +31,19 @@ interface RegioneRecord {
   pct_minori: number | null;
 }
 
+type Metrica = "tasso" | "pct_stranieri" | "pct_minori";
+
 interface Props {
   dataType: "OFFEND" | "VICTIM";
 }
+
+const VICTIM_DEFAULT = "CULPINJU";
+
+const METRICA_LABELS: Record<Metrica, string> = {
+  tasso: "Tasso per 100k ab.",
+  pct_stranieri: "% stranieri",
+  pct_minori: "% minori",
+};
 
 export function ChartAutoriTrendRegione({ dataType }: Props) {
   const { data, loading, error } = useFetchData<RegioneRecord[]>(
@@ -40,6 +51,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
   );
   const [regione, setRegione] = useState("");
   const [codiceReato, setCodiceReato] = useState("TOT");
+  const [metrica, setMetrica] = useState<Metrica>("tasso");
 
   const reatiDisponibili = useMemo(() => {
     if (!data) return [];
@@ -62,6 +74,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
 
   const effectiveReato = useMemo(() => {
     if (reatiDisponibili.some((r) => r.codice === codiceReato)) return codiceReato;
+    if (reatiDisponibili.some((r) => r.codice === VICTIM_DEFAULT)) return VICTIM_DEFAULT;
     return reatiDisponibili[0]?.codice ?? "TOT";
   }, [codiceReato, reatiDisponibili]);
 
@@ -76,7 +89,27 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
     return Array.from(set).sort();
   }, [data, dataType, effectiveReato]);
 
-  // Media nazionale ponderata (somma totali regioni / somma popolazioni stimate)
+  // Verifica disponibilita' % minori per reato/dataType
+  const hasMinori = useMemo(() => {
+    if (!data) return false;
+    return data.some(
+      (r) =>
+        r.data_type === dataType &&
+        r.codice_reato === effectiveReato &&
+        r.pct_minori !== null
+    );
+  }, [data, dataType, effectiveReato]);
+
+  const effectiveMetrica = metrica === "pct_minori" && !hasMinori ? "tasso" : metrica;
+
+  const getVal = (r: RegioneRecord): number | null =>
+    effectiveMetrica === "tasso"
+      ? r.tasso
+      : effectiveMetrica === "pct_stranieri"
+        ? r.pct_stranieri
+        : r.pct_minori;
+
+  // Media nazionale ponderata
   const mediaNazionale = useMemo(() => {
     if (!data) return new Map<number, number>();
     const reatoData = data.filter(
@@ -85,17 +118,28 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
     const anni = [...new Set(reatoData.map((r) => r.anno))];
     const map = new Map<number, number>();
     for (const anno of anni) {
-      const rows = reatoData.filter((r) => r.anno === anno && r.tasso !== null);
-      const totDel = rows.reduce((s, r) => s + r.totale, 0);
-      // Stima pop da tasso: pop = totale / tasso * 100000
-      const totPop = rows.reduce(
-        (s, r) => s + (r.tasso! > 0 ? (r.totale / r.tasso!) * 100_000 : 0),
-        0
-      );
-      map.set(anno, totPop > 0 ? (totDel / totPop) * 100_000 : 0);
+      const rows = reatoData.filter((r) => r.anno === anno);
+      if (effectiveMetrica === "tasso") {
+        const withTasso = rows.filter((r) => r.tasso !== null);
+        const totDel = withTasso.reduce((s, r) => s + r.totale, 0);
+        const totPop = withTasso.reduce(
+          (s, r) => s + (r.tasso! > 0 ? (r.totale / r.tasso!) * 100_000 : 0),
+          0
+        );
+        map.set(anno, totPop > 0 ? (totDel / totPop) * 100_000 : 0);
+      } else if (effectiveMetrica === "pct_stranieri") {
+        const totSum = rows.reduce((s, r) => s + r.totale, 0);
+        const strSum = rows.reduce((s, r) => s + r.stranieri, 0);
+        map.set(anno, totSum > 0 ? (strSum / totSum) * 100 : 0);
+      } else {
+        const withMinori = rows.filter((r) => r.pct_minori !== null);
+        const totSum = withMinori.reduce((s, r) => s + r.totale, 0);
+        const minSum = withMinori.reduce((s, r) => s + r.minori, 0);
+        map.set(anno, totSum > 0 ? (minSum / totSum) * 100 : 0);
+      }
     }
     return map;
-  }, [data, dataType, effectiveReato]);
+  }, [data, dataType, effectiveReato, effectiveMetrica]);
 
   if (loading)
     return <div className="h-[400px] animate-pulse bg-muted rounded" />;
@@ -109,11 +153,12 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
         r.data_type === dataType &&
         r.regione === selected &&
         r.codice_reato === effectiveReato &&
-        r.tasso !== null
+        getVal(r) !== null
     )
     .sort((a, b) => a.anno - b.anno);
 
   const anni = regioneData.map((r) => r.anno);
+  const valori = regioneData.map((r) => getVal(r));
   const mediaNazArr = anni.map((a) =>
     Number((mediaNazionale.get(a) ?? 0).toFixed(1))
   );
@@ -121,10 +166,14 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
   // Variazione primo-ultimo anno
   const primo = regioneData[0];
   const ultimo = regioneData[regioneData.length - 1];
+  const primoVal = primo ? getVal(primo) : null;
+  const ultimoVal = ultimo ? getVal(ultimo) : null;
   const variazione =
-    primo && ultimo && primo.tasso && primo.tasso > 0
-      ? ((ultimo.tasso! - primo.tasso) / primo.tasso) * 100
+    primoVal !== null && ultimoVal !== null && primoVal > 0
+      ? ((ultimoVal - primoVal) / primoVal) * 100
       : null;
+
+  const yLabel = METRICA_LABELS[effectiveMetrica];
 
   return (
     <div className="space-y-3">
@@ -148,7 +197,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
         </div>
         <div>
           <label htmlFor="trend-reg-regione" className="block text-sm font-medium mb-1">
-            Seleziona regione
+            Regione
           </label>
           <select
             id="trend-reg-regione"
@@ -163,16 +212,33 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
             ))}
           </select>
         </div>
+        <div>
+          <label htmlFor="trend-reg-metrica" className="block text-sm font-medium mb-1">
+            Metrica
+          </label>
+          <select
+            id="trend-reg-metrica"
+            value={effectiveMetrica}
+            onChange={(e) => setMetrica(e.target.value as Metrica)}
+            className="border rounded-md px-3 py-2 text-sm bg-background"
+          >
+            <option value="tasso">Tasso per 100k ab.</option>
+            <option value="pct_stranieri">% stranieri</option>
+            <option value="pct_minori" disabled={!hasMinori}>
+              % minori{!hasMinori ? " (non disponibile)" : ""}
+            </option>
+          </select>
+        </div>
       </div>
 
       <ChartFullscreenWrapper
-        ariaDescription={`Trend ${effectiveReato} per ${selected} vs media nazionale, tasso per 100.000 abitanti`}
+        ariaDescription={`Trend ${effectiveReato} per ${selected} vs media nazionale, ${yLabel}`}
       >
         <Plot
           data={[
             {
               x: anni,
-              y: regioneData.map((r) => r.tasso),
+              y: valori,
               mode: "lines+markers" as const,
               name: selected,
               line: { width: 3, color: COLORS.primary },
@@ -192,10 +258,10 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
             plot_bgcolor: "white",
             paper_bgcolor: "white",
             height: CHART_HEIGHT_SMALL,
-            xaxis: { ...AXIS_FIXED, title: { text: "Anno" } },
+            xaxis: { ...AXIS_YEAR, title: { text: "Anno" } },
             yaxis: {
               ...AXIS_FIXED,
-              title: { text: "Tasso per 100k ab.", font: { size: 12 } },
+              title: { text: yLabel, font: { size: 12 } },
             },
             legend: {
               x: 0,

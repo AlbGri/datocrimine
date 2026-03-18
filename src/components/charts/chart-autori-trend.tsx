@@ -10,6 +10,7 @@ import {
   COVID_SHAPES,
   COVID_ANNOTATIONS,
   AXIS_FIXED,
+  AXIS_YEAR,
 } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -28,9 +29,14 @@ interface TrendRecord {
   pct_minori: number | null;
 }
 
+type Breakdown = "pct_stranieri" | "pct_minori";
+
 interface Props {
   dataType: "OFFEND" | "VICTIM";
 }
+
+/** Reato preferito come default VICTIM (serie lunga, alto volume) */
+const VICTIM_DEFAULT = "CULPINJU";
 
 export function ChartAutoriTrend({ dataType }: Props) {
   const isMobile = useIsMobile();
@@ -38,19 +44,26 @@ export function ChartAutoriTrend({ dataType }: Props) {
     "/data/autori_vittime_trend.json"
   );
   const [codiceReato, setCodiceReato] = useState("TOT");
+  const [breakdown, setBreakdown] = useState<Breakdown>("pct_stranieri");
 
   // Lista reati disponibili per il data_type selezionato
   const reatiDisponibili = useMemo(() => {
     if (!data) return [];
-    const info = new Map<string, string>();
+    const info = new Map<string, { nome: string; anniCount: number }>();
     for (const r of data) {
-      if (r.data_type === dataType && !info.has(r.codice_reato)) {
-        info.set(r.codice_reato, r.reato);
+      if (r.data_type === dataType) {
+        const prev = info.get(r.codice_reato);
+        if (prev) {
+          prev.anniCount++;
+        } else {
+          info.set(r.codice_reato, { nome: r.reato, anniCount: 1 });
+        }
       }
     }
-    const entries = Array.from(info.entries()).map(([codice, nome]) => ({
+    const entries = Array.from(info.entries()).map(([codice, v]) => ({
       codice,
-      nome,
+      nome: v.nome,
+      anniCount: v.anniCount,
     }));
     return entries.sort((a, b) => {
       if (a.codice === "TOT") return -1;
@@ -62,7 +75,8 @@ export function ChartAutoriTrend({ dataType }: Props) {
   // Se il reato selezionato non esiste per questo dataType, fallback
   const effectiveReato = useMemo(() => {
     if (reatiDisponibili.some((r) => r.codice === codiceReato)) return codiceReato;
-    // VICTIM non ha TOT: default al primo reato disponibile
+    // VICTIM non ha TOT: preferisci un reato con serie lunga
+    if (reatiDisponibili.some((r) => r.codice === VICTIM_DEFAULT)) return VICTIM_DEFAULT;
     return reatiDisponibili[0]?.codice ?? "TOT";
   }, [codiceReato, reatiDisponibili]);
 
@@ -72,6 +86,13 @@ export function ChartAutoriTrend({ dataType }: Props) {
       .filter((r) => r.data_type === dataType && r.codice_reato === effectiveReato)
       .sort((a, b) => a.anno - b.anno);
   }, [data, dataType, effectiveReato]);
+
+  // Il breakdown % minori ha dati?
+  const hasMinori = useMemo(
+    () => filtered.some((r) => r.pct_minori !== null),
+    [filtered]
+  );
+  const effectiveBreakdown = breakdown === "pct_minori" && !hasMinori ? "pct_stranieri" : breakdown;
 
   if (loading)
     return (
@@ -84,6 +105,12 @@ export function ChartAutoriTrend({ dataType }: Props) {
   const reatoLabel = filtered[0]?.reato ?? effectiveReato;
   const annoMin = anni[0];
   const annoMax = anni[anni.length - 1];
+
+  const breakdownLabel = effectiveBreakdown === "pct_stranieri" ? "% stranieri" : "% minori";
+  const breakdownColor = effectiveBreakdown === "pct_stranieri" ? COLORS.secondary : "#7c3aed";
+  const breakdownValues = filtered.map((d) =>
+    effectiveBreakdown === "pct_stranieri" ? d.pct_stranieri : d.pct_minori
+  );
 
   return (
     <div className="space-y-3">
@@ -105,6 +132,22 @@ export function ChartAutoriTrend({ dataType }: Props) {
             ))}
           </select>
         </div>
+        <div>
+          <label htmlFor="trend-breakdown-select" className="block text-sm font-medium mb-1">
+            Spaccato
+          </label>
+          <select
+            id="trend-breakdown-select"
+            value={effectiveBreakdown}
+            onChange={(e) => setBreakdown(e.target.value as Breakdown)}
+            className="border rounded-md px-3 py-2 text-sm bg-background"
+          >
+            <option value="pct_stranieri">% stranieri</option>
+            <option value="pct_minori" disabled={!hasMinori}>
+              % minori{!hasMinori ? " (non disponibile)" : ""}
+            </option>
+          </select>
+        </div>
       </div>
 
       <ChartFullscreenWrapper ariaDescription={`Grafico trend ${dataType === "OFFEND" ? "autori" : "vittime"} ${reatoLabel} ${annoMin}-${annoMax}`}>
@@ -121,11 +164,11 @@ export function ChartAutoriTrend({ dataType }: Props) {
             },
             {
               x: anni,
-              y: filtered.map((d) => d.pct_stranieri),
+              y: breakdownValues,
               mode: "lines+markers" as const,
-              name: "% stranieri",
+              name: breakdownLabel,
               line: {
-                color: COLORS.secondary,
+                color: breakdownColor,
                 width: 3,
                 dash: "dash" as const,
               },
@@ -134,7 +177,7 @@ export function ChartAutoriTrend({ dataType }: Props) {
             },
           ]}
           layout={{
-            xaxis: { ...AXIS_FIXED, title: { text: "Anno" } },
+            xaxis: { ...AXIS_YEAR, title: { text: "Anno" } },
             yaxis: {
               ...AXIS_FIXED,
               title: {
@@ -147,10 +190,10 @@ export function ChartAutoriTrend({ dataType }: Props) {
             yaxis2: {
               ...AXIS_FIXED,
               title: {
-                text: "% stranieri",
-                font: { color: COLORS.secondary, size: 12 },
+                text: breakdownLabel,
+                font: { color: breakdownColor, size: 12 },
               },
-              tickfont: { color: COLORS.secondary },
+              tickfont: { color: breakdownColor },
               overlaying: "y" as const,
               side: "right",
             },
@@ -197,6 +240,12 @@ export function ChartAutoriTrend({ dataType }: Props) {
           La serie si ferma al {annoMax} perch&eacute; il dato aggregato (totale per tutti i reati)
           non &egrave; ancora disponibile per gli anni successivi. Per i singoli reati
           la serie arriva al 2024.
+        </p>
+      )}
+      {filtered.length <= 5 && (
+        <p className="text-xs text-muted-foreground">
+          Questo reato ha una serie storica breve ({annoMin}-{annoMax}): il dato ISTAT
+          &egrave; disponibile solo per {filtered.length} anni.
         </p>
       )}
     </div>
