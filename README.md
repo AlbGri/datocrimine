@@ -11,7 +11,7 @@ Un progetto open source per rendere accessibili e comprensibili i dati ufficiali
 - **Home** - KPI nazionali, trend delitti denunciati, percezione vs dati, numero oscuro e propensione alla denuncia
 - **Analisi Territoriale** - Mappa coropletica regioni con frecce trend, ranking regionale, trend regione/provincia, tabella province con filtro
 - **Reati di Allarme Sociale** - Focus su 6 reati rari ad alto impatto (omicidi, violenze sessuali, rapine in abitazione, ecc.): trend nazionale, ranking regionale, trend regione/provincia, tabella province
-- **Persone Denunciate** - Autori denunciati e vittime di delitto: % stranieri e minori per reato, trend nazionale, ranking e tabella province (toggle Autori/Vittime)
+- **Persone Denunciate** - Autori denunciati e vittime di delitto: breakdown per sesso, cittadinanza e et&agrave;, trend nazionale, ranking regionale, trend regione/provincia, tabella province (toggle Autori/Vittime)
 - **Metodologia** - Principi metodologici, fonti, frequenza aggiornamento e trasparenza
 - **Guida alla Lettura** - Come interpretare grafici e dati, cosa non si pu&ograve; concludere, bias noti
 - **Dati e Codice** - Dataset, istruzioni per replicare, licenze
@@ -40,8 +40,9 @@ Per rigenerarli dai CSV sorgente (richiede conda + environment `osservatorio`):
 
 ```bash
 conda activate osservatorio
+python scripts/generate_delittips.py
+python scripts/generate_popolazione.py
 python scripts/csv_to_json.py
-python scripts/generate_allarme_regioni.py
 python scripts/generate_autori_vittime.py
 ```
 
