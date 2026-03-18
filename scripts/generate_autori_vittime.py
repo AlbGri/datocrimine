@@ -2,9 +2,10 @@
 
 Input: data/raw/autvittps/autvittps_7.csv (OFFEND) e autvittps_8.csv (VICTIM)
 Output:
-  - public/data/autori_vittime_trend.json   (trend Italia, solo OFFEND con TOT)
-  - public/data/autori_vittime_reati.json   (per reato, Italia, 2022, OFFEND+VICTIM)
-  - public/data/autori_vittime_province.json (per provincia, 2022, OFFEND+VICTIM)
+  - public/data/autori_vittime_trend.json    (trend Italia, tutti i reati, OFFEND+VICTIM)
+  - public/data/autori_vittime_reati.json    (per reato, Italia, ultimo anno, OFFEND+VICTIM)
+  - public/data/autori_vittime_province.json (per provincia, multi-anno, OFFEND+VICTIM)
+  - public/data/autori_vittime_regioni.json  (per regione, multi-anno, OFFEND+VICTIM, con tasso)
 
 Uso: conda activate osservatorio && python scripts/generate_autori_vittime.py
 
@@ -146,6 +147,39 @@ PROVINCE_SPECIALI = {
     "IT110": ("Barletta-Andria-Trani", "Puglia"),
 }
 
+# Regioni per l'output (20 regioni: Bolzano+Trento aggregate in Trentino-Alto Adige)
+REGIONI_OUTPUT = {
+    "ITC1": "Piemonte",
+    "ITC2": "Valle d'Aosta",
+    "ITC3": "Liguria",
+    "ITC4": "Lombardia",
+    "ITD1+ITD2": "Trentino-Alto Adige",
+    "ITD3": "Veneto",
+    "ITD4": "Friuli-Venezia Giulia",
+    "ITD5": "Emilia-Romagna",
+    "ITE1": "Toscana",
+    "ITE2": "Umbria",
+    "ITE3": "Marche",
+    "ITE4": "Lazio",
+    "ITF1": "Abruzzo",
+    "ITF2": "Molise",
+    "ITF3": "Campania",
+    "ITF4": "Puglia",
+    "ITF5": "Basilicata",
+    "ITF6": "Calabria",
+    "ITG1": "Sicilia",
+    "ITG2": "Sardegna",
+}
+
+# Reati curati per vista regionale (evita file troppo grande con tutti i 59 reati)
+# Include reati ad alto volume o alta rilevanza sociale
+REATI_REGIONI = {
+    "TOT", "INTENHOM", "ATTEMPHOM", "RAPE", "RAPEUN18",
+    "CP572", "CP612BIS", "STALK", "CULPINJU", "MENACE",
+    "ROBBER", "HOUSEROB", "THEFT", "BURGTHEF", "EXTORT",
+    "DRUG", "SWINCYB", "KIDNAPP", "DAMAGE", "RECEIV",
+}
+
 
 def load_territory_names(project_root: Path) -> dict[str, str]:
     """Costruisce mapping REF_AREA -> nome territorio da CSV processati."""
@@ -156,13 +190,37 @@ def load_territory_names(project_root: Path) -> dict[str, str]:
         names[code] = nome
 
     # Province dai CSV processati (fonte autorevole per i nomi)
-    prov_csv = project_root / "data" / "processed" / "delitti_province_normalizzato_2014_2023.csv"
+    prov_csv = project_root / "data" / "processed" / "delitti_province_normalizzato.csv"
     if prov_csv.exists():
         df = pd.read_csv(prov_csv, dtype={"REF_AREA": str}, usecols=["REF_AREA", "Territorio"])
         for _, row in df.drop_duplicates("REF_AREA").iterrows():
             names[row["REF_AREA"]] = row["Territorio"]
 
     return names
+
+
+def load_popolazione(project_root: Path) -> dict[tuple[str, int], int]:
+    """Carica popolazione regionale da CSV. Ritorna {(REF_AREA, anno): popolazione}.
+
+    Aggrega Bolzano+Trento in Trentino-Alto Adige (ITD1+ITD2).
+    """
+    csv_path = project_root / "data" / "processed" / "popolazione_regioni_province.csv"
+    df = pd.read_csv(csv_path, dtype={"REF_AREA": str})
+    df = df[df["livello"] == "regione"]
+
+    pop: dict[tuple[str, int], int] = {}
+    for _, row in df.iterrows():
+        pop[(row["REF_AREA"], int(row["Anno"]))] = int(row["Popolazione"])
+
+    # Aggrega Bolzano + Trento
+    for anno in df["Anno"].unique():
+        anno = int(anno)
+        bz = pop.get(("ITD1", anno), 0)
+        tn = pop.get(("ITD2", anno), 0)
+        if bz > 0 and tn > 0:
+            pop[("ITD1+ITD2", anno)] = bz + tn
+
+    return pop
 
 
 def get_region_name(ref_area: str) -> str:
@@ -270,24 +328,41 @@ def extract_metrics(df: pd.DataFrame) -> dict:
     return result
 
 
-def generate_trend(df_offend: pd.DataFrame, out_dir: Path) -> None:
-    """Genera autori_vittime_trend.json: serie storica Italia TOT (solo OFFEND)."""
-    mask = (
-        (df_offend["REF_AREA"] == "IT")
-        & (df_offend["TYPE_CRIME"] == "TOT")
-    )
-    df = df_offend[mask].copy()
-
+def generate_trend(
+    df_offend: pd.DataFrame,
+    df_victim: pd.DataFrame,
+    out_dir: Path,
+) -> None:
+    """Genera autori_vittime_trend.json: serie storica Italia, tutti i reati, OFFEND+VICTIM."""
     records = []
-    for anno in sorted(df["TIME_PERIOD"].unique()):
-        year_data = df[df["TIME_PERIOD"] == anno]
-        metrics = extract_metrics(year_data)
-        records.append({"anno": int(anno), **metrics})
+
+    for data_type, df in [("OFFEND", df_offend), ("VICTIM", df_victim)]:
+        df_it = df[df["REF_AREA"] == "IT"]
+
+        for crime_code in sorted(df_it["TYPE_CRIME"].unique()):
+            if crime_code not in CRIME_NAMES:
+                continue
+            df_crime = df_it[df_it["TYPE_CRIME"] == crime_code]
+
+            for anno in sorted(df_crime["TIME_PERIOD"].unique()):
+                year_data = df_crime[df_crime["TIME_PERIOD"] == anno]
+                metrics = extract_metrics(year_data)
+                if metrics["totale"] == 0:
+                    continue
+                records.append({
+                    "data_type": data_type,
+                    "codice_reato": crime_code,
+                    "reato": CRIME_NAMES[crime_code],
+                    "anno": int(anno),
+                    **metrics,
+                })
 
     out_path = out_dir / "autori_vittime_trend.json"
     out_path.write_text(json.dumps(records, ensure_ascii=False), encoding="utf-8")
     size_kb = out_path.stat().st_size / 1024
-    log.info("OK  %-45s (%d anni, %.1f KB)", out_path.name, len(records), size_kb)
+    n_crimes = len({r["codice_reato"] for r in records})
+    log.info("OK  %-45s (%d record, %d reati, %.1f KB)",
+             out_path.name, len(records), n_crimes, size_kb)
 
 
 def generate_reati(
@@ -335,19 +410,22 @@ def generate_province(
     territory_names: dict[str, str],
     out_dir: Path,
 ) -> None:
-    """Genera autori_vittime_province.json: dati provinciali anno ANNO_REF."""
+    """Genera autori_vittime_province.json: dati provinciali multi-anno.
+
+    TOT disponibile solo per ANNO_REF (2022).
+    Singoli reati disponibili 2022-2024.
+    """
     records = []
 
     for data_type, df in [("OFFEND", df_offend), ("VICTIM", df_victim)]:
-        mask = (
-            (df["TIME_PERIOD"] == ANNO_REF)
-            & df["REF_AREA"].apply(is_province)
-        )
-        df_prov = df[mask]
+        df_prov = df[df["REF_AREA"].apply(is_province)]
 
-        for (ref_area, crime_code), group in df_prov.groupby(["REF_AREA", "TYPE_CRIME"]):
+        for (ref_area, crime_code, anno), group in df_prov.groupby(
+            ["REF_AREA", "TYPE_CRIME", "TIME_PERIOD"]
+        ):
+            if crime_code not in CRIME_NAMES:
+                continue
             metrics = extract_metrics(group)
-
             if metrics["totale"] == 0:
                 continue
 
@@ -358,6 +436,7 @@ def generate_province(
                 "regione": get_region_name(ref_area),
                 "codice_reato": crime_code,
                 "reato": CRIME_NAMES.get(crime_code, crime_code),
+                "anno": int(anno),
                 **metrics,
             })
 
@@ -365,10 +444,77 @@ def generate_province(
     out_path.write_text(json.dumps(records, ensure_ascii=False), encoding="utf-8")
     size_kb = out_path.stat().st_size / 1024
     n_province = len({r["ref_area"] for r in records})
-    n_offend = sum(1 for r in records if r["data_type"] == "OFFEND")
-    n_victim = sum(1 for r in records if r["data_type"] == "VICTIM")
-    log.info("OK  %-45s (%d province, %d OFFEND + %d VICTIM, %.1f KB)",
-             out_path.name, n_province, n_offend, n_victim, size_kb)
+    anni = sorted({r["anno"] for r in records})
+    log.info("OK  %-45s (%d province, anni %s, %.1f KB)",
+             out_path.name, n_province, f"{anni[0]}-{anni[-1]}", size_kb)
+
+
+def generate_regioni(
+    df_offend: pd.DataFrame,
+    df_victim: pd.DataFrame,
+    popolazione: dict[tuple[str, int], int],
+    out_dir: Path,
+) -> None:
+    """Genera autori_vittime_regioni.json: dati regionali multi-anno con tasso per 100k.
+
+    Aggrega Bolzano+Trento in Trentino-Alto Adige.
+    Solo reati in REATI_REGIONI per contenere la dimensione del file.
+    """
+    records = []
+
+    for data_type, df in [("OFFEND", df_offend), ("VICTIM", df_victim)]:
+        # Filtra solo regioni NUTS2
+        df_reg = df[df["REF_AREA"].isin(REGIONI)]
+
+        for crime_code in sorted(REATI_REGIONI):
+            if crime_code not in CRIME_NAMES:
+                continue
+            df_crime = df_reg[df_reg["TYPE_CRIME"] == crime_code]
+
+            # Raggruppa per regione e anno, poi aggrega BZ+TN
+            for anno in sorted(df_crime["TIME_PERIOD"].unique()):
+                df_year = df_crime[df_crime["TIME_PERIOD"] == anno]
+
+                # Regioni singole (escluse BZ e TN, aggregate dopo)
+                for reg_code, reg_name in REGIONI_OUTPUT.items():
+                    if reg_code == "ITD1+ITD2":
+                        # Aggrega Bolzano + Trento
+                        df_bz = df_year[df_year["REF_AREA"] == "ITD1"]
+                        df_tn = df_year[df_year["REF_AREA"] == "ITD2"]
+                        df_merged = pd.concat([df_bz, df_tn])
+                        if df_merged.empty:
+                            continue
+                        metrics = extract_metrics(df_merged)
+                    else:
+                        df_single = df_year[df_year["REF_AREA"] == reg_code]
+                        if df_single.empty:
+                            continue
+                        metrics = extract_metrics(df_single)
+
+                    if metrics["totale"] == 0:
+                        continue
+
+                    pop = popolazione.get((reg_code, int(anno)))
+                    tasso = round(metrics["totale"] / pop * 100_000, 1) if pop else None
+
+                    records.append({
+                        "data_type": data_type,
+                        "codice_regione": reg_code,
+                        "regione": reg_name,
+                        "codice_reato": crime_code,
+                        "reato": CRIME_NAMES[crime_code],
+                        "anno": int(anno),
+                        "tasso": tasso,
+                        **metrics,
+                    })
+
+    out_path = out_dir / "autori_vittime_regioni.json"
+    out_path.write_text(json.dumps(records, ensure_ascii=False), encoding="utf-8")
+    size_kb = out_path.stat().st_size / 1024
+    n_regioni = len({r["codice_regione"] for r in records})
+    n_crimes = len({r["codice_reato"] for r in records})
+    log.info("OK  %-45s (%d regioni, %d reati, %d record, %.1f KB)",
+             out_path.name, n_regioni, n_crimes, len(records), size_kb)
 
 
 def main() -> None:
@@ -380,11 +526,15 @@ def main() -> None:
     territory_names = load_territory_names(project_root)
     log.info("Territori mappati: %d", len(territory_names))
 
+    popolazione = load_popolazione(project_root)
+    log.info("Popolazione: %d record", len(popolazione))
+
     df_offend, df_victim = load_data(project_root)
 
-    generate_trend(df_offend, out_dir)
+    generate_trend(df_offend, df_victim, out_dir)
     generate_reati(df_offend, df_victim, out_dir)
     generate_province(df_offend, df_victim, territory_names, out_dir)
+    generate_regioni(df_offend, df_victim, popolazione, out_dir)
 
     log.info("\nCompletato.")
 

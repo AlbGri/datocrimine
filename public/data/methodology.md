@@ -18,17 +18,17 @@ I dati provengono dal portale ufficiale ISTAT ([esploradati.istat.it](https://es
    - Ricostruzione intercensuaria 2002-2019
    - DCIS_POPRES1 (Popolazione residente al 1° gennaio) 2019-2025
 
-4. **Autori e vittime di delitto** (DCCV_AUTVITTPS, periodo 2007-2022)
+4. **Autori e vittime di delitto** (DCCV_AUTVITTPS, periodo 2007-2024)
    - Autori denunciati/arrestati (DF_7) e vittime di delitto (DF_8)
    - Breakdown per sesso, età (adulti/minori), cittadinanza (italiani/stranieri)
-   - Livello territoriale: Italia, ripartizioni, regioni, province (province dal 2022)
+   - Livello territoriale: Italia, ripartizioni, regioni (2007-2024 per singoli reati, 2007-2022 per TOT), province (dal 2022, singoli reati fino al 2024, TOT solo 2022)
    - Scaricati via API SDMX REST da esploradati.istat.it
    - **Nota**: "vittima" è intesa in senso giuridico (persona offesa dal reato), non solo fisico. Per reati contro il patrimonio (furti, danneggiamenti, incendi) la vittima è il titolare del bene.
 
 ### Criticità dataset AUTVITTPS
 
-- **Dato aggregato (TOT) solo fino al 2022**: dal 2023 ISTAT pubblica solo i singoli tipi di reato, non il totale. Per questo il trend nazionale autori si ferma al 2022.
-- **Dati provinciali solo dal 2022**: prima del 2022 sono disponibili solo Italia, ripartizioni e regioni.
+- **Dato aggregato (TOT) solo fino al 2022**: dal 2023 ISTAT pubblica solo i singoli tipi di reato, non il totale. Per questo il trend nazionale TOT si ferma al 2022; selezionando un singolo reato la serie arriva al 2024.
+- **Dati provinciali solo dal 2022**: prima del 2022 sono disponibili solo Italia, ripartizioni e regioni. Per i singoli reati il dato provinciale copre 2022-2024; per il totale solo 2022.
 - **CITIZENSHIP=TOTAL solo dal 2022**: per gli anni 2007-2021, il totale autori è calcolato come somma italiani + stranieri (FRG+ITL). Verifica 2022: FRG(270.567) + ITL(548.265) = TOTAL(818.832).
 - **Dato minori limitato**: AGE=Y_UN17 è disponibile solo dal 2022 per il totale; per anni precedenti il dato è assente.
 - **Duplicato STALK/CP612BIS**: entrambi i codici rappresentano l'art. 612-bis c.p. (atti persecutori). STALK copre 2007-2024 con breakdown limitato, CP612BIS copre 2022+ con breakdown completo. Nelle visualizzazioni viene escluso STALK per evitare doppi conteggi.

@@ -47,7 +47,7 @@ next-env.d.ts
 # /public/data/
 
 # dati raw e notebook (troppo grandi per git, rigenerabili da fonti ISTAT)
-data/raw/delitti_2014_2023_istat.csv
+data/raw/*.csv
 data/raw/delittips/
 data/raw/check_updates.json
 data/raw/popolazione/

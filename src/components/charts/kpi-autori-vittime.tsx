@@ -4,6 +4,9 @@ import { useFetchData } from "@/lib/use-fetch-data";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface TrendRecord {
+  data_type: "OFFEND" | "VICTIM";
+  codice_reato: string;
+  reato: string;
   anno: number;
   totale: number;
   stranieri: number;
@@ -59,9 +62,14 @@ export function KpiAutoriVittime({ dataType }: KpiProps) {
       </div>
     );
 
-  if (dataType === "OFFEND" && trend && trend.length > 0) {
-    const ultimo = trend[trend.length - 1];
-    const varTot = varTriennaleAutori(trend);
+  // Filtra trend TOT OFFEND (come prima della ristrutturazione)
+  const trendTot = trend?.filter(
+    (r) => r.data_type === "OFFEND" && r.codice_reato === "TOT"
+  );
+
+  if (dataType === "OFFEND" && trendTot && trendTot.length > 0) {
+    const ultimo = trendTot[trendTot.length - 1];
+    const varTot = varTriennaleAutori(trendTot);
 
     const items: { label: string; value: string; color?: string; subtitle?: string }[] = [
       {

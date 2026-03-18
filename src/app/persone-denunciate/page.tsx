@@ -3,10 +3,12 @@
 import { useState } from "react";
 import { KpiAutoriVittime } from "@/components/charts/kpi-autori-vittime";
 import { ChartAutoriTrend } from "@/components/charts/chart-autori-trend";
+import { ChartAutoriRankingRegioni } from "@/components/charts/chart-autori-ranking-regioni";
+import { ChartAutoriTrendRegione } from "@/components/charts/chart-autori-trend-regione";
 import { ChartAutoriStranieriReato } from "@/components/charts/chart-autori-stranieri-reato";
 import { ChartAutoriMinoriReato } from "@/components/charts/chart-autori-minori-reato";
-import { ChartAutoriRankingProvince } from "@/components/charts/chart-autori-ranking-province";
 import { ChartAutoriTabellaProvince } from "@/components/charts/chart-autori-tabella-province";
+import { ChartAutoriTrendProvincia } from "@/components/charts/chart-autori-trend-provincia";
 import Link from "next/link";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
@@ -22,14 +24,15 @@ export default function PersoneDenunciate() {
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-4 sm:py-8 space-y-6 sm:space-y-10">
+      {/* Header + Toggle */}
       <div>
         <h1 className="text-2xl sm:text-4xl font-bold">
           Persone Denunciate
         </h1>
         <p className="mt-2 text-muted-foreground">
           Autori denunciati/arrestati e vittime di delitto per cittadinanza,
-          et&agrave; e tipo di reato. Tutti i dati provengono dall&apos;indagine
-          ISTAT su autori e vittime di delitto (2007-2022).
+          et&agrave; e tipo di reato. Fonte: ISTAT DCCV_AUTVITTPS (2007-2024 per singoli
+          reati, 2007-2022 per il totale).
         </p>
         <div className="mt-4 flex gap-2">
           {(["OFFEND", "VICTIM"] as DataType[]).map((dt) => (
@@ -48,17 +51,49 @@ export default function PersoneDenunciate() {
         </div>
       </div>
 
+      {/* 1. KPI */}
       <KpiAutoriVittime dataType={dataType} />
 
       <hr />
 
+      {/* 2. Trend Nazionale */}
       <section className="space-y-3">
         <h2 className="text-xl sm:text-2xl font-semibold text-primary">
-          Stranieri per Tipo di Reato: {dataType === "OFFEND" ? "Autori" : "Vittime"} (2022)
+          Trend Nazionale
+        </h2>
+        <ChartAutoriTrend dataType={dataType} />
+      </section>
+
+      <hr />
+
+      {/* 3. Ranking Regionale */}
+      <section className="space-y-3">
+        <h2 className="text-xl sm:text-2xl font-semibold text-primary">
+          Ranking Regionale
+        </h2>
+        <ChartAutoriRankingRegioni dataType={dataType} />
+      </section>
+
+      <hr />
+
+      {/* 4. Trend Regionale */}
+      <section className="space-y-3">
+        <h2 className="text-xl sm:text-2xl font-semibold text-primary">
+          Trend Regionale
+        </h2>
+        <ChartAutoriTrendRegione dataType={dataType} />
+      </section>
+
+      <hr />
+
+      {/* 5. % Stranieri per Reato */}
+      <section className="space-y-3">
+        <h2 className="text-xl sm:text-2xl font-semibold text-primary">
+          Stranieri per Tipo di Reato (2022)
         </h2>
         <Alert>
           <AlertDescription className="block">
-            <strong>Nota:</strong> la quota di stranieri tra gli {dataType === "OFFEND" ? "autori denunciati" : "le vittime"} varia
+            <strong>Nota:</strong> la quota di stranieri tra {dataType === "OFFEND" ? "gli autori denunciati" : "le vittime"} varia
             molto in base al tipo di reato. I dati si riferiscono a persone denunciate/arrestate,
             non a condanne definitive.
           </AlertDescription>
@@ -68,53 +103,37 @@ export default function PersoneDenunciate() {
 
       <hr />
 
+      {/* 6. % Minori per Reato */}
       <section className="space-y-3">
         <h2 className="text-xl sm:text-2xl font-semibold text-primary">
-          Minori per Tipo di Reato: {dataType === "OFFEND" ? "Autori" : "Vittime"} (2022)
+          Minori per Tipo di Reato (2022)
         </h2>
         <ChartAutoriMinoriReato dataType={dataType} />
       </section>
 
       <hr />
 
-      {dataType === "OFFEND" && (
-        <>
-          <section className="space-y-3">
-            <h2 className="text-xl sm:text-2xl font-semibold text-primary">
-              Trend Nazionale (2007-2022)
-            </h2>
-            <Alert>
-              <AlertDescription className="block">
-                <strong>Nota:</strong> la serie si ferma al 2022 perch&eacute; il dato
-                aggregato (totale autori per tutti i reati) non &egrave; ancora disponibile
-                per gli anni successivi. Dal 2023 ISTAT pubblica solo i singoli tipi di reato.
-              </AlertDescription>
-            </Alert>
-            <ChartAutoriTrend />
-          </section>
-
-          <hr />
-        </>
-      )}
-
+      {/* 7. Dati Provinciali */}
       <section className="space-y-3">
         <h2 className="text-xl sm:text-2xl font-semibold text-primary">
-          Ranking Province: {dataType === "OFFEND" ? "Autori" : "Vittime"} (2022)
-        </h2>
-        <ChartAutoriRankingProvince dataType={dataType} />
-      </section>
-
-      <hr />
-
-      <section className="space-y-3">
-        <h2 className="text-xl sm:text-2xl font-semibold text-primary">
-          Dati Provinciali: {dataType === "OFFEND" ? "Autori" : "Vittime"} (2022)
+          Dati Provinciali
         </h2>
         <ChartAutoriTabellaProvince dataType={dataType} />
       </section>
 
       <hr />
 
+      {/* 8. Trend Provinciale */}
+      <section className="space-y-3">
+        <h2 className="text-xl sm:text-2xl font-semibold text-primary">
+          Trend Provinciale
+        </h2>
+        <ChartAutoriTrendProvincia dataType={dataType} />
+      </section>
+
+      <hr />
+
+      {/* Nota metodologica */}
       <Alert>
         <AlertDescription className="block">
           <strong>Nota metodologica:</strong> i dati riguardano persone denunciate o
