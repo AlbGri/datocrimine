@@ -36,21 +36,18 @@ interface RegioneRecord {
   pct_femmine: number | null;
 }
 
-type Metrica = "tasso" | "pct_stranieri" | "pct_minori" | "pct_maschi" | "pct_femmine";
-
 interface Props {
   dataType: "OFFEND" | "VICTIM";
 }
 
 const VICTIM_DEFAULT = "CULPINJU";
 
-const METRICA_LABELS: Record<Metrica, string> = {
-  tasso: "Tasso per 100k ab.",
-  pct_stranieri: "% stranieri",
-  pct_minori: "% minori",
-  pct_maschi: "% maschi",
-  pct_femmine: "% femmine",
-};
+const BREAKDOWN_LINES = [
+  { key: "pct_stranieri" as const, label: "% stranieri", color: COLORS.secondary },
+  { key: "pct_maschi" as const, label: "% maschi", color: "#2563eb" },
+  { key: "pct_femmine" as const, label: "% femmine", color: "#db2777" },
+  { key: "pct_minori" as const, label: "% minori", color: "#7c3aed" },
+];
 
 export function ChartAutoriTrendRegione({ dataType }: Props) {
   const isMobile = useIsMobile();
@@ -59,7 +56,6 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
   );
   const [regione, setRegione] = useState("");
   const [codiceReato, setCodiceReato] = useState("TOT");
-  const [metrica, setMetrica] = useState<Metrica>("tasso");
 
   const reatiDisponibili = useMemo(() => {
     if (!data) return [];
@@ -97,38 +93,8 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
     return Array.from(set).sort();
   }, [data, dataType, effectiveReato]);
 
-  // Verifica disponibilita' breakdown per reato/dataType
-  const hasMinori = useMemo(() => {
-    if (!data) return false;
-    return data.some(
-      (r) => r.data_type === dataType && r.codice_reato === effectiveReato && r.pct_minori !== null
-    );
-  }, [data, dataType, effectiveReato]);
-  const hasSesso = useMemo(() => {
-    if (!data) return false;
-    return data.some(
-      (r) => r.data_type === dataType && r.codice_reato === effectiveReato && r.pct_maschi !== null
-    );
-  }, [data, dataType, effectiveReato]);
-
-  const effectiveMetrica = (() => {
-    if (metrica === "pct_minori" && !hasMinori) return "tasso";
-    if ((metrica === "pct_maschi" || metrica === "pct_femmine") && !hasSesso) return "tasso";
-    return metrica;
-  })();
-
-  const getVal = (r: RegioneRecord): number | null => {
-    switch (effectiveMetrica) {
-      case "tasso": return r.tasso;
-      case "pct_stranieri": return r.pct_stranieri;
-      case "pct_minori": return r.pct_minori;
-      case "pct_maschi": return r.pct_maschi;
-      case "pct_femmine": return r.pct_femmine;
-    }
-  };
-
-  // Media nazionale ponderata
-  const mediaNazionale = useMemo(() => {
+  // Media nazionale ponderata per il tasso
+  const mediaNazionaleTasso = useMemo(() => {
     if (!data) return new Map<number, number>();
     const reatoData = data.filter(
       (r) => r.data_type === dataType && r.codice_reato === effectiveReato
@@ -137,33 +103,16 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
     const map = new Map<number, number>();
     for (const anno of anni) {
       const rows = reatoData.filter((r) => r.anno === anno);
-      if (effectiveMetrica === "tasso") {
-        const withTasso = rows.filter((r) => r.tasso !== null);
-        const totDel = withTasso.reduce((s, r) => s + r.totale, 0);
-        const totPop = withTasso.reduce(
-          (s, r) => s + (r.tasso! > 0 ? (r.totale / r.tasso!) * 100_000 : 0),
-          0
-        );
-        map.set(anno, totPop > 0 ? (totDel / totPop) * 100_000 : 0);
-      } else if (effectiveMetrica === "pct_stranieri") {
-        const totSum = rows.reduce((s, r) => s + r.totale, 0);
-        const strSum = rows.reduce((s, r) => s + r.stranieri, 0);
-        map.set(anno, totSum > 0 ? (strSum / totSum) * 100 : 0);
-      } else if (effectiveMetrica === "pct_maschi" || effectiveMetrica === "pct_femmine") {
-        const field = effectiveMetrica === "pct_maschi" ? "maschi" : "femmine";
-        const withData = rows.filter((r) => r[effectiveMetrica] !== null);
-        const totSum = withData.reduce((s, r) => s + r.totale, 0);
-        const partSum = withData.reduce((s, r) => s + r[field], 0);
-        map.set(anno, totSum > 0 ? (partSum / totSum) * 100 : 0);
-      } else {
-        const withMinori = rows.filter((r) => r.pct_minori !== null);
-        const totSum = withMinori.reduce((s, r) => s + r.totale, 0);
-        const minSum = withMinori.reduce((s, r) => s + r.minori, 0);
-        map.set(anno, totSum > 0 ? (minSum / totSum) * 100 : 0);
-      }
+      const withTasso = rows.filter((r) => r.tasso !== null);
+      const totDel = withTasso.reduce((s, r) => s + r.totale, 0);
+      const totPop = withTasso.reduce(
+        (s, r) => s + (r.tasso! > 0 ? (r.totale / r.tasso!) * 100_000 : 0),
+        0
+      );
+      map.set(anno, totPop > 0 ? (totDel / totPop) * 100_000 : 0);
     }
     return map;
-  }, [data, dataType, effectiveReato, effectiveMetrica]);
+  }, [data, dataType, effectiveReato]);
 
   if (loading)
     return <div className="h-[400px] animate-pulse bg-muted rounded" />;
@@ -176,28 +125,70 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
       (r) =>
         r.data_type === dataType &&
         r.regione === selected &&
-        r.codice_reato === effectiveReato &&
-        getVal(r) !== null
+        r.codice_reato === effectiveReato
     )
     .sort((a, b) => a.anno - b.anno);
 
   const anni = regioneData.map((r) => r.anno);
-  const valori = regioneData.map((r) => getVal(r));
-  const mediaNazArr = anni.map((a) =>
-    Number((mediaNazionale.get(a) ?? 0).toFixed(1))
+
+  // Tasso regione + media nazionale su asse sinistro
+  const conTasso = regioneData.filter((r) => r.tasso !== null);
+  const anniTasso = conTasso.map((r) => r.anno);
+  const valoriTasso = conTasso.map((r) => r.tasso);
+  const mediaNazArr = anniTasso.map((a) =>
+    Number((mediaNazionaleTasso.get(a) ?? 0).toFixed(1))
   );
 
-  // Variazione primo-ultimo anno
-  const primo = regioneData[0];
-  const ultimo = regioneData[regioneData.length - 1];
-  const primoVal = primo ? getVal(primo) : null;
-  const ultimoVal = ultimo ? getVal(ultimo) : null;
-  const variazione =
-    primoVal !== null && ultimoVal !== null && primoVal > 0
-      ? ((ultimoVal - primoVal) / primoVal) * 100
-      : null;
+  const traces: Plotly.Data[] = [
+    {
+      x: anniTasso,
+      y: valoriTasso,
+      mode: "lines+markers" as const,
+      name: selected,
+      line: { width: 3, color: COLORS.primary },
+      marker: { size: 6 },
+      yaxis: "y",
+    },
+    {
+      x: anniTasso,
+      y: mediaNazArr,
+      mode: "lines" as const,
+      name: "Media nazionale",
+      line: { width: 2, color: "#999999", dash: "dash" },
+      yaxis: "y",
+    },
+  ];
 
-  const yLabel = METRICA_LABELS[effectiveMetrica];
+  // Linee breakdown % su asse destro
+  for (const bd of BREAKDOWN_LINES) {
+    const values = regioneData.map((r) => r[bd.key]);
+    const hasData = values.some((v) => v !== null);
+    if (!hasData) continue;
+
+    traces.push({
+      x: anni,
+      y: values,
+      mode: "lines+markers" as const,
+      name: bd.label,
+      line: { color: bd.color, width: 2, dash: "dash" as const },
+      marker: { size: 5 },
+      yaxis: "y2",
+    });
+  }
+
+  // Variazione tasso primo-ultimo anno
+  let variazione: number | null = null;
+  let annoInizio: number | null = null;
+  let annoFine: number | null = null;
+  if (conTasso.length >= 2) {
+    const primo = conTasso[0];
+    const ultimo = conTasso[conTasso.length - 1];
+    if (primo.tasso! > 0) {
+      variazione = ((ultimo.tasso! - primo.tasso!) / primo.tasso!) * 100;
+      annoInizio = primo.anno;
+      annoFine = ultimo.anno;
+    }
+  }
 
   return (
     <div className="space-y-3">
@@ -236,74 +227,63 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
             ))}
           </select>
         </div>
-        <div>
-          <label htmlFor="trend-reg-metrica" className="block text-sm font-medium mb-1">
-            Metrica
-          </label>
-          <select
-            id="trend-reg-metrica"
-            value={effectiveMetrica}
-            onChange={(e) => setMetrica(e.target.value as Metrica)}
-            className="border rounded-md px-3 py-2 text-sm bg-background"
-          >
-            <option value="tasso">Tasso per 100k ab.</option>
-            <option value="pct_stranieri">% stranieri</option>
-            <option value="pct_minori" disabled={!hasMinori}>
-              % minori{!hasMinori ? " (non disponibile)" : ""}
-            </option>
-            <option value="pct_maschi" disabled={!hasSesso}>
-              % maschi{!hasSesso ? " (non disponibile)" : ""}
-            </option>
-            <option value="pct_femmine" disabled={!hasSesso}>
-              % femmine{!hasSesso ? " (non disponibile)" : ""}
-            </option>
-          </select>
-        </div>
       </div>
 
       <ChartFullscreenWrapper
-        ariaDescription={`Trend ${effectiveReato} per ${selected} vs media nazionale, ${yLabel}`}
+        ariaDescription={`Trend ${effectiveReato} per ${selected} vs media nazionale con composizione %`}
       >
         <Plot
-          data={[
-            {
-              x: anni,
-              y: valori,
-              mode: "lines+markers" as const,
-              name: selected,
-              line: { width: 3, color: COLORS.primary },
-              marker: { size: 6 },
-            },
-            {
-              x: anni,
-              y: mediaNazArr,
-              mode: "lines" as const,
-              name: "Media nazionale",
-              line: { width: 2, color: "#999999", dash: "dash" },
-            },
-          ]}
+          data={traces}
           layout={{
             dragmode: false as const,
-            hovermode: "x unified" as const,
+            hovermode: "closest" as const,
             plot_bgcolor: "white",
             paper_bgcolor: "white",
             height: CHART_HEIGHT_SMALL,
             xaxis: { ...getAxisYear(isMobile), title: { text: "Anno" } },
             yaxis: {
               ...AXIS_FIXED,
-              title: { text: yLabel, font: { size: 12 } },
-              ...(effectiveMetrica !== "tasso" ? { range: [0, 100] } : {}),
+              title: {
+                text: "Tasso per 100k ab.",
+                font: { color: COLORS.primary, size: 12 },
+              },
+              tickfont: { color: COLORS.primary },
+              side: "left",
             },
-            legend: {
-              x: 0,
-              y: -0.25,
-              xanchor: "left" as const,
-              orientation: "h" as const,
-              font: { size: 10 },
+            yaxis2: {
+              ...AXIS_FIXED,
+              title: { text: "%", font: { size: 12 } },
+              overlaying: "y" as const,
+              side: "right",
+              range: [0, 100],
+              showgrid: false,
             },
-            margin: { l: 50, r: 20, t: 20, b: 80 },
+            legend: isMobile
+              ? {
+                  x: 0.5,
+                  y: -0.3,
+                  xanchor: "center" as const,
+                  yanchor: "top" as const,
+                  orientation: "h" as const,
+                  font: { size: 9 },
+                }
+              : {
+                  x: 0.5,
+                  y: 1.08,
+                  xanchor: "center" as const,
+                  orientation: "h" as const,
+                },
+            margin: isMobile
+              ? { l: 45, r: 45, t: 40, b: 60 }
+              : { l: 60, r: 60, t: 30, b: 80 },
             shapes: COVID_SHAPES,
-            annotations: COVID_ANNOTATIONS,
+            annotations: isMobile
+              ? COVID_ANNOTATIONS.map((a) => ({
+                  ...a,
+                  y: 0.92,
+                  font: { ...a.font, size: 8 },
+                }))
+              : COVID_ANNOTATIONS,
           }}
           config={PLOTLY_CONFIG}
           useResizeHandler
@@ -311,15 +291,16 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
         />
       </ChartFullscreenWrapper>
 
-      {variazione !== null && primo && ultimo && (
+      {variazione !== null && annoInizio !== null && annoFine !== null && (
         <p className="text-sm text-muted-foreground">
           <strong>
-            {selected} ({primo.anno}-{ultimo.anno}):
+            {selected} ({annoInizio}-{annoFine}):
           </strong>{" "}
           <span className={variazione < 0 ? "text-green-600" : "text-red-600"}>
             {variazione > 0 ? "+" : ""}
             {variazione.toFixed(1)}%
-          </span>
+          </span>{" "}
+          tasso per 100k ab.
         </p>
       )}
     </div>

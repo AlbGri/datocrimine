@@ -179,6 +179,7 @@ export function ChartAutoriTrend({ dataType }: Props) {
               overlaying: "y" as const,
               side: "right",
               range: [0, 100],
+              showgrid: false,
             },
             dragmode: false,
             hovermode: "closest" as const,
