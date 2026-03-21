@@ -38,7 +38,7 @@ export default function Insights() {
           >
             <p>
               Gli autori denunciati per rapine in banca sono passati da 2.893 a
-              367, con un calo monotono nell&apos;82% degli anni. La
+              367, con un calo quasi ininterrotto nel tempo. La
               digitalizzazione dei servizi bancari e il rafforzamento delle
               misure di sicurezza fisiche hanno reso questo reato sempre meno
               praticabile.
@@ -48,13 +48,13 @@ export default function Insights() {
           <InsightCard
             title="Stalking: emersione costante del fenomeno"
             confidence="alta"
-            period="2009-2024"
+            period="2009-2023"
           >
             <p>
-              Le vittime di atti persecutori (stalking) sono passate da 5.000 a
-              oltre 18.000 (+164%), con una crescita presente nell&apos;86%
-              degli anni. L&apos;introduzione del reato nel 2009 (art. 612-bis
-              c.p.) e le successive campagne di sensibilizzazione hanno
+              Le vittime di atti persecutori (stalking) sono passate da circa
+              5.000 a oltre 18.000 (+264%), con una crescita quasi costante
+              anno dopo anno. L&apos;introduzione del reato nel 2009 (art.
+              612-bis c.p.) e le successive campagne di sensibilizzazione hanno
               progressivamente ridotto il numero oscuro, portando pi&ugrave;
               vittime a denunciare.
             </p>
@@ -98,9 +98,9 @@ export default function Insights() {
             period="2007-2024"
           >
             <p>
-              Autori denunciati da 1.170 a meno della met&agrave;, vittime
-              da 1.358 in calo costante (monotonia 76%). Un reato che ha perso
-              progressivamente attrattivit&agrave; criminale.
+              Autori denunciati passati da 2.355 a 1.185, vittime da 2.095 a
+              737. Il calo &egrave; presente in circa 3 anni su 4, un reato che
+              ha perso progressivamente attrattivit&agrave; criminale.
             </p>
           </InsightCard>
 
@@ -156,7 +156,7 @@ export default function Insights() {
               &egrave; coerente su tutte le tipologie: rapine in strada (47%
               &rarr; 60%), in esercizi commerciali (36% &rarr; 50%). Anche tra
               le vittime di rapina, la quota di stranieri &egrave; salita dal
-              14% al 26% con monotonia dell&apos;88%.
+              14% al 26%, con un aumento quasi costante anno dopo anno.
             </p>
             <Caveat>
               Il dato riflette le denunce, non necessariamente la
@@ -174,9 +174,9 @@ export default function Insights() {
             <p>
               La percentuale di vittime donne di furti con destrezza
               (borseggi) &egrave; scesa dall&apos;81% al 54%, quella degli
-              uomini &egrave; salita dal 19% al 46%. &Egrave; il trend con la
-              monotonia pi&ugrave; alta dell&apos;intero dataset (94%):
-              praticamente ogni anno va nella stessa direzione.
+              uomini &egrave; salita dal 19% al 46%. &Egrave; la tendenza
+              pi&ugrave; regolare dell&apos;intero dataset: in oltre 9 anni su
+              10 il valore si muove nella stessa direzione.
               Contemporaneamente, la quota di autori stranieri &egrave; salita
               dal 34% al 61%.
             </p>
@@ -189,10 +189,10 @@ export default function Insights() {
           >
             <p>
               Tra le vittime di delitti informatici, le donne sono passate dal
-              34% al 50%, raggiungendo la parit&agrave; con gli uomini. Anche
-              per truffe e frodi informatiche le vittime donne sono cresciute
-              dal 34,5% al 43,4% (monotonia 88%). Il cybercrimine diventa
-              progressivamente trasversale al genere.
+              34% al 49,6%, sfiorando la parit&agrave; con gli uomini. Per
+              truffe e frodi informatiche le vittime donne sono cresciute dal
+              34,5% al 43,4%, con un aumento quasi costante nel tempo. Il
+              cybercrimine diventa progressivamente trasversale al genere.
             </p>
           </InsightCard>
 
@@ -260,9 +260,9 @@ export default function Insights() {
             period="2014-2024"
           >
             <p>
-              Il tasso di delitti denunciati non mostra un trend
-              statisticamente significativo (da 46,6 a 40,7 per 1.000
-              abitanti, p=0,11). La percezione di insicurezza delle famiglie
+              Il tasso di delitti denunciati non mostra una tendenza chiara
+              (da 46,6 a 40,7 per 1.000 abitanti). La percezione di
+              insicurezza delle famiglie
               ha avuto un andamento indipendente: picco al 41% nel 2015, discesa
               al 21% nel 2021, risalita al 27% nel 2024. La correlazione tra le
               due serie &egrave; debole.
@@ -291,16 +291,20 @@ export default function Insights() {
           </InsightCard>
 
           <InsightCard
-            title="Danneggiamenti e truffe informatiche: direzioni opposte"
+            title="Reati fisici e digitali: due velocit&agrave; investigative"
             confidence="media"
             period="2007-2024"
           >
             <p>
-              I danneggiamenti e le truffe e frodi informatiche tra le vittime
-              mostrano una correlazione negativa forte (rho = -0,92): mentre i
-              primi calano costantemente, le seconde salgono. Due reati che si
-              muovono in direzioni opposte, riflettendo lo spostamento della
-              criminalit&agrave; dal mondo fisico a quello digitale.
+              Per i reati fisici, il rapporto tra autori identificati e vittime
+              migliora costantemente: nelle rapine passa da 0,45 a 1,05 (oggi
+              si identifica pi&ugrave; di un autore per ogni vittima), nelle
+              rapine in esercizi commerciali da 0,64 a 1,87. Per i reati
+              digitali accade l&apos;opposto: nei delitti informatici il
+              rapporto crolla da 0,29 a 0,08 (un autore ogni 12 vittime), nelle
+              truffe da 0,43 a 0,31. Le vittime digitali crescono molto
+              pi&ugrave; velocemente della capacit&agrave; di identificare gli
+              autori.
             </p>
           </InsightCard>
         </div>
@@ -380,10 +384,10 @@ export default function Insights() {
           >
             <p>
               Il tasso di rapine (vittime) al Nord cresce rispetto al Sud
-              in modo significativo e costante (monotonia 76%). Sia nel
-              confronto Nord vs Sud (+63 per 100k) sia Centro vs Sud (+61
-              per 100k). Il tradizionale divario con il Mezzogiorno si sta
-              riducendo o invertendo per questo tipo di reato.
+              in modo costante, con la differenza che aumenta in circa 3 anni
+              su 4. Sia nel confronto Nord vs Sud (+63 per 100k) sia Centro vs
+              Sud (+61 per 100k). Il tradizionale divario con il Mezzogiorno si
+              sta riducendo o invertendo per questo tipo di reato.
             </p>
           </InsightCard>
 
@@ -394,9 +398,9 @@ export default function Insights() {
           >
             <p>
               Il tasso di truffe e frodi informatiche (vittime) al Nord
-              cresce significativamente pi&ugrave; che al Sud (+118 per 100k
-              nella differenza). Anche per gli autori, il divario Nord-Sud
-              aumenta (+85 per 100k, monotonia 65%). La digitalizzazione
+              cresce pi&ugrave; che al Sud (+118 per 100k nella differenza).
+              Anche per gli autori, il divario Nord-Sud aumenta (+85 per 100k),
+              con la differenza che cresce in 2 anni su 3. La digitalizzazione
               pi&ugrave; avanzata espone a maggiore vittimizzazione
               informatica.
             </p>
@@ -428,10 +432,11 @@ export default function Insights() {
           >
             <p>
               La differenza nella percentuale di autori stranieri per
-              stupefacenti tra Nord e Sud cresce di 10 punti percentuali
-              (monotonia 65%). Al Nord la quota di autori stranieri per droga
-              aumenta molto pi&ugrave; che al Sud, coerentemente con la
-              diversa composizione demografica dei territori.
+              stupefacenti tra Nord e Sud cresce di circa 10 punti percentuali,
+              con un aumento presente in 2 anni su 3. Al Nord la quota di
+              autori stranieri per droga aumenta molto pi&ugrave; che al Sud,
+              coerentemente con la diversa composizione demografica dei
+              territori.
             </p>
           </InsightCard>
         </div>
@@ -447,7 +452,7 @@ export default function Insights() {
         <div className="text-sm text-muted-foreground space-y-3">
           <p>
             Gli insight sono stati estratti analizzando sistematicamente{" "}
-            <strong>2.318 combinazioni</strong> di reato, dimensione
+            <strong>2.209 combinazioni</strong> di reato, dimensione
             demografica, territorio e periodo temporale. Su queste combinazioni
             sono stati applicati i seguenti test statistici:
           </p>
@@ -463,9 +468,9 @@ export default function Insights() {
                   Test di Mann-Kendall
                 </a>
               </strong>
-              : test non parametrico che verifica se una serie temporale ha un
-              trend monotono (crescente o decrescente) statisticamente
-              significativo, robusto a outlier e dati non normali
+              : verifica se una serie temporale ha una tendenza costante nel
+              tempo (crescente o decrescente), anche in presenza di oscillazioni
+              occasionali
             </li>
             <li>
               <strong>
@@ -478,26 +483,26 @@ export default function Insights() {
                   Stimatore Theil-Sen
                 </a>
               </strong>
-              : stima la pendenza del trend calcolando la mediana di tutte le
-              possibili pendenze tra coppie di punti, risultando resistente agli
-              outlier. Quantifica la velocit&agrave; del cambiamento
+              : stima la velocit&agrave; del cambiamento calcolando la
+              pendenza mediana tra tutte le coppie di punti, ignorando i valori
+              estremi
             </li>
             <li>
-              <strong>Z-score dell&apos;ultimo anno</strong>: misura quanto il
+              <strong>Anomalia dell&apos;ultimo anno</strong>: misura quanto il
               valore pi&ugrave; recente si discosta dalla media storica della
-              serie, in unit&agrave; di deviazione standard. Identifica anomalie
-              recenti
+              serie. Identifica picchi o crolli insoliti nell&apos;ultimo anno
+              disponibile
             </li>
             <li>
-              <strong>Coefficiente di variazione</strong>: rapporto tra
-              deviazione standard e media, misura la stabilit&agrave; della
-              serie. Serie stabili con un cambio improvviso sono pi&ugrave;
-              interessanti
+              <strong>Stabilit&agrave; della serie</strong>: misura quanto i
+              valori oscillano attorno alla media. Serie stabili in cui compare
+              un cambio improvviso sono pi&ugrave; significative
             </li>
             <li>
-              <strong>Divergenza inter-regionale</strong>: deviazione standard
-              dei valori tra le 20 regioni per ogni anno. Un trend crescente
-              indica che il fenomeno diventa meno uniforme sul territorio
+              <strong>Divergenza tra regioni</strong>: misura quanto i valori
+              delle 20 regioni differiscono tra loro per ogni anno. Se la
+              differenza cresce nel tempo, il fenomeno diventa meno uniforme
+              sul territorio
             </li>
             <li>
               <strong>
@@ -510,13 +515,13 @@ export default function Insights() {
                   Correlazione di Spearman
                 </a>
               </strong>
-              : misura la correlazione tra le serie temporali di reati diversi.
-              Valori prossimi a +1 indicano reati che si muovono insieme, a -1
-              reati con andamenti opposti. Basata sui ranghi, robusta a
-              relazioni non lineari
+              : misura la correlazione tra le variazioni anno-su-anno di reati
+              diversi (non tra le serie grezze, per evitare correlazioni
+              spurie dovute a trend comuni). Valori prossimi a +1 indicano
+              reati che si muovono insieme, a -1 reati con andamenti opposti
             </li>
             <li>
-              <strong>Differenza-in-differenze tra categorie</strong>: confronta
+              <strong>Confronto trend tra categorie</strong>: confronta
               l&apos;evoluzione di macro-categorie di reati (violenti,
               patrimoniali, informatici, droga) calcolando il trend della
               differenza tra le serie aggregate. Identifica se un fenomeno
@@ -528,11 +533,25 @@ export default function Insights() {
               reato e dimensione, poi analizza il trend della differenza tra
               ripartizioni. Rileva convergenze o divergenze territoriali
             </li>
+            <li>
+              <strong>Rapporto autori/vittime</strong>: per ogni reato, calcola
+              come evolve il rapporto tra autori identificati e vittime nel
+              tempo. Un rapporto in calo indica che le vittime crescono
+              pi&ugrave; velocemente degli autori identificati
+            </li>
           </ul>
 
           <p>
-            Per controllare il rischio di falsi positivi dovuto al numero
-            elevato di test simultanei, &egrave; stata applicata la correzione{" "}
+            Per isolare l&apos;effetto della pandemia, i test di trend vengono
+            eseguiti escludendo gli anni 2020 e 2021 come risultato primario,
+            confrontando poi con la serie completa. Quando i due risultati
+            divergono, l&apos;insight viene segnalato come sensibile al COVID.
+          </p>
+
+          <p>
+            Analizzando migliaia di combinazioni contemporaneamente, alcuni
+            risultati apparirebbero significativi per puro caso. Per filtrare
+            questi falsi positivi &egrave; stata applicata la correzione{" "}
             <strong>
               <a
                 href="https://en.wikipedia.org/wiki/False_discovery_rate#Benjamini%E2%80%93Hochberg_procedure"
@@ -543,24 +562,19 @@ export default function Insights() {
                 Benjamini-Hochberg (FDR)
               </a>
             </strong>{" "}
-            al 5%, separatamente per famiglia di test (trend, divergenze,
-            correlazioni, differenze tra categorie, confronti territoriali). Questa procedura controlla la proporzione attesa di
-            falsi positivi tra i risultati dichiarati significativi:
-            effettuando centinaia di test contemporaneamente, alcuni
-            risulterebbero significativi per caso; la correzione FDR filtra
-            questi falsi positivi mantenendo i risultati genuini.
+            al 5%, separatamente per ogni tipo di analisi.
           </p>
 
-          <p>Soglie aggiuntive di filtraggio pre-analisi:</p>
+          <p>Sono state inoltre escluse dall&apos;analisi:</p>
           <ul className="list-disc pl-6 space-y-1">
             <li>
-              Valore assoluto minimo: almeno 50 persone/anno (per escludere
-              rumore statistico su numeri piccoli)
+              Combinazioni con meno di 50 persone/anno (numeri troppo piccoli
+              per essere affidabili)
             </li>
-            <li>Serie temporale minima: almeno 5 data point</li>
+            <li>Serie con meno di 5 anni di dati disponibili</li>
             <li>
-              Variazione minima: almeno 3 punti percentuali sull&apos;intero
-              periodo (per le serie percentuali)
+              Variazioni inferiori a 3 punti percentuali sull&apos;intero
+              periodo
             </li>
           </ul>
 

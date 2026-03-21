@@ -46,7 +46,7 @@ KNOWN_EVENTS = {
     2018: "GDPR (impatto su reati informatici)",
 }
 
-# Classificazione reati per analisi diff-in-diff
+# Classificazione reati per confronto trend tra categorie
 REATI_VIOLENTI = {
     "INTENHOM", "ATTEMPHOM", "MAFIAHOM", "ROBBHOM", "MANSHOM", "INFANTHOM",
     "MASSMURD", "CULPINJU", "BLOWS", "RAPE", "RAPEUN18", "STALK", "CP612BIS",
@@ -121,6 +121,76 @@ def is_tautological_pair(code_a: str, code_b: str) -> bool:
         if code_a in children and code_b in children:
             return True
     return False
+
+
+# Propensione alla denuncia per codice reato (fonte: indagini vittimizzazione ISTAT)
+PROPENSIONE_DENUNCIA = {
+    # Alta (>60%): reati con evidenza fisica o assicurativa
+    "CARTHEF": "alta", "VEHITHEF": "alta", "MOPETHEF": "alta",
+    "MOTORTHEF": "alta", "TRUCKTHEF": "alta",
+    "BURGTHEF": "alta",
+    "BANKROB": "alta", "POSTROB": "alta",
+
+    # Media (30-60%)
+    "BAGTHEF": "media", "PICKTHEF": "media",
+    "SHOPTHEF": "media",
+    "THEFT": "media",
+    "DAMAGE": "media", "DAMARS": "media",
+    "ROBBER": "media", "STREETROB": "media", "SHOPROB": "media",
+    "HOUSEROB": "media",
+    "BLOWS": "media", "CULPINJU": "media",
+
+    # Bassa (<30%)
+    "SWINCYB": "bassa", "CYBERCRIM": "bassa",
+    "MENACE": "bassa",
+    "EXTORT": "bassa",
+    "RECEIV": "bassa",
+
+    # Molto bassa (<15%)
+    "RAPE": "molto_bassa", "RAPEUN18": "molto_bassa",
+    "CP572": "molto_bassa",
+    "STALK": "molto_bassa", "CP612BIS": "molto_bassa",
+    "USURY": "molto_bassa",
+    "CORRUPUN18": "molto_bassa",
+    "PORNO": "molto_bassa",
+
+    # Non applicabile - reati senza vittima diretta
+    "DRUG": "non_applicabile_consensuale",
+    "PROSTI": "non_applicabile_consensuale",
+
+    # Non applicabile - denuncia automatica
+    "INTENHOM": "non_applicabile_automatica",
+    "ATTEMPHOM": "non_applicabile_automatica",
+    "MAFIAHOM": "non_applicabile_automatica",
+    "ROBBHOM": "non_applicabile_automatica",
+    "MANSHOM": "non_applicabile_automatica",
+    "INFANTHOM": "non_applicabile_automatica",
+    "MASSMURD": "non_applicabile_automatica",
+}
+
+
+def interpret_with_propensione(trend: str, propensione: str | None) -> str:
+    """Chiave interpretativa: incrocia trend con propensione alla denuncia."""
+    if propensione is None:
+        return ""
+    if propensione.startswith("non_applicabile"):
+        return "interpretazione_non_applicabile"
+    if trend == "increasing":
+        if propensione in ("molto_bassa", "bassa"):
+            return "emersione_probabile"
+        elif propensione == "alta":
+            return "aumento_reale_probabile"
+        else:
+            return "aumento_misto"
+    elif trend == "decreasing":
+        if propensione in ("molto_bassa", "bassa"):
+            return "calo_ambiguo"
+        elif propensione == "alta":
+            return "calo_reale_probabile"
+        else:
+            return "calo_misto"
+    return ""
+
 
 # ---------------------------------------------------------------------------
 # Caricamento dati
@@ -228,15 +298,67 @@ def calc_monotonicity(series: np.ndarray) -> float:
         return np.sum(diffs < 0) / len(diffs)
 
 
+def calc_max_jump(series: np.ndarray, anni: np.ndarray) -> dict:
+    """Salto massimo anno-su-anno nella serie."""
+    if len(series) < 2:
+        return {"max_jump_value": np.nan, "max_jump_year": np.nan,
+                "max_jump_direction": ""}
+    diffs = np.diff(series)
+    idx = int(np.argmax(np.abs(diffs)))
+    return {
+        "max_jump_value": float(abs(diffs[idx])),
+        "max_jump_year": int(anni[idx + 1]),
+        "max_jump_direction": "up" if diffs[idx] > 0 else "down",
+    }
+
+
+# Anni COVID da escludere per Mann-Kendall
+COVID_YEARS = {2020, 2021}
+
+
 def analyze_series(
-    series: np.ndarray, anni: np.ndarray
+    series: np.ndarray, anni: np.ndarray,
+    covid_years: set[int] | None = None,
 ) -> dict:
-    """Applica tutti i test su una serie temporale."""
+    """Applica tutti i test su una serie temporale.
+
+    Mann-Kendall e monotonicity vengono calcolati sulla serie senza anni COVID
+    (risultato primario). La serie completa viene usata come controllo.
+    Se i trend divergono, sensibile_covid = True.
+    """
+    if covid_years is None:
+        covid_years = COVID_YEARS
+
     result = {}
-    result.update(run_mann_kendall(series))
+
+    # MK sulla serie completa (controllo)
+    mk_full = run_mann_kendall(series)
+
+    # Serie pulita (senza anni COVID)
+    mask_clean = ~np.isin(anni, list(covid_years))
+    series_clean = series[mask_clean]
+
+    if len(series_clean) >= MIN_DATA_POINTS and len(series_clean) < len(series):
+        # Serie contiene anni COVID e la serie pulita ha abbastanza punti
+        mk_clean = run_mann_kendall(series_clean)
+        result.update(mk_clean)
+        result["monotonicity"] = calc_monotonicity(series_clean)
+        result["mk_trend_full"] = mk_full["mk_trend"]
+        result["mk_p_full"] = mk_full["mk_p"]
+        result["sensibile_covid"] = mk_clean["mk_trend"] != mk_full["mk_trend"]
+        result["n_points_clean"] = len(series_clean)
+    else:
+        # Nessun anno COVID nella serie, o serie pulita troppo corta
+        result.update(mk_full)
+        result["monotonicity"] = calc_monotonicity(series)
+        result["mk_trend_full"] = mk_full["mk_trend"]
+        result["mk_p_full"] = mk_full["mk_p"]
+        result["sensibile_covid"] = False
+        result["n_points_clean"] = len(series)
+
+    # Metriche descrittive sulla serie completa
     result.update(calc_zscore_last(series))
     result["cv"] = calc_cv(series)
-    result["monotonicity"] = calc_monotonicity(series)
     result["first_value"] = series[0]
     result["total_change_pp"] = series[-1] - series[0]
     result["anno_min"] = int(anni[0])
@@ -244,6 +366,8 @@ def analyze_series(
     result["n_points"] = len(series)
     # Sparkline (valori arrotondati per compattezza)
     result["sparkline"] = [round(float(v), 1) for v in series]
+    # Salto massimo anno-su-anno
+    result.update(calc_max_jump(series, anni))
     return result
 
 
@@ -516,15 +640,22 @@ def analyze_percezione(df: pd.DataFrame) -> list[dict]:
         "mk_tau": np.nan,
         "theil_sen_slope": np.nan,
         "theil_sen_intercept": np.nan,
+        "mk_trend_full": "",
+        "mk_p_full": np.nan,
+        "sensibile_covid": False,
         "zscore_last": np.nan,
         "last_value": np.nan,
         "cv": np.nan,
         "monotonicity": np.nan,
         "first_value": np.nan,
         "total_change_pp": np.nan,
+        "max_jump_value": np.nan,
+        "max_jump_year": np.nan,
+        "max_jump_direction": "",
         "anno_min": int(anni[0]),
         "anno_max": int(anni[-1]),
         "n_points": len(anni),
+        "n_points_clean": len(anni),
         "sparkline": [round(float(v), 1) for v in percezione],
     })
 
@@ -587,7 +718,11 @@ def analyze_allarme_sociale(
 # ---------------------------------------------------------------------------
 
 def analyze_correlazioni_reati(df: pd.DataFrame) -> list[dict]:
-    """Correlazione di Spearman tra serie temporali di reati diversi."""
+    """Correlazione di Spearman tra variazioni anno-su-anno di reati diversi.
+
+    Detrending con differenze prime per evitare correlazioni spurie
+    dovute a trend comuni (es. calo generalizzato dei delitti).
+    """
     candidates = []
 
     for data_type in ["OFFEND", "VICTIM"]:
@@ -598,22 +733,26 @@ def analyze_correlazioni_reati(df: pd.DataFrame) -> list[dict]:
             index="anno", columns="codice_reato", values="totale", aggfunc="first"
         )
         # Solo reati con serie lunga e valori sufficienti
+        # +1 perche' np.diff riduce la lunghezza di 1
         valid_cols = [
             c for c in pivot.columns
-            if pivot[c].notna().sum() >= MIN_DATA_POINTS
+            if pivot[c].notna().sum() >= MIN_DATA_POINTS + 1
             and (pivot[c].dropna() >= MIN_ABS_PER_YEAR).all()
         ]
         pivot = pivot[valid_cols].dropna()
 
-        if len(pivot) < MIN_DATA_POINTS or len(valid_cols) < 2:
+        if len(pivot) < MIN_DATA_POINTS + 1 or len(valid_cols) < 2:
             continue
+
+        # Detrending: differenze prime per ogni reato
+        pivot_diff = pivot.diff().iloc[1:]  # prima riga e' NaN
 
         # Nomi reati per lookup
         nomi = dict(
             zip(dt_df["codice_reato"], dt_df["reato"])
         )
 
-        # Calcola correlazioni tra tutte le coppie
+        # Calcola correlazioni tra tutte le coppie (sulle variazioni)
         tested = set()
         for i, col_a in enumerate(valid_cols):
             for col_b in valid_cols[i + 1:]:
@@ -626,10 +765,10 @@ def analyze_correlazioni_reati(df: pd.DataFrame) -> list[dict]:
                 if is_tautological_pair(col_a, col_b):
                     continue
 
-                series_a = pivot[col_a].values
-                series_b = pivot[col_b].values
+                diff_a = pivot_diff[col_a].values
+                diff_b = pivot_diff[col_b].values
 
-                corr, p_val = stats.spearmanr(series_a, series_b)
+                corr, p_val = stats.spearmanr(diff_a, diff_b)
 
                 # Solo correlazioni forti
                 if abs(corr) < 0.7:
@@ -641,7 +780,7 @@ def analyze_correlazioni_reati(df: pd.DataFrame) -> list[dict]:
                     "data_type": data_type,
                     "codice_reato": f"{col_a}_vs_{col_b}",
                     "reato": f"{nomi.get(col_a, col_a)} vs {nomi.get(col_b, col_b)}",
-                    "dimensione": f"correlazione {direction}",
+                    "dimensione": f"correlazione {direction} (detrended)",
                     "territorio": "Italia",
                     "mk_trend": direction,
                     "mk_p": p_val,
@@ -657,19 +796,24 @@ def analyze_correlazioni_reati(df: pd.DataFrame) -> list[dict]:
                     "total_change_pp": np.nan,
                     "anno_min": int(pivot.index.min()),
                     "anno_max": int(pivot.index.max()),
-                    "n_points": len(pivot),
+                    "n_points": len(pivot_diff),
+                    "n_points_clean": len(pivot_diff),
+                    "sensibile_covid": False,
+                    "max_jump_value": np.nan,
+                    "max_jump_year": np.nan,
+                    "max_jump_direction": "",
                     "sparkline": [],
                 })
 
-    log.info(f"Correlazioni tra reati: {len(candidates)} candidati (|rho| >= 0.7)")
+    log.info(f"Correlazioni tra reati: {len(candidates)} candidati (|rho| >= 0.7, detrended)")
     return candidates
 
 
 # ---------------------------------------------------------------------------
-# Analisi 9: Diff-in-diff tra categorie di reati
+# Analisi 9: Confronto trend tra categorie di reati
 # ---------------------------------------------------------------------------
 
-def analyze_diff_categorie(df: pd.DataFrame) -> list[dict]:
+def analyze_confronto_trend_categorie(df: pd.DataFrame) -> list[dict]:
     """Confronta trend tra categorie di reati (violenti vs patrimoniali etc.)."""
     candidates = []
 
@@ -740,7 +884,7 @@ def analyze_diff_categorie(df: pd.DataFrame) -> list[dict]:
                         continue
 
                     result.update({
-                        "analysis_type": "diff_categorie",
+                        "analysis_type": "confronto_trend_categorie",
                         "data_type": data_type,
                         "codice_reato": f"{cat_a}_vs_{cat_b}",
                         "reato": f"{cat_a} vs {cat_b}",
@@ -749,7 +893,7 @@ def analyze_diff_categorie(df: pd.DataFrame) -> list[dict]:
                     })
                     candidates.append(result)
 
-    log.info(f"Diff-in-diff categorie: {len(candidates)} candidati")
+    log.info(f"Confronto trend categorie: {len(candidates)} candidati")
     return candidates
 
 
@@ -857,6 +1001,69 @@ def analyze_confronti_territoriali(
 
 
 # ---------------------------------------------------------------------------
+# Analisi 11: Rapporto autori/vittime nel tempo
+# ---------------------------------------------------------------------------
+
+def analyze_rapporto_autori_vittime(df: pd.DataFrame) -> list[dict]:
+    """Trend del rapporto autori/vittime per ogni reato."""
+    candidates = []
+
+    # Pivot separati per OFFEND e VICTIM
+    off_df = df[df["data_type"] == "OFFEND"]
+    vic_df = df[df["data_type"] == "VICTIM"]
+
+    off_pivot = off_df.pivot_table(
+        index="anno", columns="codice_reato", values="totale", aggfunc="first"
+    )
+    vic_pivot = vic_df.pivot_table(
+        index="anno", columns="codice_reato", values="totale", aggfunc="first"
+    )
+
+    # Nomi reati per lookup
+    nomi = dict(zip(df["codice_reato"], df["reato"]))
+
+    # Reati presenti in entrambi
+    common_reati = set(off_pivot.columns) & set(vic_pivot.columns)
+
+    for reato in sorted(common_reati):
+        off_series = off_pivot[reato].dropna()
+        vic_series = vic_pivot[reato].dropna()
+
+        # Allinea sugli anni comuni
+        common_anni = off_series.index.intersection(vic_series.index)
+        if len(common_anni) < MIN_DATA_POINTS:
+            continue
+
+        autori = off_series.loc[common_anni].values.astype(float)
+        vittime = vic_series.loc[common_anni].values.astype(float)
+        anni = common_anni.values
+
+        # Evita divisione per zero
+        if np.any(vittime == 0):
+            continue
+
+        rapporto = autori / vittime
+
+        # Filtro: variazione minima del rapporto
+        if abs(rapporto[-1] - rapporto[0]) < 0.1:
+            continue
+
+        result = analyze_series(rapporto, anni)
+        result.update({
+            "analysis_type": "rapporto_autori_vittime",
+            "data_type": "RAPPORTO",
+            "codice_reato": reato,
+            "reato": nomi.get(reato, reato),
+            "dimensione": "autori/vittime",
+            "territorio": "Italia",
+        })
+        candidates.append(result)
+
+    log.info(f"Rapporto autori/vittime: {len(candidates)} candidati")
+    return candidates
+
+
+# ---------------------------------------------------------------------------
 # Correzione FDR
 # ---------------------------------------------------------------------------
 
@@ -874,8 +1081,9 @@ def apply_fdr(df: pd.DataFrame) -> pd.DataFrame:
         "divergenza": df["analysis_type"] == "divergenza_regionale",
         "percezione": df["analysis_type"] == "percezione_vs_dati",
         "correlazione": df["analysis_type"] == "correlazione_reati",
-        "diff_categorie": df["analysis_type"] == "diff_categorie",
+        "confronto_trend_categorie": df["analysis_type"] == "confronto_trend_categorie",
         "territoriale": df["analysis_type"] == "confronto_territoriale",
+        "rapporto_av": df["analysis_type"] == "rapporto_autori_vittime",
     }
 
     for family_name, mask in families.items():
@@ -950,6 +1158,10 @@ def score_candidates(df: pd.DataFrame) -> pd.DataFrame:
         "confidence",
     ] = "high"
 
+    # Warning bassa potenza: serie con < 7 punti puliti dopo esclusione COVID
+    n_clean = df["n_points_clean"].fillna(df["n_points"]) if "n_points_clean" in df.columns else df["n_points"]
+    df.loc[n_clean < 7, "confidence"] = "low"
+
     # Annotazioni eventi noti
     def check_known_events(row):
         events = []
@@ -960,6 +1172,21 @@ def score_candidates(df: pd.DataFrame) -> pd.DataFrame:
         return "; ".join(events) if events else ""
 
     df["known_events"] = df.apply(check_known_events, axis=1)
+
+    # Propensione alla denuncia e interpretazione
+    def get_propensione(row):
+        code = row.get("codice_reato", "")
+        if "_vs_" in str(code):
+            return ""
+        return PROPENSIONE_DENUNCIA.get(code, "")
+
+    df["propensione_denuncia"] = df.apply(get_propensione, axis=1)
+    df["interpretazione_propensione"] = df.apply(
+        lambda r: interpret_with_propensione(
+            r.get("mk_trend", ""), r.get("propensione_denuncia", "")
+        ),
+        axis=1,
+    )
 
     return df.sort_values("score", ascending=False)
 
@@ -1097,9 +1324,9 @@ def generate_report(df: pd.DataFrame, output_path: Path) -> None:
     lines.append("## 6. Correlazioni tra reati")
     lines.append("")
     lines.append(
-        "Correlazione di Spearman tra le serie temporali di reati diversi. "
-        "Valori prossimi a +1 indicano che i due reati si muovono insieme, "
-        "prossimi a -1 che si muovono in direzioni opposte."
+        "Correlazione di Spearman tra le variazioni anno-su-anno (detrended) "
+        "di reati diversi. Valori prossimi a +1 indicano che i due reati "
+        "co-variano, prossimi a -1 che variano in direzioni opposte."
     )
     lines.append("")
     corr = sig[sig["analysis_type"] == "correlazione_reati"].head(20)
@@ -1116,19 +1343,19 @@ def generate_report(df: pd.DataFrame, output_path: Path) -> None:
         )
     lines.append("")
 
-    # --- Sezione 7: diff-in-diff categorie ---
+    # --- Sezione 7: confronto trend categorie ---
     lines.append("---")
     lines.append("")
-    lines.append("## 7. Differenze tra categorie di reati")
+    lines.append("## 7. Confronto trend tra categorie di reati")
     lines.append("")
     lines.append(
         "Trend della differenza tra categorie (es. violenti - patrimoniali). "
         "Un trend crescente indica che la prima categoria cresce piu' della seconda."
     )
     lines.append("")
-    diff_cat = sig[sig["analysis_type"] == "diff_categorie"].head(20)
+    diff_cat = sig[sig["analysis_type"] == "confronto_trend_categorie"].head(20)
     if len(diff_cat) == 0:
-        diff_cat = df[df["analysis_type"] == "diff_categorie"].head(10)
+        diff_cat = df[df["analysis_type"] == "confronto_trend_categorie"].head(10)
     for _, r in diff_cat.iterrows():
         dt = "autori" if r["data_type"] == "OFFEND" else "vittime"
         direction = "crescente" if r["mk_trend"] == "increasing" else "decrescente"
@@ -1166,18 +1393,43 @@ def generate_report(df: pd.DataFrame, output_path: Path) -> None:
         )
     lines.append("")
 
-    # --- Sezione 9: top 50 assoluti per score ---
+    # --- Sezione 9: rapporto autori/vittime ---
     lines.append("---")
     lines.append("")
-    lines.append("## 9. Top 50 candidati per score (tutti i tipi)")
+    lines.append("## 9. Rapporto autori/vittime")
+    lines.append("")
+    lines.append(
+        "Trend del rapporto autori/vittime per reato. Un rapporto in calo "
+        "indica piu' vittime per ogni autore identificato."
+    )
+    lines.append("")
+    rapporto = sig[sig["analysis_type"] == "rapporto_autori_vittime"].head(20)
+    if len(rapporto) == 0:
+        rapporto = df[df["analysis_type"] == "rapporto_autori_vittime"].head(10)
+    for _, r in rapporto.iterrows():
+        direction = "crescente" if r["mk_trend"] == "increasing" else "decrescente"
+        p = r["mk_p_adjusted"] if pd.notna(r.get("mk_p_adjusted")) else r["mk_p"]
+        fdr = " [FDR sig.]" if r.get("fdr_significant", False) else ""
+        lines.append(
+            f"- **{r['reato']}**: trend {direction}, "
+            f"rapporto {r['first_value']:.2f} -> {r['last_value']:.2f} "
+            f"({r['total_change_pp']:+.2f}), "
+            f"p={p:.4f}{fdr}"
+        )
+    lines.append("")
+
+    # --- Sezione 10: top 50 assoluti per score ---
+    lines.append("---")
+    lines.append("")
+    lines.append("## 10. Top 50 candidati per score (tutti i tipi)")
     lines.append("")
     lines.append(
         "| # | Score | Conf. | Reato | Tipo | Dimensione | Territorio | "
-        "Trend | Cambio | p (adj) | Monotonia |"
+        "Trend | Cambio | p (adj) | Mono | COVID | Propensione |"
     )
     lines.append(
         "|---|-------|-------|-------|------|------------|------------|"
-        "-------|--------|---------|-----------|"
+        "-------|--------|---------|------|-------|-------------|"
     )
     for i, (_, r) in enumerate(sig.head(50).iterrows(), 1):
         dt = r["data_type"]
@@ -1196,10 +1448,13 @@ def generate_report(df: pd.DataFrame, output_path: Path) -> None:
             if pd.notna(r["monotonicity"])
             else "n/a"
         )
+        covid = "!" if r.get("sensibile_covid", False) else ""
+        prop = r.get("propensione_denuncia", "")
         lines.append(
             f"| {i} | {r['score']:.3f} | {r['confidence']} | "
             f"{r['reato']} | {dt} | {r['dimensione']} | {r['territorio']} | "
-            f"{r['mk_trend']} | {change} | {p_adj} | {mono} |"
+            f"{r['mk_trend']} | {change} | {p_adj} | {mono} | "
+            f"{covid} | {prop} |"
         )
     lines.append("")
 
@@ -1245,13 +1500,16 @@ def main():
     log.info("Analisi correlazioni tra reati...")
     all_candidates.extend(analyze_correlazioni_reati(data["avt"]))
 
-    log.info("Analisi diff-in-diff tra categorie di reati...")
-    all_candidates.extend(analyze_diff_categorie(data["avt"]))
+    log.info("Analisi confronto trend tra categorie di reati...")
+    all_candidates.extend(analyze_confronto_trend_categorie(data["avt"]))
 
     log.info("Analisi confronti territoriali (Nord/Centro/Sud)...")
     all_candidates.extend(
         analyze_confronti_territoriali(data["avr"], data["popolazione_regioni"])
     )
+
+    log.info("Analisi rapporto autori/vittime...")
+    all_candidates.extend(analyze_rapporto_autori_vittime(data["avt"]))
 
     log.info(f"Totale candidati pre-FDR: {len(all_candidates)}")
 
@@ -1274,10 +1532,13 @@ def main():
         "score", "confidence", "analysis_type", "data_type",
         "codice_reato", "reato", "dimensione", "territorio",
         "mk_trend", "mk_p", "mk_p_adjusted", "fdr_significant",
+        "mk_trend_full", "mk_p_full", "sensibile_covid",
         "mk_tau", "theil_sen_slope",
         "total_change_pp", "first_value", "last_value",
         "zscore_last", "cv", "monotonicity",
-        "anno_min", "anno_max", "n_points",
+        "max_jump_value", "max_jump_year", "max_jump_direction",
+        "anno_min", "anno_max", "n_points", "n_points_clean",
+        "propensione_denuncia", "interpretazione_propensione",
         "known_events",
         "score_significance", "score_effect", "score_monotonicity",
         "score_anomaly", "score_length",
