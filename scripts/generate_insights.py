@@ -79,6 +79,49 @@ RIPARTIZIONI = {
     "Sud e Isole": SUD_ISOLE,
 }
 
+# Gerarchie reati ISTAT per filtrare correlazioni tautologiche
+# Formato: genitore -> set di figli. Coppie genitore-figlio e fratelli
+# dello stesso genitore producono correlazioni spurie (~1.0)
+# Gerarchie strette: genitore -> figli diretti. Le correlazioni tra
+# genitore-figlio e tra fratelli dello stesso genitore sono tautologiche.
+# TOT e' un caso speciale: TOT vs qualsiasi reato e' tautologico,
+# ma due reati distinti sotto TOT NON lo sono (sono reati indipendenti).
+REATI_GERARCHIA_STRETTA = {
+    "THEFT": {  # Furti -> sotto-tipi
+        "BAGTHEF", "BURGTHEF", "PICKTHEF", "SHOPTHEF", "CARTHEF",
+        "VEHITHEF", "MOPETHEF", "MOTORTHEF", "TRUCKTHEF", "ARTTHEF",
+    },
+    "ROBBER": {  # Rapine -> sotto-tipi
+        "STREETROB", "HOUSEROB", "BANKROB", "SHOPROB", "POSTROB",
+    },
+    "ARSON": {"DAMARS"},  # Incendi -> incendi dolosi
+    "INTENHOM": {"MAFIAHOM", "ROBBHOM", "INFANTHOM"},  # Omicidi volontari -> sotto-tipi
+    "RAPE": {"RAPEUN18"},  # Violenze sessuali -> atti sessuali con minorenne
+}
+
+# TOT correla meccanicamente con qualsiasi suo componente
+_ALL_SPECIFIC_CODES = set()
+for _children in REATI_GERARCHIA_STRETTA.values():
+    _ALL_SPECIFIC_CODES.update(_children)
+for _parent in REATI_GERARCHIA_STRETTA:
+    _ALL_SPECIFIC_CODES.add(_parent)
+
+
+def is_tautological_pair(code_a: str, code_b: str) -> bool:
+    """Verifica se due codici reato sono in relazione gerarchica."""
+    # TOT vs qualsiasi altro reato
+    if code_a == "TOT" or code_b == "TOT":
+        return True
+    # Genitore-figlio e fratelli nelle gerarchie strette
+    for parent, children in REATI_GERARCHIA_STRETTA.items():
+        if code_a == parent and code_b in children:
+            return True
+        if code_b == parent and code_a in children:
+            return True
+        if code_a in children and code_b in children:
+            return True
+    return False
+
 # ---------------------------------------------------------------------------
 # Caricamento dati
 # ---------------------------------------------------------------------------
@@ -104,6 +147,21 @@ def load_all_data() -> dict[str, pd.DataFrame]:
     datasets["allarme_regioni"] = pd.DataFrame(
         load_json("reati_allarme_sociale_regioni.json")
     )
+
+    # Popolazione regionale per media pesata nei confronti territoriali
+    pop_path = PROJECT_ROOT / "data" / "processed" / "popolazione_regioni_province.csv"
+    pop = pd.read_csv(pop_path)
+    pop_reg = pop[pop["livello"] == "regione"][["REF_AREA", "Anno", "Popolazione"]].copy()
+    # Unifica ITD1+ITD2 (Trentino-Alto Adige) per coerenza con autori_vittime_regioni
+    trento_bolzano = pop_reg[pop_reg["REF_AREA"].isin(["ITD1", "ITD2"])]
+    if len(trento_bolzano) > 0:
+        merged = trento_bolzano.groupby("Anno")["Popolazione"].sum().reset_index()
+        merged["REF_AREA"] = "ITD1+ITD2"
+        pop_reg = pd.concat([
+            pop_reg[~pop_reg["REF_AREA"].isin(["ITD1", "ITD2"])],
+            merged,
+        ], ignore_index=True)
+    datasets["popolazione_regioni"] = pop_reg
 
     for name, df in datasets.items():
         log.info(f"  {name}: {len(df)} righe, colonne: {list(df.columns)}")
@@ -564,6 +622,10 @@ def analyze_correlazioni_reati(df: pd.DataFrame) -> list[dict]:
                     continue
                 tested.add(pair)
 
+                # Escludi coppie genitore-figlio e fratelli
+                if is_tautological_pair(col_a, col_b):
+                    continue
+
                 series_a = pivot[col_a].values
                 series_b = pivot[col_b].values
 
@@ -695,7 +757,9 @@ def analyze_diff_categorie(df: pd.DataFrame) -> list[dict]:
 # Analisi 10: Confronti territoriali (Nord vs Centro vs Sud)
 # ---------------------------------------------------------------------------
 
-def analyze_confronti_territoriali(df_regioni: pd.DataFrame) -> list[dict]:
+def analyze_confronti_territoriali(
+    df_regioni: pd.DataFrame, pop_regioni: pd.DataFrame
+) -> list[dict]:
     """Confronta trend tra ripartizioni (Nord/Centro/Sud) per dimensione."""
     candidates = []
 
@@ -705,6 +769,11 @@ def analyze_confronti_territoriali(df_regioni: pd.DataFrame) -> list[dict]:
         ("pct_femmine", "% femmine"),
         ("tasso", "tasso per 100k"),
     ]
+
+    # Lookup popolazione: (codice_regione, anno) -> popolazione
+    pop_lookup = {}
+    for _, row in pop_regioni.iterrows():
+        pop_lookup[(row["REF_AREA"], int(row["Anno"]))] = row["Popolazione"]
 
     for data_type in ["OFFEND", "VICTIM"]:
         dt_df = df_regioni[df_regioni["data_type"] == data_type]
@@ -725,8 +794,22 @@ def analyze_confronti_territoriali(df_regioni: pd.DataFrame) -> list[dict]:
                         continue
 
                     if col == "tasso":
-                        # Media pesata per popolazione (approssimata con totale)
-                        agg = sub.groupby("anno")[col].mean().sort_index()
+                        # Media pesata per popolazione
+                        sub = sub.copy()
+                        sub["_pop"] = sub.apply(
+                            lambda r: pop_lookup.get(
+                                (r["codice_regione"], int(r["anno"])), np.nan
+                            ),
+                            axis=1,
+                        )
+                        sub = sub.dropna(subset=["_pop"])
+                        if len(sub) == 0:
+                            continue
+                        sub["_w_tasso"] = sub[col] * sub["_pop"]
+                        agg_num = sub.groupby("anno")["_w_tasso"].sum()
+                        agg_den = sub.groupby("anno")["_pop"].sum()
+                        agg_den = agg_den.replace(0, np.nan)
+                        agg = (agg_num / agg_den).dropna().sort_index()
                     else:
                         # Media pesata delle % sul totale
                         sub = sub.copy()
@@ -857,13 +940,13 @@ def score_candidates(df: pd.DataFrame) -> pd.DataFrame:
         + 0.15 * df["score_length"]
     )
 
-    # Confidenza
+    # Confidenza a tre livelli con soglie riviste
     df["confidence"] = "low"
     df.loc[df["fdr_significant"] & (df["score"] >= 0.5), "confidence"] = "medium"
     df.loc[
         df["fdr_significant"]
-        & (df["score"] >= 0.7)
-        & (df["monotonicity"] >= 0.8),
+        & (df["monotonicity"] >= 0.7)
+        & (df["n_points"] >= 12),
         "confidence",
     ] = "high"
 
@@ -1166,7 +1249,9 @@ def main():
     all_candidates.extend(analyze_diff_categorie(data["avt"]))
 
     log.info("Analisi confronti territoriali (Nord/Centro/Sud)...")
-    all_candidates.extend(analyze_confronti_territoriali(data["avr"]))
+    all_candidates.extend(
+        analyze_confronti_territoriali(data["avr"], data["popolazione_regioni"])
+    )
 
     log.info(f"Totale candidati pre-FDR: {len(all_candidates)}")
 

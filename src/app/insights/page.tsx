@@ -37,8 +37,8 @@ export default function Insights() {
             period="2007-2024"
           >
             <p>
-              Gli autori denunciati per rapine in banca sono passati da 2.526 a
-              meno di 100, con un calo monotono nell&apos;82% degli anni. La
+              Gli autori denunciati per rapine in banca sono passati da 2.893 a
+              367, con un calo monotono nell&apos;82% degli anni. La
               digitalizzazione dei servizi bancari e il rafforzamento delle
               misure di sicurezza fisiche hanno reso questo reato sempre meno
               praticabile.
@@ -381,7 +381,7 @@ export default function Insights() {
             <p>
               Il tasso di rapine (vittime) al Nord cresce rispetto al Sud
               in modo significativo e costante (monotonia 76%). Sia nel
-              confronto Nord vs Sud (+33 per 100k) sia Centro vs Sud (+30
+              confronto Nord vs Sud (+63 per 100k) sia Centro vs Sud (+61
               per 100k). Il tradizionale divario con il Mezzogiorno si sta
               riducendo o invertendo per questo tipo di reato.
             </p>
@@ -394,9 +394,9 @@ export default function Insights() {
           >
             <p>
               Il tasso di truffe e frodi informatiche (vittime) al Nord
-              cresce significativamente pi&ugrave; che al Sud (+129 per 100k
+              cresce significativamente pi&ugrave; che al Sud (+118 per 100k
               nella differenza). Anche per gli autori, il divario Nord-Sud
-              aumenta (+72 per 100k, monotonia 65%). La digitalizzazione
+              aumenta (+85 per 100k, monotonia 65%). La digitalizzazione
               pi&ugrave; avanzata espone a maggiore vittimizzazione
               informatica.
             </p>
@@ -409,8 +409,8 @@ export default function Insights() {
           >
             <p>
               Il tasso di autori denunciati per violenze sessuali al Nord
-              cresce significativamente rispetto al Sud (+4,1 per 100k) e al
-              Centro (+3,0 per 100k). Il divario si amplia anche per le
+              cresce significativamente rispetto al Sud (+2,3 per 100k) e al
+              Centro (+1,8 per 100k). Il divario si amplia anche per le
               vittime.
             </p>
             <Caveat>
@@ -447,7 +447,7 @@ export default function Insights() {
         <div className="text-sm text-muted-foreground space-y-3">
           <p>
             Gli insight sono stati estratti analizzando sistematicamente{" "}
-            <strong>2.355 combinazioni</strong> di reato, dimensione
+            <strong>2.318 combinazioni</strong> di reato, dimensione
             demografica, territorio e periodo temporale. Su queste combinazioni
             sono stati applicati i seguenti test statistici:
           </p>
