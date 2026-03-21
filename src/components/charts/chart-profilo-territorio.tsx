@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
+import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
@@ -38,6 +39,7 @@ export function ChartProfiloTerritorio({ dataType }: Props) {
     "/data/autori_vittime_regioni.json"
   );
   const [selectedRegione, setSelectedRegione] = useState<string | null>(null);
+  const setRegioneStable = useCallback((v: string) => setSelectedRegione(v), []);
   const [selectedAnno, setSelectedAnno] = useState<number | null>(null);
 
   const regioni = useMemo(() => {
@@ -52,6 +54,8 @@ export function ChartProfiloTerritorio({ dataType }: Props) {
   const regione = selectedRegione && regioni.includes(selectedRegione)
     ? selectedRegione
     : regioni[0] ?? "Abruzzo";
+
+  const { handleSync } = useFilterSync("regione", regione, setRegioneStable);
 
   const anniDisponibili = useMemo(() => {
     if (!data) return [];
@@ -127,8 +131,9 @@ export function ChartProfiloTerritorio({ dataType }: Props) {
     <div className="space-y-3">
       <div className="flex items-end gap-4 flex-wrap">
         <div>
-          <label htmlFor="profilo-regione" className="block text-sm font-medium mb-1">
+          <label htmlFor="profilo-regione" className="text-sm font-medium mb-1 flex items-center">
             Regione
+            <SyncButton onClick={() => handleSync()} />
           </label>
           <select
             id="profilo-regione"

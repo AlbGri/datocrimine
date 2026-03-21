@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
+import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 
 interface ProvinciaRecord {
   data_type: "OFFEND" | "VICTIM";
@@ -29,6 +30,7 @@ export function ChartAutoriTrendProvincia({ dataType }: Props) {
   const VICTIM_DEFAULT = "CULPINJU";
   const [codiceReato, setCodiceReato] = useState(VICTIM_DEFAULT);
   const [regioneSelezionata, setRegioneSelezionata] = useState("");
+  const setRegioneStable = useCallback((v: string) => setRegioneSelezionata(v), []);
 
   // Solo reati con dati multi-anno (escludi TOT che ha solo 2022)
   const reatiDisponibili = useMemo(() => {
@@ -66,6 +68,8 @@ export function ChartAutoriTrendProvincia({ dataType }: Props) {
     }
     return Array.from(set).sort((a, b) => a.localeCompare(b, "it"));
   }, [data, dataType, effectiveReato]);
+
+  const { handleSync } = useFilterSync("regione", regioneSelezionata || regioni[0] || "", setRegioneStable);
 
   const effectiveRegione = useMemo(() => {
     if (regioni.includes(regioneSelezionata)) return regioneSelezionata;
@@ -149,8 +153,9 @@ export function ChartAutoriTrendProvincia({ dataType }: Props) {
           </select>
         </div>
         <div>
-          <label htmlFor="trend-prov-regione" className="block text-sm font-medium mb-1">
+          <label htmlFor="trend-prov-regione" className="text-sm font-medium mb-1 flex items-center">
             Regione
+            <SyncButton onClick={() => handleSync()} />
           </label>
           <select
             id="trend-prov-regione"

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
@@ -16,6 +16,7 @@ import {
 } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
+import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
@@ -50,6 +51,7 @@ export function ChartAllarmeTrendProvincia({ reato }: Props) {
   );
   const [regione, setRegione] = useState<string>("");
   const [provincia, setProvincia] = useState<string>("");
+  const setRegioneStable = useCallback((v: string) => { setRegione(v); setProvincia(""); }, []);
 
   const regioni = useMemo(() => {
     if (!data) return [];
@@ -57,6 +59,7 @@ export function ChartAllarmeTrendProvincia({ reato }: Props) {
   }, [data]);
 
   const selectedRegione = regione || regioni[0] || "";
+  const { handleSync } = useFilterSync("regione", selectedRegione, setRegioneStable);
 
   const province = useMemo(() => {
     if (!data) return [];
@@ -115,9 +118,10 @@ export function ChartAllarmeTrendProvincia({ reato }: Props) {
         <div>
           <label
             htmlFor="allarme-prov-regione-select"
-            className="block text-sm font-medium mb-1"
+            className="text-sm font-medium mb-1 flex items-center"
           >
             Regione
+            <SyncButton onClick={() => handleSync()} />
           </label>
           <select
             id="allarme-prov-regione-select"

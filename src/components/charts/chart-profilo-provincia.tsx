@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
+import { useFilterSync } from "@/lib/filter-sync-context";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
@@ -73,6 +74,13 @@ export function ChartProfiloProvincia({ dataType }: Props) {
   const provincia = selectedProvincia && province.some((p) => p.provincia === selectedProvincia)
     ? selectedProvincia
     : province[0]?.provincia ?? "Agrigento";
+
+  // Sync regione: quando arriva broadcast regione, seleziona la prima provincia di quella regione
+  const setRegioneForSync = useCallback((v: string) => {
+    const match = province.find((p) => p.regione === v);
+    if (match) setSelectedProvincia(match.provincia);
+  }, [province]);
+  useFilterSync("regione", province.find((p) => p.provincia === provincia)?.regione ?? "", setRegioneForSync);
 
   const anniDisponibili = useMemo(() => {
     if (!provData) return [];
@@ -158,7 +166,7 @@ export function ChartProfiloProvincia({ dataType }: Props) {
     <div className="space-y-3">
       <div className="flex items-end gap-4 flex-wrap">
         <div>
-          <label htmlFor="profilo-provincia" className="block text-sm font-medium mb-1">
+          <label htmlFor="profilo-provincia" className="text-sm font-medium mb-1 flex items-center">
             Provincia
           </label>
           <select

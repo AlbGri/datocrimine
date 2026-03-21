@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
@@ -14,6 +14,7 @@ import {
 } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
+import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
@@ -55,6 +56,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
     "/data/autori_vittime_regioni.json"
   );
   const [regione, setRegione] = useState("");
+  const setRegioneStable = useCallback((v: string) => setRegione(v), []);
   const [codiceReato, setCodiceReato] = useState("TOT");
 
   const reatiDisponibili = useMemo(() => {
@@ -92,6 +94,9 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
     }
     return Array.from(set).sort((a, b) => a.localeCompare(b, "it"));
   }, [data, dataType, effectiveReato]);
+
+  const effectiveRegione = regione || regioni[0] || "";
+  const { handleSync } = useFilterSync("regione", effectiveRegione, setRegioneStable);
 
   // Media nazionale ponderata per il tasso
   const mediaNazionaleTasso = useMemo(() => {
@@ -211,8 +216,9 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
           </select>
         </div>
         <div>
-          <label htmlFor="trend-reg-regione" className="block text-sm font-medium mb-1">
+          <label htmlFor="trend-reg-regione" className="text-sm font-medium mb-1 flex items-center">
             Regione
+            <SyncButton onClick={() => handleSync()} />
           </label>
           <select
             id="trend-reg-regione"

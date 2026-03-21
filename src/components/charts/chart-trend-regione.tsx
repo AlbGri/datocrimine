@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
@@ -16,6 +16,7 @@ import {
 } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
+import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
@@ -34,11 +35,15 @@ export function ChartTrendRegione() {
     "/data/delitti_regioni.json"
   );
   const [regione, setRegione] = useState<string>("");
+  const setRegioneStable = useCallback((v: string) => setRegione(v), []);
 
   const regioni = useMemo(() => {
     if (!data) return [];
     return [...new Set(data.map((d) => d.Territorio))].sort((a, b) => a.localeCompare(b, "it"));
   }, [data]);
+
+  const effectiveRegione = regione || regioni[0] || "";
+  const { handleSync } = useFilterSync("regione", effectiveRegione, setRegioneStable);
 
   // Media nazionale ponderata per anno
   const mediaNazionale = useMemo(() => {
@@ -72,8 +77,9 @@ export function ChartTrendRegione() {
   return (
     <div className="space-y-3">
       <div>
-        <label htmlFor="regione-trend-select" className="block text-sm font-medium mb-1">
+        <label htmlFor="regione-trend-select" className="text-sm font-medium mb-1 flex items-center">
           Seleziona regione
+          <SyncButton onClick={() => handleSync()} />
         </label>
         <select
           id="regione-trend-select"

@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { varTriennale, TRIENNALE_LABEL } from "@/lib/config";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 
 interface DelittiProvincia {
   REF_AREA: string;
@@ -27,6 +28,7 @@ export function ChartTabellaProvince({ anno }: Props) {
     "/data/delitti_province.json"
   );
   const [regioneSelezionata, setRegioneSelezionata] = useState("Tutte le regioni");
+  const setRegioneStable = useCallback((v: string) => setRegioneSelezionata(v), []);
   const [sortKey, setSortKey] = useState<SortKey>("Tasso_per_1000");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
 
@@ -35,6 +37,8 @@ export function ChartTabellaProvince({ anno }: Props) {
     const set = new Set(data.map((d) => d.Regione));
     return Array.from(set).sort((a, b) => a.localeCompare(b, "it"));
   }, [data]);
+
+  const { handleSync } = useFilterSync("regione", regioneSelezionata, setRegioneStable);
 
   const handleSort = useCallback((key: SortKey) => {
     if (key === sortKey) {
@@ -158,9 +162,10 @@ export function ChartTabellaProvince({ anno }: Props) {
         <div>
           <label
             htmlFor="regione-select"
-            className="block text-sm font-medium mb-1"
+            className="text-sm font-medium mb-1 flex items-center"
           >
             Filtra per regione
+            <SyncButton onClick={() => handleSync()} />
           </label>
           <select
             id="regione-select"

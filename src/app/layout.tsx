@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { FilterSyncProvider } from "@/lib/filter-sync-context";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -51,11 +52,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <FilterSyncProvider>
         <Header />
         <div className="min-h-[calc(100vh-3.5rem)]">
           {children}
         </div>
         <Footer />
+        </FilterSyncProvider>
       </body>
     </html>
   );

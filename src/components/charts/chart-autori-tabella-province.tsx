@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
+import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 
 interface ProvinciaRecord {
   data_type: "OFFEND" | "VICTIM";
@@ -39,6 +40,7 @@ export function ChartAutoriTabellaProvince({ dataType }: Props) {
   const [regioneSelezionata, setRegioneSelezionata] = useState(
     "Tutte le regioni"
   );
+  const setRegioneStable = useCallback((v: string) => setRegioneSelezionata(v), []);
   const [reatoSelezionato, setReatoSelezionato] = useState("TOT");
   const [annoSelezionato, setAnnoSelezionato] = useState(2022);
   const [sortKey, setSortKey] = useState<SortKey>("pct_stranieri");
@@ -112,6 +114,8 @@ export function ChartAutoriTabellaProvince({ dataType }: Props) {
     }
     return Array.from(set).sort((a, b) => a.localeCompare(b, "it"));
   }, [data, dataType]);
+
+  const { handleSync } = useFilterSync("regione", regioneSelezionata, setRegioneStable);
 
   const handleSort = useCallback(
     (key: SortKey) => {
@@ -236,9 +240,10 @@ export function ChartAutoriTabellaProvince({ dataType }: Props) {
         <div>
           <label
             htmlFor="regione-prov-select"
-            className="block text-sm font-medium mb-1"
+            className="text-sm font-medium mb-1 flex items-center"
           >
             Filtra per regione
+            <SyncButton onClick={() => handleSync()} />
           </label>
           <select
             id="regione-prov-select"
