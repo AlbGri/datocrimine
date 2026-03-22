@@ -11,7 +11,8 @@ Un progetto open source per rendere accessibili e comprensibili i dati ufficiali
 - **Home** - KPI nazionali, trend delitti denunciati, percezione vs dati, numero oscuro e propensione alla denuncia
 - **Analisi Territoriale** - Mappa coropletica regioni con frecce trend, ranking regionale, trend regione/provincia, tabella province con filtro
 - **Reati di Allarme Sociale** - Focus su 6 reati rari ad alto impatto (omicidi, violenze sessuali, rapine in abitazione, ecc.): trend nazionale, ranking regionale, trend regione/provincia, tabella province
-- **Persone Denunciate** - Autori denunciati e vittime di delitto: breakdown per sesso, cittadinanza e et&agrave;, trend nazionale, ranking regionale, trend regione/provincia, tabella province (toggle Autori/Vittime)
+- **Persone Denunciate** - Autori e vittime di delitto: profilo criminale a 3 livelli (nazionale, regionale, provinciale) con selettore metrica (tasso, % stranieri/maschi/femmine/minori), trend, ranking, tabelle province
+- **Insights** - Analisi statistica automatizzata: 23 insight curati su trend, composizione demografica, anomalie, confronti tra categorie e territori. Filtri per categoria e dimensione, badge test statistici cliccabili
 - **Metodologia** - Principi metodologici, fonti, frequenza aggiornamento e trasparenza
 - **Guida alla Lettura** - Come interpretare grafici e dati, cosa non si pu&ograve; concludere, bias noti
 - **Dati e Codice** - Dataset, istruzioni per replicare, licenze

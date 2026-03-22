@@ -16,19 +16,27 @@ type Category =
 
 type Dimension = "genere" | "stranieri" | "territoriale";
 
+type TestType =
+  | "mann-kendall"
+  | "spearman"
+  | "divergenza"
+  | "confronto-categorie"
+  | "confronto-territoriale"
+  | "rapporto-av";
+
 type Insight = {
   id: string;
   title: string;
   category: Category;
   dimensions: Dimension[];
-  confidence: "alta" | "media";
+  tests: TestType[];
   period: string;
   body: string;
   caveat?: string;
 };
 
 /* ================================================================
-   Metadata categorie e dimensioni
+   Metadata
    ================================================================ */
 
 const CATEGORY_ORDER: Category[] = [
@@ -72,6 +80,42 @@ const DIMENSION_OPTIONS: { value: Dimension; label: string }[] = [
   { value: "territoriale", label: "Territoriale" },
 ];
 
+const TESTS: Record<
+  TestType,
+  { label: string; anchor: string; className: string }
+> = {
+  "mann-kendall": {
+    label: "Mann-Kendall",
+    anchor: "test-mann-kendall",
+    className: "bg-blue-100 text-blue-800 hover:bg-blue-200",
+  },
+  spearman: {
+    label: "Spearman",
+    anchor: "test-spearman",
+    className: "bg-purple-100 text-purple-800 hover:bg-purple-200",
+  },
+  divergenza: {
+    label: "Divergenza regionale",
+    anchor: "test-divergenza",
+    className: "bg-amber-100 text-amber-800 hover:bg-amber-200",
+  },
+  "confronto-categorie": {
+    label: "Confronto categorie",
+    anchor: "test-confronto-categorie",
+    className: "bg-teal-100 text-teal-800 hover:bg-teal-200",
+  },
+  "confronto-territoriale": {
+    label: "Confronto territoriale",
+    anchor: "test-confronto-territoriale",
+    className: "bg-indigo-100 text-indigo-800 hover:bg-indigo-200",
+  },
+  "rapporto-av": {
+    label: "Rapporto A/V",
+    anchor: "test-rapporto-av",
+    className: "bg-rose-100 text-rose-800 hover:bg-rose-200",
+  },
+};
+
 /* ================================================================
    Dati insight
    ================================================================ */
@@ -83,7 +127,7 @@ const INSIGHTS: Insight[] = [
     title: "Rapine in banca: un reato in via di estinzione",
     category: "trend",
     dimensions: [],
-    confidence: "alta",
+    tests: ["mann-kendall"],
     period: "2007-2024",
     body: "Gli autori denunciati per rapine in banca sono passati da 2.893 a 367, con un calo quasi ininterrotto nel tempo. La digitalizzazione dei servizi bancari e il rafforzamento delle misure di sicurezza fisiche hanno reso questo reato sempre meno praticabile.",
   },
@@ -92,7 +136,7 @@ const INSIGHTS: Insight[] = [
     title: "Stalking: emersione costante del fenomeno",
     category: "trend",
     dimensions: [],
-    confidence: "alta",
+    tests: ["mann-kendall"],
     period: "2009-2023",
     body: "Le vittime di atti persecutori (stalking) sono passate da circa 5.000 a oltre 18.000 (+264%), con una crescita quasi costante anno dopo anno. L\u2019introduzione del reato nel 2009 (art. 612-bis c.p.) e le successive campagne di sensibilizzazione hanno progressivamente ridotto il numero oscuro, portando pi\u00f9 vittime a denunciare.",
     caveat:
@@ -103,25 +147,25 @@ const INSIGHTS: Insight[] = [
     title: "Truffe e frodi informatiche: il reato del decennio",
     category: "trend",
     dimensions: [],
-    confidence: "media",
+    tests: ["mann-kendall"],
     period: "2007-2024",
-    body: "Le vittime di truffe e frodi informatiche sono pi\u00f9 che raddoppiate: da 109.000 a 236.000. Gli autori denunciati sono passati da 46.000 a 73.000. Il fenomeno \u00e8 uniforme su tutto il territorio: in 64 regioni-reato su 88 analizzate, il trend regionale \u00e8 significativamente crescente.",
+    body: "Le vittime di truffe e frodi informatiche sono pi\u00f9 che raddoppiate: da 109.000 a 236.000, con una crescita graduale lungo l\u2019intero periodo. Gli autori denunciati sono passati da 46.000 a 73.000. Il fenomeno \u00e8 uniforme su tutto il territorio: in 64 regioni-reato su 88 analizzate, il trend regionale \u00e8 significativamente crescente.",
   },
   {
     id: "omicidi",
     title: "Omicidi volontari in calo strutturale",
     category: "trend",
     dimensions: [],
-    confidence: "media",
+    tests: ["mann-kendall"],
     period: "2007-2024",
-    body: "Gli autori denunciati per omicidio volontario sono scesi da 1.199 a 771 (-36%), le vittime da 631 a 328 (-48%). Il calo include gli omicidi di tipo mafioso, passati da 476 a 130 autori denunciati. Il trend \u00e8 coerente con la tendenza europea di lungo periodo.",
+    body: "Gli autori denunciati per omicidio volontario sono scesi da 1.199 a 771 (-36%), le vittime da 631 a 328 (-48%), con un calo graduale lungo l\u2019intero periodo. Il calo include gli omicidi di tipo mafioso, passati da 476 a 130 autori denunciati. Il trend \u00e8 coerente con la tendenza europea di lungo periodo.",
   },
   {
     id: "sequestri",
     title: "Sequestri di persona dimezzati",
     category: "trend",
     dimensions: [],
-    confidence: "media",
+    tests: ["mann-kendall"],
     period: "2007-2024",
     body: "Autori denunciati passati da 2.355 a 1.185, vittime da 2.095 a 737. Il calo \u00e8 presente in circa 3 anni su 4, un reato che ha perso progressivamente attrattivit\u00e0 criminale.",
   },
@@ -130,20 +174,20 @@ const INSIGHTS: Insight[] = [
     title: "Usura: le denunce crollano, ma il sommerso resta",
     category: "trend",
     dimensions: [],
-    confidence: "media",
+    tests: ["mann-kendall"],
     period: "2007-2024",
-    body: "Gli autori denunciati per usura sono passati da 1.392 a 495, le vittime da 298 a 106. Un calo marcato che va letto con cautela.",
+    body: "Gli autori denunciati per usura sono passati da 1.392 a 495, le vittime da 298 a 106. Un calo graduale lungo l\u2019intero periodo, che va letto con cautela.",
     caveat:
-      "L\u2019usura ha uno dei numeri oscuri pi\u00f9 alti tra tutti i reati: le vittime raramente denunciano per paura di ritorsioni o perch\u00e9 coinvolte in situazioni di illegalit\u00e0. Il calo delle denunce non implica un calo del fenomeno.",
+      "L\u2019usura \u00e8 per sua natura un reato con alta cifra oscura: il rapporto di dipendenza tra vittima e usuraio rende la denuncia rara. Il calo delle denunce non implica un calo del fenomeno.",
   },
   {
     id: "estorsioni",
     title: "Estorsioni: pi\u00f9 vittime, meno stranieri coinvolti",
     category: "trend",
     dimensions: ["stranieri"],
-    confidence: "media",
+    tests: ["mann-kendall"],
     period: "2007-2024",
-    body: "Le vittime di estorsione sono aumentate del 70%, da 6.704 a 11.433. Contemporaneamente, la percentuale di vittime straniere \u00e8 scesa dal 16,4% all\u20198,8%. L\u2019estorsione colpisce in misura crescente cittadini italiani.",
+    body: "Le vittime di estorsione sono aumentate del 70%, da 6.704 a 11.433, con una crescita graduale nel tempo. Contemporaneamente, la percentuale di vittime straniere \u00e8 scesa dal 16,4% all\u20198,8% con andamento altrettanto costante. L\u2019estorsione colpisce in misura crescente cittadini italiani.",
   },
   // --- COMPOSIZIONE DEMOGRAFICA ---
   {
@@ -151,9 +195,9 @@ const INSIGHTS: Insight[] = [
     title: "Rapine: la quota di autori stranieri raddoppia",
     category: "demografica",
     dimensions: ["stranieri"],
-    confidence: "alta",
+    tests: ["mann-kendall"],
     period: "2007-2024",
-    body: "La percentuale di autori stranieri denunciati per rapine \u00e8 passata dal 35,5% al 52,4% (+16,9 punti percentuali). Il trend \u00e8 coerente su tutte le tipologie: rapine in strada (47% \u2192 60%), in esercizi commerciali (36% \u2192 50%). Anche tra le vittime di rapina, la quota di stranieri \u00e8 salita dal 14% al 26%, con un aumento quasi costante anno dopo anno.",
+    body: "La percentuale di autori stranieri denunciati per rapine \u00e8 passata dal 35,5% al 52,4% (+16,9 punti percentuali), con un aumento graduale lungo l\u2019intero periodo. Il trend \u00e8 coerente su tutte le tipologie: rapine in strada (47% \u2192 60%), in esercizi commerciali (36% \u2192 50%). Anche tra le vittime di rapina, la quota di stranieri \u00e8 salita dal 14% al 26%, con un aumento quasi costante anno dopo anno.",
     caveat:
       "Il dato riflette le denunce, non necessariamente la criminalit\u00e0 reale. Fattori come la maggiore visibilit\u00e0 e le pratiche di controllo differenziate possono influenzare la composizione degli autori denunciati.",
   },
@@ -162,7 +206,7 @@ const INSIGHTS: Insight[] = [
     title: "Furti con destrezza: ribaltamento di genere tra le vittime",
     category: "demografica",
     dimensions: ["genere", "stranieri"],
-    confidence: "media",
+    tests: ["mann-kendall"],
     period: "2008-2024",
     body: "La percentuale di vittime donne di furti con destrezza (borseggi) \u00e8 scesa dall\u201981% al 54%, quella degli uomini \u00e8 salita dal 19% al 46%. \u00c8 la tendenza pi\u00f9 regolare dell\u2019intero dataset: in oltre 9 anni su 10 il valore si muove nella stessa direzione. Contemporaneamente, la quota di autori stranieri \u00e8 salita dal 34% al 61%.",
   },
@@ -171,7 +215,7 @@ const INSIGHTS: Insight[] = [
     title: "Cybercrimine: convergenza di genere",
     category: "demografica",
     dimensions: ["genere"],
-    confidence: "media",
+    tests: ["mann-kendall"],
     period: "2008-2024",
     body: "Tra le vittime di delitti informatici, le donne sono passate dal 34% al 49,6%, sfiorando la parit\u00e0 con gli uomini. Per truffe e frodi informatiche le vittime donne sono cresciute dal 34,5% al 43,4%, con un aumento quasi costante nel tempo. Il cybercrimine diventa progressivamente trasversale al genere.",
   },
@@ -180,9 +224,9 @@ const INSIGHTS: Insight[] = [
     title: "Omicidi: la quota di vittime donne cresce",
     category: "demografica",
     dimensions: ["genere"],
-    confidence: "media",
+    tests: ["mann-kendall"],
     period: "2008-2024",
-    body: "Le vittime donne di omicidio volontario sono passate dal 24% al 34,5% del totale (+10,5 punti percentuali). Gli omicidi calano complessivamente, ma calano di pi\u00f9 quelli con vittime maschili. Il dato \u00e8 coerente con l\u2019attenzione crescente al tema dei femminicidi e con il calo degli omicidi legati alla criminalit\u00e0 organizzata (prevalentemente maschili).",
+    body: "Le vittime donne di omicidio volontario sono passate dal 24% al 34,5% del totale, con un aumento graduale nel tempo. Non perch\u00e9 i femminicidi aumentino, ma perch\u00e9 calano di pi\u00f9 gli omicidi con vittime maschili, in particolare quelli legati alla criminalit\u00e0 organizzata.",
   },
   {
     id: "violenze-sessuali-straniere",
@@ -190,9 +234,9 @@ const INSIGHTS: Insight[] = [
       "Violenze sessuali: il tasso sale, la quota di vittime straniere scende",
     category: "demografica",
     dimensions: ["stranieri"],
-    confidence: "media",
+    tests: ["mann-kendall"],
     period: "2007-2024",
-    body: "Il tasso di violenze sessuali denunciate \u00e8 aumentato da 7,0 a 11,6 per 100.000 abitanti. Contemporaneamente, la percentuale di vittime straniere \u00e8 scesa dal 31% al 22,5% (-8,5 punti percentuali).",
+    body: "Il tasso di violenze sessuali denunciate \u00e8 aumentato da 7,0 a 11,6 per 100.000 abitanti, con una crescita graduale lungo l\u2019intero periodo. Contemporaneamente, la percentuale di vittime straniere \u00e8 scesa dal 31% al 22,5% (-8,5 punti percentuali).",
     caveat:
       "L\u2019aumento delle denunce riflette principalmente campagne di sensibilizzazione (es. #MeToo) e maggiore fiducia nelle istituzioni. \u00c8 un segnale positivo di emersione del sommerso, non necessariamente di aumento del fenomeno.",
   },
@@ -201,9 +245,9 @@ const INSIGHTS: Insight[] = [
     title: "Incendi dolosi: pi\u00f9 autori e pi\u00f9 stranieri",
     category: "demografica",
     dimensions: ["stranieri"],
-    confidence: "media",
+    tests: ["mann-kendall"],
     period: "2007-2024",
-    body: "Gli autori denunciati per incendi dolosi sono aumentati di 607 unit\u00e0, e la percentuale di autori stranieri \u00e8 salita dal 17,4% al 34% (+16,6 punti percentuali). Trend significativo su entrambe le dimensioni.",
+    body: "Gli autori denunciati per incendi dolosi sono aumentati di 607 unit\u00e0, e la percentuale di autori stranieri \u00e8 salita dal 17,4% al 34% (+16,6 punti percentuali). Entrambi i trend sono graduali lungo l\u2019intero periodo.",
   },
   // --- ANOMALIE E DIVERGENZE ---
   {
@@ -211,7 +255,7 @@ const INSIGHTS: Insight[] = [
     title: "Percezione e realt\u00e0: direzioni indipendenti",
     category: "anomalie",
     dimensions: [],
-    confidence: "media",
+    tests: ["spearman"],
     period: "2014-2024",
     body: "Il tasso di delitti denunciati non mostra una tendenza chiara (da 46,6 a 40,7 per 1.000 abitanti). La percezione di insicurezza delle famiglie ha avuto un andamento indipendente: picco al 41% nel 2015, discesa al 21% nel 2021, risalita al 27% nel 2024. La correlazione tra le due serie \u00e8 debole.",
     caveat:
@@ -222,7 +266,7 @@ const INSIGHTS: Insight[] = [
     title: "Violenze sessuali: divergenza regionale crescente",
     category: "anomalie",
     dimensions: ["territoriale"],
-    confidence: "media",
+    tests: ["divergenza"],
     period: "2007-2024",
     body: "La dispersione dei tassi di violenze sessuali tra regioni aumenta significativamente nel tempo, sia per gli autori sia per le vittime. Il fenomeno non \u00e8 uniforme sul territorio: alcune regioni mostrano aumenti marcati, altre stagnazione. Questo pu\u00f2 riflettere differenze nella propensione alla denuncia pi\u00f9 che nella diffusione del reato.",
   },
@@ -231,7 +275,7 @@ const INSIGHTS: Insight[] = [
     title: "Reati fisici e digitali: due velocit\u00e0 investigative",
     category: "anomalie",
     dimensions: [],
-    confidence: "media",
+    tests: ["rapporto-av"],
     period: "2007-2024",
     body: "Per i reati fisici, il rapporto tra autori identificati e vittime migliora costantemente: nelle rapine passa da 0,45 a 1,05 (oggi si identifica pi\u00f9 di un autore per ogni vittima), nelle rapine in esercizi commerciali da 0,64 a 1,87. Per i reati digitali accade l\u2019opposto: nei delitti informatici il rapporto crolla da 0,29 a 0,08 (un autore ogni 12 vittime), nelle truffe da 0,43 a 0,31. Le vittime digitali crescono molto pi\u00f9 velocemente della capacit\u00e0 di identificare gli autori.",
   },
@@ -241,7 +285,7 @@ const INSIGHTS: Insight[] = [
     title: "Reati informatici vs patrimoniali: il sorpasso tra le vittime",
     category: "categorie",
     dimensions: [],
-    confidence: "media",
+    tests: ["confronto-categorie"],
     period: "2007-2024",
     body: "La differenza nel numero di vittime tra reati patrimoniali e informatici si riduce significativamente nel tempo: le vittime di reati informatici crescono molto pi\u00f9 velocemente di quelle dei reati patrimoniali tradizionali (cambio: -1.018.000 nella differenza). Le truffe online stanno erodendo la predominanza dei furti fisici.",
   },
@@ -250,7 +294,7 @@ const INSIGHTS: Insight[] = [
     title: "Reati violenti vs patrimoniali: le vittime divergono",
     category: "categorie",
     dimensions: [],
-    confidence: "media",
+    tests: ["confronto-categorie"],
     period: "2007-2024",
     body: "La differenza nel numero di vittime tra reati violenti e patrimoniali cresce significativamente (+900.000): i reati patrimoniali calano pi\u00f9 di quelli violenti. Il profilo complessivo della criminalit\u00e0 denunciata si sta spostando: meno reati contro il patrimonio, tenuta dei reati contro la persona.",
   },
@@ -259,7 +303,7 @@ const INSIGHTS: Insight[] = [
     title: "Autori stranieri: pi\u00f9 concentrati nei reati violenti",
     category: "categorie",
     dimensions: ["stranieri"],
-    confidence: "media",
+    tests: ["confronto-categorie"],
     period: "2007-2024",
     body: "La differenza nella percentuale di autori stranieri tra reati violenti e informatici \u00e8 in crescita (+9,2 punti percentuali): la quota di stranieri aumenta pi\u00f9 nei reati violenti che in quelli informatici, dove anzi diminuisce (dal 37% al 20%).",
     caveat:
@@ -271,7 +315,7 @@ const INSIGHTS: Insight[] = [
     title: "Rapine: il gap Nord-Sud si inverte",
     category: "territoriali",
     dimensions: ["territoriale"],
-    confidence: "media",
+    tests: ["confronto-territoriale"],
     period: "2007-2024",
     body: "Il tasso di rapine (vittime) al Nord cresce rispetto al Sud in modo costante, con la differenza che aumenta in circa 3 anni su 4. Sia nel confronto Nord vs Sud (+63 per 100k) sia Centro vs Sud (+61 per 100k). Il tradizionale divario con il Mezzogiorno si sta riducendo o invertendo per questo tipo di reato.",
   },
@@ -280,7 +324,7 @@ const INSIGHTS: Insight[] = [
     title: "Truffe informatiche: il Nord corre di pi\u00f9",
     category: "territoriali",
     dimensions: ["territoriale"],
-    confidence: "media",
+    tests: ["confronto-territoriale"],
     period: "2007-2024",
     body: "Il tasso di truffe e frodi informatiche (vittime) al Nord cresce pi\u00f9 che al Sud (+118 per 100k nella differenza). Anche per gli autori, il divario Nord-Sud aumenta (+85 per 100k), con la differenza che cresce in 2 anni su 3. La digitalizzazione pi\u00f9 avanzata espone a maggiore vittimizzazione informatica.",
   },
@@ -289,7 +333,7 @@ const INSIGHTS: Insight[] = [
     title: "Violenze sessuali: il Nord supera il Sud",
     category: "territoriali",
     dimensions: ["territoriale"],
-    confidence: "media",
+    tests: ["confronto-territoriale"],
     period: "2007-2024",
     body: "Il tasso di autori denunciati per violenze sessuali al Nord cresce significativamente rispetto al Sud (+2,3 per 100k) e al Centro (+1,8 per 100k). Il divario si amplia anche per le vittime.",
     caveat:
@@ -300,7 +344,7 @@ const INSIGHTS: Insight[] = [
     title: "Autori stranieri per stupefacenti: divario Nord-Sud crescente",
     category: "territoriali",
     dimensions: ["stranieri", "territoriale"],
-    confidence: "media",
+    tests: ["confronto-territoriale"],
     period: "2007-2024",
     body: "La differenza nella percentuale di autori stranieri per stupefacenti tra Nord e Sud cresce di circa 10 punti percentuali, con un aumento presente in 2 anni su 3. Al Nord la quota di autori stranieri per droga aumenta molto pi\u00f9 che al Sud, coerentemente con la diversa composizione demografica dei territori.",
   },
@@ -325,12 +369,13 @@ export default function Insights() {
     });
   }, [categoryFilter, dimensionFilter]);
 
-  // Ordina: alta prima di media, poi ordine originale
+  // Ordina per categoria (stesso ordine della vista raggruppata)
   const sorted = useMemo(() => {
-    return [...filtered].sort((a, b) => {
-      if (a.confidence === b.confidence) return 0;
-      return a.confidence === "alta" ? -1 : 1;
-    });
+    return [...filtered].sort(
+      (a, b) =>
+        CATEGORY_ORDER.indexOf(a.category) -
+        CATEGORY_ORDER.indexOf(b.category)
+    );
   }, [filtered]);
 
   const hasFilter = categoryFilter !== null || dimensionFilter !== null;
@@ -359,7 +404,6 @@ export default function Insights() {
 
       {/* Filtri */}
       <div className="space-y-3">
-        {/* Categoria */}
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
             Categoria
@@ -383,7 +427,6 @@ export default function Insights() {
           ))}
         </div>
 
-        {/* Dimensione */}
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
             Dimensione
@@ -409,7 +452,6 @@ export default function Insights() {
           ))}
         </div>
 
-        {/* Conteggio risultati (solo con filtri attivi) */}
         {hasFilter && (
           <p className="text-sm text-muted-foreground">
             {sorted.length} insight su {INSIGHTS.length}
@@ -419,14 +461,9 @@ export default function Insights() {
 
       {/* Insight */}
       {hasFilter ? (
-        // Vista filtrata: lista piatta ordinata per confidenza
         <div className="space-y-4">
           {sorted.map((insight) => (
-            <InsightCard
-              key={insight.id}
-              insight={insight}
-              showCategory
-            />
+            <InsightCard key={insight.id} insight={insight} showCategory />
           ))}
           {sorted.length === 0 && (
             <p className="text-sm text-muted-foreground py-8 text-center">
@@ -435,7 +472,6 @@ export default function Insights() {
           )}
         </div>
       ) : (
-        // Vista default: raggruppata per categoria
         CATEGORY_ORDER.map((cat, i) => {
           const items = INSIGHTS.filter((ins) => ins.category === cat);
           return (
@@ -464,11 +500,12 @@ export default function Insights() {
           <p>
             Gli insight sono stati estratti analizzando sistematicamente{" "}
             <strong>2.209 combinazioni</strong> di reato, dimensione
-            demografica, territorio e periodo temporale. Su queste combinazioni
-            sono stati applicati i seguenti test statistici:
+            demografica, territorio e periodo temporale. Ogni insight riporta un
+            badge con il tipo di analisi statistica che lo supporta. Su queste
+            combinazioni sono stati applicati i seguenti test:
           </p>
           <ul className="list-disc pl-6 space-y-2">
-            <li>
+            <li id="test-mann-kendall">
               <strong>
                 <a
                   href="https://en.wikipedia.org/wiki/Mann%E2%80%93Kendall_trend_test"
@@ -481,7 +518,8 @@ export default function Insights() {
               </strong>
               : verifica se una serie temporale ha una tendenza costante nel
               tempo (crescente o decrescente), anche in presenza di oscillazioni
-              occasionali
+              occasionali. Analizza l&apos;intera serie, non solo il primo e
+              l&apos;ultimo punto
             </li>
             <li>
               <strong>
@@ -508,13 +546,13 @@ export default function Insights() {
               valori oscillano attorno alla media. Serie stabili in cui compare
               un cambio improvviso sono pi&ugrave; significative
             </li>
-            <li>
+            <li id="test-divergenza">
               <strong>Divergenza tra regioni</strong>: misura quanto i valori
               delle 20 regioni differiscono tra loro per ogni anno. Se la
               differenza cresce nel tempo, il fenomeno diventa meno uniforme sul
               territorio
             </li>
-            <li>
+            <li id="test-spearman">
               <strong>
                 <a
                   href="https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient"
@@ -530,20 +568,20 @@ export default function Insights() {
               dovute a trend comuni). Valori prossimi a +1 indicano reati che si
               muovono insieme, a -1 reati con andamenti opposti
             </li>
-            <li>
+            <li id="test-confronto-categorie">
               <strong>Confronto trend tra categorie</strong>: confronta
               l&apos;evoluzione di macro-categorie di reati (violenti,
               patrimoniali, informatici, droga) calcolando il trend della
               differenza tra le serie aggregate. Identifica se un fenomeno
               &egrave; specifico di una categoria o generalizzato
             </li>
-            <li>
+            <li id="test-confronto-territoriale">
               <strong>Confronti territoriali Nord/Centro/Sud</strong>: calcola
               la media per ripartizione (Nord, Centro, Sud e Isole) per ogni
               reato e dimensione, poi analizza il trend della differenza tra
               ripartizioni. Rileva convergenze o divergenze territoriali
             </li>
-            <li>
+            <li id="test-rapporto-av">
               <strong>Rapporto autori/vittime</strong>: per ogni reato, calcola
               come evolve il rapporto tra autori identificati e vittime nel
               tempo. Un rapporto in calo indica che le vittime crescono
@@ -572,7 +610,8 @@ export default function Insights() {
                 Benjamini-Hochberg (FDR)
               </a>
             </strong>{" "}
-            al 5%, separatamente per ogni tipo di analisi.
+            al 5%, separatamente per ogni tipo di analisi. Tutti gli insight
+            presentati in questa pagina hanno superato questa correzione.
           </p>
 
           <p>Sono state inoltre escluse dall&apos;analisi:</p>
@@ -648,6 +687,22 @@ function FilterPill({
   );
 }
 
+function TestBadge({ test }: { test: TestType }) {
+  const meta = TESTS[test];
+  return (
+    <button
+      onClick={() => {
+        const el = document.getElementById(meta.anchor);
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }}
+      className={`text-xs px-2 py-0.5 rounded-full cursor-pointer transition-colors ${meta.className}`}
+      title={`Vai alla spiegazione: ${meta.label}`}
+    >
+      {meta.label}
+    </button>
+  );
+}
+
 function InsightCard({
   insight,
   showCategory = false,
@@ -659,7 +714,7 @@ function InsightCard({
     <div className="rounded-lg border p-4 space-y-2">
       <div className="flex items-start justify-between gap-2 flex-wrap">
         <h3 className="font-semibold text-base">{insight.title}</h3>
-        <div className="flex gap-2 shrink-0 items-center">
+        <div className="flex gap-2 shrink-0 items-center flex-wrap justify-end">
           {showCategory && (
             <span className="text-xs text-muted-foreground">
               {CATEGORIES[insight.category].label}
@@ -668,15 +723,9 @@ function InsightCard({
           <span className="text-xs text-muted-foreground">
             {insight.period}
           </span>
-          <span
-            className={`text-xs px-2 py-0.5 rounded-full ${
-              insight.confidence === "alta"
-                ? "bg-green-100 text-green-800"
-                : "bg-blue-100 text-blue-800"
-            }`}
-          >
-            {insight.confidence}
-          </span>
+          {insight.tests.map((test) => (
+            <TestBadge key={test} test={test} />
+          ))}
         </div>
       </div>
       <div className="text-sm space-y-2">
