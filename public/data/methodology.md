@@ -230,7 +230,7 @@ Questo progetto è limitato ai dati delle denunce non per scelta metodologica, m
 
 4. **Database integrato Interno-Giustizia-Sanità**
    - Tecnicamente possibile (abbiamo anagrafe tributaria, sanitaria unificata)
-   - Nessun progetto in corso per integrazione dati criminalità
+   - Il sistema VIVA (ISTAT/Pari Opportunità) è un primo passo, ma limitato ai centri antiviolenza: non integra denunce, esiti processuali né dati sanitari
 
 ### Perché l'Italia non li pubblica
 
@@ -240,11 +240,15 @@ Questo progetto è limitato ai dati delle denunce non per scelta metodologica, m
 - Sistema informatico Ministero Interno per denunce
 - Sistema SICP Ministero Giustizia per processi
 
-**Sono scelte politiche:**
+**Difficoltà oggettive (ma non insormontabili):**
+
+La frammentazione del SSN in 21 sistemi regionali con codifiche sanitarie disomogenee rende la raccolta centralizzata dei dati PS più complessa che nel NHS britannico (centralizzato). Il protocollo "Codice Rosa" per le vittime di violenza in Pronto Soccorso è stato adottato a macchia di leopardo. Il [sistema informativo VIVA](https://www.istat.it/statistiche-per-temi/focus/violenza-sulle-donne/) dell'ISTAT, sviluppato con il Dipartimento Pari Opportunità, monitora centri antiviolenza e case rifugio ma non integra dati di denunce, esiti processuali o accessi sanitari. Queste sono complicazioni reali, non scuse: altri paesi con strutture federali (Germania, USA) le hanno superate.
+
+**Le ragioni di fondo sono però politiche:**
 
 1. **Accountability**: dati reali = governi valutabili su risultati
-   - Esempio: se ISTAT pubblicasse "500.000 violenze domestiche/anno" vs "6.000 denunce", pressione su servizi sociali, centri antiviolenza, fondi
-   - Più facile non misurare che dover agire
+   - Esempio: ISTAT stima che il 12,6% delle donne abbia subito violenza da partner ([indagine 2025](https://www.istat.it/comunicato-stampa/la-violenza-contro-le-donne-dentro-e-fuori-la-famiglia-primi-risultati-anno-2025/)), ma solo il 10,5% denuncia. Pubblicare stime annuali di vittimizzazione accanto alle denunce creerebbe pressione immediata su servizi sociali, centri antiviolenza, fondi
+   - Il risultato è che non si misura e non si è obbligati ad agire
 
 2. **Inerzia burocratica**: ogni ministero protegge proprio territorio
    - Interno: denunce
@@ -253,8 +257,8 @@ Questo progetto è limitato ai dati delle denunce non per scelta metodologica, m
    - Zero coordinamento, zero incentivi a condividere
 
 3. **Costo politico percepito**: nessun governo vuole titoli
-   - "Italia: 500k violenze/anno, solo 6k denunciate"
-   - "Numero oscuro criminalità 400% più alto di UK"
+   - "Tasso di denuncia violenza domestica: 10,5%" (dato ISTAT reale)
+   - "Italia: indagini vittimizzazione ogni 5-7 anni, UK ogni anno dal 1982"
    - Preferiscono parlare di "aumento denunce" (spin positivo: fiducia cittadini)
 
 4. **Assenza pressione pubblica**: cittadini/media non chiedono questi dati
@@ -268,17 +272,15 @@ Questo progetto è limitato ai dati delle denunce non per scelta metodologica, m
 - **Non comparabilità internazionale**: impossibile valutare performance Italia vs paesi trasparenti
 - **Mancanza accountability**: nessuno può misurare efficacia politiche sicurezza senza dati pre/post
 
-### Costi pubblicazione dati (risibili)
+### Costi pubblicazione dati
 
-UK CSEW: ~£10 milioni/anno (£0.15 per abitante)
-- Interviste, elaborazione, pubblicazione aperta
+UK CSEW: il [contratto fieldwork 2024-2029](https://www.ons.gov.uk/aboutus/transparencyandgovernance/freedomofinformationfoi/costsforthecrimesurveyforenglandandwalescontract) vale £28,8 milioni su 5 anni (~£5,8 milioni/anno solo per le interviste). I costi interni ONS per elaborazione e pubblicazione non sono pubblici.
+- 182.343 interviste previste nel quinquennio, modalità mista (face-to-face + telefono)
 - ROI: politiche basate su evidenze, non percezione
 
-Italia equivalente: ~€9 milioni/anno
-- 0.01% budget Ministero Interno (€11 miliardi)
-- Costo: 1 caffè/anno per cittadino
-
-**Non è problema di soldi. È problema di volontà politica.**
+Italia equivalente: con un investimento analogo (~€7 milioni/anno per il solo fieldwork)
+- <0,03% del [budget Ministero Interno](https://www.rgs.mef.gov.it/VERSIONE-I/attivita_istituzionali/formazione_e_gestione_del_bilancio/bilancio_di_previsione/bilancio_finanziario/BF_2025_2027/index.html) (~€31 miliardi in competenza 2025)
+- Meno di €0,12 per abitante/anno
 
 ### Cosa si potrebbe fare
 
