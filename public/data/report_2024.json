@@ -15,7 +15,11 @@
       "yoy_pct": 70.3,
       "valore_corrente": 402,
       "valore_precedente": 236,
-      "trend_strutturale": "decreasing"
+      "trend_strutturale": "decreasing",
+      "contesto": "Rimbalzo: crescita annuale su un trend storico in calo. Su numeri assoluti contenuti (402 autori denunciati), le variazioni percentuali possono essere amplificate.",
+      "caveat": null,
+      "insight_id": null,
+      "nota": null
     },
     {
       "reato": "Rapine in banca",
@@ -23,7 +27,11 @@
       "yoy_pct": 16.9,
       "valore_corrente": 367,
       "valore_precedente": 314,
-      "trend_strutturale": "decreasing"
+      "trend_strutturale": "decreasing",
+      "contesto": "Rimbalzo: crescita annuale su un trend storico in calo. Su numeri assoluti contenuti (367 autori denunciati), le variazioni percentuali possono essere amplificate.",
+      "caveat": null,
+      "insight_id": "rapine-banca",
+      "nota": "Il calo strutturale è legato alla smaterializzazione del contante e all'automazione delle filiali bancarie. Il rimbalzo annuale è volatilità su numeri molto piccoli."
     },
     {
       "reato": "Maltrattamenti in famiglia",
@@ -31,7 +39,11 @@
       "yoy_pct": 15.8,
       "valore_corrente": 21911,
       "valore_precedente": 18921,
-      "trend_strutturale": "no trend"
+      "trend_strutturale": "no trend",
+      "contesto": "Picco su un trend storico stabile.",
+      "caveat": "La propensione alla denuncia per questo reato è molto bassa: l'aumento potrebbe riflettere maggiore emersione più che un aumento reale.",
+      "insight_id": null,
+      "nota": "Il Codice Rosso (L. 69/2019) ha introdotto corsie preferenziali per le denunce di violenza domestica. L'aumento riflette anche campagne istituzionali di sensibilizzazione."
     },
     {
       "reato": "Pornografia minorile",
@@ -39,7 +51,11 @@
       "yoy_pct": 13.7,
       "valore_corrente": 1271,
       "valore_precedente": 1118,
-      "trend_strutturale": "no trend"
+      "trend_strutturale": "no trend",
+      "contesto": "Picco su un trend storico stabile.",
+      "caveat": "La propensione alla denuncia per questo reato è molto bassa: l'aumento potrebbe riflettere maggiore emersione più che un aumento reale.",
+      "insight_id": null,
+      "nota": "L'aumento è legato all'intensificazione delle indagini della Polizia Postale e alla crescita dell'uso di piattaforme digitali tra minori."
     },
     {
       "reato": "Furti con destrezza",
@@ -47,7 +63,11 @@
       "yoy_pct": 13.4,
       "valore_corrente": 2177,
       "valore_precedente": 1920,
-      "trend_strutturale": "increasing"
+      "trend_strutturale": "increasing",
+      "contesto": "Prosegue il trend storico di crescita.",
+      "caveat": "Il dato riflette sia variazioni reali sia possibili cambiamenti nella propensione alla denuncia.",
+      "insight_id": "furti-destrezza",
+      "nota": "La ripresa dei flussi turistici post-COVID ha riportato le opportunità per questo tipo di reato ai livelli pre-pandemia."
     }
   ],
   "top_calo": [
@@ -57,7 +77,11 @@
       "yoy_pct": -37.2,
       "valore_corrente": 247,
       "valore_precedente": 393,
-      "trend_strutturale": "decreasing"
+      "trend_strutturale": "decreasing",
+      "contesto": "Prosegue il trend storico di calo. Su numeri assoluti contenuti (247 autori denunciati), le variazioni percentuali possono essere amplificate.",
+      "caveat": null,
+      "insight_id": null,
+      "nota": null
     },
     {
       "reato": "Omicidi di tipo mafioso",
@@ -65,7 +89,11 @@
       "yoy_pct": -31.9,
       "valore_corrente": 130,
       "valore_precedente": 191,
-      "trend_strutturale": "decreasing"
+      "trend_strutturale": "decreasing",
+      "contesto": "Prosegue il trend storico di calo. Su numeri assoluti contenuti (130 autori denunciati), le variazioni percentuali possono essere amplificate.",
+      "caveat": null,
+      "insight_id": null,
+      "nota": "La diminuzione della violenza mafiosa è una tendenza consolidata dagli anni '90, legata alla transizione verso attività economiche meno visibili."
     },
     {
       "reato": "Sfruttamento della prostituzione",
@@ -73,7 +101,11 @@
       "yoy_pct": -14.0,
       "valore_corrente": 943,
       "valore_precedente": 1097,
-      "trend_strutturale": "decreasing"
+      "trend_strutturale": "decreasing",
+      "contesto": "Prosegue il trend storico di calo.",
+      "caveat": null,
+      "insight_id": null,
+      "nota": null
     },
     {
       "reato": "Attentati",
@@ -81,7 +113,11 @@
       "yoy_pct": -8.4,
       "valore_corrente": 141,
       "valore_precedente": 154,
-      "trend_strutturale": "decreasing"
+      "trend_strutturale": "decreasing",
+      "contesto": "Prosegue il trend storico di calo. Su numeri assoluti contenuti (141 autori denunciati), le variazioni percentuali possono essere amplificate.",
+      "caveat": null,
+      "insight_id": null,
+      "nota": null
     },
     {
       "reato": "Sequestri di persona",
@@ -89,7 +125,11 @@
       "yoy_pct": -7.9,
       "valore_corrente": 1185,
       "valore_precedente": 1287,
-      "trend_strutturale": "decreasing"
+      "trend_strutturale": "decreasing",
+      "contesto": "Prosegue il trend storico di calo.",
+      "caveat": null,
+      "insight_id": "sequestri",
+      "nota": "Il crollo dei sequestri di persona a scopo estorsivo è un fenomeno storico iniziato negli anni '90."
     }
   ],
   "variazione_regioni": [

@@ -37,6 +37,10 @@ interface ReportData {
     valore_corrente: number;
     valore_precedente: number;
     trend_strutturale: string;
+    contesto: string;
+    caveat: string | null;
+    insight_id: string | null;
+    nota: string | null;
   }[];
   top_calo: {
     reato: string;
@@ -45,6 +49,10 @@ interface ReportData {
     valore_corrente: number;
     valore_precedente: number;
     trend_strutturale: string;
+    contesto: string;
+    caveat: string | null;
+    insight_id: string | null;
+    nota: string | null;
   }[];
   variazione_regioni: {
     REF_AREA: string;
@@ -549,14 +557,37 @@ export function ReportContent({ anno }: { anno: string }) {
             <h3 className="font-semibold text-red-600 mb-2">
               Maggiore crescita
             </h3>
-            <ul className="space-y-1">
+            <ul className="space-y-3">
               {data.top_crescita.map((d) => (
-                <li key={d.codice} className="flex items-baseline gap-2">
-                  <span className="font-medium">{d.reato}</span>
-                  <span className="text-red-600 font-semibold">
-                    +{d.yoy_pct.toFixed(1)}%
-                  </span>
-                  <TrendLabel trend={d.trend_strutturale} />
+                <li key={d.codice}>
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-medium">{d.reato}</span>
+                    <span className="text-red-600 font-semibold">
+                      +{d.yoy_pct.toFixed(1)}%
+                    </span>
+                    <TrendLabel trend={d.trend_strutturale} />
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {d.contesto}
+                  </p>
+                  {d.nota && (
+                    <p className="text-xs text-muted-foreground mt-0.5 italic">
+                      {d.nota}
+                    </p>
+                  )}
+                  {d.caveat && (
+                    <p className="text-xs text-amber-700 mt-0.5 border-l-2 border-amber-300 pl-2">
+                      {d.caveat}
+                    </p>
+                  )}
+                  {d.insight_id && (
+                    <Link
+                      href={`/insights#${d.insight_id}`}
+                      className="text-xs text-primary hover:underline mt-0.5 inline-block"
+                    >
+                      Approfondimento negli Insights &rarr;
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -565,14 +596,37 @@ export function ReportContent({ anno }: { anno: string }) {
             <h3 className="font-semibold text-green-600 mb-2">
               Maggiore calo
             </h3>
-            <ul className="space-y-1">
+            <ul className="space-y-3">
               {data.top_calo.map((d) => (
-                <li key={d.codice} className="flex items-baseline gap-2">
-                  <span className="font-medium">{d.reato}</span>
-                  <span className="text-green-600 font-semibold">
-                    {d.yoy_pct.toFixed(1)}%
-                  </span>
-                  <TrendLabel trend={d.trend_strutturale} />
+                <li key={d.codice}>
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-medium">{d.reato}</span>
+                    <span className="text-green-600 font-semibold">
+                      {d.yoy_pct.toFixed(1)}%
+                    </span>
+                    <TrendLabel trend={d.trend_strutturale} />
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {d.contesto}
+                  </p>
+                  {d.nota && (
+                    <p className="text-xs text-muted-foreground mt-0.5 italic">
+                      {d.nota}
+                    </p>
+                  )}
+                  {d.caveat && (
+                    <p className="text-xs text-amber-700 mt-0.5 border-l-2 border-amber-300 pl-2">
+                      {d.caveat}
+                    </p>
+                  )}
+                  {d.insight_id && (
+                    <Link
+                      href={`/insights#${d.insight_id}`}
+                      className="text-xs text-primary hover:underline mt-0.5 inline-block"
+                    >
+                      Approfondimento negli Insights &rarr;
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -620,6 +674,10 @@ export function ReportContent({ anno }: { anno: string }) {
         <h2 className="text-xl sm:text-2xl font-semibold text-primary">
           Nord, Centro, Sud
         </h2>
+        <p className="text-sm text-muted-foreground">
+          Come cambia il tasso di delitti denunciati nelle tre grandi
+          ripartizioni territoriali. I tassi sono medie pesate per popolazione.
+        </p>
         <ChartRipartizioni
           ripartizioni={data.variazione_ripartizioni}
           anno={annoNum}
@@ -641,6 +699,11 @@ export function ReportContent({ anno }: { anno: string }) {
           <h2 className="text-xl sm:text-2xl font-semibold text-primary">
             Reati di allarme sociale
           </h2>
+          <p className="text-sm text-muted-foreground">
+            I sei reati che generano maggiore allarme nell&apos;opinione
+            pubblica: tasso per 100.000 abitanti e variazione rispetto al{" "}
+            {annoNum - 1}.
+          </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {data.reati_allarme_sociale.map((r) => (
               <Card key={r.reato}>

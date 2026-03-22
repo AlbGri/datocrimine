@@ -21,7 +21,9 @@ from generate_insights import (
     COVID_YEARS,
     DATA_DIR,
     PROJECT_ROOT,
+    PROPENSIONE_DENUNCIA,
     calc_year_on_year,
+    interpret_with_propensione,
     load_json,
     run_mann_kendall,
 )
@@ -32,6 +34,58 @@ log = logging.getLogger(__name__)
 # Soglia minima valore assoluto per includere un reato nel top crescita/calo.
 # Variazioni % su numeri piccoli sono rumore statistico.
 MIN_ABS_REPORT = 100
+
+# Sotto questa soglia, il contesto segnala che la % puo' essere amplificata.
+SOGLIA_NUMERI_BASSI = 500
+
+# Mappa codice reato ISTAT -> id insight curato (per link nel frontend)
+CODICE_TO_INSIGHT_ID: dict[str, str] = {
+    "BANKROB": "rapine-banca",
+    "STALK": "stalking",
+    "CP612BIS": "stalking",
+    "SWINCYB": "truffe",
+    "INTENHOM": "omicidi",
+    "KIDNAPP": "sequestri",
+    "USURY": "usura",
+    "EXTORT": "estorsioni",
+    "BAGTHEF": "furti-destrezza",
+    "RAPE": "violenze-sessuali-straniere",
+    "ARSON": "incendi-dolosi",
+}
+
+
+# Note di contesto esterno per reati specifici, non derivabili dai dati.
+# Chiave: codice reato ISTAT. Valore: testo breve con fonte implicita.
+NOTE_MANUALI: dict[str, str] = {
+    "CP572": (
+        "Il Codice Rosso (L. 69/2019) ha introdotto corsie preferenziali "
+        "per le denunce di violenza domestica. L'aumento riflette anche "
+        "campagne istituzionali di sensibilizzazione."
+    ),
+    "PORNO": (
+        "L'aumento è legato all'intensificazione delle indagini della "
+        "Polizia Postale e alla crescita dell'uso di piattaforme digitali "
+        "tra minori."
+    ),
+    "BANKROB": (
+        "Il calo strutturale è legato alla smaterializzazione del contante "
+        "e all'automazione delle filiali bancarie. Il rimbalzo annuale è "
+        "volatilità su numeri molto piccoli."
+    ),
+    "BAGTHEF": (
+        "La ripresa dei flussi turistici post-COVID ha riportato le "
+        "opportunità per questo tipo di reato ai livelli pre-pandemia."
+    ),
+    "MAFIAHOM": (
+        "La diminuzione della violenza mafiosa è una tendenza consolidata "
+        "dagli anni '90, legata alla transizione verso attività economiche "
+        "meno visibili."
+    ),
+    "KIDNAPP": (
+        "Il crollo dei sequestri di persona a scopo estorsivo è un fenomeno "
+        "storico iniziato negli anni '90."
+    ),
+}
 
 
 def _fix_accenti(text: str) -> str:
@@ -91,6 +145,95 @@ def build_executive_summary(
     }
 
 
+def _build_contesto(
+    yoy_pct: float,
+    trend: str,
+    valore_corrente: int,
+    valore_precedente: int,
+    series: np.ndarray,
+    anni: np.ndarray,
+    target_year: int,
+) -> str:
+    """Genera testo di contesto per una top variazione."""
+    frasi = []
+
+    # Regola 1: YoY vs trend strutturale
+    positivo = yoy_pct > 0
+    etichette = {
+        (True, "decreasing"): "Rimbalzo: crescita annuale su un trend storico in calo",
+        (True, "no trend"): "Picco su un trend storico stabile",
+        (True, "increasing"): "Prosegue il trend storico di crescita",
+        (False, "decreasing"): "Prosegue il trend storico di calo",
+        (False, "no trend"): "Calo su un trend storico stabile",
+        (False, "increasing"): "Frenata: calo annuale su un trend storico in crescita",
+    }
+    frasi.append(etichette.get((positivo, trend), ""))
+
+    # Regola 2: numeri assoluti bassi
+    val_max = max(valore_corrente, valore_precedente)
+    if val_max < SOGLIA_NUMERI_BASSI:
+        num_fmt = f"{valore_corrente:,}".replace(",", ".")
+        frasi.append(
+            f"Su numeri assoluti contenuti ({num_fmt} autori denunciati), "
+            "le variazioni percentuali possono essere amplificate"
+        )
+
+    # Regola 3: post-COVID (solo se target_year e' 2022 o 2023)
+    if target_year in (2022, 2023):
+        frasi.append(
+            f"Il confronto con il {target_year - 1} risente della "
+            "normalizzazione post-COVID"
+        )
+
+    # Regola 4: sensibilita' COVID (trend diverge con/senza anni COVID)
+    if len(anni) >= 5 and any(a in COVID_YEARS for a in anni):
+        trend_full = run_mann_kendall(series)["mk_trend"]
+        if trend_full != trend:
+            frasi.append(
+                "Il trend strutturale cambia rimuovendo gli anni COVID (2020-2021)"
+            )
+
+    return ". ".join(f for f in frasi if f) + "."
+
+
+def _build_caveat(
+    codice: str,
+    trend: str,
+    yoy_pct: float,
+) -> str | None:
+    """Genera caveat per una top variazione. Ritorna None se non serve."""
+    parti = []
+
+    # Regola A: propensione alla denuncia
+    # Per il report YoY, usiamo la direzione annuale quando il trend strutturale
+    # e' "no trend", perche' il lettore vede la variazione dell'anno, non il trend.
+    propensione = PROPENSIONE_DENUNCIA.get(codice)
+    if propensione is not None:
+        trend_per_propensione = trend
+        if trend == "no trend" and yoy_pct != 0:
+            trend_per_propensione = "increasing" if yoy_pct > 0 else "decreasing"
+        interp = interpret_with_propensione(trend_per_propensione, propensione)
+        if interp == "emersione_probabile":
+            parti.append(
+                "La propensione alla denuncia per questo reato è molto bassa: "
+                "l'aumento potrebbe riflettere maggiore emersione "
+                "più che un aumento reale"
+            )
+        elif interp == "calo_ambiguo":
+            parti.append(
+                "La propensione alla denuncia per questo reato è molto bassa: "
+                "il calo delle denunce non implica necessariamente "
+                "un calo del fenomeno"
+            )
+        elif interp in ("aumento_misto", "calo_misto"):
+            parti.append(
+                "Il dato riflette sia variazioni reali sia possibili "
+                "cambiamenti nella propensione alla denuncia"
+            )
+
+    return ". ".join(parti) + "." if parti else None
+
+
 def build_top_variazioni(
     df_avt: pd.DataFrame, target_year: int, n: int = 5
 ) -> tuple[list[dict], list[dict]]:
@@ -116,13 +259,29 @@ def build_top_variazioni(
             continue
         # Trend strutturale
         trend = _trend_strutturale_with_covid(totali, anni)
+        codice_str = str(codice_reato)
+        val_curr = int(yoy["curr_value"])
+        val_prev = int(yoy["prev_value"])
+        yoy_pct = round(yoy["yoy_pct"], 1)
+
+        contesto = _build_contesto(
+            yoy_pct, trend, val_curr, val_prev, totali, anni, target_year,
+        )
+        caveat = _build_caveat(codice_str, trend, yoy_pct)
+        insight_id = CODICE_TO_INSIGHT_ID.get(codice_str)
+        nota = NOTE_MANUALI.get(codice_str)
+
         results.append({
             "reato": _fix_accenti(grp["reato"].iloc[0]),
-            "codice": str(codice_reato),
-            "yoy_pct": round(yoy["yoy_pct"], 1),
-            "valore_corrente": int(yoy["curr_value"]),
-            "valore_precedente": int(yoy["prev_value"]),
+            "codice": codice_str,
+            "yoy_pct": yoy_pct,
+            "valore_corrente": val_curr,
+            "valore_precedente": val_prev,
             "trend_strutturale": trend,
+            "contesto": contesto,
+            "caveat": caveat,
+            "insight_id": insight_id,
+            "nota": nota,
         })
 
     df_res = pd.DataFrame(results)

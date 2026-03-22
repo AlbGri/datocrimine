@@ -717,7 +717,7 @@ function InsightCard({
   showCategory?: boolean;
 }) {
   return (
-    <div className="rounded-lg border p-4 space-y-2">
+    <div id={insight.id} className="rounded-lg border p-4 space-y-2 scroll-mt-20">
       <div className="flex items-start justify-between gap-2 flex-wrap">
         <h3 className="font-semibold text-base">{insight.title}</h3>
         <div className="flex gap-2 shrink-0 items-center flex-wrap justify-end">
