@@ -26,6 +26,11 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://albgri.github.io/osservatorio-criminalita-next/report/2024</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://albgri.github.io/osservatorio-criminalita-next/metodologia</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>

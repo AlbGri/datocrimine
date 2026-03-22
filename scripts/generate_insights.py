@@ -312,6 +312,35 @@ def calc_max_jump(series: np.ndarray, anni: np.ndarray) -> dict:
     }
 
 
+def calc_year_on_year(
+    series: np.ndarray, anni: np.ndarray, target_year: int
+) -> dict:
+    """Variazione anno-su-anno per un anno specifico.
+
+    A differenza di calc_max_jump (massimo sull'intera serie), questa funzione
+    calcola la variazione per target_year vs target_year-1.
+    """
+    result = {
+        "yoy_change": np.nan, "yoy_pct": np.nan,
+        "prev_value": np.nan, "curr_value": np.nan,
+    }
+    anni_list = list(anni)
+    if target_year not in anni_list or (target_year - 1) not in anni_list:
+        return result
+    idx_curr = anni_list.index(target_year)
+    idx_prev = anni_list.index(target_year - 1)
+    curr = float(series[idx_curr])
+    prev = float(series[idx_prev])
+    change = curr - prev
+    pct = (change / abs(prev) * 100) if prev != 0 else np.nan
+    return {
+        "yoy_change": change,
+        "yoy_pct": pct,
+        "prev_value": prev,
+        "curr_value": curr,
+    }
+
+
 # Anni COVID da escludere per Mann-Kendall
 COVID_YEARS = {2020, 2021}
 
@@ -319,6 +348,7 @@ COVID_YEARS = {2020, 2021}
 def analyze_series(
     series: np.ndarray, anni: np.ndarray,
     covid_years: set[int] | None = None,
+    target_year: int | None = None,
 ) -> dict:
     """Applica tutti i test su una serie temporale.
 
@@ -368,6 +398,9 @@ def analyze_series(
     result["sparkline"] = [round(float(v), 1) for v in series]
     # Salto massimo anno-su-anno
     result.update(calc_max_jump(series, anni))
+    # Variazione anno-su-anno per anno target (se specificato)
+    if target_year is not None:
+        result.update(calc_year_on_year(series, anni, target_year))
     return result
 
 

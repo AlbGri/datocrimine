@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { href: "/reati-allarme-sociale", label: "Allarme Sociale" },
   { href: "/persone-denunciate", label: "Persone Denunciate" },
   { href: "/insights", label: "Insights" },
+  { href: "/report/2024", label: "Report 2024" },
   { href: "/metodologia", label: "Metodologia" },
   { href: "/guida", label: "Guida alla Lettura" },
   { href: "/dati-e-codice", label: "Dati e Codice" },
