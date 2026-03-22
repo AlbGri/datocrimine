@@ -5,20 +5,27 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const NAV_ITEMS = [
-  { href: "/", label: "Home" },
-  { href: "/analisi-territoriale", label: "Analisi Territoriale" },
-  { href: "/reati-allarme-sociale", label: "Allarme Sociale" },
-  { href: "/persone-denunciate", label: "Persone Denunciate" },
-  { href: "/insights", label: "Insights" },
   { href: "/report/2024", label: "Report 2024" },
-  { href: "/metodologia", label: "Metodologia" },
-  { href: "/guida", label: "Guida alla Lettura" },
-  { href: "/dati-e-codice", label: "Dati e Codice" },
+  { href: "/esplora", label: "Esplora i dati" },
+  { href: "/insights", label: "Insights" },
+  { href: "/", label: "Il contesto" },
+];
+
+const ESPLORA_ROUTES = [
+  "/esplora",
+  "/analisi-territoriale",
+  "/reati-allarme-sociale",
+  "/persone-denunciate",
 ];
 
 export function Header() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const isActive = (href: string) =>
+    href === "/esplora"
+      ? ESPLORA_ROUTES.includes(pathname)
+      : pathname === href;
 
   return (
     <header className="border-b bg-background sticky top-0 z-50">
@@ -35,7 +42,7 @@ export function Header() {
                 key={item.href}
                 href={item.href}
                 className={`px-3 py-2 text-sm rounded-md transition-colors ${
-                  pathname === item.href
+                  isActive(item.href)
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted"
                 }`}
@@ -76,7 +83,7 @@ export function Header() {
                 href={item.href}
                 onClick={() => setMenuOpen(false)}
                 className={`block px-3 py-2 text-sm rounded-md transition-colors ${
-                  pathname === item.href
+                  isActive(item.href)
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted"
                 }`}
