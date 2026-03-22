@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://albgri.github.io/osservatorio-criminalita-next</loc>
+    <loc>https://datocrimine.it</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://albgri.github.io/osservatorio-criminalita-next/analisi-territoriale</loc>
+    <loc>https://datocrimine.it/analisi-territoriale</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://albgri.github.io/osservatorio-criminalita-next/reati-allarme-sociale</loc>
+    <loc>https://datocrimine.it/reati-allarme-sociale</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://albgri.github.io/osservatorio-criminalita-next/persone-denunciate</loc>
+    <loc>https://datocrimine.it/persone-denunciate</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://albgri.github.io/osservatorio-criminalita-next/insights</loc>
+    <loc>https://datocrimine.it/insights</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://albgri.github.io/osservatorio-criminalita-next/report/2024</loc>
+    <loc>https://datocrimine.it/report/2024</loc>
     <changefreq>yearly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://albgri.github.io/osservatorio-criminalita-next/metodologia</loc>
+    <loc>https://datocrimine.it/metodologia</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://albgri.github.io/osservatorio-criminalita-next/guida</loc>
+    <loc>https://datocrimine.it/guida</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://albgri.github.io/osservatorio-criminalita-next/dati-e-codice</loc>
+    <loc>https://datocrimine.it/dati-e-codice</loc>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>

@@ -26,11 +26,11 @@ export const metadata: Metadata = {
     description: "Dati e analisi sulla criminalit\u00e0 in Italia 2014-2024 con fonti ufficiali ISTAT",
     type: "website",
     locale: "it_IT",
-    url: "https://albgri.github.io/osservatorio-criminalita-next",
+    url: "https://datocrimine.it",
     siteName: "Osservatorio Criminalit\u00e0",
     images: [
       {
-        url: "https://albgri.github.io/osservatorio-criminalita-next/og-image.png",
+        url: "https://datocrimine.it/og-image.png",
         width: 1200,
         height: 630,
         alt: "Osservatorio Criminalit\u00e0 - Dati e analisi sulla criminalit\u00e0 in Italia",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Osservatorio Criminalit\u00e0",
     description: "Dati e analisi sulla criminalit\u00e0 in Italia 2014-2024 con fonti ufficiali ISTAT",
-    images: ["https://albgri.github.io/osservatorio-criminalita-next/og-image.png"],
+    images: ["https://datocrimine.it/og-image.png"],
   },
 };
 
@@ -54,14 +54,14 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Osservatorio Criminalit\u00e0",
-    url: "https://albgri.github.io/osservatorio-criminalita-next",
+    url: "https://datocrimine.it",
     description:
       "Dati e analisi interattive sulla criminalit\u00e0 in Italia con fonti ufficiali ISTAT",
     inLanguage: "it",
     publisher: {
       "@type": "Organization",
       name: "Osservatorio Criminalit\u00e0",
-      url: "https://albgri.github.io/osservatorio-criminalita-next",
+      url: "https://datocrimine.it",
     },
     dataset: {
       "@type": "Dataset",
