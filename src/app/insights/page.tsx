@@ -137,8 +137,8 @@ const INSIGHTS: Insight[] = [
     category: "trend",
     dimensions: [],
     tests: ["mann-kendall"],
-    period: "2009-2023",
-    body: "Le vittime di atti persecutori (stalking) sono passate da circa 5.000 a oltre 18.000 (+264%), con una crescita quasi costante anno dopo anno. L\u2019introduzione del reato nel 2009 (art. 612-bis c.p.) e le successive campagne di sensibilizzazione hanno progressivamente ridotto il numero oscuro, portando pi\u00f9 vittime a denunciare.",
+    period: "2009-2024",
+    body: "Le vittime di atti persecutori (stalking) sono passate da circa 5.000 a oltre 18.800 (+278%), con una crescita quasi costante anno dopo anno. L\u2019introduzione del reato nel 2009 (art. 612-bis c.p.) e le successive campagne di sensibilizzazione hanno progressivamente ridotto il numero oscuro, portando pi\u00f9 vittime a denunciare.",
     caveat:
       "L\u2019aumento delle denunce \u00e8 un indicatore di emersione, non necessariamente di aumento del fenomeno reale.",
   },

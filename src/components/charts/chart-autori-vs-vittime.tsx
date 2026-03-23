@@ -33,7 +33,6 @@ export function ChartAutoriVsVittime() {
     const offend = new Map<string, ReatiRecord>();
     const victim = new Map<string, ReatiRecord>();
     for (const r of data) {
-      if (r.codice_reato === "STALK") continue;
       if (r.data_type === "OFFEND") offend.set(r.codice_reato, r);
       else victim.set(r.codice_reato, r);
     }

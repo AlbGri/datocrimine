@@ -116,7 +116,6 @@ export function ChartProfiloNazionale({ dataType }: Props) {
     (r) =>
       r.data_type === dataType &&
       r.anno === anno &&
-      r.codice_reato !== "STALK" &&
       r.codice_reato !== "TOT" &&
       r.totale >= MIN_CASI &&
       (isTasso || r[metrica] !== null)
@@ -180,7 +179,6 @@ export function ChartProfiloNazionale({ dataType }: Props) {
     (r) =>
       r.data_type === dataType &&
       r.anno === anno &&
-      r.codice_reato !== "STALK" &&
       r.codice_reato !== "TOT" &&
       r.totale > 0 &&
       r.totale < MIN_CASI

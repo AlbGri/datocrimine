@@ -49,7 +49,7 @@ KNOWN_EVENTS = {
 # Classificazione reati per confronto trend tra categorie
 REATI_VIOLENTI = {
     "INTENHOM", "ATTEMPHOM", "MAFIAHOM", "ROBBHOM", "MANSHOM", "INFANTHOM",
-    "MASSMURD", "CULPINJU", "BLOWS", "RAPE", "RAPEUN18", "STALK", "CP612BIS",
+    "MASSMURD", "CULPINJU", "BLOWS", "RAPE", "RAPEUN18", "CP612BIS",
     "KIDNAPP", "MENACE", "CP572", "CORRUPUN18", "PORNO", "CP612TER",
 }
 REATI_PATRIMONIALI = {
@@ -149,7 +149,7 @@ PROPENSIONE_DENUNCIA = {
     # Molto bassa (<15%)
     "RAPE": "molto_bassa", "RAPEUN18": "molto_bassa",
     "CP572": "molto_bassa",
-    "STALK": "molto_bassa", "CP612BIS": "molto_bassa",
+    "CP612BIS": "molto_bassa",
     "USURY": "molto_bassa",
     "CORRUPUN18": "molto_bassa",
     "PORNO": "molto_bassa",

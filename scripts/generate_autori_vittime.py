@@ -11,8 +11,17 @@ Uso: conda activate osservatorio && python scripts/generate_autori_vittime.py
 
 Mappatura codici CP verificata su brocardi.it (fonte ufficiale codice penale):
   CP572    -> art. 572 c.p.     -> Maltrattamenti contro familiari o conviventi
-  CP612BIS -> art. 612-bis c.p. -> Atti persecutori (= STALK, dal 2022 con breakdown completo)
+  CP612BIS -> art. 612-bis c.p. -> Atti persecutori (stalking)
   CP612TER -> art. 612-ter c.p. -> Diffusione illecita di immagini o video sessualmente espliciti
+
+Unificazione STALK/CP612BIS:
+  ISTAT usa due codici per lo stesso reato (art. 612-bis c.p.):
+  - STALK: presente dal 2009, senza breakdown minori (pct_minori null)
+  - CP612BIS: presente dal 2022, con breakdown completo (inclusi minori)
+  I valori negli anni sovrapposti (2022-2023) sono identici.
+  In fase di caricamento, STALK viene rinominato in CP612BIS e i duplicati
+  vengono risolti mantenendo il record CP612BIS originale (breakdown completo).
+  Questo produce una serie unica CP612BIS 2009-2024.
 """
 
 import json
@@ -30,8 +39,7 @@ ANNO_REF = 2022
 # Mappatura codici reato -> label italiane
 # I codici senza prefisso sono abbreviazioni ISTAT standard.
 # I codici CP*** fanno riferimento ad articoli del codice penale (verificati
-# su brocardi.it). STALK e CP612BIS si sovrappongono: STALK copre 2007-2024
-# con breakdown limitato, CP612BIS copre 2022+ con breakdown completo.
+# su brocardi.it). STALK e CP612BIS sono unificati: vedi docstring modulo.
 # ---------------------------------------------------------------------------
 CRIME_NAMES = {
     "TOT": "Totale",
@@ -50,14 +58,13 @@ CRIME_NAMES = {
     "CULPINJU": "Lesioni dolose",
     "BLOWS": "Percosse",
     "MENACE": "Minacce",
-    "STALK": "Atti persecutori (stalking)",
     # Reati sessuali e contro minori
     "RAPE": "Violenze sessuali",
     "RAPEUN18": "Atti sessuali con minorenne",
     "CORRUPUN18": "Corruzione di minorenne",
     "PORNO": "Pornografia minorile",
     "CP572": "Maltrattamenti in famiglia",
-    "CP612BIS": "Atti persecutori",
+    "CP612BIS": "Atti persecutori (stalking)",
     "CP612TER": "Diffusione illecita immagini sessuali",
     "PROSTI": "Sfruttamento della prostituzione",
     # Sequestri e rapine
@@ -175,7 +182,7 @@ REGIONI_OUTPUT = {
 # Include reati ad alto volume o alta rilevanza sociale
 REATI_REGIONI = {
     "TOT", "INTENHOM", "ATTEMPHOM", "RAPE", "RAPEUN18",
-    "CP572", "CP612BIS", "STALK", "CULPINJU", "MENACE",
+    "CP572", "CP612BIS", "CULPINJU", "MENACE",
     "ROBBER", "HOUSEROB", "THEFT", "BURGTHEF", "EXTORT",
     "DRUG", "SWINCYB", "KIDNAPP", "DAMAGE", "RECEIV",
 }
@@ -241,8 +248,39 @@ def is_province(ref_area: str) -> bool:
     return len(ref_area) >= 5
 
 
+def _unify_stalk_cp612bis(df: pd.DataFrame) -> pd.DataFrame:
+    """Unifica STALK in CP612BIS producendo una serie unica.
+
+    ISTAT usa due codici per l'art. 612-bis c.p. (atti persecutori):
+    - STALK: dal 2009, senza breakdown minori
+    - CP612BIS: dal 2022, con breakdown completo
+
+    Strategia: rinomina STALK -> CP612BIS, poi rimuove i duplicati
+    mantenendo il record CP612BIS originale (ha breakdown completo).
+    Il sort mette CP612BIS prima di STALK-rinominato grazie al flag,
+    e drop_duplicates tiene il primo (= CP612BIS originale).
+    """
+    stalk_count = (df["TYPE_CRIME"] == "STALK").sum()
+    if stalk_count == 0:
+        return df
+
+    df = df.copy()
+    # Flag per distinguere i record originali CP612BIS da quelli rinominati
+    df["_from_stalk"] = df["TYPE_CRIME"] == "STALK"
+    df.loc[df["TYPE_CRIME"] == "STALK", "TYPE_CRIME"] = "CP612BIS"
+
+    # In caso di overlap, tieni CP612BIS originale (ha breakdown completo)
+    key_cols = [c for c in df.columns if c not in ("OBS_VALUE", "_from_stalk")]
+    df = df.sort_values("_from_stalk")  # False (originale) prima di True (ex-STALK)
+    df = df.drop_duplicates(subset=key_cols, keep="first")
+    df = df.drop(columns=["_from_stalk"])
+
+    log.info("  Unificazione STALK -> CP612BIS: %d righe STALK rinominate", stalk_count)
+    return df
+
+
 def load_data(project_root: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Carica DF_7 (OFFEND) e DF_8 (VICTIM)."""
+    """Carica DF_7 (OFFEND) e DF_8 (VICTIM), unificando STALK in CP612BIS."""
     raw_dir = project_root / "data" / "raw" / "autvittps"
     cols = ["REF_AREA", "DATA_TYPE", "TYPE_CRIME", "SEX", "AGE",
             "CITIZENSHIP", "TIME_PERIOD", "OBS_VALUE"]
@@ -252,12 +290,14 @@ def load_data(project_root: Path) -> tuple[pd.DataFrame, pd.DataFrame]:
         raw_dir / "autvittps_7.csv", sep=";", usecols=cols,
         dtype={"REF_AREA": str, "SEX": str, "OBS_VALUE": float},
     )
+    df7 = _unify_stalk_cp612bis(df7)
 
     log.info("Lettura autvittps_8.csv (VICTIM)...")
     df8 = pd.read_csv(
         raw_dir / "autvittps_8.csv", sep=";", usecols=cols,
         dtype={"REF_AREA": str, "SEX": str, "OBS_VALUE": float},
     )
+    df8 = _unify_stalk_cp612bis(df8)
 
     log.info("  OFFEND: %d righe, VICTIM: %d righe", len(df7), len(df8))
     return df7, df8

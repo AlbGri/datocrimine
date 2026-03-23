@@ -41,7 +41,6 @@ SOGLIA_NUMERI_BASSI = 500
 # Mappa codice reato ISTAT -> id insight curato (per link nel frontend)
 CODICE_TO_INSIGHT_ID: dict[str, str] = {
     "BANKROB": "rapine-banca",
-    "STALK": "stalking",
     "CP612BIS": "stalking",
     "SWINCYB": "truffe",
     "INTENHOM": "omicidi",

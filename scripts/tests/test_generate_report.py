@@ -487,8 +487,8 @@ class TestBuildContesto:
 
 class TestBuildCaveat:
     def test_propensione_bassa_crescita(self):
-        # STALK: molto_bassa, trend increasing -> emersione_probabile
-        result = _build_caveat("STALK", "increasing", 10.0)
+        # CP612BIS: molto_bassa, trend increasing -> emersione_probabile
+        result = _build_caveat("CP612BIS", "increasing", 10.0)
         assert result is not None
         assert "emersione" in result
 
@@ -542,7 +542,7 @@ class TestBuildCaveat:
         assert result is None
 
     def test_caveat_termina_con_punto(self):
-        result = _build_caveat("STALK", "increasing", 10.0)
+        result = _build_caveat("CP612BIS", "increasing", 10.0)
         assert result is not None
         assert result.endswith(".")
 
