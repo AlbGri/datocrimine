@@ -90,15 +90,3 @@
   }
 }
 
-.fullscreen-chart:fullscreen {
-  background: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 16px;
-}
-
-.fullscreen-chart:fullscreen .js-plotly-plot {
-  height: 100% !important;
-  flex: 1;
-}
