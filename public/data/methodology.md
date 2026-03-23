@@ -45,7 +45,7 @@ I dati provengono dal portale ufficiale ISTAT ([esploradati.istat.it](https://es
 - **Dati provinciali solo dal 2022**: prima del 2022 sono disponibili solo Italia, ripartizioni e regioni.
 - **CITIZENSHIP=TOTAL solo dal 2022**: per gli anni 2007-2021, il totale autori è calcolato come somma italiani + stranieri (FRG+ITL). Verifica 2022: FRG(270.567) + ITL(548.265) = TOTAL(818.832).
 - **Dato minori limitato**: AGE=Y_UN17 è disponibile solo dal 2022 per il totale; per anni precedenti il dato è assente.
-- **Duplicato STALK/CP612BIS**: entrambi i codici rappresentano l'art. 612-bis c.p. (atti persecutori). STALK copre 2007-2024 con breakdown limitato, CP612BIS copre 2022+ con breakdown completo. Nelle visualizzazioni viene escluso STALK per evitare doppi conteggi.
+- **Duplicato STALK/CP612BIS**: entrambi i codici rappresentano l'art. 612-bis c.p. (atti persecutori). STALK copre 2009-2023 (reato introdotto nel 2009), CP612BIS copre 2022-2024 con breakdown completo. I valori 2022-2023 coincidono tra i due codici. Nelle visualizzazioni viene escluso STALK per evitare doppi conteggi.
 - **Subset reati per livello regionale**: i dati regionali espongono 20 reati selezionati (i più rilevanti per volume e interesse analitico) su circa 30 disponibili nel dataset ISTAT, per contenere la dimensione dei file. Il dato nazionale copre tutti i reati disponibili. Un reato assente nel dettaglio regionale è comunque incluso nel totale nazionale.
 
 ## Cosa rappresentano i dati
