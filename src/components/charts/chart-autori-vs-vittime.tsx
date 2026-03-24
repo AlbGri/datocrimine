@@ -93,10 +93,10 @@ export function ChartAutoriVsVittime() {
               textposition: "outside" as const,
               hovertemplate:
                 "<b>%{y}</b><br>Rapporto A/V: %{x:.2f}<br>" +
-                "Autori: %{customdata[0]}<br>Vittime: %{customdata[1]}<extra></extra>",
+                "Autori: %{customdata[0]:,.0f}<br>Vittime: %{customdata[1]:,.0f}<extra></extra>",
               customdata: reati.map((d) => [
-                fmtNum(d.autori),
-                fmtNum(d.vittime),
+                d.autori,
+                d.vittime,
               ]),
             },
           ]}

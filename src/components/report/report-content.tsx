@@ -185,8 +185,8 @@ function ChartTopVariazioni({
     d.yoy_pct >= 0 ? COLORS.secondary : "#16a34a"
   );
   const customdata = allItems.map((d) => [
-    fmtNum(d.valore_corrente),
-    fmtNum(d.valore_precedente),
+    d.valore_corrente,
+    d.valore_precedente,
     d.trend_strutturale,
   ]);
 
@@ -205,8 +205,8 @@ function ChartTopVariazioni({
             customdata: customdata,
             hovertemplate:
               "<b>%{y}</b><br>Variazione: %{x:+.1f}%<br>" +
-              `Autori denunciati ${anno}: %{customdata[0]}<br>` +
-              `Autori denunciati ${anno - 1}: %{customdata[1]}<br>` +
+              `Autori denunciati ${anno}: %{customdata[0]:,.0f}<br>` +
+              `Autori denunciati ${anno - 1}: %{customdata[1]:,.0f}<br>` +
               "Trend storico: %{customdata[2]}<extra></extra>",
           },
         ]}
@@ -260,8 +260,8 @@ function ChartMappaVariazione({
   const values = regioni.map((r) => r.variazione_pct);
   const nomi = regioni.map((r) => r.Territorio);
   const customdata = regioni.map((r) => [
-    fmtNum(r.tasso_corrente, 1),
-    fmtNum(r.tasso_precedente, 1),
+    r.tasso_corrente,
+    r.tasso_precedente,
   ]);
 
   const maxAbs = Math.max(...values.map(Math.abs), 5);
@@ -297,7 +297,7 @@ function ChartMappaVariazione({
             text: nomi,
             customdata: customdata,
             hovertemplate:
-              `<b>%{text}</b><br>Variazione: %{z:+.1f}%<br>Tasso ${anno}: %{customdata[0]}<br>Tasso ${anno - 1}: %{customdata[1]}<extra></extra>`,
+              `<b>%{text}</b><br>Variazione: %{z:+.1f}%<br>Tasso ${anno}: %{customdata[0]:.1f}<br>Tasso ${anno - 1}: %{customdata[1]:.1f}<extra></extra>`,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any,
         ]}

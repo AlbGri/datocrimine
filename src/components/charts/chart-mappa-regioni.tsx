@@ -89,8 +89,8 @@ export function ChartMappaRegioni({ anno }: Props) {
     const prev = prevMap.get(d.REF_AREA);
     const diff = prev != null ? d.Tasso_per_1000 - prev : null;
     return [
-      fmtNum(d.Popolazione),
-      fmtNum(d.Delitti),
+      d.Popolazione,
+      d.Delitti,
       diff != null ? fmtSigned(diff, 1) : "n/d",
       `${rankMap.get(d.REF_AREA)}/${dataAnno.length}`,
     ];
@@ -176,7 +176,7 @@ export function ChartMappaRegioni({ anno }: Props) {
               text: nomi,
               customdata: customdata,
               hovertemplate:
-                "<b>%{text}</b><br>Tasso: %{z:.1f} per 1000 ab.<br>Delitti: %{customdata[1]}<br>Popolazione: %{customdata[0]}<br>Var. anno prec.: %{customdata[2]}<br>Ranking: %{customdata[3]}<extra></extra>",
+                "<b>%{text}</b><br>Tasso: %{z:.1f} per 1000 ab.<br>Delitti: %{customdata[1]:,.0f}<br>Popolazione: %{customdata[0]:,.0f}<br>Var. anno prec.: %{customdata[2]}<br>Ranking: %{customdata[3]}<extra></extra>",
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } as any,
             ...trendAnnotations.map((t) => ({

@@ -243,19 +243,19 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
               hovertemplate: (() => {
                 const base = "<b>%{y}</b><br>";
                 switch (effectiveMetrica) {
-                  case "pct_stranieri": return base + "Stranieri: %{x:.1f}%<br>Totale: %{customdata[0]}<br>Stranieri: %{customdata[1]}<extra></extra>";
-                  case "pct_minori": return base + "Minori: %{x:.1f}%<br>Totale: %{customdata[0]}<br>Minori: %{customdata[2]}<extra></extra>";
-                  case "pct_maschi": return base + "Maschi: %{x:.1f}%<br>Totale: %{customdata[0]}<br>Maschi: %{customdata[3]}<extra></extra>";
-                  case "pct_femmine": return base + "Femmine: %{x:.1f}%<br>Totale: %{customdata[0]}<br>Femmine: %{customdata[4]}<extra></extra>";
-                  default: return base + "Tasso: %{x:.1f} per 100k<br>Totale: %{customdata[0]}<extra></extra>";
+                  case "pct_stranieri": return base + "Stranieri: %{x:.1f}%<br>Totale: %{customdata[0]:,.0f}<br>Stranieri: %{customdata[1]:,.0f}<extra></extra>";
+                  case "pct_minori": return base + "Minori: %{x:.1f}%<br>Totale: %{customdata[0]:,.0f}<br>Minori: %{customdata[2]:,.0f}<extra></extra>";
+                  case "pct_maschi": return base + "Maschi: %{x:.1f}%<br>Totale: %{customdata[0]:,.0f}<br>Maschi: %{customdata[3]:,.0f}<extra></extra>";
+                  case "pct_femmine": return base + "Femmine: %{x:.1f}%<br>Totale: %{customdata[0]:,.0f}<br>Femmine: %{customdata[4]:,.0f}<extra></extra>";
+                  default: return base + "Tasso: %{x:.1f} per 100k<br>Totale: %{customdata[0]:,.0f}<extra></extra>";
                 }
               })(),
               customdata: sorted.map((r) => [
-                fmtNum(r.totale),
-                fmtNum(r.stranieri),
-                fmtNum(r.minori),
-                fmtNum(r.maschi),
-                fmtNum(r.femmine),
+                r.totale,
+                r.stranieri,
+                r.minori,
+                r.maschi,
+                r.femmine,
               ]),
             },
           ]}
