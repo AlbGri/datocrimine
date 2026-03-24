@@ -2,6 +2,7 @@
 
 import { useFetchData } from "@/lib/use-fetch-data";
 import { Card, CardContent } from "@/components/ui/card";
+import { fmtNum, fmtPct, fmtPctSigned } from "@/lib/format";
 
 interface TrendRecord {
   data_type: "OFFEND" | "VICTIM";
@@ -74,17 +75,17 @@ export function KpiAutoriVittime({ dataType }: KpiProps) {
     const items: { label: string; value: string; color?: string; subtitle?: string }[] = [
       {
         label: `Totale autori ${ultimo.anno}`,
-        value: ultimo.totale.toLocaleString("it-IT"),
+        value: fmtNum(ultimo.totale),
       },
       {
         label: `Stranieri ${ultimo.anno}`,
-        value: `${ultimo.pct_stranieri.toFixed(1)}%`,
+        value: fmtPct(ultimo.pct_stranieri),
       },
       ...(ultimo.pct_minori !== null
         ? [
             {
               label: `Minori ${ultimo.anno}`,
-              value: `${ultimo.pct_minori.toFixed(1)}%`,
+              value: fmtPct(ultimo.pct_minori),
             },
           ]
         : []),
@@ -92,7 +93,7 @@ export function KpiAutoriVittime({ dataType }: KpiProps) {
         ? [
             {
               label: "Variazione totale autori",
-              value: `${varTot > 0 ? "+" : ""}${varTot.toFixed(1)}%`,
+              value: fmtPctSigned(varTot),
               color: varTot < 0 ? "text-green-600" : "text-red-600",
               subtitle: "media '17-'19 vs '20-'22 (denunciati, non condannati)",
             },

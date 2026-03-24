@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
+import { fmtNum, fmtPctSigned } from "@/lib/format";
 
 interface ProvinciaRecord {
   data_type: "OFFEND" | "VICTIM";
@@ -193,7 +194,7 @@ export function ChartAutoriTrendProvincia({ dataType }: Props) {
                 <td className="py-2 px-3">{p.provincia}</td>
                 {anniDisponibili.map((a) => (
                   <td key={a} className="py-2 px-3 text-right">
-                    {p.perAnno.get(a)?.toLocaleString("it-IT") ?? "-"}
+                    {p.perAnno.get(a) != null ? fmtNum(p.perAnno.get(a)!) : "-"}
                   </td>
                 ))}
                 {anniDisponibili.length >= 2 && (
@@ -209,7 +210,7 @@ export function ChartAutoriTrendProvincia({ dataType }: Props) {
                     }`}
                   >
                     {p.variazione !== null
-                      ? `${p.variazione > 0 ? "+" : ""}${p.variazione.toFixed(1)}%`
+                      ? fmtPctSigned(p.variazione)
                       : "-"}
                   </td>
                 )}

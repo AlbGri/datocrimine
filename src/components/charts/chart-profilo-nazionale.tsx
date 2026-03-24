@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
+import { fmtNum, fmtPct, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 
@@ -258,7 +259,7 @@ export function ChartProfiloNazionale({ dataType }: Props) {
               orientation: "h" as const,
               marker: { color: colors },
               text: valori.map((v) =>
-                isTasso ? v.toFixed(1) : `${v.toFixed(1)}%`
+                isTasso ? fmtNum(v, 1) : fmtPct(v)
               ),
               textposition: "outside" as const,
               hovertemplate: displayItems.map((d) => {
@@ -266,32 +267,33 @@ export function ChartProfiloNazionale({ dataType }: Props) {
                 if (isTasso) {
                   lines.push(
                     d.isAltro
-                      ? `Tasso cumulato: ${d.value.toFixed(1)} per 100k ab.`
-                      : `Tasso: ${d.value.toFixed(1)} per 100k ab.`
+                      ? `Tasso cumulato: ${fmtNum(d.value, 1)} per 100k ab.`
+                      : `Tasso: ${fmtNum(d.value, 1)} per 100k ab.`
                   );
                 } else {
                   lines.push(
                     d.isAltro
-                      ? `${metricaConfig.label} media: ${d.value.toFixed(1)}%`
-                      : `${metricaConfig.label}: ${d.value.toFixed(1)}%`
+                      ? `${metricaConfig.label} media: ${fmtPct(d.value)}`
+                      : `${metricaConfig.label}: ${fmtPct(d.value)}`
                   );
                 }
                 lines.push(
-                  `Totale ${subjectLabel}: ${d.totale.toLocaleString("it-IT")}`
+                  `Totale ${subjectLabel}: ${fmtNum(d.totale)}`
                 );
                 if (metrica === "pct_stranieri")
-                  lines.push(`Stranieri: ${d.stranieri.toLocaleString("it-IT")}`);
+                  lines.push(`Stranieri: ${fmtNum(d.stranieri)}`);
                 if (metrica === "pct_minori")
-                  lines.push(`Minori: ${d.minori.toLocaleString("it-IT")}`);
+                  lines.push(`Minori: ${fmtNum(d.minori)}`);
                 if (metrica === "pct_maschi")
-                  lines.push(`Maschi: ${d.maschi.toLocaleString("it-IT")}`);
+                  lines.push(`Maschi: ${fmtNum(d.maschi)}`);
                 if (metrica === "pct_femmine")
-                  lines.push(`Femmine: ${d.femmine.toLocaleString("it-IT")}`);
+                  lines.push(`Femmine: ${fmtNum(d.femmine)}`);
                 return lines.join("<br>") + "<extra></extra>";
               }),
             },
           ]}
           layout={{
+            separators: PLOTLY_IT_SEPARATORS,
             xaxis: {
               ...AXIS_FIXED,
               title: { text: metricaConfig.label },

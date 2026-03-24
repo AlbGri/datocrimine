@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
+import { fmtNum, fmtPct, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 
@@ -97,7 +98,6 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
       r.anno === effectiveAnno
   );
 
-  // Verifica disponibilita' breakdown per il filtro corrente
   const hasMinori = filtered.some((r) => r.pct_minori !== null);
   const hasSesso = filtered.some((r) => r.pct_maschi !== null);
   const effectiveMetrica = (() => {
@@ -120,7 +120,6 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
   const nomi = sorted.map((r) => r.regione);
   const valori = sorted.map((r) => getValue(r));
 
-  // Media ponderata nazionale
   let media = 0;
   if (effectiveMetrica === "pct_stranieri") {
     const totSum = filtered.reduce((s, r) => s + r.totale, 0);
@@ -239,7 +238,7 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
               x: valori,
               orientation: "h" as const,
               marker: { color: colors },
-              text: valori.map((v) => v.toFixed(decimali) + (effectiveMetrica !== "tasso" ? "%" : "")),
+              text: valori.map((v) => effectiveMetrica !== "tasso" ? fmtPct(v, decimali) : fmtNum(v, decimali)),
               textposition: "outside" as const,
               hovertemplate: (() => {
                 const base = "<b>%{y}</b><br>";
@@ -252,15 +251,16 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
                 }
               })(),
               customdata: sorted.map((r) => [
-                r.totale.toLocaleString("it-IT"),
-                r.stranieri.toLocaleString("it-IT"),
-                r.minori.toLocaleString("it-IT"),
-                r.maschi.toLocaleString("it-IT"),
-                r.femmine.toLocaleString("it-IT"),
+                fmtNum(r.totale),
+                fmtNum(r.stranieri),
+                fmtNum(r.minori),
+                fmtNum(r.maschi),
+                fmtNum(r.femmine),
               ]),
             },
           ]}
           layout={{
+            separators: PLOTLY_IT_SEPARATORS,
             xaxis: {
               ...AXIS_FIXED,
               title: { text: etichettaMetrica },
@@ -281,7 +281,7 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
               {
                 x: media,
                 y: nomi.length - 0.5,
-                text: `Media: ${media.toFixed(decimali)}`,
+                text: `Media: ${fmtNum(media, decimali)}`,
                 showarrow: false,
                 font: { size: 10, color: "#dc2626" },
                 xanchor: "left",

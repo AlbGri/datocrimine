@@ -14,6 +14,7 @@ import {
   varTriennale,
   TRIENNALE_PERIODI,
 } from "@/lib/config";
+import { fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
@@ -137,6 +138,7 @@ export function ChartAllarmeTrendRegione({ reato }: Props) {
             },
           ]}
           layout={{
+            separators: PLOTLY_IT_SEPARATORS,
             dragmode: false as const,
             hovermode: "x unified" as const,
             plot_bgcolor: "white",
@@ -171,8 +173,7 @@ export function ChartAllarmeTrendRegione({ reato }: Props) {
           <span
             className={varRegione < 0 ? "text-green-600" : "text-red-600"}
           >
-            {varRegione > 0 ? "+" : ""}
-            {varRegione.toFixed(1)}%
+            {fmtPctSigned(varRegione)}
           </span>
         </p>
       )}

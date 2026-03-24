@@ -12,6 +12,7 @@ import {
   AXIS_FIXED,
   getAxisYear,
 } from "@/lib/config";
+import { fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
@@ -241,6 +242,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
         <Plot
           data={traces}
           layout={{
+            separators: PLOTLY_IT_SEPARATORS,
             dragmode: false as const,
             hovermode: "closest" as const,
             plot_bgcolor: "white",
@@ -303,8 +305,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
             {selected} ({annoInizio}-{annoFine}):
           </strong>{" "}
           <span className={variazione < 0 ? "text-green-600" : "text-red-600"}>
-            {variazione > 0 ? "+" : ""}
-            {variazione.toFixed(1)}%
+            {fmtPctSigned(variazione)}
           </span>{" "}
           tasso per 100k ab.
         </p>

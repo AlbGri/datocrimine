@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
+import { fmtNum, fmtPct, fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
@@ -351,23 +352,23 @@ export function ChartProfiloProvincia({ dataType }: Props) {
               orientation: "h" as const,
               marker: { color: barColors },
               text: valori.map((v) =>
-                isTasso ? v.toFixed(1) : `${v.toFixed(1)}%`
+                isTasso ? fmtNum(v, 1) : fmtPct(v)
               ),
               textposition: "outside" as const,
               name: provincia,
               hovertemplate: displayItems.map((i) => {
                 const lines = [`<b>${i.reato}</b>`];
                 if (isTasso) {
-                  lines.push(`Tasso provincia: ${i.value.toFixed(1)} per 100k`);
-                  lines.push(`Media nazionale: ${i.media.toFixed(1)} per 100k`);
+                  lines.push(`Tasso provincia: ${fmtNum(i.value, 1)} per 100k`);
+                  lines.push(`Media nazionale: ${fmtNum(i.media, 1)} per 100k`);
                 } else {
-                  lines.push(`${metricaConfig.label} provincia: ${i.value.toFixed(1)}%`);
-                  lines.push(`${metricaConfig.label} nazionale: ${i.media.toFixed(1)}%`);
+                  lines.push(`${metricaConfig.label} provincia: ${fmtPct(i.value)}`);
+                  lines.push(`${metricaConfig.label} nazionale: ${fmtPct(i.media)}`);
                 }
                 lines.push(
-                  `Scostamento: ${i.scostamento >= 0 ? "+" : ""}${i.scostamento.toFixed(1)}%`
+                  `Scostamento: ${fmtPctSigned(i.scostamento)}`
                 );
-                lines.push(`Denunce: ${i.totale.toLocaleString("it-IT")}`);
+                lines.push(`Denunce: ${fmtNum(i.totale)}`);
                 return lines.join("<br>") + "<extra></extra>";
               }),
             },
@@ -380,13 +381,14 @@ export function ChartProfiloProvincia({ dataType }: Props) {
               name: "Media nazionale",
               hovertemplate: nomi.map(
                 (n, idx) => {
-                  const val = medieNaz[idx].toFixed(1);
+                  const val = fmtNum(medieNaz[idx], 1);
                   return `<b>${n}</b><br>Media nazionale: ${val}${isTasso ? " per 100k" : "%"}<extra></extra>`;
                 }
               ),
             },
           ]}
           layout={{
+            separators: PLOTLY_IT_SEPARATORS,
             xaxis: {
               ...AXIS_FIXED,
               title: { text: metricaConfig.label },

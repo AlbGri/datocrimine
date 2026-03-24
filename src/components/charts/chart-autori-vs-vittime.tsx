@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { PLOTLY_CONFIG, AXIS_FIXED, COLORS } from "@/lib/config";
+import { fmtNum, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 
@@ -88,18 +89,19 @@ export function ChartAutoriVsVittime() {
               x: ratios,
               orientation: "h" as const,
               marker: { color: colors },
-              text: ratios.map((r) => r.toFixed(2)),
+              text: ratios.map((r) => fmtNum(r, 2)),
               textposition: "outside" as const,
               hovertemplate:
                 "<b>%{y}</b><br>Rapporto A/V: %{x:.2f}<br>" +
                 "Autori: %{customdata[0]}<br>Vittime: %{customdata[1]}<extra></extra>",
               customdata: reati.map((d) => [
-                d.autori.toLocaleString("it-IT"),
-                d.vittime.toLocaleString("it-IT"),
+                fmtNum(d.autori),
+                fmtNum(d.vittime),
               ]),
             },
           ]}
           layout={{
+            separators: PLOTLY_IT_SEPARATORS,
             xaxis: {
               ...AXIS_FIXED,
               title: { text: "Rapporto Autori / Vittime" },

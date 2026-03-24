@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
+import { fmtNum, fmtPct } from "@/lib/format";
 
 interface ProvinciaRecord {
   data_type: "OFFEND" | "VICTIM";
@@ -348,19 +349,19 @@ export function ChartAutoriTabellaProvince({ dataType }: Props) {
                   {r.regione}
                 </td>
                 <td className="py-2 px-3 text-right">
-                  {r.totale.toLocaleString("it-IT")}
+                  {fmtNum(r.totale)}
                 </td>
                 <td className="py-2 px-3 text-right">
-                  {r.stranieri.toLocaleString("it-IT")}
+                  {fmtNum(r.stranieri)}
                 </td>
                 <td className="py-2 px-3 text-right">
-                  {r.pct_stranieri.toFixed(1)}%
+                  {fmtPct(r.pct_stranieri)}
                 </td>
                 <td className="py-2 px-3 text-right">
-                  {r.minori.toLocaleString("it-IT")}
+                  {fmtNum(r.minori)}
                 </td>
                 <td className="py-2 px-3 text-right">
-                  {r.pct_minori !== null ? `${r.pct_minori.toFixed(1)}%` : "-"}
+                  {r.pct_minori !== null ? fmtPct(r.pct_minori) : "-"}
                 </td>
               </tr>
             ))}

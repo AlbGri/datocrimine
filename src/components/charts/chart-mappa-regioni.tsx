@@ -7,6 +7,7 @@ import {
   PLOTLY_CONFIG,
   NUTS_TO_ISTAT,
 } from "@/lib/config";
+import { fmtNum, fmtSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card, CardContent } from "@/components/ui/card";
@@ -88,9 +89,9 @@ export function ChartMappaRegioni({ anno }: Props) {
     const prev = prevMap.get(d.REF_AREA);
     const diff = prev != null ? d.Tasso_per_1000 - prev : null;
     return [
-      d.Popolazione.toLocaleString("it-IT"),
-      d.Delitti.toLocaleString("it-IT"),
-      diff != null ? `${diff > 0 ? "+" : ""}${diff.toFixed(1)}` : "n/d",
+      fmtNum(d.Popolazione),
+      fmtNum(d.Delitti),
+      diff != null ? fmtSigned(diff, 1) : "n/d",
       `${rankMap.get(d.REF_AREA)}/${dataAnno.length}`,
     ];
   });
@@ -195,6 +196,7 @@ export function ChartMappaRegioni({ anno }: Props) {
             } as any)),
           ]}
           layout={{
+            separators: PLOTLY_IT_SEPARATORS,
             geo: {
               projection: { type: "mercator", scale: 1 },
               center: { lat: 42.0, lon: 12.0 },
@@ -238,7 +240,7 @@ export function ChartMappaRegioni({ anno }: Props) {
             <p className="text-xs sm:text-sm text-muted-foreground">
               Tasso nazionale
             </p>
-            <p className="text-lg sm:text-2xl font-bold">{media.toFixed(1)}{varIndicator(media, mediaPrev)}</p>
+            <p className="text-lg sm:text-2xl font-bold">{fmtNum(media, 1)}{varIndicator(media, mediaPrev)}</p>
           </CardContent>
         </Card>
         <Card>
@@ -247,7 +249,7 @@ export function ChartMappaRegioni({ anno }: Props) {
               Piu alto: {top.Territorio}
             </p>
             <p className="text-lg sm:text-2xl font-bold">
-              {top.Tasso_per_1000.toFixed(1)}{varIndicator(top.Tasso_per_1000, prevMap.get(top.REF_AREA))}
+              {fmtNum(top.Tasso_per_1000, 1)}{varIndicator(top.Tasso_per_1000, prevMap.get(top.REF_AREA))}
             </p>
           </CardContent>
         </Card>
@@ -257,7 +259,7 @@ export function ChartMappaRegioni({ anno }: Props) {
               Piu basso: {bottom.Territorio}
             </p>
             <p className="text-lg sm:text-2xl font-bold">
-              {bottom.Tasso_per_1000.toFixed(1)}{varIndicator(bottom.Tasso_per_1000, prevMap.get(bottom.REF_AREA))}
+              {fmtNum(bottom.Tasso_per_1000, 1)}{varIndicator(bottom.Tasso_per_1000, prevMap.get(bottom.REF_AREA))}
             </p>
           </CardContent>
         </Card>

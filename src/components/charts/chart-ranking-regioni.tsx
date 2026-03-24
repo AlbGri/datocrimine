@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
+import { fmtNum, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 
@@ -57,12 +58,13 @@ export function ChartRankingRegioni({ anno }: Props) {
             x: tassi,
             orientation: "h" as const,
             marker: { color: colors },
-            text: tassi.map((t) => t.toFixed(1)),
+            text: tassi.map((t) => fmtNum(t, 1)),
             textposition: "outside" as const,
             hovertemplate: "<b>%{y}</b><br>Tasso: %{x:.1f} per 1000 ab.<extra></extra>",
           },
         ]}
         layout={{
+          separators: PLOTLY_IT_SEPARATORS,
           xaxis: { ...AXIS_FIXED,
             title: { text: "Tasso per 1000 ab." },
             range: [0, Math.max(...tassi) * 1.15],
@@ -84,7 +86,7 @@ export function ChartRankingRegioni({ anno }: Props) {
             {
               x: media,
               y: nomi.length - 0.5,
-              text: `Media: ${media.toFixed(1)}`,
+              text: `Media: ${fmtNum(media, 1)}`,
               showarrow: false,
               font: { size: 10, color: "#dc2626" },
               xanchor: "left",

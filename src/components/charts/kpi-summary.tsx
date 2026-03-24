@@ -2,6 +2,7 @@
 
 import { useFetchData } from "@/lib/use-fetch-data";
 import { varTriennale, TRIENNALE_PERIODI } from "@/lib/config";
+import { fmtNum, fmtPctSigned } from "@/lib/format";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface DelittiItalia {
@@ -34,18 +35,18 @@ export function KpiSummary() {
   const items: { label: string; value: string; color?: string; subtitle?: string }[] = [
     {
       label: `Delitti denunciati ${ultimo.Anno}`,
-      value: ultimo.Delitti.toLocaleString("it-IT"),
+      value: fmtNum(ultimo.Delitti),
     },
     {
       label: `Tasso ${ultimo.Anno}`,
-      value: ultimo.Tasso_per_1000.toFixed(1),
+      value: fmtNum(ultimo.Tasso_per_1000, 1),
       subtitle: "per 1.000 ab.",
     },
     ...(varTasso !== null
       ? [
           {
             label: "Variazione tasso delitti",
-            value: `${varTasso > 0 ? "+" : ""}${varTasso.toFixed(1)}%`,
+            value: fmtPctSigned(varTasso),
             color: varTasso < 0 ? "text-green-600" : "text-red-600",
             subtitle: `media ${TRIENNALE_PERIODI}`,
           },

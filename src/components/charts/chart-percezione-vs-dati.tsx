@@ -11,6 +11,7 @@ import {
   AXIS_FIXED,
   getAxisYear,
 } from "@/lib/config";
+import { fmtNum, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card, CardContent } from "@/components/ui/card";
@@ -77,6 +78,7 @@ export function ChartPercezioneVsDati() {
             },
           ]}
           layout={{
+            separators: PLOTLY_IT_SEPARATORS,
             xaxis: { ...getAxisYear(isMobile), title: { text: "Anno" } },
             yaxis: { ...AXIS_FIXED,
               title: { text: "% Percezione rischio", font: { color: COLORS.secondary, size: 12 } },
@@ -129,13 +131,13 @@ export function ChartPercezioneVsDati() {
         <Card>
           <CardContent className="py-2 sm:pt-4 sm:pb-2 text-center">
             <p className="text-xs sm:text-sm text-muted-foreground">Delta Percezione 2014-2024</p>
-            <p className="text-lg sm:text-2xl font-bold">{varPercezione.toFixed(1)} punti %</p>
+            <p className="text-lg sm:text-2xl font-bold">{fmtNum(varPercezione, 1)} punti %</p>
           </CardContent>
         </Card>
         <Card>
           <CardContent className="py-2 sm:pt-4 sm:pb-2 text-center">
             <p className="text-xs sm:text-sm text-muted-foreground">Delta Tasso delitti denunciati</p>
-            <p className="text-lg sm:text-2xl font-bold">{varTasso.toFixed(1)}</p>
+            <p className="text-lg sm:text-2xl font-bold">{fmtNum(varTasso, 1)}</p>
             <p className="text-[10px] sm:text-xs text-muted-foreground">per 1.000 ab.</p>
           </CardContent>
         </Card>

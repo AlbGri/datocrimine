@@ -14,6 +14,7 @@ import {
   varTriennale,
   TRIENNALE_PERIODI,
 } from "@/lib/config";
+import { fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -144,6 +145,7 @@ export function ChartTrendNazionale() {
         <Plot
           data={isTipologia ? traceTipologia : traceTotale}
           layout={{
+            separators: PLOTLY_IT_SEPARATORS,
             xaxis: { ...getAxisYear(isMobile), title: { text: "Anno" } },
             yaxis: { ...AXIS_FIXED, title: { text: "Tasso per 1.000 ab.", font: { size: 12 } } },
             dragmode: false,
@@ -171,7 +173,7 @@ export function ChartTrendNazionale() {
 
       {isTipologia && varFurti !== null && varTruffe !== null && (
         <p className="text-sm text-muted-foreground text-center">
-          <strong>Variazioni ({TRIENNALE_PERIODI}):</strong> Furti {varFurti > 0 ? "+" : ""}{varFurti.toFixed(1)}% | Truffe e Frodi {varTruffe > 0 ? "+" : ""}{varTruffe.toFixed(1)}%
+          <strong>Variazioni ({TRIENNALE_PERIODI}):</strong> Furti {fmtPctSigned(varFurti)} | Truffe e Frodi {fmtPctSigned(varTruffe)}
         </p>
       )}
     </div>

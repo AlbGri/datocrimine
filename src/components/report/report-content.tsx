@@ -11,6 +11,7 @@ import {
   NUTS_TO_ISTAT,
   COLORS,
 } from "@/lib/config";
+import { fmtNum, fmtPct, fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -91,9 +92,9 @@ function VariazioneIndicator({ value }: { value: number }) {
   if (Math.abs(value) < 0.05)
     return <span className="text-muted-foreground">=</span>;
   return value > 0 ? (
-    <span className="text-red-600">&#9650; +{value.toFixed(1)}%</span>
+    <span className="text-red-600">&#9650; {fmtPctSigned(value)}</span>
   ) : (
-    <span className="text-green-600">&#9660; {value.toFixed(1)}%</span>
+    <span className="text-green-600">&#9660; {fmtPctSigned(value)}</span>
   );
 }
 
@@ -120,21 +121,21 @@ function ExecutiveSummary({
   const items = [
     {
       label: "Delitti denunciati",
-      value: data.delitti_totali.toLocaleString("it-IT"),
+      value: fmtNum(data.delitti_totali),
     },
     {
       label: "Tasso per 1.000 ab.",
-      value: data.tasso_totale.toFixed(1),
-      subtitle: `anno prec.: ${data.tasso_precedente.toFixed(1)}`,
+      value: fmtNum(data.tasso_totale, 1),
+      subtitle: `anno prec.: ${fmtNum(data.tasso_precedente, 1)}`,
     },
     {
       label: "Variazione anno",
-      value: `${data.variazione_pct > 0 ? "+" : ""}${data.variazione_pct.toFixed(1)}%`,
+      value: fmtPctSigned(data.variazione_pct),
       color: data.variazione_pct < 0 ? "text-green-600" : "text-red-600",
     },
     {
       label: "Media storica",
-      value: data.media_storica.toFixed(1),
+      value: fmtNum(data.media_storica, 1),
       subtitle: "per 1.000 ab.",
     },
   ];
@@ -184,8 +185,8 @@ function ChartTopVariazioni({
     d.yoy_pct >= 0 ? COLORS.secondary : "#16a34a"
   );
   const customdata = allItems.map((d) => [
-    d.valore_corrente.toLocaleString("it-IT"),
-    d.valore_precedente.toLocaleString("it-IT"),
+    fmtNum(d.valore_corrente),
+    fmtNum(d.valore_precedente),
     d.trend_strutturale,
   ]);
 
@@ -210,6 +211,7 @@ function ChartTopVariazioni({
           },
         ]}
         layout={{
+          separators: PLOTLY_IT_SEPARATORS,
           height: isMobile ? 380 : CHART_HEIGHT,
           xaxis: {
             ...AXIS_FIXED,
@@ -258,8 +260,8 @@ function ChartMappaVariazione({
   const values = regioni.map((r) => r.variazione_pct);
   const nomi = regioni.map((r) => r.Territorio);
   const customdata = regioni.map((r) => [
-    r.tasso_corrente.toFixed(1),
-    r.tasso_precedente.toFixed(1),
+    fmtNum(r.tasso_corrente, 1),
+    fmtNum(r.tasso_precedente, 1),
   ]);
 
   const maxAbs = Math.max(...values.map(Math.abs), 5);
@@ -300,6 +302,7 @@ function ChartMappaVariazione({
           } as any,
         ]}
         layout={{
+          separators: PLOTLY_IT_SEPARATORS,
           geo: {
             projection: { type: "mercator", scale: 1 },
             scope: "europe",
@@ -348,7 +351,7 @@ function ChartRipartizioni({
             y: ripartizioni.map((r) => r.variazione_pct),
             marker: { color: colors },
             text: ripartizioni.map(
-              (r) => `${r.variazione_pct > 0 ? "+" : ""}${r.variazione_pct.toFixed(1)}%`
+              (r) => fmtPctSigned(r.variazione_pct)
             ),
             textposition: "outside",
             hovertemplate:
@@ -356,6 +359,7 @@ function ChartRipartizioni({
           },
         ]}
         layout={{
+          separators: PLOTLY_IT_SEPARATORS,
           height: 300,
           xaxis: { ...AXIS_FIXED },
           yaxis: {
@@ -435,6 +439,7 @@ function ChartPercezione({ anno }: { anno: number }) {
           },
         ]}
         layout={{
+          separators: PLOTLY_IT_SEPARATORS,
           height: CHART_HEIGHT,
           xaxis: {
             ...AXIS_FIXED,
@@ -529,12 +534,12 @@ export function ReportContent({ anno }: { anno: string }) {
         <ExecutiveSummary data={es} anno={annoNum} />
         <p>
           Nel {annoNum} sono stati denunciati{" "}
-          <strong>{es.delitti_totali.toLocaleString("it-IT")}</strong> delitti
+          <strong>{fmtNum(es.delitti_totali)}</strong> delitti
           in Italia, con un tasso di{" "}
-          <strong>{es.tasso_totale.toFixed(1)}</strong> per 1.000 abitanti (
+          <strong>{fmtNum(es.tasso_totale, 1)}</strong> per 1.000 abitanti (
           <VariazioneIndicator value={es.variazione_pct} /> rispetto al{" "}
           {annoNum - 1}). La media storica degli anni precedenti &egrave;{" "}
-          {es.media_storica.toFixed(1)}.
+          {fmtNum(es.media_storica, 1)}.
         </p>
       </section>
 
@@ -563,7 +568,7 @@ export function ReportContent({ anno }: { anno: string }) {
                   <div className="flex items-baseline gap-2">
                     <span className="font-medium">{d.reato}</span>
                     <span className="text-red-600 font-semibold">
-                      +{d.yoy_pct.toFixed(1)}%
+                      {fmtPctSigned(d.yoy_pct)}
                     </span>
                     <TrendLabel trend={d.trend_strutturale} />
                   </div>
@@ -602,7 +607,7 @@ export function ReportContent({ anno }: { anno: string }) {
                   <div className="flex items-baseline gap-2">
                     <span className="font-medium">{d.reato}</span>
                     <span className="text-green-600 font-semibold">
-                      {d.yoy_pct.toFixed(1)}%
+                      {fmtPct(d.yoy_pct)}
                     </span>
                     <TrendLabel trend={d.trend_strutturale} />
                   </div>
@@ -686,7 +691,7 @@ export function ReportContent({ anno }: { anno: string }) {
           {data.variazione_ripartizioni.map((r) => (
             <p key={r.ripartizione}>
               <strong>{r.ripartizione}:</strong> tasso{" "}
-              {r.tasso_corrente.toFixed(1)} (
+              {fmtNum(r.tasso_corrente, 1)} (
               <VariazioneIndicator value={r.variazione_pct} />)
             </p>
           ))}
@@ -710,7 +715,7 @@ export function ReportContent({ anno }: { anno: string }) {
                 <CardContent className="py-0">
                   <p className="text-xs text-muted-foreground">{r.reato}</p>
                   <p className="text-lg font-bold">
-                    {r.tasso_corrente.toFixed(2)}
+                    {fmtNum(r.tasso_corrente, 2)}
                   </p>
                   <p className="text-xs text-muted-foreground">denunciati per 100k ab.</p>
                   <p className="text-sm font-semibold">
@@ -738,7 +743,7 @@ export function ReportContent({ anno }: { anno: string }) {
           <p className="text-sm">
             Nel {annoNum} il {data.percezione.percezione_pct}% delle famiglie
             percepisce un rischio di criminalit&agrave; nella propria zona,
-            a fronte di un tasso reale di {data.percezione.tasso_delitti.toFixed(1)}{" "}
+            a fronte di un tasso reale di {fmtNum(data.percezione.tasso_delitti, 1)}{" "}
             per 1.000 abitanti.
           </p>
         </section>

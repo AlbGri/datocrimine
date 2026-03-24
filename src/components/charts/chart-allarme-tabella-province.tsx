@@ -5,6 +5,7 @@ import { useFetchData } from "@/lib/use-fetch-data";
 import { varTriennale, TRIENNALE_LABEL } from "@/lib/config";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
+import { fmtNum } from "@/lib/format";
 
 interface ReatoAllarme {
   REF_AREA: string;
@@ -96,7 +97,7 @@ export function ChartAllarmeTabellaProvince({ anno, reato }: Props) {
         varNum !== null && varRegNum !== null &&
         Math.sign(varNum) !== Math.sign(varRegNum) &&
         Math.abs(varNum) > 5;
-      return { ...d, varNum, variazione: varNum != null ? varNum.toFixed(1) : "-", controtendenza };
+      return { ...d, varNum, variazione: varNum != null ? fmtNum(varNum, 1) : "-", controtendenza };
     });
 
     return mapped.sort((a, b) => {
@@ -225,13 +226,13 @@ export function ChartAllarmeTabellaProvince({ anno, reato }: Props) {
                 <td className="py-2 px-3">{r.Territorio}</td>
                 <td className="py-2 px-3 text-muted-foreground">{r.Regione}</td>
                 <td className="py-2 px-3 text-right">
-                  {r.Tasso_per_100k.toFixed(2)}
+                  {fmtNum(r.Tasso_per_100k, 2)}
                 </td>
                 <td
                   className={`py-2 px-3 text-right ${
-                    r.variazione !== "-" && parseFloat(r.variazione) < 0
+                    r.varNum !== null && r.varNum < 0
                       ? "text-green-600"
-                      : r.variazione !== "-" && parseFloat(r.variazione) > 0
+                      : r.varNum !== null && r.varNum > 0
                         ? "text-red-600"
                         : ""
                   }`}
@@ -241,10 +242,10 @@ export function ChartAllarmeTabellaProvince({ anno, reato }: Props) {
                   {r.controtendenza && <span className="ml-1" aria-label="controtendenza">&#9888;</span>}
                 </td>
                 <td className="py-2 px-3 text-right">
-                  {r.Delitti.toLocaleString("it-IT")}
+                  {fmtNum(r.Delitti)}
                 </td>
                 <td className="py-2 px-3 text-right">
-                  {r.Popolazione.toLocaleString("it-IT")}
+                  {fmtNum(r.Popolazione)}
                 </td>
               </tr>
             ))}
