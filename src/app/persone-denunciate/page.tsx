@@ -71,33 +71,33 @@ export default function PersoneDenunciate() {
 
       <hr />
 
-      {/* 2. Profilo Criminale Nazionale */}
+      {/* 2. Trend Nazionale */}
+      <CollapsibleSection
+        title="Trend Nazionale"
+        description="Andamento temporale di autori denunciati e vittime per reato"
+        defaultOpen
+      >
+        <ChartAutoriTrend dataType={dataType} />
+      </CollapsibleSection>
+
+      <hr />
+
+      {/* 3. Profilo Criminale Nazionale */}
       <CollapsibleSection
         title="Profilo Criminale Nazionale"
         description="Composizione per tipo di reato: quota stranieri, maschi, femmine e minori"
-        defaultOpen
       >
         <ChartProfiloNazionale dataType={dataType} />
       </CollapsibleSection>
 
       <hr />
 
-      {/* 3. Confronto Autori vs Vittime */}
+      {/* 4. Confronto Autori vs Vittime */}
       <CollapsibleSection
         title="Confronto Autori vs Vittime per Reato"
         description="Rapporto tra autori denunciati e vittime per tipologia di reato"
       >
         <ChartAutoriVsVittime />
-      </CollapsibleSection>
-
-      <hr />
-
-      {/* 4. Trend Nazionale */}
-      <CollapsibleSection
-        title="Trend Nazionale"
-        description="Andamento temporale di autori denunciati e vittime per reato"
-      >
-        <ChartAutoriTrend dataType={dataType} />
       </CollapsibleSection>
 
       <hr />
@@ -114,17 +114,7 @@ export default function PersoneDenunciate() {
 
       <hr />
 
-      {/* 6. Profilo Criminale per Regione */}
-      <CollapsibleSection
-        title="Profilo Criminale per Regione"
-        description="Distribuzione dei reati per regione rispetto alla media nazionale"
-      >
-        <ChartProfiloTerritorio dataType={dataType} />
-      </CollapsibleSection>
-
-      <hr />
-
-      {/* 7. Trend Regionale */}
+      {/* 6. Trend Regionale */}
       <CollapsibleSection
         title="Trend Regionale"
         description="Andamento temporale per singola regione"
@@ -134,19 +124,19 @@ export default function PersoneDenunciate() {
 
       <hr />
 
-      {/* === BLOCCO PROVINCIALE === */}
-
-      {/* 8. Profilo Criminale per Provincia */}
+      {/* 7. Profilo Criminale per Regione */}
       <CollapsibleSection
-        title="Profilo Criminale per Provincia"
-        description="Distribuzione dei reati per provincia rispetto alla media nazionale (dal 2022)"
+        title="Profilo Criminale per Regione"
+        description="Distribuzione dei reati per regione rispetto alla media nazionale"
       >
-        <ChartProfiloProvincia dataType={dataType} />
+        <ChartProfiloTerritorio dataType={dataType} />
       </CollapsibleSection>
 
       <hr />
 
-      {/* 9. Dati Provinciali */}
+      {/* === BLOCCO PROVINCIALE === */}
+
+      {/* 8. Dati Provinciali */}
       <CollapsibleSection
         title="Dati Provinciali"
         description="Tabella con dati per provincia e variazioni temporali"
@@ -156,12 +146,22 @@ export default function PersoneDenunciate() {
 
       <hr />
 
-      {/* 10. Trend Provinciale */}
+      {/* 9. Trend Provinciale */}
       <CollapsibleSection
         title="Trend Provinciale"
         description="Andamento temporale per singola provincia"
       >
         <ChartAutoriTrendProvincia dataType={dataType} />
+      </CollapsibleSection>
+
+      <hr />
+
+      {/* 10. Profilo Criminale per Provincia */}
+      <CollapsibleSection
+        title="Profilo Criminale per Provincia"
+        description="Distribuzione dei reati per provincia rispetto alla media nazionale (dal 2022)"
+      >
+        <ChartProfiloProvincia dataType={dataType} />
       </CollapsibleSection>
 
       <hr />
