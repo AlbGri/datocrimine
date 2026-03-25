@@ -45,6 +45,8 @@ interface Props {
   reato: string;
 }
 
+type Metrica = "tasso" | "assoluto";
+
 export function ChartAllarmeTrendProvincia({ reato }: Props) {
   const isMobile = useIsMobile();
   const { data, loading } = useFetchData<AllarmeProvincia[]>(
@@ -52,6 +54,7 @@ export function ChartAllarmeTrendProvincia({ reato }: Props) {
   );
   const [regione, setRegione] = useState<string>("");
   const [provincia, setProvincia] = useState<string>("");
+  const [metrica, setMetrica] = useState<Metrica>("tasso");
   const setRegioneStable = useCallback((v: string) => { setRegione(v); setProvincia(""); }, []);
 
   const regioni = useMemo(() => {
@@ -96,6 +99,8 @@ export function ChartAllarmeTrendProvincia({ reato }: Props) {
     return <div className="h-[400px] animate-pulse bg-muted rounded" />;
   if (!data) return null;
 
+  const isAssoluto = metrica === "assoluto";
+
   const provData = data
     .filter(
       (d) => d.Territorio === selectedProvincia && d.Reato === reato
@@ -108,7 +113,7 @@ export function ChartAllarmeTrendProvincia({ reato }: Props) {
   );
 
   const varProvincia = varTriennale(
-    provData.map((d) => ({ anno: d.Anno, tasso: d.Tasso_per_100k }))
+    provData.map((d) => ({ anno: d.Anno, tasso: isAssoluto ? d.Delitti : d.Tasso_per_100k }))
   );
 
   const lineColor = COLORI_ALLARME[reato] ?? COLORS.primary;
@@ -160,6 +165,20 @@ export function ChartAllarmeTrendProvincia({ reato }: Props) {
             ))}
           </select>
         </div>
+        <div>
+          <label htmlFor="allarme-prov-metrica" className="block text-sm font-medium mb-1">
+            Metrica
+          </label>
+          <select
+            id="allarme-prov-metrica"
+            value={metrica}
+            onChange={(e) => setMetrica(e.target.value as Metrica)}
+            className="border rounded-md px-3 py-2 text-sm bg-background"
+          >
+            <option value="tasso">Tasso per 100k ab.</option>
+            <option value="assoluto">Numero assoluto</option>
+          </select>
+        </div>
       </div>
 
       <ChartFullscreenWrapper ariaDescription={`Grafico trend ${reato} per ${selectedProvincia} vs media ${selectedRegione}, 2014-2024`}>
@@ -167,19 +186,19 @@ export function ChartAllarmeTrendProvincia({ reato }: Props) {
           data={[
             {
               x: anni,
-              y: provData.map((d) => d.Tasso_per_100k),
+              y: provData.map((d) => isAssoluto ? d.Delitti : d.Tasso_per_100k),
               mode: "lines+markers" as const,
               name: selectedProvincia,
               line: { width: 3, color: lineColor },
               marker: { size: 6 },
             },
-            {
+            ...(!isAssoluto ? [{
               x: anni,
               y: mediaRegArr,
               mode: "lines" as const,
               name: `Media ${selectedRegione}`,
-              line: { width: 2, color: "#999999", dash: "dash" },
-            },
+              line: { width: 2, color: "#999999", dash: "dash" as const },
+            }] : []),
           ]}
           layout={{
             separators: PLOTLY_IT_SEPARATORS,
@@ -190,7 +209,8 @@ export function ChartAllarmeTrendProvincia({ reato }: Props) {
             height: CHART_HEIGHT_SMALL,
             xaxis: { ...getAxisYear(isMobile), title: { text: "Anno" } },
             yaxis: { ...AXIS_FIXED,
-              title: { text: "Tasso per 100k ab.", font: { size: 12 } },
+              title: { text: isAssoluto ? "Delitti denunciati" : "Tasso per 100k ab.", font: { size: 12 } },
+              ...(isAssoluto && { tickformat: ",", hoverformat: "," }),
             },
             legend: {
               x: 0,

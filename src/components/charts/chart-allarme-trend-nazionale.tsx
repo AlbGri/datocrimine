@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
@@ -12,6 +12,7 @@ import {
   AXIS_FIXED,
   getAxisYear,
 } from "@/lib/config";
+import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 
@@ -34,15 +35,20 @@ const COLORI_ALLARME: Record<string, string> = {
   "Sequestri di persona": COLORS.sequestri,
 };
 
+type Metrica = "tasso" | "assoluto";
+
 interface Props {
   reatoSelezionato: string;
 }
 
 export function ChartAllarmeTrendNazionale({ reatoSelezionato }: Props) {
   const isMobile = useIsMobile();
+  const [metrica, setMetrica] = useState<Metrica>("tasso");
   const { data, loading } = useFetchData<ReatoAllarme[]>(
     "/data/reati_allarme_sociale.json"
   );
+
+  const isAssoluto = metrica === "assoluto";
 
   const traces = useMemo(() => {
     if (!data) return [];
@@ -54,7 +60,7 @@ export function ChartAllarmeTrendNazionale({ reatoSelezionato }: Props) {
       const isSelected = reato === reatoSelezionato;
       return {
         x: filtered.map((d) => d.Anno),
-        y: filtered.map((d) => d.Tasso_per_100k),
+        y: filtered.map((d) => isAssoluto ? d.Delitti : d.Tasso_per_100k),
         mode: "lines+markers" as const,
         name: reato,
         line: {
@@ -65,24 +71,43 @@ export function ChartAllarmeTrendNazionale({ reatoSelezionato }: Props) {
         opacity: isSelected ? 1 : 0.3,
       };
     });
-  }, [data, reatoSelezionato]);
+  }, [data, reatoSelezionato, isAssoluto]);
 
   if (loading)
     return <div className="h-[400px] animate-pulse bg-muted rounded" />;
   if (!data) return null;
 
   return (
-    <ChartFullscreenWrapper ariaDescription={`Grafico trend nazionale reati allarme sociale 2014-2024, evidenziato: ${reatoSelezionato}`}>
-      <Plot
-        data={traces}
-        layout={{
-          dragmode: false as const,
+    <div className="space-y-3">
+      <div className="flex flex-wrap gap-4">
+        <div>
+          <label htmlFor="allarme-naz-metrica" className="block text-sm font-medium mb-1">
+            Metrica
+          </label>
+          <select
+            id="allarme-naz-metrica"
+            value={metrica}
+            onChange={(e) => setMetrica(e.target.value as Metrica)}
+            className="border rounded-md px-3 py-2 text-sm bg-background"
+          >
+            <option value="tasso">Tasso per 100k ab.</option>
+            <option value="assoluto">Numero assoluto</option>
+          </select>
+        </div>
+      </div>
+
+      <ChartFullscreenWrapper ariaDescription={`Grafico trend nazionale reati allarme sociale 2014-2024, evidenziato: ${reatoSelezionato}`}>
+        <Plot
+          data={traces}
+          layout={{
+            separators: PLOTLY_IT_SEPARATORS,
+            dragmode: false as const,
           hovermode: "closest" as const,
           plot_bgcolor: "white",
           paper_bgcolor: "white",
           height: CHART_HEIGHT_SMALL,
           xaxis: { ...getAxisYear(isMobile), title: { text: "Anno" } },
-          yaxis: { ...AXIS_FIXED, title: { text: "Tasso per 100k ab.", font: { size: 12 } } },
+          yaxis: { ...AXIS_FIXED, title: { text: isAssoluto ? "Delitti denunciati" : "Tasso per 100k ab.", font: { size: 12 } }, ...(isAssoluto && { tickformat: ",", hoverformat: "," }) },
           legend: {
             x: 0,
             y: -0.25,
@@ -99,5 +124,6 @@ export function ChartAllarmeTrendNazionale({ reatoSelezionato }: Props) {
         className="w-full"
       />
     </ChartFullscreenWrapper>
+    </div>
   );
 }

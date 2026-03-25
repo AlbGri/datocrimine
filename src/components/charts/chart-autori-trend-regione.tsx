@@ -51,6 +51,8 @@ const BREAKDOWN_LINES = [
   { key: "pct_minori" as const, label: "% minori", color: "#7c3aed" },
 ];
 
+type Metrica = "tasso" | "assoluto";
+
 export function ChartAutoriTrendRegione({ dataType }: Props) {
   const isMobile = useIsMobile();
   const { data, loading, error } = useFetchData<RegioneRecord[]>(
@@ -59,6 +61,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
   const [regione, setRegione] = useState("");
   const setRegioneStable = useCallback((v: string) => setRegione(v), []);
   const [codiceReato, setCodiceReato] = useState("TOT");
+  const [metrica, setMetrica] = useState<Metrica>("tasso");
 
   const reatiDisponibili = useMemo(() => {
     if (!data) return [];
@@ -125,6 +128,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
   if (error) return <p className="text-destructive">Errore: {error}</p>;
   if (!data) return null;
 
+  const isAssoluto = metrica === "assoluto";
   const selected = regione || regioni[0] || "";
   const regioneData = data
     .filter(
@@ -147,22 +151,22 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
 
   const traces: Plotly.Data[] = [
     {
-      x: anniTasso,
-      y: valoriTasso,
+      x: isAssoluto ? anni : anniTasso,
+      y: isAssoluto ? regioneData.map((r) => r.totale) : valoriTasso,
       mode: "lines+markers" as const,
       name: selected,
       line: { width: 3, color: COLORS.primary },
       marker: { size: 6 },
       yaxis: "y",
     },
-    {
+    ...(!isAssoluto ? [{
       x: anniTasso,
       y: mediaNazArr,
       mode: "lines" as const,
       name: "Media nazionale",
-      line: { width: 2, color: "#999999", dash: "dash" },
-      yaxis: "y",
-    },
+      line: { width: 2, color: "#999999", dash: "dash" as const },
+      yaxis: "y" as const,
+    }] : []),
   ];
 
   // Linee breakdown % su asse destro
@@ -182,11 +186,21 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
     });
   }
 
-  // Variazione tasso primo-ultimo anno
+  // Variazione primo-ultimo anno
   let variazione: number | null = null;
   let annoInizio: number | null = null;
   let annoFine: number | null = null;
-  if (conTasso.length >= 2) {
+  if (isAssoluto) {
+    if (regioneData.length >= 2) {
+      const primo = regioneData[0];
+      const ultimo = regioneData[regioneData.length - 1];
+      if (primo.totale > 0) {
+        variazione = ((ultimo.totale - primo.totale) / primo.totale) * 100;
+        annoInizio = primo.anno;
+        annoFine = ultimo.anno;
+      }
+    }
+  } else if (conTasso.length >= 2) {
     const primo = conTasso[0];
     const ultimo = conTasso[conTasso.length - 1];
     if (primo.tasso! > 0) {
@@ -234,6 +248,20 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
             ))}
           </select>
         </div>
+        <div>
+          <label htmlFor="trend-reg-metrica" className="block text-sm font-medium mb-1">
+            Metrica
+          </label>
+          <select
+            id="trend-reg-metrica"
+            value={metrica}
+            onChange={(e) => setMetrica(e.target.value as Metrica)}
+            className="border rounded-md px-3 py-2 text-sm bg-background"
+          >
+            <option value="tasso">Tasso per 100k ab.</option>
+            <option value="assoluto">Numero assoluto</option>
+          </select>
+        </div>
       </div>
 
       <ChartFullscreenWrapper
@@ -252,9 +280,10 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
             yaxis: {
               ...AXIS_FIXED,
               title: {
-                text: "Tasso per 100k ab.",
+                text: isAssoluto ? (dataType === "OFFEND" ? "Autori denunciati" : "Vittime") : "Tasso per 100k ab.",
                 font: { color: COLORS.primary, size: 12 },
               },
+              ...(isAssoluto && { tickformat: ",", hoverformat: "," }),
               tickfont: { color: COLORS.primary },
               side: "left",
             },
@@ -307,7 +336,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
           <span className={variazione < 0 ? "text-green-600" : "text-red-600"}>
             {fmtPctSigned(variazione)}
           </span>{" "}
-          tasso per 100k ab.
+          {isAssoluto ? "numero assoluto" : "tasso per 100k ab."}
         </p>
       )}
     </div>

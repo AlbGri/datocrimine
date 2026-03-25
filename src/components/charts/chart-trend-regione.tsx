@@ -30,12 +30,15 @@ interface DelittiRegione {
   Tasso_per_1000: number;
 }
 
+type Metrica = "tasso" | "assoluto";
+
 export function ChartTrendRegione() {
   const isMobile = useIsMobile();
   const { data, loading } = useFetchData<DelittiRegione[]>(
     "/data/delitti_regioni.json"
   );
   const [regione, setRegione] = useState<string>("");
+  const [metrica, setMetrica] = useState<Metrica>("tasso");
   const setRegioneStable = useCallback((v: string) => setRegione(v), []);
 
   const regioni = useMemo(() => {
@@ -63,6 +66,7 @@ export function ChartTrendRegione() {
   if (loading) return <div className="h-[400px] animate-pulse bg-muted rounded" />;
   if (!data) return null;
 
+  const isAssoluto = metrica === "assoluto";
   const selected = regione || regioni[0] || "";
   const regioneData = data
     .filter((d) => d.Territorio === selected)
@@ -72,26 +76,42 @@ export function ChartTrendRegione() {
   const mediaNazArr = anni.map((a) => mediaNazionale.get(a) ?? 0);
 
   const varRegione = varTriennale(
-    regioneData.map((d) => ({ anno: d.Anno, tasso: d.Tasso_per_1000 }))
+    regioneData.map((d) => ({ anno: d.Anno, tasso: isAssoluto ? d.Delitti : d.Tasso_per_1000 }))
   );
 
   return (
     <div className="space-y-3">
-      <div>
-        <label htmlFor="regione-trend-select" className="text-sm font-medium mb-1 flex items-center">
-          Seleziona regione
-          <SyncButton onClick={() => handleSync()} />
-        </label>
-        <select
-          id="regione-trend-select"
-          value={selected}
-          onChange={(e) => setRegione(e.target.value)}
-          className="border rounded-md px-3 py-2 text-sm bg-background"
-        >
-          {regioni.map((r) => (
-            <option key={r} value={r}>{r}</option>
-          ))}
-        </select>
+      <div className="flex flex-wrap gap-4">
+        <div>
+          <label htmlFor="regione-trend-select" className="text-sm font-medium mb-1 flex items-center">
+            Seleziona regione
+            <SyncButton onClick={() => handleSync()} />
+          </label>
+          <select
+            id="regione-trend-select"
+            value={selected}
+            onChange={(e) => setRegione(e.target.value)}
+            className="border rounded-md px-3 py-2 text-sm bg-background"
+          >
+            {regioni.map((r) => (
+              <option key={r} value={r}>{r}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="regione-trend-metrica" className="block text-sm font-medium mb-1">
+            Metrica
+          </label>
+          <select
+            id="regione-trend-metrica"
+            value={metrica}
+            onChange={(e) => setMetrica(e.target.value as Metrica)}
+            className="border rounded-md px-3 py-2 text-sm bg-background"
+          >
+            <option value="tasso">Tasso per 1.000 ab.</option>
+            <option value="assoluto">Numero assoluto</option>
+          </select>
+        </div>
       </div>
 
       <ChartFullscreenWrapper ariaDescription={`Grafico trend delitti denunciati per ${selected} vs media nazionale, 2014-2024`}>
@@ -99,19 +119,19 @@ export function ChartTrendRegione() {
           data={[
             {
               x: anni,
-              y: regioneData.map((d) => d.Tasso_per_1000),
+              y: regioneData.map((d) => isAssoluto ? d.Delitti : d.Tasso_per_1000),
               mode: "lines+markers" as const,
               name: selected,
               line: { width: 3, color: COLORS.primary },
               marker: { size: 6 },
             },
-            {
+            ...(!isAssoluto ? [{
               x: anni,
               y: mediaNazArr,
               mode: "lines" as const,
               name: "Media nazionale",
-              line: { width: 2, color: "#999999", dash: "dash" },
-            },
+              line: { width: 2, color: "#999999", dash: "dash" as const },
+            }] : []),
           ]}
           layout={{
             separators: PLOTLY_IT_SEPARATORS,
@@ -121,7 +141,7 @@ export function ChartTrendRegione() {
             paper_bgcolor: "white",
             height: CHART_HEIGHT_SMALL,
             xaxis: { ...getAxisYear(isMobile), title: { text: "Anno" } },
-            yaxis: { ...AXIS_FIXED, title: { text: "Tasso per 1000 ab.", font: { size: 12 } } },
+            yaxis: { ...AXIS_FIXED, title: { text: isAssoluto ? "Delitti denunciati" : "Tasso per 1.000 ab.", font: { size: 12 } }, ...(isAssoluto && { tickformat: ",", hoverformat: "," }) },
             legend: {
               x: 0,
               y: -0.25,

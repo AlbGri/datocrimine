@@ -46,9 +46,11 @@ const COLORI_CATEGORIE: Record<string, string> = {
 };
 
 type ViewMode = "totale" | "tipologia";
+type Metrica = "tasso" | "assoluto";
 
 export function ChartTrendNazionale() {
   const [view, setView] = useState<ViewMode>("totale");
+  const [metrica, setMetrica] = useState<Metrica>("tasso");
   const isMobile = useIsMobile();
 
   const { data, loading, error } = useFetchData<DelittiItalia[]>(
@@ -62,12 +64,14 @@ export function ChartTrendNazionale() {
   if (error) return <p className="text-destructive">Errore: {error}</p>;
   if (!data) return null;
 
+  const isAssoluto = metrica === "assoluto";
+
   const traceTotale = [
     {
       x: data.map((d) => d.Anno),
-      y: data.map((d) => d.Tasso_per_1000),
+      y: data.map((d) => isAssoluto ? d.Delitti : d.Tasso_per_1000),
       mode: "lines+markers" as const,
-      name: "Tasso delitti per 1.000 ab.",
+      name: isAssoluto ? "Delitti denunciati" : "Tasso delitti per 1.000 ab.",
       line: { color: COLORS.primary, width: 3 },
       marker: { size: 8 },
     },
@@ -78,7 +82,7 @@ export function ChartTrendNazionale() {
     const filtered = categorie!.filter((d) => d.Categoria === cat);
     return {
       x: filtered.map((d) => d.Anno),
-      y: filtered.map((d) => d.Tasso_per_1000),
+      y: filtered.map((d) => isAssoluto ? d.Delitti : d.Tasso_per_1000),
       mode: "lines+markers" as const,
       name: cat,
       line: { width: 2, color: COLORI_CATEGORIE[cat] ?? "#999999" },
@@ -89,7 +93,7 @@ export function ChartTrendNazionale() {
   const calcVar = (cat: string) =>
     categorie
       ? varTriennale(
-          categorie.filter((d) => d.Categoria === cat).map((d) => ({ anno: d.Anno, tasso: d.Tasso_per_1000 }))
+          categorie.filter((d) => d.Categoria === cat).map((d) => ({ anno: d.Anno, tasso: isAssoluto ? d.Delitti : d.Tasso_per_1000 }))
         )
       : null;
   const varFurti = calcVar("Furti");
@@ -114,32 +118,49 @@ export function ChartTrendNazionale() {
         </AlertDescription>
       </Alert>
 
-      {showToggle && (
-        <div className="flex justify-center">
-          <div className="inline-flex rounded-md border border-border overflow-hidden text-sm">
-            <button
-              onClick={() => setView("totale")}
-              className={`px-3 py-1.5 transition-colors ${
-                view === "totale"
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-background text-muted-foreground hover:bg-muted"
-              }`}
-            >
-              Totale
-            </button>
-            <button
-              onClick={() => setView("tipologia")}
-              className={`px-3 py-1.5 transition-colors ${
-                view === "tipologia"
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-background text-muted-foreground hover:bg-muted"
-              }`}
-            >
-              Per tipologia
-            </button>
+      <div className="flex flex-wrap items-end gap-4">
+        {showToggle && (
+          <div>
+            <span className="block text-sm font-medium mb-1">Visualizzazione</span>
+            <div className="inline-flex rounded-md border border-border overflow-hidden text-sm">
+              <button
+                onClick={() => setView("totale")}
+                className={`px-3 py-1.5 transition-colors ${
+                  view === "totale"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-background text-muted-foreground hover:bg-muted"
+                }`}
+              >
+                Totale
+              </button>
+              <button
+                onClick={() => setView("tipologia")}
+                className={`px-3 py-1.5 transition-colors ${
+                  view === "tipologia"
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-background text-muted-foreground hover:bg-muted"
+                }`}
+              >
+                Per tipologia
+              </button>
+            </div>
           </div>
+        )}
+        <div>
+          <label htmlFor="trend-naz-metrica" className="block text-sm font-medium mb-1">
+            Metrica
+          </label>
+          <select
+            id="trend-naz-metrica"
+            value={metrica}
+            onChange={(e) => setMetrica(e.target.value as Metrica)}
+            className="border rounded-md px-3 py-2 text-sm bg-background"
+          >
+            <option value="tasso">Tasso per 1.000 ab.</option>
+            <option value="assoluto">Numero assoluto</option>
+          </select>
         </div>
-      )}
+      </div>
 
       <ChartFullscreenWrapper ariaDescription={isTipologia ? "Grafico trend delitti per tipologia in Italia dal 2014 al 2024: furti in calo, truffe in crescita costante" : "Grafico trend tasso delitti denunciati per 1.000 abitanti in Italia dal 2014 al 2024"}>
         <Plot
@@ -147,7 +168,7 @@ export function ChartTrendNazionale() {
           layout={{
             separators: PLOTLY_IT_SEPARATORS,
             xaxis: { ...getAxisYear(isMobile), title: { text: "Anno" } },
-            yaxis: { ...AXIS_FIXED, title: { text: "Tasso per 1.000 ab.", font: { size: 12 } } },
+            yaxis: { ...AXIS_FIXED, title: { text: isAssoluto ? "Delitti denunciati" : "Tasso per 1.000 ab.", font: { size: 12 } }, ...(isAssoluto && { tickformat: ",", hoverformat: "," }) },
             dragmode: false,
             hovermode: "closest" as const,
             plot_bgcolor: "white",
