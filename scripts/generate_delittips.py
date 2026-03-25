@@ -65,22 +65,18 @@ CRIME_LABELS = {
     "UNINTHOM": "Omicidi colposi", "USURY": "Usura", "VEHITHEF": "Furti in auto in sosta",
 }
 
-# Mapping codice -> categoria (include padri + figli, doppi conteggi intenzionali)
+# Mapping codice -> categoria (mutuamente esclusive: solo codici padre per Furti/Rapine,
+# figli esclusi perche' gia' conteggiati nel padre ISTAT)
 CATEGORY_MAP = {
-    "THEFT": "Furti", "BAGTHEF": "Furti", "PICKTHEF": "Furti", "BURGTHEF": "Furti",
-    "SHOPTHEF": "Furti", "VEHITHEF": "Furti", "ARTTHEF": "Furti", "TRUCKTHEF": "Furti",
-    "MOPETHEF": "Furti", "MOTORTHEF": "Furti", "CARTHEF": "Furti",
-    "ROBBER": "Rapine", "HOUSEROB": "Rapine", "BANKROB": "Rapine",
-    "POSTROB": "Rapine", "SHOPROB": "Rapine", "STREETROB": "Rapine",
+    "THEFT": "Furti",
+    "ROBBER": "Rapine",
     "INTENHOM": "Violenze contro la persona", "ATTEMPHOM": "Violenze contro la persona",
-    "MANSHOM": "Violenze contro la persona", "INFANTHOM": "Violenze contro la persona",
-    "MAFIAHOM": "Violenze contro la persona", "ROBBHOM": "Violenze contro la persona",
-    "TERRORHOM": "Violenze contro la persona", "MASSMURD": "Violenze contro la persona",
+    "MANSHOM": "Violenze contro la persona",
     "BLOWS": "Violenze contro la persona", "CULPINJU": "Violenze contro la persona",
     "MENACE": "Violenze contro la persona", "KIDNAPP": "Violenze contro la persona",
-    "OFFENCE": "Violenze contro la persona", "RAPE": "Violenze contro la persona",
-    "RAPEUN18": "Violenze contro la persona", "PORNO": "Violenze contro la persona",
-    "CORRUPUN18": "Violenze contro la persona", "PROSTI": "Violenze contro la persona",
+    "RAPE": "Violenze contro la persona", "RAPEUN18": "Violenze contro la persona",
+    "PORNO": "Violenze contro la persona", "CORRUPUN18": "Violenze contro la persona",
+    "PROSTI": "Violenze contro la persona",
     "SWINCYB": "Truffe e Frodi", "CYBERCRIM": "Truffe e Frodi",
     "COUNTER": "Truffe e Frodi", "INTPROP": "Truffe e Frodi",
     "DRUG": "Droga",

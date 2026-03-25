@@ -104,7 +104,7 @@ export function ChartTrendNazionale() {
         <AlertDescription className="block">
           {isTipologia ? (
             <>
-              <strong>Composizione per tipologia:</strong> le macro-categorie non sono mutuamente esclusive (uno stesso reato pu&ograve; rientrare in pi&ugrave; categorie), pertanto la loro somma supera il totale nazionale.
+              <strong>Composizione per tipologia:</strong> ogni reato rientra in una sola categoria. La somma pu&ograve; differire lievemente dal totale nazionale per effetto delle aggregazioni ISTAT.
             </>
           ) : (
             <>

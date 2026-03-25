@@ -98,6 +98,16 @@ function VariazioneIndicator({ value }: { value: number }) {
   );
 }
 
+const TREND_IT: Record<string, string> = {
+  increasing: "in crescita",
+  decreasing: "in calo",
+  "no trend": "stabile",
+};
+
+function trendToItalian(trend: string): string {
+  return TREND_IT[trend] ?? trend;
+}
+
 function TrendLabel({ trend }: { trend: string }) {
   const labels: Record<string, { text: string; color: string }> = {
     increasing: { text: "trend storico: in crescita", color: "text-red-600" },
@@ -187,7 +197,7 @@ function ChartTopVariazioni({
   const customdata = allItems.map((d) => [
     d.valore_corrente,
     d.valore_precedente,
-    d.trend_strutturale,
+    trendToItalian(d.trend_strutturale),
   ]);
 
   return (

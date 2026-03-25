@@ -143,11 +143,11 @@ La normalizzazione è essenziale perché la **popolazione italiana è diminuita*
 
 ### Aggregazione in macro-categorie
 
-I 56 tipi di delitto ISTAT sono stati aggregati in 6 macro-categorie per leggibilità. **Le macro-categorie non sono mutuamente esclusive**: uno stesso reato può rientrare in più categorie (es. una rapina con violenza può figurare sia in "Rapine" che in "Violenze contro la persona"). La somma delle categorie supera pertanto il totale nazionale del 25-35%.
+I 56 tipi di delitto ISTAT sono stati aggregati in 6 macro-categorie **mutuamente esclusive**: ogni reato rientra in una sola categoria. Per Furti e Rapine si usa il codice padre ISTAT (che include tutti i sottotipi); per le altre categorie si usano i codici foglia. La somma delle categorie può differire lievemente dal totale nazionale per effetto delle aggregazioni interne ISTAT.
 
-1. **Furti**: tutti i furti (con strappo, destrezza, abitazioni, auto, moto, esercizi commerciali, ecc.)
-2. **Rapine**: rapine in abitazione, banca, uffici postali, esercizi commerciali, pubblica via
-3. **Violenze contro la persona**: omicidi volontari (inclusi infanticidi, per mafia, per rapina, terrorismo, strage), tentati omicidi, percosse, lesioni, minacce, sequestri, ingiurie, violenze sessuali, atti con minori, pornografia minorile, corruzione di minorenne, sfruttamento prostituzione. Nota: gli omicidi colposi (stradali e non) sono classificati in "Altro" perché non sono violenza intenzionale
+1. **Furti**: codice padre ISTAT (include tutti i sottotipi: con strappo, destrezza, abitazioni, auto, moto, esercizi commerciali, ecc.)
+2. **Rapine**: codice padre ISTAT (include tutti i sottotipi: in abitazione, banca, uffici postali, esercizi commerciali, pubblica via)
+3. **Violenze contro la persona**: omicidi volontari consumati, tentati omicidi, omicidi preterintenzionali, percosse, lesioni, minacce, sequestri, violenze sessuali, atti con minori, pornografia minorile, corruzione di minorenne, sfruttamento prostituzione. Nota: gli omicidi colposi (stradali e non) sono classificati in "Altro" perché non sono violenza intenzionale
 4. **Truffe e Frodi**: truffe informatiche, delitti informatici, contraffazione marchi, violazione proprietà intellettuale
 5. **Droga**: normativa stupefacenti
 6. **Altro**: danneggiamenti, incendi, criminalità organizzata (mafia, riciclaggio, usura, estorsioni), ricettazione, contrabbando
