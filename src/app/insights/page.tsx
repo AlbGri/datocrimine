@@ -1,7 +1,15 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, lazy, Suspense } from "react";
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
+import type { InsightChartConfig } from "@/components/charts/insight-mini-chart";
+
+const InsightMiniChart = lazy(
+  () =>
+    import("@/components/charts/insight-mini-chart").then((m) => ({
+      default: m.InsightMiniChart,
+    }))
+);
 
 /* ================================================================
    Tipi
@@ -33,6 +41,7 @@ type Insight = {
   period: string;
   body: string;
   caveat?: string;
+  chart?: InsightChartConfig;
 };
 
 /* ================================================================
@@ -130,6 +139,12 @@ const INSIGHTS: Insight[] = [
     tests: ["mann-kendall"],
     period: "2007-2024",
     body: "Gli autori denunciati per rapine in banca sono passati da 2.893 a 367, con un calo quasi ininterrotto nel tempo. La digitalizzazione dei servizi bancari e il rafforzamento delle misure di sicurezza fisiche hanno reso questo reato sempre meno praticabile.",
+    chart: {
+      file: "autori_vittime_trend.json",
+      series: [
+        { dataType: "OFFEND", code: "BANKROB", xField: "anno", yField: "totale", label: "Autori denunciati", color: "#8B4513" },
+      ],
+    },
   },
   {
     id: "stalking",
@@ -141,6 +156,12 @@ const INSIGHTS: Insight[] = [
     body: "Le vittime di atti persecutori (stalking) sono passate da circa 5.000 a oltre 18.800 (+278%), con una crescita quasi costante anno dopo anno. L\u2019introduzione del reato nel 2009 (art. 612-bis c.p.) e le successive campagne di sensibilizzazione hanno progressivamente ridotto il numero oscuro, portando pi\u00f9 vittime a denunciare.",
     caveat:
       "L\u2019aumento delle denunce \u00e8 un indicatore di emersione, non necessariamente di aumento del fenomeno reale.",
+    chart: {
+      file: "autori_vittime_trend.json",
+      series: [
+        { dataType: "VICTIM", code: "CP612BIS", xField: "anno", yField: "totale", label: "Vittime", color: "#d62728" },
+      ],
+    },
   },
   {
     id: "truffe",
@@ -150,6 +171,13 @@ const INSIGHTS: Insight[] = [
     tests: ["mann-kendall"],
     period: "2007-2024",
     body: "Le vittime di truffe e frodi informatiche sono pi\u00f9 che raddoppiate: da 109.000 a 236.000, con una crescita graduale lungo l\u2019intero periodo. Gli autori denunciati sono passati da 46.000 a 73.000. Il fenomeno \u00e8 uniforme su tutto il territorio: in 64 regioni-reato su 88 analizzate, il trend regionale \u00e8 significativamente crescente.",
+    chart: {
+      file: "autori_vittime_trend.json",
+      series: [
+        { dataType: "VICTIM", code: "SWINCYB", xField: "anno", yField: "totale", label: "Vittime", color: "#ff7f0e" },
+        { dataType: "OFFEND", code: "SWINCYB", xField: "anno", yField: "totale", label: "Autori", color: "#ff7f0e", dash: "dash" },
+      ],
+    },
   },
   {
     id: "omicidi",
@@ -159,6 +187,13 @@ const INSIGHTS: Insight[] = [
     tests: ["mann-kendall"],
     period: "2007-2024",
     body: "Gli autori denunciati per omicidio volontario sono scesi da 1.199 a 771 (-36%), le vittime da 631 a 328 (-48%), con un calo graduale lungo l\u2019intero periodo. Il calo include gli omicidi di tipo mafioso, passati da 476 a 130 autori denunciati. Il trend \u00e8 coerente con la tendenza europea di lungo periodo.",
+    chart: {
+      file: "autori_vittime_trend.json",
+      series: [
+        { dataType: "VICTIM", code: "INTENHOM", xField: "anno", yField: "totale", label: "Vittime", color: "#d62728" },
+        { dataType: "OFFEND", code: "INTENHOM", xField: "anno", yField: "totale", label: "Autori", color: "#d62728", dash: "dash" },
+      ],
+    },
   },
   {
     id: "sequestri",
@@ -168,6 +203,13 @@ const INSIGHTS: Insight[] = [
     tests: ["mann-kendall"],
     period: "2007-2024",
     body: "Autori denunciati passati da 2.355 a 1.185, vittime da 2.095 a 737. Il calo \u00e8 presente in circa 3 anni su 4, un reato che ha perso progressivamente attrattivit\u00e0 criminale.",
+    chart: {
+      file: "autori_vittime_trend.json",
+      series: [
+        { dataType: "VICTIM", code: "KIDNAPP", xField: "anno", yField: "totale", label: "Vittime", color: "#17becf" },
+        { dataType: "OFFEND", code: "KIDNAPP", xField: "anno", yField: "totale", label: "Autori", color: "#17becf", dash: "dash" },
+      ],
+    },
   },
   {
     id: "usura",
@@ -179,6 +221,13 @@ const INSIGHTS: Insight[] = [
     body: "Gli autori denunciati per usura sono passati da 1.392 a 495, le vittime da 298 a 106. Un calo graduale lungo l\u2019intero periodo, che va letto con cautela.",
     caveat:
       "L\u2019usura \u00e8 per sua natura un reato con alta cifra oscura: il rapporto di dipendenza tra vittima e usuraio rende la denuncia rara. Il calo delle denunce non implica un calo del fenomeno.",
+    chart: {
+      file: "autori_vittime_trend.json",
+      series: [
+        { dataType: "OFFEND", code: "USURY", xField: "anno", yField: "totale", label: "Autori", color: "#9467bd" },
+        { dataType: "VICTIM", code: "USURY", xField: "anno", yField: "totale", label: "Vittime", color: "#9467bd", dash: "dash" },
+      ],
+    },
   },
   {
     id: "estorsioni",
@@ -188,6 +237,15 @@ const INSIGHTS: Insight[] = [
     tests: ["mann-kendall"],
     period: "2007-2024",
     body: "Le vittime di estorsione sono aumentate del 70%, da 6.704 a 11.433, con una crescita graduale nel tempo. Contemporaneamente, la percentuale di vittime straniere \u00e8 scesa dal 16,4% all\u20198,8% con andamento altrettanto costante. L\u2019estorsione colpisce in misura crescente cittadini italiani.",
+    chart: {
+      file: "autori_vittime_trend.json",
+      series: [
+        { dataType: "VICTIM", code: "EXTORT", xField: "anno", yField: "totale", label: "Vittime", color: "#2E86AB" },
+        { dataType: "VICTIM", code: "EXTORT", xField: "anno", yField: "pct_stranieri", label: "% stranieri", color: "#E63946", yaxis: "y2" },
+      ],
+      yAxisLabel: "Vittime",
+      y2AxisLabel: "% stranieri",
+    },
   },
   // --- COMPOSIZIONE DEMOGRAFICA ---
   {
@@ -200,6 +258,13 @@ const INSIGHTS: Insight[] = [
     body: "La percentuale di autori stranieri denunciati per rapine \u00e8 passata dal 35,5% al 52,4% (+16,9 punti percentuali), con un aumento graduale lungo l\u2019intero periodo. Il trend \u00e8 coerente su tutte le tipologie: rapine in strada (47% \u2192 60%), in esercizi commerciali (36% \u2192 50%). Anche tra le vittime di rapina, la quota di stranieri \u00e8 salita dal 14% al 26%, con un aumento quasi costante anno dopo anno.",
     caveat:
       "Il dato riflette le denunce, non necessariamente la criminalit\u00e0 reale. Fattori come la maggiore visibilit\u00e0 e le pratiche di controllo differenziate possono influenzare la composizione degli autori denunciati.",
+    chart: {
+      file: "autori_vittime_trend.json",
+      series: [
+        { dataType: "OFFEND", code: "ROBBER", xField: "anno", yField: "pct_stranieri", label: "% stranieri (autori)", color: "#E63946" },
+      ],
+      yAxisLabel: "%",
+    },
   },
   {
     id: "furti-destrezza",
@@ -209,6 +274,14 @@ const INSIGHTS: Insight[] = [
     tests: ["mann-kendall"],
     period: "2008-2024",
     body: "La percentuale di vittime donne di furti con destrezza (borseggi) \u00e8 scesa dall\u201981% al 54%, quella degli uomini \u00e8 salita dal 19% al 46%. \u00c8 la tendenza pi\u00f9 regolare dell\u2019intero dataset: in oltre 9 anni su 10 il valore si muove nella stessa direzione. Contemporaneamente, la quota di autori stranieri \u00e8 salita dal 34% al 61%.",
+    chart: {
+      file: "autori_vittime_trend.json",
+      series: [
+        { dataType: "VICTIM", code: "PICKTHEF", xField: "anno", yField: "pct_femmine", label: "% donne", color: "#e377c2" },
+        { dataType: "VICTIM", code: "PICKTHEF", xField: "anno", yField: "pct_maschi", label: "% uomini", color: "#2E86AB" },
+      ],
+      yAxisLabel: "%",
+    },
   },
   {
     id: "cybercrimine-genere",
@@ -218,6 +291,14 @@ const INSIGHTS: Insight[] = [
     tests: ["mann-kendall"],
     period: "2008-2024",
     body: "Tra le vittime di delitti informatici, le donne sono passate dal 34% al 49,6%, sfiorando la parit\u00e0 con gli uomini. Per truffe e frodi informatiche le vittime donne sono cresciute dal 34,5% al 43,4%, con un aumento quasi costante nel tempo. Il cybercrimine diventa progressivamente trasversale al genere.",
+    chart: {
+      file: "autori_vittime_trend.json",
+      series: [
+        { dataType: "VICTIM", code: "CYBERCRIM", xField: "anno", yField: "pct_femmine", label: "% donne (delitti inform.)", color: "#ff7f0e" },
+        { dataType: "VICTIM", code: "SWINCYB", xField: "anno", yField: "pct_femmine", label: "% donne (truffe)", color: "#ff7f0e", dash: "dash" },
+      ],
+      yAxisLabel: "%",
+    },
   },
   {
     id: "omicidi-donne",
@@ -227,6 +308,13 @@ const INSIGHTS: Insight[] = [
     tests: ["mann-kendall"],
     period: "2008-2024",
     body: "Le vittime donne di omicidio volontario sono passate dal 24% al 34,5% del totale, con un aumento graduale nel tempo. Non perch\u00e9 i femminicidi aumentino, ma perch\u00e9 calano di pi\u00f9 gli omicidi con vittime maschili, in particolare quelli legati alla criminalit\u00e0 organizzata.",
+    chart: {
+      file: "autori_vittime_trend.json",
+      series: [
+        { dataType: "VICTIM", code: "INTENHOM", xField: "anno", yField: "pct_femmine", label: "% vittime donne", color: "#e377c2" },
+      ],
+      yAxisLabel: "%",
+    },
   },
   {
     id: "violenze-sessuali-straniere",
@@ -239,6 +327,13 @@ const INSIGHTS: Insight[] = [
     body: "Il tasso di violenze sessuali denunciate \u00e8 aumentato da 7,0 a 11,6 per 100.000 abitanti, con una crescita graduale lungo l\u2019intero periodo. Contemporaneamente, la percentuale di vittime straniere \u00e8 scesa dal 31% al 22,5% (-8,5 punti percentuali).",
     caveat:
       "L\u2019aumento delle denunce riflette principalmente campagne di sensibilizzazione (es. #MeToo) e maggiore fiducia nelle istituzioni. \u00c8 un segnale positivo di emersione del sommerso, non necessariamente di aumento del fenomeno.",
+    chart: {
+      file: "autori_vittime_trend.json",
+      series: [
+        { dataType: "VICTIM", code: "RAPE", xField: "anno", yField: "pct_stranieri", label: "% vittime straniere", color: "#E63946" },
+      ],
+      yAxisLabel: "%",
+    },
   },
   {
     id: "incendi-dolosi",
@@ -248,6 +343,15 @@ const INSIGHTS: Insight[] = [
     tests: ["mann-kendall"],
     period: "2007-2024",
     body: "Gli autori denunciati per incendi dolosi sono aumentati di 607 unit\u00e0, e la percentuale di autori stranieri \u00e8 salita dal 17,4% al 34% (+16,6 punti percentuali). Entrambi i trend sono graduali lungo l\u2019intero periodo.",
+    chart: {
+      file: "autori_vittime_trend.json",
+      series: [
+        { dataType: "OFFEND", code: "ARSON", xField: "anno", yField: "totale", label: "Autori", color: "#d62728" },
+        { dataType: "OFFEND", code: "ARSON", xField: "anno", yField: "pct_stranieri", label: "% stranieri", color: "#E63946", yaxis: "y2" },
+      ],
+      yAxisLabel: "Autori",
+      y2AxisLabel: "% stranieri",
+    },
   },
   // --- ANOMALIE E DIVERGENZE ---
   {
@@ -260,6 +364,15 @@ const INSIGHTS: Insight[] = [
     body: "Dal 2015 al 2020 entrambe le serie calano; dal 2021 entrambe risalgono. La correlazione sui livelli \u00e8 positiva e significativa (Spearman), ma con soli 11 punti e un possibile cambio metodologico nel 2015 va interpretata con cautela. La somiglianza dei trend potrebbe riflettere fattori comuni (COVID, ciclo mediatico) pi\u00f9 che un nesso diretto tra criminalit\u00e0 reale e percezione.",
     caveat:
       "La percezione di insicurezza \u00e8 influenzata dalla copertura mediatica, dal clima politico e da fattori locali che i dati aggregati non catturano. Il salto 2014-2015 potrebbe riflettere un cambio metodologico ISTAT.",
+    chart: {
+      file: "percezione_vs_dati.json",
+      series: [
+        { xField: "Anno", yField: "Tasso_per_1000", label: "Tasso delitti per 1.000", color: "#2E86AB" },
+        { xField: "Anno", yField: "Percezione_pct", label: "Percezione insicurezza %", color: "#E63946", yaxis: "y2" },
+      ],
+      yAxisLabel: "Tasso per 1.000",
+      y2AxisLabel: "Percezione %",
+    },
   },
   {
     id: "violenze-divergenza",
@@ -716,6 +829,8 @@ function InsightCard({
   insight: Insight;
   showCategory?: boolean;
 }) {
+  const [showChart, setShowChart] = useState(false);
+
   return (
     <div id={insight.id} className="rounded-lg border p-4 space-y-2 scroll-mt-20">
       <div className="flex items-start justify-between gap-2 flex-wrap">
@@ -738,6 +853,33 @@ function InsightCard({
         <p>{insight.body}</p>
         {insight.caveat && <Caveat>{insight.caveat}</Caveat>}
       </div>
+      {insight.chart && (
+        <div className="pt-1">
+          <button
+            onClick={() => setShowChart((v) => !v)}
+            className="text-xs text-primary hover:underline cursor-pointer flex items-center gap-1"
+          >
+            <span
+              className="inline-block transition-transform duration-200"
+              style={{ transform: showChart ? "rotate(90deg)" : "rotate(0deg)" }}
+            >
+              &#9654;
+            </span>
+            {showChart ? "Nascondi grafico" : "Mostra il grafico"}
+          </button>
+          {showChart && (
+            <div className="mt-2">
+              <Suspense
+                fallback={
+                  <div className="h-[300px] animate-pulse bg-muted rounded" />
+                }
+              >
+                <InsightMiniChart config={insight.chart} />
+              </Suspense>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
