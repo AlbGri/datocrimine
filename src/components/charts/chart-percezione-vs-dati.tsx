@@ -11,10 +11,9 @@ import {
   AXIS_FIXED,
   getAxisYear,
 } from "@/lib/config";
-import { fmtNum, PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Card, CardContent } from "@/components/ui/card";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
@@ -39,19 +38,12 @@ export function ChartPercezioneVsDati() {
 
   const anni = data.map((d) => d.Anno);
 
-  const varPercezione =
-    data[data.length - 1].Percezione_pct - data[0].Percezione_pct;
-  const varTasso =
-    data[data.length - 1].Tasso_per_1000 - data[0].Tasso_per_1000;
-
-  const percezioni = data.map((d) => d.Percezione_pct);
-  const idxMaxPercezione = percezioni.indexOf(Math.max(...percezioni));
 
   return (
     <div className="space-y-4">
       <Alert>
         <AlertDescription className="block">
-          <strong>Divario percezione-dati:</strong> la percezione di insicurezza non &egrave; &quot;sbagliata&quot; - risponde a fattori legittimi come copertura mediatica, degrado urbano, sfiducia istituzionale. Percezione e delitti denunciati seguono dinamiche diverse.
+          <strong>Percezione e realt&agrave;:</strong> dal 2015 al 2020 entrambe le serie calano, dal 2021 risalgono. La correlazione &egrave; positiva, ma il nesso &egrave; incerto: la percezione &egrave; influenzata da copertura mediatica, clima politico e fattori locali che i dati aggregati non catturano.
         </AlertDescription>
       </Alert>
 
@@ -129,27 +121,6 @@ export function ChartPercezioneVsDati() {
         />
       </ChartFullscreenWrapper>
 
-      <div className="grid grid-cols-3 gap-2 sm:gap-3">
-        <Card>
-          <CardContent className="py-2 sm:pt-4 sm:pb-2 text-center">
-            <p className="text-xs sm:text-sm text-muted-foreground">Delta Percezione 2014-2024</p>
-            <p className="text-lg sm:text-2xl font-bold">{fmtNum(varPercezione, 1)} punti %</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="py-2 sm:pt-4 sm:pb-2 text-center">
-            <p className="text-xs sm:text-sm text-muted-foreground">Delta Tasso delitti denunciati</p>
-            <p className="text-lg sm:text-2xl font-bold">{fmtNum(varTasso, 1)}</p>
-            <p className="text-[10px] sm:text-xs text-muted-foreground">per 1.000 ab.</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="py-2 sm:pt-4 sm:pb-2 text-center">
-            <p className="text-xs sm:text-sm text-muted-foreground">Anno percezione max</p>
-            <p className="text-lg sm:text-2xl font-bold">{anni[idxMaxPercezione]}</p>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 }
