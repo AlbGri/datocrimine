@@ -47,7 +47,7 @@ CODICE_TO_INSIGHT_ID: dict[str, str] = {
     "KIDNAPP": "sequestri",
     "USURY": "usura",
     "EXTORT": "estorsioni",
-    "BAGTHEF": "furti-destrezza",
+    "BAGTHEF": "furti-strappo",
     "RAPE": "violenze-sessuali-straniere",
     "ARSON": "incendi-dolosi",
 }

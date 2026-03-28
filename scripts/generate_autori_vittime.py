@@ -80,9 +80,9 @@ CRIME_NAMES = {
     "USURY": "Usura",
     # Furti
     "THEFT": "Furti",
-    "PICKTHEF": "Borseggi",
+    "PICKTHEF": "Furti con destrezza",
     "SHOPTHEF": "Furti in esercizi commerciali",
-    "BAGTHEF": "Furti con destrezza",
+    "BAGTHEF": "Furti con strappo",
     "BURGTHEF": "Furti con scasso",
     "VEHITHEF": "Furti di autoveicoli",
     "CARTHEF": "Furti di autovetture",

@@ -231,8 +231,8 @@ const INSIGHTS: Insight[] = [
     chart: {
       file: "autori_vittime_trend.json",
       series: [
-        { dataType: "OFFEND", code: "USURY", xField: "anno", yField: "totale", label: "Autori", color: "#2E86AB" },
-        { dataType: "VICTIM", code: "USURY", xField: "anno", yField: "totale", label: "Vittime", color: "#d62728", dash: "dash" },
+        { dataType: "VICTIM", code: "USURY", xField: "anno", yField: "totale", label: "Vittime", color: "#d62728" },
+        { dataType: "OFFEND", code: "USURY", xField: "anno", yField: "totale", label: "Autori", color: "#2E86AB", dash: "dash" },
       ],
       yAxisLabel: "Persone",
     },
@@ -277,19 +277,19 @@ const INSIGHTS: Insight[] = [
     },
   },
   {
-    id: "furti-destrezza",
-    title: "Furti con destrezza: ribaltamento di genere tra le vittime",
+    id: "furti-strappo",
+    title: "Furti con strappo: ribaltamento di genere tra le vittime",
     category: "demografica",
     dimensions: ["genere", "stranieri"],
     tests: ["mann-kendall"],
     period: "2008-2024",
-    body: "La percentuale di vittime donne di furti con destrezza (borseggi) \u00e8 scesa dall\u201981% al 54%, quella degli uomini \u00e8 salita dal 19% al 46%. \u00c8 la tendenza pi\u00f9 regolare dell\u2019intero dataset: in oltre 9 anni su 10 il valore si muove nella stessa direzione. Contemporaneamente, la quota di autori stranieri \u00e8 salita dal 34% al 61%.",
+    body: "La percentuale di vittime donne di furti con strappo \u00e8 scesa dall\u201981% al 54%, quella degli uomini \u00e8 salita dal 19% al 46%. \u00c8 la tendenza pi\u00f9 regolare dell\u2019intero dataset: in oltre 9 anni su 10 il valore si muove nella stessa direzione. Contemporaneamente, la quota di autori stranieri \u00e8 salita dal 34% al 61%.",
     chart: {
       file: "autori_vittime_trend.json",
       series: [
-        { dataType: "VICTIM", code: "PICKTHEF", xField: "anno", yField: "pct_femmine", label: "% donne", color: "#e377c2" },
-        { dataType: "VICTIM", code: "PICKTHEF", xField: "anno", yField: "pct_maschi", label: "% uomini", color: "#2E86AB" },
-        { dataType: "VICTIM", code: "PICKTHEF", xField: "anno", yField: "totale", label: "Vittime totali", color: "#d62728", yaxis: "y2" },
+        { dataType: "VICTIM", code: "BAGTHEF", xField: "anno", yField: "pct_femmine", label: "% donne", color: "#e377c2" },
+        { dataType: "VICTIM", code: "BAGTHEF", xField: "anno", yField: "pct_maschi", label: "% uomini", color: "#2E86AB" },
+        { dataType: "VICTIM", code: "BAGTHEF", xField: "anno", yField: "totale", label: "Vittime totali", color: "#d62728", yaxis: "y2" },
       ],
       yAxisLabel: "%",
       y2AxisLabel: "Vittime",

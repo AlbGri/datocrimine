@@ -13,6 +13,7 @@ import {
   getAxisYear,
 } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
+import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
@@ -206,6 +207,7 @@ export function ChartAutoriTrend({ dataType }: Props) {
                   xanchor: "center",
                   orientation: "h" as const,
                 },
+            separators: PLOTLY_IT_SEPARATORS,
             shapes: COVID_SHAPES,
             annotations: isMobile
               ? COVID_ANNOTATIONS.map((a) => ({

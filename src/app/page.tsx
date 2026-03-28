@@ -8,6 +8,10 @@ import { CollapsibleSection } from "@/components/ui/collapsible-section";
 export default function Home() {
   return (
     <main className="mx-auto max-w-7xl px-4 py-4 sm:py-8 space-y-6 sm:space-y-10">
+      <h1 className="text-2xl sm:text-4xl font-bold">
+        Osservatorio Criminalit&agrave;
+      </h1>
+
       <Link
         href="/report/2024"
         className="block rounded-lg border border-primary/30 bg-primary/5 p-4 sm:p-5 transition-colors hover:bg-primary/10"

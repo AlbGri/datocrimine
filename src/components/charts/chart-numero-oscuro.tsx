@@ -3,6 +3,7 @@
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import { COLORS, CHART_HEIGHT_SMALL, PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
+import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
@@ -165,6 +166,7 @@ export function ChartNumeroOscuro() {
             dragmode: false,
             plot_bgcolor: "white",
             paper_bgcolor: "white",
+            separators: PLOTLY_IT_SEPARATORS,
           }}
           config={PLOTLY_CONFIG}
           useResizeHandler
@@ -219,6 +221,7 @@ export function ChartNumeroOscuro() {
             dragmode: false,
             plot_bgcolor: "white",
             paper_bgcolor: "white",
+            separators: PLOTLY_IT_SEPARATORS,
           }}
           config={PLOTLY_CONFIG}
           useResizeHandler
@@ -301,6 +304,7 @@ export function ChartNumeroOscuro() {
             dragmode: false,
             plot_bgcolor: "white",
             paper_bgcolor: "white",
+            separators: PLOTLY_IT_SEPARATORS,
             shapes: Object.values(mediaNazionale2023).map((val, i) => ({
               type: "line" as const,
               xref: "paper" as const,
@@ -389,6 +393,7 @@ export function ChartNumeroOscuro() {
                   dragmode: false,
                   plot_bgcolor: "white",
                   paper_bgcolor: "white",
+                  separators: PLOTLY_IT_SEPARATORS,
                 }}
                 config={PLOTLY_CONFIG}
                 useResizeHandler
