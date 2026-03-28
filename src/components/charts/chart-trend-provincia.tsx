@@ -179,7 +179,7 @@ export function ChartTrendProvincia() {
               mode: "lines" as const,
               name: `Media ${selectedRegione}`,
               hovertemplate: "<b>%{fullData.name}</b>: %{y:.2f} per 1.000 ab.<extra></extra>",
-              line: { width: 2, color: "#999999", dash: "dash" as const },
+              line: { width: 2, color: COLORS.grigioMedia, dash: "dash" as const },
             }] : []),
           ]}
           key={metrica}

@@ -15,7 +15,44 @@ export const COLORS = {
   atti_minori: "#e377c2",
   rapine_abitazione: "#bcbd22",
   sequestri: "#17becf",
+
+  // Demografici
+  stranieri: "#E63946",
+  maschi: "#2563eb",
+  femmine: "#db2777",
+  minori: "#7c3aed",
+
+  // Strutturali
+  mediaNazionale: "#dc2626",
+  grigioMedia: "#999999",
+  grigioAltro: "#9ca3af",
 } as const;
+
+export const COLORI_ALLARME: Record<string, string> = {
+  "Omicidi volontari consumati": COLORS.omicidi,
+  "Tentati omicidi": COLORS.tentati_omicidi,
+  "Violenze sessuali": COLORS.violenze_sessuali,
+  "Atti sessuali con minorenne": COLORS.atti_minori,
+  "Rapine in abitazione": COLORS.rapine_abitazione,
+  "Sequestri di persona": COLORS.sequestri,
+};
+
+export type MetricaProfilo = "tasso" | "pct_stranieri" | "pct_maschi" | "pct_femmine" | "pct_minori";
+
+export const METRICHE_PROFILO: { value: MetricaProfilo; label: string; color: string }[] = [
+  { value: "tasso", label: "Tasso per 100k ab.", color: COLORS.maschi },
+  { value: "pct_stranieri", label: "% stranieri", color: COLORS.stranieri },
+  { value: "pct_maschi", label: "% maschi", color: COLORS.maschi },
+  { value: "pct_femmine", label: "% femmine", color: COLORS.femmine },
+  { value: "pct_minori", label: "% minori", color: COLORS.minori },
+];
+
+export const BREAKDOWN_LINES = [
+  { key: "pct_stranieri" as const, label: "% stranieri", color: COLORS.stranieri },
+  { key: "pct_maschi" as const, label: "% maschi", color: COLORS.maschi },
+  { key: "pct_femmine" as const, label: "% femmine", color: COLORS.femmine },
+  { key: "pct_minori" as const, label: "% minori", color: COLORS.minori },
+];
 
 export const COVID_PERIOD = {
   start: 2019.8,

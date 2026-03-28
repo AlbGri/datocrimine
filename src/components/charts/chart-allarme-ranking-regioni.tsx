@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { COLORS, PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
+import { COLORS, COLORI_ALLARME, PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
 import { fmtNum, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -19,14 +19,6 @@ interface AllarmeRegione {
   Tasso_per_100k: number;
 }
 
-const COLORI_ALLARME: Record<string, string> = {
-  "Omicidi volontari consumati": COLORS.omicidi,
-  "Tentati omicidi": COLORS.tentati_omicidi,
-  "Violenze sessuali": COLORS.violenze_sessuali,
-  "Atti sessuali con minorenne": COLORS.atti_minori,
-  "Rapine in abitazione": COLORS.rapine_abitazione,
-  "Sequestri di persona": COLORS.sequestri,
-};
 
 interface Props {
   anno: number;
@@ -94,7 +86,7 @@ export function ChartAllarmeRankingRegioni({ anno, reato }: Props) {
               x1: media,
               y0: -0.5,
               y1: nomi.length - 0.5,
-              line: { color: "#dc2626", width: 2, dash: "dash" },
+              line: { color: COLORS.mediaNazionale, width: 2, dash: "dash" },
             },
           ],
           annotations: [
@@ -103,7 +95,7 @@ export function ChartAllarmeRankingRegioni({ anno, reato }: Props) {
               y: nomi.length - 0.5,
               text: `Media: ${fmtNum(media, 2)}`,
               showarrow: false,
-              font: { size: 10, color: "#dc2626" },
+              font: { size: 10, color: COLORS.mediaNazionale },
               xanchor: "left",
               yanchor: "bottom",
               xshift: 4,

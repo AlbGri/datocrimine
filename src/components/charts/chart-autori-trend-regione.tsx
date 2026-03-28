@@ -11,6 +11,7 @@ import {
   COVID_ANNOTATIONS,
   AXIS_FIXED,
   getAxisYear,
+  BREAKDOWN_LINES,
 } from "@/lib/config";
 import { fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
@@ -44,12 +45,6 @@ interface Props {
 
 const VICTIM_DEFAULT = "CULPINJU";
 
-const BREAKDOWN_LINES = [
-  { key: "pct_stranieri" as const, label: "% stranieri", color: COLORS.secondary },
-  { key: "pct_maschi" as const, label: "% maschi", color: "#2563eb" },
-  { key: "pct_femmine" as const, label: "% femmine", color: "#db2777" },
-  { key: "pct_minori" as const, label: "% minori", color: "#7c3aed" },
-];
 
 type Metrica = "tasso" | "assoluto";
 
@@ -170,7 +165,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
       mode: "lines" as const,
       name: "Media nazionale",
       hovertemplate: "<b>%{fullData.name}</b><br>Anno: %{x}<br>%{y:.2f} per 100k ab.<extra></extra>",
-      line: { width: 2, color: "#999999", dash: "dash" as const },
+      line: { width: 2, color: COLORS.grigioMedia, dash: "dash" as const },
       yaxis: "y" as const,
     }] : []),
   ];

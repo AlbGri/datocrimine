@@ -11,6 +11,7 @@ import {
   COVID_ANNOTATIONS,
   AXIS_FIXED,
   getAxisYear,
+  BREAKDOWN_LINES,
 } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
@@ -41,12 +42,6 @@ interface Props {
 /** Reato preferito come default VICTIM (serie lunga, alto volume) */
 const VICTIM_DEFAULT = "CULPINJU";
 
-const BREAKDOWN_LINES = [
-  { key: "pct_stranieri" as const, label: "% stranieri", color: COLORS.secondary },
-  { key: "pct_maschi" as const, label: "% maschi", color: "#2563eb" },
-  { key: "pct_femmine" as const, label: "% femmine", color: "#db2777" },
-  { key: "pct_minori" as const, label: "% minori", color: "#7c3aed" },
-];
 
 export function ChartAutoriTrend({ dataType }: Props) {
   const isMobile = useIsMobile();

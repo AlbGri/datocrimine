@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
+import { PLOTLY_CONFIG, AXIS_FIXED, MetricaProfilo, METRICHE_PROFILO, COLORS } from "@/lib/config";
 import { fmtNum, fmtPct, fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -37,15 +37,8 @@ interface PopolazioneRecord {
   Popolazione: number;
 }
 
-type Metrica = "tasso" | "pct_stranieri" | "pct_maschi" | "pct_femmine" | "pct_minori";
-
-const METRICHE: { value: Metrica; label: string; color: string }[] = [
-  { value: "tasso", label: "Tasso per 100k ab.", color: "#2563eb" },
-  { value: "pct_stranieri", label: "% stranieri", color: "#2E86AB" },
-  { value: "pct_maschi", label: "% maschi", color: "#2563eb" },
-  { value: "pct_femmine", label: "% femmine", color: "#db2777" },
-  { value: "pct_minori", label: "% minori", color: "#7c3aed" },
-];
+type Metrica = MetricaProfilo;
+const METRICHE = METRICHE_PROFILO;
 
 interface Props {
   dataType: "OFFEND" | "VICTIM";
@@ -261,7 +254,7 @@ export function ChartProfiloProvincia({ dataType }: Props) {
   const valori = displayItems.map((i) => i.value);
   const medieNaz = displayItems.map((i) => i.media);
   const barColors = displayItems.map((i) =>
-    i.isAltro ? "#9ca3af" : metricaConfig.color
+    i.isAltro ? COLORS.grigioAltro : metricaConfig.color
   );
 
   const nBars = displayItems.length;
@@ -377,7 +370,7 @@ export function ChartProfiloProvincia({ dataType }: Props) {
               y: nomi,
               x: medieNaz,
               mode: "markers" as const,
-              marker: { color: "#dc2626", symbol: "line-ns", size: 14, line: { width: 2, color: "#dc2626" } },
+              marker: { color: COLORS.mediaNazionale, symbol: "line-ns", size: 14, line: { width: 2, color: COLORS.mediaNazionale } },
               name: "Media nazionale",
               hovertemplate: nomi.map(
                 (n, idx) => {

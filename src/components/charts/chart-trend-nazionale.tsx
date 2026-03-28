@@ -101,7 +101,7 @@ export function ChartTrendNazionale() {
       hovertemplate: isAssoluto
         ? "<b>%{fullData.name}</b><br>Anno: %{x}<br>Delitti: %{y:,.0f}<extra></extra>"
         : "<b>%{fullData.name}</b><br>Anno: %{x}<br>%{y:.2f} per 1.000 ab.<extra></extra>",
-      line: { width: 2, color: COLORI_CATEGORIE[cat] ?? "#999999" },
+      line: { width: 2, color: COLORI_CATEGORIE[cat] ?? COLORS.grigioMedia },
       marker: { size: isMobile ? 4 : 6 },
     };
   });

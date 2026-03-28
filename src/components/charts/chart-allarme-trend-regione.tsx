@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
   COLORS,
+  COLORI_ALLARME,
   CHART_HEIGHT_SMALL,
   PLOTLY_CONFIG,
   COVID_SHAPES,
@@ -31,14 +32,6 @@ interface AllarmeRegione {
   Tasso_per_100k: number;
 }
 
-const COLORI_ALLARME: Record<string, string> = {
-  "Omicidi volontari consumati": COLORS.omicidi,
-  "Tentati omicidi": COLORS.tentati_omicidi,
-  "Violenze sessuali": COLORS.violenze_sessuali,
-  "Atti sessuali con minorenne": COLORS.atti_minori,
-  "Rapine in abitazione": COLORS.rapine_abitazione,
-  "Sequestri di persona": COLORS.sequestri,
-};
 
 interface Props {
   reato: string;
@@ -158,7 +151,7 @@ export function ChartAllarmeTrendRegione({ reato }: Props) {
               mode: "lines" as const,
               name: "Media nazionale",
               hovertemplate: "<b>%{fullData.name}</b>: %{y:.2f} per 100k ab.<extra></extra>",
-              line: { width: 2, color: "#999999", dash: "dash" as const },
+              line: { width: 2, color: COLORS.grigioMedia, dash: "dash" as const },
             }] : []),
           ]}
           key={metrica}

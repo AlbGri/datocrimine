@@ -47,7 +47,7 @@ const mediaNazionale2023: Record<string, number> = {
   "Reati abitazione": 55.3,
   "Reati veicoli": 41.3,
 };
-const coloriMacro = ["#2E86AB", "#E63946", "#ff7f0e", "#9467bd"];
+const coloriMacro = [COLORS.primary, COLORS.secondary, COLORS.truffe, COLORS.droga];
 
 // Confronto storico per macroarea - tutti i singoli reati
 // 2015-2016: Prospetto 6 report ISTAT 1 feb 2019

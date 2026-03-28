@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
+import { COLORS, PLOTLY_CONFIG, AXIS_FIXED, MetricaProfilo, METRICHE_PROFILO } from "@/lib/config";
 import { fmtNum, fmtPct, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -33,15 +33,8 @@ interface DelittiItaliaRecord {
   Tasso_per_1000: number;
 }
 
-type Metrica = "tasso" | "pct_stranieri" | "pct_maschi" | "pct_femmine" | "pct_minori";
-
-const METRICHE: { value: Metrica; label: string; color: string }[] = [
-  { value: "tasso", label: "Tasso per 100k ab.", color: "#2563eb" },
-  { value: "pct_stranieri", label: "% stranieri", color: "#2E86AB" },
-  { value: "pct_maschi", label: "% maschi", color: "#2563eb" },
-  { value: "pct_femmine", label: "% femmine", color: "#db2777" },
-  { value: "pct_minori", label: "% minori", color: "#7c3aed" },
-];
+type Metrica = MetricaProfilo;
+const METRICHE = METRICHE_PROFILO;
 
 interface Props {
   dataType: "OFFEND" | "VICTIM";
@@ -191,7 +184,7 @@ export function ChartProfiloNazionale({ dataType }: Props) {
   const maxVal = Math.max(...valori, 1);
   const baseColor = metricaConfig.color;
   const colors = displayItems.map((d) => {
-    if (d.isAltro) return "#9ca3af";
+    if (d.isAltro) return COLORS.grigioAltro;
     const ratio = Math.min(d.value / maxVal, 1);
     const opacity = 0.25 + ratio * 0.75;
     return baseColor + Math.round(opacity * 255).toString(16).padStart(2, "0");

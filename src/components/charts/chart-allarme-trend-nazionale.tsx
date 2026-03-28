@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
   COLORS,
+  COLORI_ALLARME,
   CHART_HEIGHT_SMALL,
   PLOTLY_CONFIG,
   COVID_SHAPES,
@@ -26,14 +27,6 @@ interface ReatoAllarme {
   Tasso_per_100k: number;
 }
 
-const COLORI_ALLARME: Record<string, string> = {
-  "Omicidi volontari consumati": COLORS.omicidi,
-  "Tentati omicidi": COLORS.tentati_omicidi,
-  "Violenze sessuali": COLORS.violenze_sessuali,
-  "Atti sessuali con minorenne": COLORS.atti_minori,
-  "Rapine in abitazione": COLORS.rapine_abitazione,
-  "Sequestri di persona": COLORS.sequestri,
-};
 
 type Metrica = "tasso" | "assoluto";
 
@@ -68,7 +61,7 @@ export function ChartAllarmeTrendNazionale({ reatoSelezionato }: Props) {
           : "<b>%{fullData.name}</b><br>Anno: %{x}<br>%{y:.2f} per 100k ab.<extra></extra>",
         line: {
           width: isSelected ? 3 : 1.5,
-          color: COLORI_ALLARME[reato] ?? "#999999",
+          color: COLORI_ALLARME[reato] ?? COLORS.grigioMedia,
         },
         marker: { size: isSelected ? 7 : 4 },
         opacity: isSelected ? 1 : 0.3,
