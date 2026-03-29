@@ -288,8 +288,8 @@ const INSIGHTS: Insight[] = [
     chart: {
       file: "autori_vittime_trend.json",
       series: [
-        { dataType: "VICTIM", code: "BAGTHEF", xField: "anno", yField: "pct_femmine", label: "% donne", color: "#e377c2" },
-        { dataType: "VICTIM", code: "BAGTHEF", xField: "anno", yField: "pct_maschi", label: "% uomini", color: "#2E86AB" },
+        { dataType: "VICTIM", code: "BAGTHEF", xField: "anno", yField: "pct_femmine", label: "% donne", color: "#db2777" },
+        { dataType: "VICTIM", code: "BAGTHEF", xField: "anno", yField: "pct_maschi", label: "% uomini", color: "#2563eb" },
         { dataType: "VICTIM", code: "BAGTHEF", xField: "anno", yField: "totale", label: "Vittime totali", color: "#d62728", yaxis: "y2" },
       ],
       yAxisLabel: "%",
@@ -307,8 +307,8 @@ const INSIGHTS: Insight[] = [
     chart: {
       file: "autori_vittime_trend.json",
       series: [
-        { dataType: "VICTIM", code: "CYBERCRIM", xField: "anno", yField: "pct_femmine", label: "% donne (delitti inform.)", color: "#e377c2" },
-        { dataType: "VICTIM", code: "SWINCYB", xField: "anno", yField: "pct_femmine", label: "% donne (truffe)", color: "#e377c2", dash: "dash" },
+        { dataType: "VICTIM", code: "CYBERCRIM", xField: "anno", yField: "pct_femmine", label: "% donne (delitti inform.)", color: "#db2777" },
+        { dataType: "VICTIM", code: "SWINCYB", xField: "anno", yField: "pct_femmine", label: "% donne (truffe)", color: "#db2777", dash: "dash" },
         { dataType: "VICTIM", code: "CYBERCRIM", xField: "anno", yField: "totale", label: "Vittime delitti inform.", color: "#d62728", yaxis: "y2" },
       ],
       yAxisLabel: "% donne",
@@ -327,7 +327,7 @@ const INSIGHTS: Insight[] = [
       file: "autori_vittime_trend.json",
       series: [
         { dataType: "VICTIM", code: "INTENHOM", xField: "anno", yField: "totale", label: "Vittime totali", color: "#d62728" },
-        { dataType: "VICTIM", code: "INTENHOM", xField: "anno", yField: "pct_femmine", label: "% donne", color: "#e377c2", yaxis: "y2" },
+        { dataType: "VICTIM", code: "INTENHOM", xField: "anno", yField: "pct_femmine", label: "% donne", color: "#db2777", yaxis: "y2" },
       ],
       yAxisLabel: "Vittime",
       y2AxisLabel: "% donne",

@@ -6,6 +6,7 @@ import { useFetchData } from "@/lib/use-fetch-data";
 import {
   COLORS,
   CHART_HEIGHT,
+  CHART_HEIGHT_MINI,
   PLOTLY_CONFIG,
   COVID_SHAPES,
   COVID_ANNOTATIONS,
@@ -204,14 +205,14 @@ export function ChartTrendNazionale() {
             hovermode: "closest" as const,
             plot_bgcolor: "white",
             paper_bgcolor: "white",
-            height: isMobile ? 250 : CHART_HEIGHT,
+            height: isMobile ? CHART_HEIGHT_MINI : CHART_HEIGHT,
             margin: isMobile ? { l: 45, r: 20, t: 20, b: 60 } : { l: 50, r: 20, t: 20, b: 50 },
             legend: isTipologia
               ? isMobile
                 ? { x: 0.5, y: -0.35, xanchor: "center" as const, yanchor: "top" as const, orientation: "h" as const, font: { size: 9 } }
                 : { x: 0.5, y: 1.08, xanchor: "center" as const, orientation: "h" as const }
-              : undefined,
-            showlegend: isTipologia,
+              : { x: 0.5, y: -0.15, xanchor: "center" as const, orientation: "h" as const },
+            showlegend: true,
             shapes: COVID_SHAPES,
             annotations: isMobile
               ? COVID_ANNOTATIONS.map((a) => ({ ...a, y: 0.92, font: { ...a.font, size: 8 } }))

@@ -5,6 +5,7 @@ import { useFetchData } from "@/lib/use-fetch-data";
 import { PLOTLY_CONFIG, AXIS_FIXED, getAxisYear, COVID_SHAPES, COVID_ANNOTATIONS, CHART_HEIGHT_MINI } from "@/lib/config";
 import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
+import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 
 const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
 
@@ -352,7 +353,7 @@ export function InsightMiniChart({ config, ariaLabel }: { config: InsightChartCo
   }
 
   return (
-    <div role="img" aria-label={ariaLabel ?? "Grafico insight"}>
+    <ChartFullscreenWrapper ariaDescription={ariaLabel ?? "Grafico insight"}>
       <Plot
         data={traces}
         layout={layout}
@@ -360,6 +361,6 @@ export function InsightMiniChart({ config, ariaLabel }: { config: InsightChartCo
         useResizeHandler
         className="w-full"
       />
-    </div>
+    </ChartFullscreenWrapper>
   );
 }

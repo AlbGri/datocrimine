@@ -120,7 +120,7 @@ export function ChartMappaRegioni({ anno }: Props) {
           lat: centroid.lat,
           lon: centroid.lon,
           markerSymbol: diff > 0 ? "triangle-up" : "triangle-down",
-          color: diff > 0 ? COLORS.mediaNazionale : "#16a34a",
+          color: diff > 0 ? COLORS.mediaNazionale : COLORS.verdeCalo,
         };
       }).filter(Boolean) as { lat: number; lon: number; markerSymbol: string; color: string }[]
     : [];

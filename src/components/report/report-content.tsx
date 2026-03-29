@@ -6,10 +6,14 @@ import { useFetchData } from "@/lib/use-fetch-data";
 import {
   AXIS_FIXED,
   CHART_HEIGHT,
+  CHART_HEIGHT_SMALL,
   CHART_HEIGHT_MAP,
+  CHART_HEIGHT_MINI,
   PLOTLY_CONFIG,
   NUTS_TO_ISTAT,
   COLORS,
+  COLORI_ALLARME,
+  getAxisYear,
 } from "@/lib/config";
 import { fmtNum, fmtPct, fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
@@ -192,7 +196,7 @@ function ChartTopVariazioni({
   const reati = allItems.map((d) => d.reato);
   const values = allItems.map((d) => d.yoy_pct);
   const colors = allItems.map((d) =>
-    d.yoy_pct >= 0 ? COLORS.secondary : "#16a34a"
+    d.yoy_pct >= 0 ? COLORS.secondary : COLORS.verdeCalo
   );
   const customdata = allItems.map((d) => [
     d.valore_corrente,
@@ -222,7 +226,7 @@ function ChartTopVariazioni({
         ]}
         layout={{
           separators: PLOTLY_IT_SEPARATORS,
-          height: isMobile ? 380 : CHART_HEIGHT,
+          height: isMobile ? CHART_HEIGHT_SMALL : CHART_HEIGHT,
           xaxis: {
             ...AXIS_FIXED,
             title: { text: "Variazione % anno su anno" },
@@ -289,9 +293,9 @@ function ChartMappaVariazione({
             z: values,
             featureidkey: "properties.reg_istat_code_num",
             colorscale: [
-              [0, "#16a34a"],
+              [0, COLORS.verdeCalo],
               [0.5, "#f5f5f5"],
-              [1, "#dc2626"],
+              [1, COLORS.mediaNazionale],
             ],
             zmin: -maxAbs,
             zmax: maxAbs,
@@ -346,7 +350,7 @@ function ChartRipartizioni({
   anno: number;
 }) {
   const colors = ripartizioni.map((r) =>
-    r.variazione_pct >= 0 ? COLORS.secondary : "#16a34a"
+    r.variazione_pct >= 0 ? COLORS.secondary : COLORS.verdeCalo
   );
 
   return (
@@ -370,7 +374,7 @@ function ChartRipartizioni({
         ]}
         layout={{
           separators: PLOTLY_IT_SEPARATORS,
-          height: 300,
+          height: CHART_HEIGHT_MINI,
           xaxis: { ...AXIS_FIXED },
           yaxis: {
             ...AXIS_FIXED,
@@ -412,12 +416,31 @@ function ChartPercezione({ anno }: { anno: number }) {
         data={[
           {
             x: anni,
+            y: percezione,
+            type: "scatter",
+            mode: "lines+markers",
+            name: "Percezione insicurezza (%)",
+            hovertemplate: "<b>Percezione insicurezza</b><br>Anno: %{x}<br>%{y:.1f}%<extra></extra>",
+            line: { color: COLORS.secondary },
+            marker: {
+              size: anni.map((a) => (a === anno ? 12 : 6)),
+              line: {
+                color: anni.map((a) =>
+                  a === anno ? "#000" : COLORS.secondary
+                ),
+                width: anni.map((a) => (a === anno ? 2 : 0)),
+              },
+            },
+            yaxis: "y",
+          },
+          {
+            x: anni,
             y: tassi,
             type: "scatter",
             mode: "lines+markers",
             name: "Tasso delitti (per 1.000 ab.)",
             hovertemplate: "<b>Tasso delitti</b><br>Anno: %{x}<br>%{y:.2f} per 1.000 ab.<extra></extra>",
-            line: { color: COLORS.primary },
+            line: { color: COLORS.primary, dash: "dash" },
             marker: {
               size: anni.map((a) => (a === anno ? 12 : 6)),
               color: anni.map((a) =>
@@ -428,43 +451,23 @@ function ChartPercezione({ anno }: { anno: number }) {
                 width: anni.map((a) => (a === anno ? 2 : 0)),
               },
             },
-            yaxis: "y",
-          },
-          {
-            x: anni,
-            y: percezione,
-            type: "scatter",
-            mode: "lines+markers",
-            name: "Percezione insicurezza (%)",
-            hovertemplate: "<b>Percezione insicurezza</b><br>Anno: %{x}<br>%{y:.1f}%<extra></extra>",
-            line: { color: COLORS.secondary, dash: "dash" },
-            marker: {
-              size: anni.map((a) => (a === anno ? 12 : 6)),
-              line: {
-                color: anni.map((a) =>
-                  a === anno ? "#000" : COLORS.secondary
-                ),
-                width: anni.map((a) => (a === anno ? 2 : 0)),
-              },
-            },
             yaxis: "y2",
           },
         ]}
         layout={{
           separators: PLOTLY_IT_SEPARATORS,
           height: CHART_HEIGHT,
-          xaxis: {
-            ...AXIS_FIXED,
-            dtick: isMobile ? 2 : 1,
-          },
+          xaxis: getAxisYear(isMobile),
           yaxis: {
             ...AXIS_FIXED,
-            title: { text: "Tasso per 1.000 ab." },
+            title: { text: "% Percezione rischio", font: { color: COLORS.secondary, size: 12 } },
+            tickfont: { color: COLORS.secondary },
             side: "left",
           },
           yaxis2: {
             ...AXIS_FIXED,
-            title: { text: "Percezione %" },
+            title: { text: "Tasso per 1.000 ab.", font: { color: COLORS.primary, size: 12 } },
+            tickfont: { color: COLORS.primary },
             side: "right",
             overlaying: "y",
           },
@@ -723,7 +726,7 @@ export function ReportContent({ anno }: { anno: string }) {
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {data.reati_allarme_sociale.map((r) => (
-              <Card key={r.reato}>
+              <Card key={r.reato} style={{ borderLeftWidth: 3, borderLeftColor: COLORI_ALLARME[r.reato] ?? COLORS.grigioMedia }}>
                 <CardContent className="py-0">
                   <p className="text-xs text-muted-foreground">{r.reato}</p>
                   <p className="text-lg font-bold">

@@ -24,6 +24,7 @@ export const COLORS = {
 
   // Strutturali
   mediaNazionale: "#dc2626",
+  verdeCalo: "#16a34a",
   grigioMedia: "#999999",
   grigioAltro: "#9ca3af",
 } as const;
