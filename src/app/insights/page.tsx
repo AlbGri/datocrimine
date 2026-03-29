@@ -45,6 +45,8 @@ type Insight = {
   chart?: InsightChartConfig;
   /** Dettaglio espandibile sotto il grafico (es. composizione categorie aggregate) */
   chartInfo?: string;
+  /** Nota sulla composizione di genere delle vittime (es. "Il 90% delle vittime sono donne") */
+  genderNote?: string;
 };
 
 /* ================================================================
@@ -158,6 +160,7 @@ const INSIGHTS: Insight[] = [
     tests: ["mann-kendall"],
     period: "2009-2024",
     body: "Le vittime di atti persecutori (stalking) sono passate da circa 5.000 a oltre 18.800 (+278%), con una crescita quasi costante anno dopo anno. L\u2019introduzione del reato nel 2009 (art. 612-bis c.p.) e le successive campagne di sensibilizzazione hanno progressivamente ridotto il numero oscuro, portando pi\u00f9 vittime a denunciare.",
+    genderNote: "Il 74% delle vittime di stalking sono donne (2024).",
     caveat:
       "L\u2019aumento delle denunce \u00e8 un indicatore di emersione, non necessariamente di aumento del fenomeno reale.",
     chart: {
@@ -240,12 +243,12 @@ const INSIGHTS: Insight[] = [
   },
   {
     id: "estorsioni",
-    title: "Estorsioni: pi\u00f9 vittime, meno stranieri coinvolti",
+    title: "Estorsioni: pi\u00f9 vittime, meno cittadini stranieri coinvolti",
     category: "trend",
     dimensions: ["stranieri"],
     tests: ["mann-kendall"],
     period: "2007-2024",
-    body: "Le vittime di estorsione sono aumentate del 70%, da 6.704 a 11.433, con una crescita graduale nel tempo. Contemporaneamente, la percentuale di vittime straniere \u00e8 scesa dal 16,4% all\u20198,8% con andamento altrettanto costante. L\u2019estorsione colpisce in misura crescente cittadini italiani.",
+    body: "Le vittime di estorsione sono aumentate del 70%, da 6.704 a 11.433, con una crescita graduale nel tempo. Contemporaneamente, la percentuale di vittime di nazionalit\u00e0 straniera \u00e8 scesa dal 16,4% all\u20198,8% con andamento altrettanto costante. L\u2019estorsione colpisce in misura crescente cittadini italiani.",
     chart: {
       file: "autori_vittime_trend.json",
       series: [
@@ -290,7 +293,7 @@ const INSIGHTS: Insight[] = [
       series: [
         { dataType: "VICTIM", code: "BAGTHEF", xField: "anno", yField: "pct_femmine", label: "% donne", color: "#db2777" },
         { dataType: "VICTIM", code: "BAGTHEF", xField: "anno", yField: "pct_maschi", label: "% uomini", color: "#2563eb" },
-        { dataType: "VICTIM", code: "BAGTHEF", xField: "anno", yField: "totale", label: "Vittime totali", color: "#d62728", yaxis: "y2" },
+        { dataType: "VICTIM", code: "BAGTHEF", xField: "anno", yField: "totale", label: "Vittime totali", color: "#64748b", yaxis: "y2" },
       ],
       yAxisLabel: "%",
       y2AxisLabel: "Vittime",
@@ -309,7 +312,7 @@ const INSIGHTS: Insight[] = [
       series: [
         { dataType: "VICTIM", code: "CYBERCRIM", xField: "anno", yField: "pct_femmine", label: "% donne (delitti inform.)", color: "#db2777" },
         { dataType: "VICTIM", code: "SWINCYB", xField: "anno", yField: "pct_femmine", label: "% donne (truffe)", color: "#db2777", dash: "dash" },
-        { dataType: "VICTIM", code: "CYBERCRIM", xField: "anno", yField: "totale", label: "Vittime delitti inform.", color: "#d62728", yaxis: "y2" },
+        { dataType: "VICTIM", code: "CYBERCRIM", xField: "anno", yField: "totale", label: "Vittime delitti inform.", color: "#2E86AB", yaxis: "y2" },
       ],
       yAxisLabel: "% donne",
       y2AxisLabel: "Vittime",
@@ -326,7 +329,7 @@ const INSIGHTS: Insight[] = [
     chart: {
       file: "autori_vittime_trend.json",
       series: [
-        { dataType: "VICTIM", code: "INTENHOM", xField: "anno", yField: "totale", label: "Vittime totali", color: "#d62728" },
+        { dataType: "VICTIM", code: "INTENHOM", xField: "anno", yField: "totale", label: "Vittime totali", color: "#2E86AB" },
         { dataType: "VICTIM", code: "INTENHOM", xField: "anno", yField: "pct_femmine", label: "% donne", color: "#db2777", yaxis: "y2" },
       ],
       yAxisLabel: "Vittime",
@@ -336,22 +339,23 @@ const INSIGHTS: Insight[] = [
   {
     id: "violenze-sessuali-straniere",
     title:
-      "Violenze sessuali: il tasso sale, la quota di vittime straniere scende",
+      "Violenze sessuali: il tasso sale, la quota di vittime di nazionalit\u00e0 straniera scende",
     category: "demografica",
     dimensions: ["stranieri"],
     tests: ["mann-kendall"],
     period: "2007-2024",
-    body: "Il tasso di violenze sessuali denunciate \u00e8 aumentato da 7,0 a 11,6 per 100.000 abitanti, con una crescita graduale lungo l\u2019intero periodo. Contemporaneamente, la percentuale di vittime straniere \u00e8 scesa dal 31% al 22,5% (-8,5 punti percentuali).",
+    body: "Il tasso di violenze sessuali denunciate \u00e8 aumentato da 7,0 a 11,6 per 100.000 abitanti, con una crescita graduale lungo l\u2019intero periodo. Contemporaneamente, la percentuale di vittime di nazionalit\u00e0 straniera \u00e8 scesa dal 31% al 22,5% (-8,5 punti percentuali).",
+    genderNote: "Il 90% delle vittime di violenze sessuali sono donne (2024).",
     caveat:
       "L\u2019aumento delle denunce riflette principalmente campagne di sensibilizzazione (es. #MeToo) e maggiore fiducia nelle istituzioni. \u00c8 un segnale positivo di emersione del sommerso, non necessariamente di aumento del fenomeno.",
     chart: {
       file: "autori_vittime_trend.json",
       series: [
-        { dataType: "VICTIM", code: "RAPE", xField: "anno", yField: "totale", label: "Vittime totali", color: "#d62728" },
-        { dataType: "VICTIM", code: "RAPE", xField: "anno", yField: "pct_stranieri", label: "% straniere", color: "#E63946", yaxis: "y2" },
+        { dataType: "VICTIM", code: "RAPE", xField: "anno", yField: "totale", label: "Vittime totali", color: "#2E86AB" },
+        { dataType: "VICTIM", code: "RAPE", xField: "anno", yField: "pct_stranieri", label: "% naz. straniera", color: "#E63946", yaxis: "y2" },
       ],
       yAxisLabel: "Vittime",
-      y2AxisLabel: "% straniere",
+      y2AxisLabel: "% naz. straniera",
     },
   },
   {
@@ -401,6 +405,7 @@ const INSIGHTS: Insight[] = [
     tests: ["divergenza"],
     period: "2007-2024",
     body: "La dispersione dei tassi di violenze sessuali tra regioni aumenta significativamente nel tempo, sia per gli autori sia per le vittime. Il fenomeno non \u00e8 uniforme sul territorio: alcune regioni mostrano aumenti marcati, altre stagnazione. Questo pu\u00f2 riflettere differenze nella propensione alla denuncia pi\u00f9 che nella diffusione del reato.",
+    genderNote: "Il 90% delle vittime di violenze sessuali sono donne (2024).",
     chart: {
       file: "autori_vittime_regioni.json",
       series: [
@@ -532,6 +537,7 @@ const INSIGHTS: Insight[] = [
     tests: ["confronto-territoriale"],
     period: "2007-2024",
     body: "Il tasso di autori denunciati per violenze sessuali al Nord cresce significativamente rispetto al Sud (+2,3 per 100k) e al Centro (+1,8 per 100k). Il divario si amplia anche per le vittime.",
+    genderNote: "Il 90% delle vittime di violenze sessuali sono donne (2024).",
     caveat:
       "Questa divergenza potrebbe riflettere una maggiore propensione alla denuncia al Nord pi\u00f9 che una reale differenza nei tassi di violenza. Il numero oscuro delle violenze sessuali \u00e8 molto alto e varia per territorio.",
     chart: {
@@ -967,6 +973,7 @@ function InsightCard({
       </div>
       <div className="text-sm space-y-2">
         <p>{insight.body}</p>
+        {insight.genderNote && <GenderNote>{insight.genderNote}</GenderNote>}
         {insight.caveat && <Caveat>{insight.caveat}</Caveat>}
       </div>
       {insight.chart && (
@@ -1014,6 +1021,14 @@ function InsightCard({
         </div>
       )}
     </div>
+  );
+}
+
+function GenderNote({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="text-xs text-muted-foreground border-l-2 border-pink-400 pl-3 mt-2">
+      {children}
+    </p>
   );
 }
 
