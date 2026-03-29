@@ -6,8 +6,9 @@ import {
   COLORS,
   CHART_HEIGHT,
   PLOTLY_CONFIG,
+  PLOTLY_FONT,
   COVID_SHAPES,
-  COVID_ANNOTATIONS,
+  getCovidAnnotations,
   AXIS_FIXED,
   getAxisYear,
 } from "@/lib/config";
@@ -75,12 +76,12 @@ export function ChartPercezioneVsDati() {
             separators: PLOTLY_IT_SEPARATORS,
             xaxis: { ...getAxisYear(isMobile), title: { text: "Anno" } },
             yaxis: { ...AXIS_FIXED,
-              title: { text: "% Percezione rischio", font: { color: COLORS.secondary, size: 12 } },
+              title: { text: "% Percezione rischio", font: { color: COLORS.secondary, size: PLOTLY_FONT.axisTitle } },
               tickfont: { color: COLORS.secondary },
               side: "left",
             },
             yaxis2: { ...AXIS_FIXED,
-              title: { text: "Tasso per 1000 ab.", font: { color: COLORS.primary, size: 12 } },
+              title: { text: "Tasso per 1000 ab.", font: { color: COLORS.primary, size: PLOTLY_FONT.axisTitle } },
               tickfont: { color: COLORS.primary },
               overlaying: "y" as const,
               side: "right",
@@ -92,13 +93,11 @@ export function ChartPercezioneVsDati() {
             height: isMobile ? 300 : CHART_HEIGHT,
             margin: isMobile ? { l: 45, r: 45, t: 40, b: 60 } : { l: 50, r: 50, t: 30, b: 50 },
             legend: isMobile
-              ? { x: 0.5, y: -0.3, xanchor: "center", yanchor: "top", orientation: "h" as const, font: { size: 9 } }
+              ? { x: 0.5, y: -0.3, xanchor: "center", yanchor: "top", orientation: "h" as const, font: { size: PLOTLY_FONT.legendMobile } }
               : { x: 0.5, y: 1.08, xanchor: "center", orientation: "h" as const },
             shapes: COVID_SHAPES,
             annotations: [
-              ...(isMobile
-                ? COVID_ANNOTATIONS.map((a) => ({ ...a, y: 0.92, font: { ...a.font, size: 8 } }))
-                : COVID_ANNOTATIONS),
+              ...getCovidAnnotations(isMobile),
               {
                 x: 2015,
                 y: 41.1,
@@ -111,7 +110,7 @@ export function ChartPercezioneVsDati() {
                 arrowcolor: "#999",
                 ax: isMobile ? 20 : 40,
                 ay: isMobile ? -25 : -35,
-                font: { size: isMobile ? 9 : 11, color: "#666" },
+                font: { size: isMobile ? PLOTLY_FONT.tickMobile : PLOTLY_FONT.tick, color: COLORS.grigioTesto },
               },
             ],
           }}

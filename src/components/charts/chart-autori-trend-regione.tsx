@@ -7,8 +7,9 @@ import {
   COLORS,
   CHART_HEIGHT_SMALL,
   PLOTLY_CONFIG,
+  PLOTLY_FONT,
   COVID_SHAPES,
-  COVID_ANNOTATIONS,
+  getCovidAnnotations,
   AXIS_FIXED,
   getAxisYear,
   BREAKDOWN_LINES,
@@ -282,7 +283,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
               ...AXIS_FIXED,
               title: {
                 text: isAssoluto ? (dataType === "OFFEND" ? "Autori denunciati" : "Vittime") : "Tasso per 100k ab.",
-                font: { color: COLORS.primary, size: 12 },
+                font: { color: COLORS.primary, size: PLOTLY_FONT.axisTitle },
               },
               ...(isAssoluto && { tickformat: "~s", hoverformat: ",.0f" }),
               tickfont: { color: COLORS.primary },
@@ -290,7 +291,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
             },
             yaxis2: {
               ...AXIS_FIXED,
-              title: { text: "%", font: { size: 12 } },
+              title: { text: "%", font: { size: PLOTLY_FONT.axisTitle } },
               overlaying: "y" as const,
               side: "right",
               range: [0, 100],
@@ -303,7 +304,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
                   xanchor: "center" as const,
                   yanchor: "top" as const,
                   orientation: "h" as const,
-                  font: { size: 9 },
+                  font: { size: PLOTLY_FONT.legendMobile },
                 }
               : {
                   x: 0.5,
@@ -315,13 +316,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
               ? { l: 45, r: 45, t: 40, b: 60 }
               : { l: 60, r: 60, t: 30, b: 80 },
             shapes: COVID_SHAPES,
-            annotations: isMobile
-              ? COVID_ANNOTATIONS.map((a) => ({
-                  ...a,
-                  y: 0.92,
-                  font: { ...a.font, size: 8 },
-                }))
-              : COVID_ANNOTATIONS,
+            annotations: getCovidAnnotations(isMobile),
           }}
           config={PLOTLY_CONFIG}
           useResizeHandler

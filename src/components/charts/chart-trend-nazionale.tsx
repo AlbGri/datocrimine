@@ -8,8 +8,9 @@ import {
   CHART_HEIGHT,
   CHART_HEIGHT_MINI,
   PLOTLY_CONFIG,
+  PLOTLY_FONT,
   COVID_SHAPES,
-  COVID_ANNOTATIONS,
+  getCovidAnnotations,
   AXIS_FIXED,
   getAxisYear,
   varTriennale,
@@ -200,7 +201,7 @@ export function ChartTrendNazionale() {
           layout={{
             separators: PLOTLY_IT_SEPARATORS,
             xaxis: { ...getAxisYear(isMobile), title: { text: "Anno" } },
-            yaxis: { ...AXIS_FIXED, title: { text: isAssoluto ? "Delitti denunciati" : "Tasso per 1.000 ab.", font: { size: 12 } }, ...(isAssoluto && { tickformat: "~s", hoverformat: ",.0f" }) },
+            yaxis: { ...AXIS_FIXED, title: { text: isAssoluto ? "Delitti denunciati" : "Tasso per 1.000 ab.", font: { size: PLOTLY_FONT.axisTitle } }, ...(isAssoluto && { tickformat: "~s", hoverformat: ",.0f" }) },
             dragmode: false,
             hovermode: "closest" as const,
             plot_bgcolor: "white",
@@ -209,14 +210,12 @@ export function ChartTrendNazionale() {
             margin: isMobile ? { l: 45, r: 20, t: 20, b: 60 } : { l: 50, r: 20, t: 20, b: 50 },
             legend: isTipologia
               ? isMobile
-                ? { x: 0.5, y: -0.35, xanchor: "center" as const, yanchor: "top" as const, orientation: "h" as const, font: { size: 9 } }
+                ? { x: 0.5, y: -0.35, xanchor: "center" as const, yanchor: "top" as const, orientation: "h" as const, font: { size: PLOTLY_FONT.legendMobile } }
                 : { x: 0.5, y: 1.08, xanchor: "center" as const, orientation: "h" as const }
               : { x: 0.5, y: -0.15, xanchor: "center" as const, orientation: "h" as const },
             showlegend: true,
             shapes: COVID_SHAPES,
-            annotations: isMobile
-              ? COVID_ANNOTATIONS.map((a) => ({ ...a, y: 0.92, font: { ...a.font, size: 8 } }))
-              : COVID_ANNOTATIONS,
+            annotations: getCovidAnnotations(isMobile),
           }}
           config={PLOTLY_CONFIG}
           useResizeHandler

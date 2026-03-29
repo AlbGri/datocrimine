@@ -12,7 +12,7 @@ import { ChartAutoriTabellaProvince } from "@/components/charts/chart-autori-tab
 import { ChartProfiloProvincia } from "@/components/charts/chart-profilo-provincia";
 import { ChartAutoriTrendProvincia } from "@/components/charts/chart-autori-trend-provincia";
 import Link from "next/link";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
 
 type DataType = "OFFEND" | "VICTIM";
@@ -55,13 +55,11 @@ export default function PersoneDenunciate() {
       </div>
 
       {dataType === "VICTIM" && (
-        <Alert>
-          <AlertDescription className="block">
+        <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm">
             <strong>Nota:</strong> per le vittime il dato aggregato (totale per tutti i reati)
             non &egrave; disponibile. Le analisi sono basate sui singoli reati.
             Una stessa vittima pu&ograve; comparire in pi&ugrave; tipologie.
-          </AlertDescription>
-        </Alert>
+        </div>
       )}
 
       {/* === BLOCCO NAZIONALE === */}
@@ -167,16 +165,14 @@ export default function PersoneDenunciate() {
       <hr />
 
       {/* Nota metodologica */}
-      <Alert>
-        <AlertDescription className="block">
+      <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm">
           <strong>Nota metodologica:</strong> i dati riguardano persone denunciate o
           arrestate dalle forze dell&apos;ordine, non condannate. Una stessa persona
           pu&ograve; comparire pi&ugrave; volte se coinvolta in pi&ugrave; procedimenti.
           Il dato provinciale &egrave; disponibile solo dal 2022.
           Per approfondimenti si rimanda alla{" "}
           <Link href="/metodologia" className="underline">nota metodologica</Link>.
-        </AlertDescription>
-      </Alert>
+      </div>
     </main>
   );
 }

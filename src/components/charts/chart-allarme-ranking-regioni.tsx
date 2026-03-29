@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { COLORS, COLORI_ALLARME, PLOTLY_CONFIG, AXIS_FIXED, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE } from "@/lib/config";
+import { COLORS, COLORI_ALLARME, PLOTLY_CONFIG, AXIS_FIXED, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE, MEDIA_ANNOTATION_FONT } from "@/lib/config";
 import { fmtNum, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -95,7 +95,7 @@ export function ChartAllarmeRankingRegioni({ anno, reato }: Props) {
               y: nomi.length - 0.5,
               text: `Media: ${fmtNum(media, 2)}`,
               showarrow: false,
-              font: { size: 10, color: COLORS.mediaNazionale },
+              font: MEDIA_ANNOTATION_FONT,
               xanchor: "left",
               yanchor: "bottom",
               xshift: 4,

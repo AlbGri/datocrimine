@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { PLOTLY_CONFIG, AXIS_FIXED, COLORS, VICTIM_DEFAULT, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE } from "@/lib/config";
+import { PLOTLY_CONFIG, AXIS_FIXED, COLORS, VICTIM_DEFAULT, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE, MEDIA_ANNOTATION_FONT } from "@/lib/config";
 import { fmtNum, fmtPct, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -281,7 +281,7 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
                 y: nomi.length - 0.5,
                 text: `Media: ${fmtNum(media, decimali)}`,
                 showarrow: false,
-                font: { size: 10, color: COLORS.mediaNazionale },
+                font: MEDIA_ANNOTATION_FONT,
                 xanchor: "left",
                 yanchor: "bottom",
                 xshift: 4,

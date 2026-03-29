@@ -25,7 +25,7 @@ export default function Esplora() {
   return (
     <main className="mx-auto max-w-7xl px-4 py-4 sm:py-8 space-y-6 sm:space-y-10">
       <div className="space-y-2">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+        <h1 className="text-2xl sm:text-4xl font-bold">
           Esplora i dati
         </h1>
         <p className="text-muted-foreground max-w-2xl">

@@ -135,7 +135,7 @@ export default function Guida() {
         <h2 className="text-xl sm:text-2xl font-semibold text-primary">Domande comuni</h2>
 
         <div className="space-y-2">
-          <h3 className="font-semibold text-primary">
+          <h3 className="text-lg font-semibold text-primary">
             Perch&eacute; alcuni reati aumentano ma il totale cala?
           </h3>
           <p>
@@ -147,7 +147,7 @@ export default function Guida() {
         </div>
 
         <div className="space-y-2">
-          <h3 className="font-semibold text-primary">
+          <h3 className="text-lg font-semibold text-primary">
             Posso usare questi dati per decidere dove vivere?
           </h3>
           <p>
@@ -158,7 +158,7 @@ export default function Guida() {
         </div>
 
         <div className="space-y-2">
-          <h3 className="font-semibold text-primary">
+          <h3 className="text-lg font-semibold text-primary">
             Perch&eacute; le denunce per violenza sessuale aumentano?
           </h3>
           <p>

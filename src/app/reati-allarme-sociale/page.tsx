@@ -6,7 +6,7 @@ import { ChartAllarmeRankingRegioni } from "@/components/charts/chart-allarme-ra
 import { ChartAllarmeTrendRegione } from "@/components/charts/chart-allarme-trend-regione";
 import { ChartAllarmeTabellaProvince } from "@/components/charts/chart-allarme-tabella-province";
 import { ChartAllarmeTrendProvincia } from "@/components/charts/chart-allarme-trend-provincia";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
 
 const REATI = [
@@ -70,7 +70,7 @@ export default function ReatiAllarmeSociale() {
                 key={a}
                 onClick={() => setAnno(a)}
                 aria-pressed={anno === a}
-                className={`px-2.5 py-1.5 text-sm rounded-md transition-colors ${
+                className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
                   anno === a
                     ? "bg-primary text-primary-foreground"
                     : "bg-muted text-muted-foreground hover:text-foreground"
@@ -131,15 +131,13 @@ export default function ReatiAllarmeSociale() {
 
       <hr />
 
-      <Alert>
-        <AlertDescription className="block">
+      <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm">
           <strong>Nota metodologica:</strong> tutti i tassi sono calcolati sui
           delitti denunciati e sulla popolazione residente. Per reati rari (es.
           omicidi in regioni piccole), poche unit&agrave; di differenza possono
           causare variazioni percentuali significative. Confrontare sempre i
           valori assoluti.
-        </AlertDescription>
-      </Alert>
+      </div>
     </main>
   );
 }

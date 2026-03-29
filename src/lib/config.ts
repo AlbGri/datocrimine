@@ -27,6 +27,8 @@ export const COLORS = {
   verdeCalo: "#16a34a",
   grigioMedia: "#999999",
   grigioAltro: "#9ca3af",
+  grigioTesto: "#6b7280",
+  testoScuro: "#333",
 } as const;
 
 export const COLORI_ALLARME: Record<string, string> = {
@@ -99,6 +101,25 @@ export const NUTS_TO_ISTAT: Record<string, number> = {
   ITG2: 20,
 };
 
+/** Font-size centralizzati per grafici Plotly */
+export const PLOTLY_FONT = {
+  axisTitle: 12,
+  tick: 11,
+  tickMobile: 9,
+  legendFixed: 10,
+  legendMobile: 9,
+  legendMini: 11,
+  annotationCovidMobile: 8,
+  annotationMedia: 10,
+  mapTitle: 18,
+} as const;
+
+/** Font annotation "Media nazionale" nei ranking */
+export const MEDIA_ANNOTATION_FONT = {
+  size: PLOTLY_FONT.annotationMedia,
+  color: COLORS.mediaNazionale,
+} as const;
+
 export const PLOTLY_CONFIG: Partial<Plotly.Config> = {
   displayModeBar: false,
   scrollZoom: false,
@@ -168,3 +189,10 @@ export const COVID_ANNOTATIONS = [
     font: { size: 9, color: "gray" },
   },
 ];
+
+/** COVID annotations con font ridotto su mobile */
+export function getCovidAnnotations(isMobile: boolean) {
+  return isMobile
+    ? COVID_ANNOTATIONS.map((a) => ({ ...a, y: 0.92, font: { ...a.font, size: PLOTLY_FONT.annotationCovidMobile } }))
+    : COVID_ANNOTATIONS;
+}

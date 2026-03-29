@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { PLOTLY_CONFIG, AXIS_FIXED, COLORS, MIN_CASI } from "@/lib/config";
+import { PLOTLY_CONFIG, PLOTLY_FONT, AXIS_FIXED, COLORS, MIN_CASI } from "@/lib/config";
 import { fmtNum, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -108,7 +108,7 @@ export function ChartAutoriVsVittime() {
             yaxis: {
               ...AXIS_FIXED,
               automargin: true,
-              tickfont: { size: isMobile ? 9 : 11 },
+              tickfont: { size: isMobile ? PLOTLY_FONT.tickMobile : PLOTLY_FONT.tick },
             },
             height: chartHeight,
             margin: {

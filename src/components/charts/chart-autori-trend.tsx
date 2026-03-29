@@ -7,8 +7,9 @@ import {
   COLORS,
   CHART_HEIGHT,
   PLOTLY_CONFIG,
+  PLOTLY_FONT,
   COVID_SHAPES,
-  COVID_ANNOTATIONS,
+  getCovidAnnotations,
   AXIS_FIXED,
   getAxisYear,
   BREAKDOWN_LINES,
@@ -163,14 +164,14 @@ export function ChartAutoriTrend({ dataType }: Props) {
               ...AXIS_FIXED,
               title: {
                 text: `Totale ${dataType === "OFFEND" ? "autori" : "vittime"}`,
-                font: { color: COLORS.primary, size: 12 },
+                font: { color: COLORS.primary, size: PLOTLY_FONT.axisTitle },
               },
               tickfont: { color: COLORS.primary },
               side: "left",
             },
             yaxis2: {
               ...AXIS_FIXED,
-              title: { text: "%", font: { size: 12, color: "#6b7280" } },
+              title: { text: "%", font: { size: PLOTLY_FONT.axisTitle, color: COLORS.grigioTesto } },
               overlaying: "y" as const,
               side: "right",
               range: [0, 100],
@@ -191,7 +192,7 @@ export function ChartAutoriTrend({ dataType }: Props) {
                   xanchor: "center",
                   yanchor: "top",
                   orientation: "h" as const,
-                  font: { size: 9 },
+                  font: { size: PLOTLY_FONT.legendMobile },
                 }
               : {
                   x: 0.5,
@@ -201,13 +202,7 @@ export function ChartAutoriTrend({ dataType }: Props) {
                 },
             separators: PLOTLY_IT_SEPARATORS,
             shapes: COVID_SHAPES,
-            annotations: isMobile
-              ? COVID_ANNOTATIONS.map((a) => ({
-                  ...a,
-                  y: 0.92,
-                  font: { ...a.font, size: 8 },
-                }))
-              : COVID_ANNOTATIONS,
+            annotations: getCovidAnnotations(isMobile),
           }}
           config={PLOTLY_CONFIG}
           useResizeHandler

@@ -5,6 +5,7 @@ import { useFetchData } from "@/lib/use-fetch-data";
 import {
   CHART_HEIGHT_MAP,
   PLOTLY_CONFIG,
+  PLOTLY_FONT,
   NUTS_TO_ISTAT,
   COLORS,
 } from "@/lib/config";
@@ -218,7 +219,7 @@ export function ChartMappaRegioni({ anno }: Props) {
                 xref: "paper",
                 yref: "paper",
                 showarrow: false,
-                font: { size: 18, color: "#333" },
+                font: { size: PLOTLY_FONT.mapTitle, color: COLORS.testoScuro },
                 xanchor: "left",
                 yanchor: "top",
               },

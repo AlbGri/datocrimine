@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { PLOTLY_CONFIG, AXIS_FIXED, getAxisYear, COVID_SHAPES, COVID_ANNOTATIONS, CHART_HEIGHT_MINI } from "@/lib/config";
+import { PLOTLY_CONFIG, PLOTLY_FONT, AXIS_FIXED, getAxisYear, COVID_SHAPES, COVID_ANNOTATIONS, CHART_HEIGHT_MINI } from "@/lib/config";
 import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -336,7 +336,7 @@ export function InsightMiniChart({ config, ariaLabel }: { config: InsightChartCo
       y: -0.2,
       x: 0.5,
       xanchor: "center" as const,
-      font: { size: 11 },
+      font: { size: PLOTLY_FONT.legendMini },
     },
     showlegend: true,
   };

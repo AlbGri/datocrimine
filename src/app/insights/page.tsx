@@ -827,7 +827,7 @@ export default function Insights() {
           </p>
 
           <p>Sono state inoltre escluse dall&apos;analisi:</p>
-          <ul className="list-disc pl-6 space-y-1">
+          <ul className="list-disc pl-6 space-y-2">
             <li>
               Combinazioni con meno di 50 persone/anno (numeri troppo piccoli
               per essere affidabili)
