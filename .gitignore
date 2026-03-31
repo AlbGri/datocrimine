@@ -50,7 +50,7 @@ __pycache__/
 # dati generati (rigenerabili con scripts/csv_to_json.py)
 # /public/data/
 
-# dati raw e notebook (troppo grandi per git, rigenerabili da fonti ISTAT)
+# dati raw (troppo grandi per git, rigenerabili da fonti ISTAT)
 data/raw/*.csv
 data/raw/delittips/
 data/raw/check_updates.json
@@ -58,19 +58,13 @@ data/raw/popolazione/
 data/raw/geojson_regioni_italia.geojson
 data/raw/autvittps/
 data/raw/Vittime di delitto*
-notebooks/
 scripts/download_autvittps.py
 scripts/download_delittips.py
 scripts/download_popolazione.py
 scripts/check_istat_updates.py
 
-# file privati e sorgenti
+# file privati e sorgenti (include prompt audit, risultati audit, note)
 _local/
-
-# docs privati (spostati in _local/)
 
 # insights (rigenerabili con scripts/generate_insights.py)
 data/processed/insights_candidates.csv
-
-# audit
-audit/
