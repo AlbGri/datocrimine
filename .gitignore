@@ -44,7 +44,12 @@ next-env.d.ts
 __pycache__/
 .pytest_cache/
 
-# claude
+# documenti privati
+/*.md
+!/README.md
+!/CHANGELOG.md
+CLAUDE.md
+_local/
 .claude/
 
 # dati generati (rigenerabili con scripts/csv_to_json.py)
@@ -62,9 +67,6 @@ scripts/download_autvittps.py
 scripts/download_delittips.py
 scripts/download_popolazione.py
 scripts/check_istat_updates.py
-
-# file privati e sorgenti (include prompt audit, risultati audit, note)
-_local/
 
 # insights (rigenerabili con scripts/generate_insights.py)
 data/processed/insights_candidates.csv
