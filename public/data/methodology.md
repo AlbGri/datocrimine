@@ -11,7 +11,7 @@ I dati provengono dal portale ufficiale ISTAT ([esploradati.istat.it](https://es
 2. **Percezione di sicurezza delle famiglie** - Indagine Multiscopo ISTAT (2014-2024)
    - Indicatore: "Famiglie per presenza di alcuni problemi nella zona in cui abitano: rischio di criminalità: molto e abbastanza"
    - Espresso in percentuale di famiglie che percepiscono rischio
-   - Dato 2024 (26.6%) da [Noi Italia 2025 - Criminalità e sicurezza](https://noi-italia.istat.it/pagina.php?id=3&categoria=9&action=show&L=0) (indicatore BES derivato dall'indagine Multiscopo)
+   - Dato 2024 (26,6%) da [Noi Italia 2025 - Criminalità e sicurezza](https://noi-italia.istat.it/pagina.php?id=3&categoria=9&action=show&L=0) (indicatore BES derivato dall'indagine Multiscopo)
    - La serie storica è compilata manualmente da pubblicazioni ISTAT annuali (Noi Italia, rapporto BES, comunicati Multiscopo). Non esiste un dataset ISTAT scaricabile automaticamente per questo indicatore. Ogni anno può provenire da una pubblicazione diversa, quindi la coerenza metodologica tra anni non è garantita (es. variazioni nel campione o nel questionario non sono sempre documentate da ISTAT).
 
 3. **Popolazione residente** - ISTAT
@@ -60,7 +60,7 @@ I numeri mostrati rappresentano le **denunce** registrate dalle forze di polizia
 
 ### Percezione di sicurezza
 
-Il dato sulla percezione proviene da indagine campionaria ISTAT Multiscopo su famiglie italiane. Misura la **percezione soggettiva** di insicurezza nella zona di residenza, non l'esperienza diretta di vittimizzazione. La serie potrebbe risentire di **variazioni metodologiche** tra edizioni dell'indagine (es. il **salto 30.0% → 41.1%** tra 2014 e 2015 potrebbe riflettere un cambiamento nel questionario).
+Il dato sulla percezione proviene da indagine campionaria ISTAT Multiscopo su famiglie italiane. Misura la **percezione soggettiva** di insicurezza nella zona di residenza, non l'esperienza diretta di vittimizzazione. La serie potrebbe risentire di **variazioni metodologiche** tra edizioni dell'indagine (es. il **salto 30,0% → 41,1%** tra 2014 e 2015 potrebbe riflettere un cambiamento nel questionario).
 
 ## Cosa NON rappresentano
 
@@ -79,9 +79,9 @@ I dati NON mostrano:
 La differenza tra reati commessi e reati denunciati (il "numero oscuro") varia significativamente per tipo di reato. Dati dall'[Indagine ISTAT sulla Sicurezza dei Cittadini 2022-2023](https://www.istat.it/comunicato-stampa/reati-contro-la-persona-e-contro-la-proprieta-vittime-ed-eventi-2022-2023/) e dal [Report ISTAT Reati contro la persona e la proprietà 2025](https://www.istat.it/wp-content/uploads/2025/06/Report_REATI-CONTRO-LA-PERSONA-E-LA-PROPRIETA_VITTIME-ED-EVENTI.pdf):
 
 - **Furti auto/moto**: ~95% denunciati (necessità assicurativa; stabile tra le due edizioni)
-- **Scippi**: 68.2% denunciati (era 88.9% nel 2015-2016: calo per rassegnazione)
-- **Aggressioni**: 40.6% denunciate (era 19.9% nel 2015-2016: forte miglioramento)
-- **Frodi/truffe**: 24.1% denunciate (era 18.4% nel 2015-2016: lieve aumento, legato a crescita truffe bancarie online)
+- **Scippi**: 68,2% denunciati (era 88,9% nel 2015-2016: calo per rassegnazione)
+- **Aggressioni**: 40,6% denunciate (era 19,9% nel 2015-2016: forte miglioramento)
+- **Frodi/truffe**: 24,1% denunciate (era 18,4% nel 2015-2016: lieve aumento, legato a crescita truffe bancarie online)
 - **Violenza da partner**: ~11% denunciata ([ISTAT Violenza donne 2025](https://www.istat.it/comunicato-stampa/la-violenza-contro-le-donne-dentro-e-fuori-la-famiglia-primi-risultati-anno-2025/))
 
 Il numero oscuro varia nel tempo: un aumento delle denunce può indicare maggiore propensione a denunciare (positivo), non necessariamente più reati. Il raddoppio delle denunce per aggressioni tra 2015-2016 e 2022-2023 ne è un esempio. Le due edizioni dell'indagine comparabili sono l'[Indagine 2015-2016](https://www.istat.it/it/files/2019/02/Reati-contro-la-persona-e-contro-la-proprieta.pdf) e quella 2022-2023.
@@ -118,7 +118,7 @@ La propensione a denunciare varia per:
 - **Gravità del reato**: crimini gravi più probabilmente denunciati
 - **Utilità pratica**: denunce per assicurazione vs rassegnazione per piccoli furti
 
-**Esempio critico**: l'aumento delle denunce per violenze sessuali (+60.4% in numeri assoluti dal 2014 al 2024, da 4.257 a 6.831) riflette principalmente l'effetto di campagne come #MeToo e maggiore fiducia nelle autorità, NON necessariamente un aumento delle violenze reali. Questo è un risultato positivo: il numero oscuro si sta riducendo.
+**Esempio critico**: l'aumento delle denunce per violenze sessuali (+60,4% in numeri assoluti dal 2014 al 2024, da 4.257 a 6.831) riflette principalmente l'effetto di campagne come #MeToo e maggiore fiducia nelle autorità, NON necessariamente un aumento delle violenze reali. Questo è un risultato positivo: il numero oscuro si sta riducendo.
 
 ### Anno di riferimento
 
@@ -137,7 +137,7 @@ Tutti i tassi sono calcolati per abitanti per permettere confronti temporali cor
 
 Formula: `Tasso = (Numero delitti / Popolazione) × 1000 (o 100.000)`
 
-La normalizzazione è essenziale perché la **popolazione italiana è diminuita** da 60.3 milioni (2014) a 59.0 milioni (2024).
+La normalizzazione è essenziale perché la **popolazione italiana è diminuita** da 60,3 milioni (2014) a 59,0 milioni (2024).
 
 ## Categorie di reato
 
@@ -322,7 +322,7 @@ I dati territoriali provengono dallo **stesso dataset ISTAT** dei delitti nazion
 
 I confronti territoriali richiedono estrema cautela per diversi motivi:
 
-1. **Propensione alla denuncia**: la propensione a denunciare varia significativamente per tipo di reato e territorio. L'Indagine ISTAT 2022-2023 mostra che il Sud denuncia più della media nazionale per reati contro la proprietà (52.6% vs 44.7%) e per reati violenti (58.6% vs 41.6%), mentre Nord-est e Isole denunciano meno (vedi sezione "Propensione alla denuncia per territorio"). Un tasso più alto non significa necessariamente più criminalità reale. Di conseguenza, **classifiche e confronti Nord-Sud basati sui tassi di denuncia non sono interpretabili senza correzione per propensione**, correzione che ISTAT non fornisce a livello regionale/provinciale.
+1. **Propensione alla denuncia**: la propensione a denunciare varia significativamente per tipo di reato e territorio. L'Indagine ISTAT 2022-2023 mostra che il Sud denuncia più della media nazionale per reati contro la proprietà (52,6% vs 44,7%) e per reati violenti (58,6% vs 41,6%), mentre Nord-est e Isole denunciano meno (vedi sezione "Propensione alla denuncia per territorio"). Un tasso più alto non significa necessariamente più criminalità reale. Di conseguenza, **classifiche e confronti Nord-Sud basati sui tassi di denuncia non sono interpretabili senza correzione per propensione**, correzione che ISTAT non fornisce a livello regionale/provinciale.
 
 2. **Effetto turismo e pendolarismo**: regioni con alta presenza turistica (es. Lazio, Toscana) o forte pendolarismo mostrano tassi elevati perché il denominatore (popolazione residente) sottostima le persone effettivamente presenti.
 

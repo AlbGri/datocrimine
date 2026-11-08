@@ -2,9 +2,11 @@
 
 /** Numero generico: 1234.5 → "1.234,5" */
 export function fmtNum(value: number, decimals: number = 0): string {
+  // "always": in it-IT i numeri a 4 cifre resterebbero senza punto ("3858")
   return value.toLocaleString("it-IT", {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
+    useGrouping: "always",
   });
 }
 

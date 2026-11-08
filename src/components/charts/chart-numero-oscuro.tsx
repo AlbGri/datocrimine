@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { COLORS, CHART_HEIGHT_SMALL, PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
-import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { PLOTLY_IT_SEPARATORS, fmtPct } from "@/lib/format";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
@@ -102,7 +102,7 @@ const asterischi2023: Record<string, boolean[]> = {
   "Furti oggetti dai veicoli": [false, false, false, false, true],
 };
 const fmtAst = (vals: number[], ast: boolean[]) =>
-  vals.map((v, i) => `${v}%${ast[i] ? "*" : ""}`);
+  vals.map((v, i) => `${fmtPct(v)}${ast[i] ? "*" : ""}`);
 
 const MACRO_DETTAGLIO: Record<string, string> = {
   "Reati proprietà individuale": "scippi, borseggi, furti di oggetti personali",
@@ -138,7 +138,7 @@ export function ChartNumeroOscuro() {
               orientation: "h" as const,
               type: "bar",
               marker: { color: COLORS.primary },
-              text: pctDenunciati.map((v) => `${v}%`),
+              text: pctDenunciati.map((v) => fmtPct(v, 0)),
               textposition: "inside" as const,
               hovertemplate: "<b>%{y}</b><br>%{fullData.name}: %{x}%<extra></extra>",
             },
@@ -149,7 +149,7 @@ export function ChartNumeroOscuro() {
               orientation: "h" as const,
               type: "bar",
               marker: { color: "#d3d3d3" },
-              text: pctNonDenunciati.map((v) => `${v}%`),
+              text: pctNonDenunciati.map((v) => fmtPct(v, 0)),
               textposition: "inside" as const,
               hovertemplate: "<b>%{y}</b><br>%{fullData.name}: %{x}%<extra></extra>",
             },
@@ -191,7 +191,7 @@ export function ChartNumeroOscuro() {
               y: pct2016,
               type: "bar",
               marker: { color: "#b0c4de" },
-              text: pct2016.map((v) => `${v}%`),
+              text: pct2016.map((v) => fmtPct(v)),
               textposition: "outside" as const,
               hovertemplate: "<b>%{x}</b><br>%{fullData.name}: %{y:.1f}%<extra></extra>",
             },
@@ -201,7 +201,7 @@ export function ChartNumeroOscuro() {
               y: pct2023,
               type: "bar",
               marker: { color: COLORS.primary },
-              text: pct2023.map((v) => `${v}%`),
+              text: pct2023.map((v) => fmtPct(v)),
               textposition: "outside" as const,
               hovertemplate: "<b>%{x}</b><br>%{fullData.name}: %{y:.1f}%<extra></extra>",
             },
@@ -228,12 +228,12 @@ export function ChartNumeroOscuro() {
       </ChartFullscreenWrapper>
 
       <p>
-        Le aggressioni denunciate sono <strong>raddoppiate</strong> (da 19.9% a
-        40.6%), probabilmente per maggiore fiducia nelle istituzioni e campagne
+        Le aggressioni denunciate sono <strong>raddoppiate</strong> (da 19,9% a
+        40,6%), probabilmente per maggiore fiducia nelle istituzioni e campagne
         di sensibilizzazione. Gli scippi denunciati sono invece{" "}
-        <strong>calati</strong> (da 88.9% a 68.2%), forse per rassegnazione su
+        <strong>calati</strong> (da 88,9% a 68,2%), forse per rassegnazione su
         reati percepiti come a basso recupero. Le frodi/truffe mostrano un{" "}
-        <strong>lieve aumento</strong> (da 18.4% a 24.1%), probabilmente legato
+        <strong>lieve aumento</strong> (da 18,4% a 24,1%), probabilmente legato
         alla crescita delle truffe bancarie online dove c&apos;è maggiore
         consapevolezza e incentivo a denunciare.
       </p>
@@ -283,7 +283,7 @@ export function ChartNumeroOscuro() {
               y: vals,
               type: "bar" as const,
               marker: { color: coloriMacro[i] },
-              text: vals.map((v) => `${v}%`),
+              text: vals.map((v) => fmtPct(v)),
               textposition: "outside" as const,
               textfont: { size: 10 },
               hovertemplate: "<b>%{fullData.name}</b><br>%{x}: %{y:.1f}%<extra></extra>",
@@ -319,7 +319,7 @@ export function ChartNumeroOscuro() {
               x: 1,
               y: val,
               xanchor: "left" as const,
-              text: `${val}%`,
+              text: fmtPct(val),
               showarrow: false,
               font: { size: 9, color: coloriMacro[i] },
             })),
@@ -332,11 +332,11 @@ export function ChartNumeroOscuro() {
 
       <p>
         Il <strong>Sud</strong> denuncia più della media nazionale per reati
-        contro la proprietà (52.6% vs 44.7%), reati violenti (58.6% vs 41.6%) e
-        reati contro i veicoli (50.6% vs 41.3%). Sono il{" "}
+        contro la proprietà (52,6% vs 44,7%), reati violenti (58,6% vs 41,6%) e
+        reati contro i veicoli (50,6% vs 41,3%). Sono il{" "}
         <strong>Nord-est</strong> e le <strong>Isole</strong> a denunciare meno
         per quasi tutte le categorie. Il <strong>Centro</strong> ha la
-        propensione più alta per i reati violenti (65.2%).
+        propensione più alta per i reati violenti (65,2%).
       </p>
 
       <CollapsibleSection
@@ -404,14 +404,14 @@ export function ChartNumeroOscuro() {
         <p>
           I cambiamenti pi&ugrave; marcati riguardano i{" "}
           <strong>reati violenti al Centro-Sud</strong>: le aggressioni denunciate
-          al Sud passano da 9.2% a 55.3% (+46 punti), al Centro da 17.0% a 69.0%
-          (+52 punti). Le rapine al Sud passano da 40.0% a 74.7% (+35 punti).
+          al Sud passano da 9,2% a 55,3% (+46 punti), al Centro da 17,0% a 69,0%
+          (+52 punti). Le rapine al Sud passano da 40,0% a 74,7% (+35 punti).
           Al contrario, gli scippi denunciati calano drasticamente al{" "}
-          <strong>Nord-ovest</strong> (da 71.7% a 33.9%) e al{" "}
-          <strong>Nord-est</strong> (da 64.4% a 39.2%). I borseggi aumentano
+          <strong>Nord-ovest</strong> (da 71,7% a 33,9%) e al{" "}
+          <strong>Nord-est</strong> (da 64,4% a 39,2%). I borseggi aumentano
           ovunque tranne che alle Isole. I furti di veicoli crescono fortemente al{" "}
-          <strong>Sud</strong> (da 49.2% a 65.7%) e alle{" "}
-          <strong>Isole</strong> (da 24.7% a 55.9%). I furti di oggetti dai
+          <strong>Sud</strong> (da 49,2% a 65,7%) e alle{" "}
+          <strong>Isole</strong> (da 24,7% a 55,9%). I furti di oggetti dai
           veicoli aumentano al Nord ma calano alle Isole.
         </p>
       </CollapsibleSection>
