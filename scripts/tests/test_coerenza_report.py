@@ -12,7 +12,6 @@ import json
 import sys
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 import pytest
 
@@ -51,8 +50,7 @@ def test_sintesi(report):
     coincide(es["tasso_totale"], corrente)
     coincide(es["tasso_precedente"], precedente)
     coincide(es["variazione_pct"], variazione(precedente, corrente))
-    storici = [tasso(df, a, 1000) for a in df["Anno"] if a < anno]
-    coincide(es["media_storica"], np.mean(storici))
+    coincide(es["tasso_pre_covid"], tasso(df, 2019, 1000))
     riga = df[df["Anno"] == anno].iloc[0]
     assert es["delitti_totali"] == riga["Delitti"]
     assert es["popolazione"] == riga["Popolazione"]

@@ -40,6 +40,7 @@ def _make_df_italia(rows: list[dict]) -> pd.DataFrame:
 class TestBuildExecutiveSummary:
     def test_basic(self):
         df = _make_df_italia([
+            {"Anno": 2019, "Delitti": 2300000, "Popolazione": 60000000, "Tasso_per_1000": 38.33},
             {"Anno": 2023, "Delitti": 2500000, "Popolazione": 60000000, "Tasso_per_1000": 41.67},
             {"Anno": 2024, "Delitti": 2600000, "Popolazione": 59800000, "Tasso_per_1000": 43.48},
         ])
@@ -50,18 +51,15 @@ class TestBuildExecutiveSummary:
         assert result["popolazione"] == 59800000
         # variazione_pct = (43.48 - 41.67) / 41.67 * 100 = ~4.3
         assert result["variazione_pct"] == pytest.approx(4.3, abs=0.1)
-        # media_storica = solo anno precedente al target
-        assert result["media_storica"] == 41.67
+        assert result["tasso_pre_covid"] == 38.33
 
-    def test_media_storica_multi_anni(self):
+    def test_anno_pre_covid_mancante_raises(self):
         df = _make_df_italia([
-            {"Anno": 2022, "Delitti": 2400000, "Popolazione": 60000000, "Tasso_per_1000": 40.0},
             {"Anno": 2023, "Delitti": 2500000, "Popolazione": 60000000, "Tasso_per_1000": 41.67},
             {"Anno": 2024, "Delitti": 2600000, "Popolazione": 59800000, "Tasso_per_1000": 43.48},
         ])
-        result = build_executive_summary(df, 2024)
-        # media_storica = mean(40.0, 41.667) = 40.833
-        assert result["media_storica"] == 40.83
+        with pytest.raises(ValueError, match="Dati mancanti"):
+            build_executive_summary(df, 2024)
 
     def test_anno_mancante_raises(self):
         df = _make_df_italia([
@@ -79,6 +77,7 @@ class TestBuildExecutiveSummary:
 
     def test_variazione_negativa(self):
         df = _make_df_italia([
+            {"Anno": 2019, "Delitti": 2300000, "Popolazione": 60000000, "Tasso_per_1000": 38.33},
             {"Anno": 2023, "Delitti": 2600000, "Popolazione": 60000000, "Tasso_per_1000": 43.33},
             {"Anno": 2024, "Delitti": 2400000, "Popolazione": 60000000, "Tasso_per_1000": 40.0},
         ])

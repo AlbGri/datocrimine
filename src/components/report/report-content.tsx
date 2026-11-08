@@ -20,6 +20,7 @@ import { useIsMobile } from "@/lib/use-is-mobile";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
+import { SintesiNazionale } from "@/components/charts/sintesi-nazionale";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type GeoJSON = any;
@@ -30,7 +31,7 @@ interface ReportData {
     tasso_totale: number;
     tasso_precedente: number;
     variazione_pct: number;
-    media_storica: number;
+    tasso_pre_covid: number;
     popolazione: number;
     delitti_totali: number;
   };
@@ -153,9 +154,9 @@ function ExecutiveSummary({
       color: data.variazione_pct < 0 ? "text-green-600" : "text-red-600",
     },
     {
-      label: "Media storica",
-      value: fmtNum(data.media_storica, 1),
-      subtitle: "per 1.000 ab.",
+      label: "Tasso 2019",
+      value: fmtNum(data.tasso_pre_covid, 1),
+      subtitle: "prima del COVID",
     },
   ];
 
@@ -640,11 +641,9 @@ export function ReportContent({ anno }: { anno: string }) {
         <h1 className="text-2xl sm:text-4xl font-bold">
           Criminalit&agrave; in Italia {annoNum}
         </h1>
-        <p className="text-muted-foreground mt-2">
-          Cosa &egrave; cambiato rispetto al {annoNum - 1}: variazioni nei
-          delitti denunciati per reato, territorio e confronto con la media
-          storica. Dati ISTAT.
-        </p>
+        <div className="mt-2">
+          <SintesiNazionale anno={annoNum} />
+        </div>
       </header>
 
       {/* 1. Executive Summary */}
@@ -659,8 +658,8 @@ export function ReportContent({ anno }: { anno: string }) {
           in Italia, con un tasso di{" "}
           <strong>{fmtNum(es.tasso_totale, 1)}</strong> per 1.000 abitanti (
           <VariazioneIndicator value={es.variazione_pct} /> rispetto al{" "}
-          {annoNum - 1}). La media storica degli anni precedenti &egrave;{" "}
-          {fmtNum(es.media_storica, 1)}.
+          {annoNum - 1}). Nel 2019, ultimo anno prima del COVID, era{" "}
+          {fmtNum(es.tasso_pre_covid, 1)}.
         </p>
       </section>
 

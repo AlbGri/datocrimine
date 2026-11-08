@@ -85,28 +85,25 @@ def _trend_strutturale_with_covid(
 def build_executive_summary(
     df_italia: pd.DataFrame, target_year: int
 ) -> dict:
-    """Numeri chiave del report: tasso, variazione, media storica."""
+    """Numeri chiave del report: tasso, variazione, tasso dell'ultimo anno prima del COVID."""
     df = df_italia.sort_values("Anno")
     row_curr = df[df["Anno"] == target_year]
     row_prev = df[df["Anno"] == target_year - 1]
-    if row_curr.empty or row_prev.empty:
+    row_pre_covid = df[df["Anno"] == ANNO_PRE_COVID]
+    if row_curr.empty or row_prev.empty or row_pre_covid.empty:
         raise ValueError(
-            f"Dati mancanti per {target_year} o {target_year - 1} in delitti_italia"
+            f"Dati mancanti per {target_year}, {target_year - 1} o {ANNO_PRE_COVID} in delitti_italia"
         )
 
     tasso_curr = _tasso(row_curr.iloc[0], 1000)
     tasso_prev = _tasso(row_prev.iloc[0], 1000)
     variazione_pct = (tasso_curr - tasso_prev) / abs(tasso_prev) * 100
 
-    # Media storica (tutti gli anni disponibili escluso il target)
-    precedenti = df[df["Anno"] < target_year]
-    media_storica = float((precedenti["Delitti"] / precedenti["Popolazione"] * 1000).mean())
-
     return {
         "tasso_totale": round(tasso_curr, 2),
         "tasso_precedente": round(tasso_prev, 2),
         "variazione_pct": round(variazione_pct, 1),
-        "media_storica": round(media_storica, 2),
+        "tasso_pre_covid": round(_tasso(row_pre_covid.iloc[0], 1000), 2),
         "popolazione": int(row_curr.iloc[0]["Popolazione"]),
         "delitti_totali": int(row_curr.iloc[0]["Delitti"]),
     }
