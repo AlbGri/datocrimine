@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-08 — Icone e formato dei numeri
+- Le frecce delle sezioni e il pulsante dell'animazione non vengono più mostrati come emoji
+- Decimali con la virgola anche nella sezione Il Numero Oscuro e nella Metodologia
+- Separatore delle migliaia anche nei numeri a quattro cifre (3.858, non 3858)
+
 ## 2026-11-08 — Sito più leggero
 - Le pagine con grafici scaricano circa un terzo dei dati di prima (la home da 1,6 MB a circa 650 KB)
 - La mappa delle regioni scarica 42 KB invece di 1,2 MB
