@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-08 — Nuovo nome: DatoCrimine
+- Il sito si chiama DatoCrimine, come il suo indirizzo: "Osservatorio" faceva pensare a un ente pubblico
+- Condividendo una pagina, l'anteprima mostra titolo e indirizzo di quella pagina, non quelli della home; il Report 2024 ha di nuovo l'immagine
+- Nuova immagine di anteprima, da 2,3 MB a 11 KB
+
 ## 2026-11-08 — Correzioni su mappa, KPI e testi
 - Mappa e classifica delle regioni: la scala di colore arriva al tasso più alto registrato, non a 100, ed è uguale per tutti gli anni; le differenze fra regioni si vedono meglio
 - KPI "Variazione totale autori": confronto fra 2022 e 2019 (ultimo anno prima del COVID), non più fra medie che includevano il 2020 e il 2021
