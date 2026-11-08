@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
   CHART_HEIGHT_MAP,
@@ -14,8 +13,7 @@ import { useIsMobile } from "@/lib/use-is-mobile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
-
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+import { Plot } from "@/components/charts/plot";
 
 interface DelittiRegione {
   REF_AREA: string;

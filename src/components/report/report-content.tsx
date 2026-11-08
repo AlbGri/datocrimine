@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
@@ -20,8 +19,7 @@ import { fmtNum, fmtPctSigned, fmtSigned, PLOTLY_IT_SEPARATORS } from "@/lib/for
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
-
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+import { Plot } from "@/components/charts/plot";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type GeoJSON = any;

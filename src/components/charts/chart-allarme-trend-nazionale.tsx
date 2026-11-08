@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
   COLORS,
@@ -18,8 +17,7 @@ import {
 import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
-
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+import { Plot } from "@/components/charts/plot";
 
 interface ReatoAllarme {
   Anno: number;
@@ -28,7 +26,6 @@ interface ReatoAllarme {
   Popolazione: number;
   Tasso_per_100k: number;
 }
-
 
 type Metrica = "tasso" | "assoluto";
 

@@ -1,14 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";
 import { COLORS, CHART_HEIGHT_SMALL, PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
 import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
-
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+import { Plot } from "@/components/charts/plot";
 
 const URL_REATI_2023 =
   "https://www.istat.it/comunicato-stampa/reati-contro-la-persona-e-contro-la-proprieta-vittime-ed-eventi-2022-2023/";

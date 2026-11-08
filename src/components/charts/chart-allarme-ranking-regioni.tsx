@@ -1,13 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { COLORS, COLORI_ALLARME, PLOTLY_CONFIG, AXIS_FIXED, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE, MEDIA_ANNOTATION_FONT } from "@/lib/config";
 import { fmtNum, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
-
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+import { Plot } from "@/components/charts/plot";
 
 interface AllarmeRegione {
   REF_AREA: string;
@@ -18,7 +16,6 @@ interface AllarmeRegione {
   Popolazione: number;
   Tasso_per_100k: number;
 }
-
 
 interface Props {
   anno: number;

@@ -1,14 +1,12 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { COLORS, PLOTLY_CONFIG, PLOTLY_FONT, AXIS_FIXED, MetricaProfilo, METRICHE_PROFILO, MIN_CASI, TOP_N, isVoceAutonoma } from "@/lib/config";
 import { fmtNum, fmtPct, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
-
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+import { Plot } from "@/components/charts/plot";
 
 interface TrendRecord {
   data_type: "OFFEND" | "VICTIM";
@@ -39,7 +37,6 @@ const METRICHE = METRICHE_PROFILO;
 interface Props {
   dataType: "OFFEND" | "VICTIM";
 }
-
 
 interface ChartItem {
   reato: string;

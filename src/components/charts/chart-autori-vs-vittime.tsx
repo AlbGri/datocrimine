@@ -1,14 +1,12 @@
 "use client";
 
 import { useMemo } from "react";
-import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { PLOTLY_CONFIG, PLOTLY_FONT, AXIS_FIXED, COLORS, MIN_CASI } from "@/lib/config";
 import { fmtNum, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
-
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+import { Plot } from "@/components/charts/plot";
 
 interface ReatiRecord {
   data_type: "OFFEND" | "VICTIM";

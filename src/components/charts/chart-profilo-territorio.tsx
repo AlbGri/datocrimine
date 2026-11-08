@@ -1,15 +1,13 @@
 "use client";
 
 import { useState, useMemo, useCallback } from "react";
-import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { PLOTLY_CONFIG, AXIS_FIXED, MetricaProfilo, METRICHE_PROFILO, COLORS, MIN_CASI, TOP_N, isVoceAutonoma, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE } from "@/lib/config";
 import { fmtNum, fmtPct, fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
-
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+import { Plot } from "@/components/charts/plot";
 
 interface RegioneRecord {
   data_type: "OFFEND" | "VICTIM";
@@ -36,7 +34,6 @@ const METRICHE = METRICHE_PROFILO;
 interface Props {
   dataType: "OFFEND" | "VICTIM";
 }
-
 
 interface ChartItem {
   reato: string;

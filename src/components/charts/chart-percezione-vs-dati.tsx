@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
   COLORS,
@@ -17,8 +16,7 @@ import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
-
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+import { Plot } from "@/components/charts/plot";
 
 interface PercezioneVsDati {
   Anno: number;
@@ -39,7 +37,6 @@ export function ChartPercezioneVsDati() {
   if (!data) return null;
 
   const anni = data.map((d) => d.Anno);
-
 
   return (
     <div className="space-y-4">

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
   COLORS,
@@ -21,8 +20,7 @@ import { fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
-
-const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+import { Plot } from "@/components/charts/plot";
 
 interface DelittiItalia {
   Anno: number;
