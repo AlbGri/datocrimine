@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-11-08 — CSV leggibili da Excel
+- I file CSV delle tabelle provinciali usano la virgola decimale in tutte le colonne, come Excel in italiano
+
 ## 2026-11-08 — Icone e formato dei numeri
 - Le frecce delle sezioni e il pulsante dell'animazione non vengono più mostrati come emoji
 - Decimali con la virgola anche nella sezione Il Numero Oscuro e nella Metodologia
