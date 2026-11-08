@@ -17,67 +17,24 @@ dati) e che i risultati in "candidati" superino la correzione FDR.
 """
 
 import json
-import re
+import sys
 from pathlib import Path
 
 import pandas as pd
 import pytest
 
-ROOT = Path(__file__).resolve().parent.parent.parent
-DATA_DIR = ROOT / "public" / "data"
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from tests.fatti import ANNO, NUMERO, ROOT, calcola, tolleranza
+
 CANDIDATI = ROOT / "data" / "processed" / "insights_candidates.csv"
 INSIGHTS = json.loads((ROOT / "src" / "data" / "insights.json").read_text(encoding="utf-8"))
 
-NUMERO = re.compile(r"\d+(?:[.,]\d+)*")
-ANNO = re.compile(r"(19|20)\d\d")
 CAMPI_TESTO = ("title", "body", "caveat", "genderNote", "chartInfo")
 # Nome del filtro nel fatto -> nome nella serie del grafico
 FILTRO_GRAFICO = {"data_type": "dataType", "codice_reato": "code", "categoria": "category"}
 
-_cache: dict[str, pd.DataFrame] = {}
-
-
-def carica(file: str) -> pd.DataFrame:
-    if file not in _cache:
-        _cache[file] = pd.DataFrame(json.loads((DATA_DIR / file).read_text(encoding="utf-8")))
-    return _cache[file]
-
-
-def valore_serie(fatto: dict, filtro: dict, anno: int) -> float:
-    df = carica(fatto["file"])
-    col_anno = "anno" if "anno" in df.columns else "Anno"
-    mask = df[col_anno] == anno
-    for chiave, valore in filtro.items():
-        mask &= df[chiave] == valore
-    righe = df.loc[mask, fatto["campo"]]
-    assert len(righe) == 1, f"{len(righe)} righe per {filtro} {anno} in {fatto['file']}"
-    return float(righe.iloc[0])
-
-
-def valore_anno(fatto: dict, anno: int) -> float:
-    valore = valore_serie(fatto, fatto.get("filtro", {}), anno)
-    if "meno" in fatto:
-        valore -= valore_serie(fatto, fatto["meno"], anno)
-    if "diviso" in fatto:
-        valore /= valore_serie(fatto, fatto["diviso"], anno)
-    return valore
-
-
-def calcola(fatto: dict) -> float:
-    fine = valore_anno(fatto, fatto["anno"])
-    if "da" not in fatto:
-        return fine
-    inizio = valore_anno(fatto, fatto["da"])
-    if fatto["calcolo"] == "variazione_pct":
-        return (fine / inizio - 1) * 100
-    return fine - inizio
-
-
-def tolleranza(fatto: dict) -> float:
-    if "tolleranza" in fatto:
-        return fatto["tolleranza"]
-    decimali = str(fatto["valore"])[::-1].find(".")
-    return 0.5 * 10 ** -max(decimali, 0) + 1e-9
+_candidati: dict[str, pd.DataFrame] = {}
 
 
 def contenuto_insight(insight: dict) -> str:
@@ -139,9 +96,9 @@ def test_ogni_numero_e_dichiarato(insight):
 def riga_candidato(candidato: dict) -> pd.Series:
     if not CANDIDATI.exists():
         pytest.skip(f"assente: {CANDIDATI}")
-    if "df" not in _cache:
-        _cache["df"] = pd.read_csv(CANDIDATI)
-    df = _cache["df"]
+    if "df" not in _candidati:
+        _candidati["df"] = pd.read_csv(CANDIDATI)
+    df = _candidati["df"]
     mask = pd.Series(True, index=df.index)
     for chiave, valore in candidato.items():
         mask &= df[chiave] == valore

@@ -15,7 +15,7 @@
     }
   },
   "righe": [
-    {"reato":"Violenza da partner","area":"Italia","edizione":"2025","fonte":"violenza_donne_2025","pct":11},
+    {"reato":"Violenza da partner","area":"Italia","edizione":"2025","fonte":"violenza_donne_2025","pct":10.5},
     {"reato":"Furti auto/moto","area":"Italia","edizione":"2022-2023","fonte":"sicurezza_2022_2023","pct":95},
     {"reato":"Frodi/truffe","area":"Italia","edizione":"2015-2016","fonte":"sicurezza_2015_2016","pct":18.4},
     {"reato":"Frodi/truffe","area":"Italia","edizione":"2022-2023","fonte":"sicurezza_2022_2023","pct":24.1},

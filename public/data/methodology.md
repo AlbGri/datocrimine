@@ -118,7 +118,7 @@ La propensione a denunciare varia per:
 - **Gravità del reato**: crimini gravi più probabilmente denunciati
 - **Utilità pratica**: denunce per assicurazione vs rassegnazione per piccoli furti
 
-**Esempio critico**: l'aumento delle denunce per violenze sessuali (+60,4% in numeri assoluti dal 2014 al 2024, da 4.257 a 6.831) riflette principalmente l'effetto di campagne come #MeToo e maggiore fiducia nelle autorità, NON necessariamente un aumento delle violenze reali. Questo è un risultato positivo: il numero oscuro si sta riducendo.
+**Esempio critico**: l'aumento delle denunce per violenze sessuali (+60,5% in numeri assoluti dal 2014 al 2024, da 4.257 a 6.831) riflette principalmente l'effetto di campagne come #MeToo e maggiore fiducia nelle autorità, NON necessariamente un aumento delle violenze reali. Questo è un risultato positivo: il numero oscuro si sta riducendo.
 
 ### Anno di riferimento
 

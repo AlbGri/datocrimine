@@ -1,0 +1,52 @@
+{
+  "nota": "Numeri di public/data/methodology.md. fatti: ricalcolati dai dati (formato in scripts/tests/fatti.py); esterni: da fonti fuori dai nostri dati, con il link; a_mano: verificati a mano, con il calcolo; liberi: soglie, unita' ed esempi.",
+  "fatti": [
+    {"testo": "26,6%", "valore": 26.6, "file": "percezione_vs_dati.json", "campo": "Percezione_pct", "anno": 2024},
+    {"testo": "30,0%", "valore": 30.0, "file": "percezione_vs_dati.json", "campo": "Percezione_pct", "anno": 2014},
+    {"testo": "41,1%", "valore": 41.1, "file": "percezione_vs_dati.json", "campo": "Percezione_pct", "anno": 2015},
+    {"testo": "270.567", "valore": 270567, "file": "autori_vittime_trend.json", "filtro": {"data_type": "OFFEND", "codice_reato": "TOT"}, "campo": "stranieri", "anno": 2022},
+    {"testo": "548.265", "valore": 548265, "file": "autori_vittime_trend.json", "filtro": {"data_type": "OFFEND", "codice_reato": "TOT"}, "campo": "totale", "meno": {"data_type": "OFFEND", "codice_reato": "TOT", "campo": "stranieri"}, "anno": 2022},
+    {"testo": "818.832", "valore": 818832, "file": "autori_vittime_trend.json", "filtro": {"data_type": "OFFEND", "codice_reato": "TOT"}, "campo": "totale", "anno": 2022},
+    {"testo": "58.620", "valore": 58620, "file": "delitti_categorie.json", "filtro": {"Categoria": "Ingiurie"}, "campo": "Delitti", "anno": 2015},
+    {"testo": "15.781", "valore": 15781, "file": "delitti_categorie.json", "filtro": {"Categoria": "Ingiurie"}, "campo": "Delitti", "anno": 2016},
+    {"testo": "2.064", "valore": 2064, "file": "delitti_categorie.json", "filtro": {"Categoria": "Ingiurie"}, "campo": "Delitti", "anno": 2017},
+    {"testo": "42.839", "valore": 42839, "file": "delitti_categorie.json", "filtro": {"Categoria": "Ingiurie"}, "campo": "Delitti", "anno": 2015, "da": 2016, "calcolo": "variazione"},
+    {"testo": "199.860", "valore": 199860, "file": "delitti_italia.json", "campo": "Delitti", "anno": 2015, "da": 2016, "calcolo": "variazione"},
+    {"testo": "+60,5%", "valore": 60.5, "file": "reati_allarme_sociale.json", "filtro": {"Reato": "Violenze sessuali"}, "campo": "Delitti", "anno": 2024, "da": 2014, "calcolo": "variazione_pct"},
+    {"testo": "4.257", "valore": 4257, "file": "reati_allarme_sociale.json", "filtro": {"Reato": "Violenze sessuali"}, "campo": "Delitti", "anno": 2014},
+    {"testo": "6.831", "valore": 6831, "file": "reati_allarme_sociale.json", "filtro": {"Reato": "Violenze sessuali"}, "campo": "Delitti", "anno": 2024},
+    {"testo": "-17%", "valore": -17, "file": "delitti_italia.json", "campo": "Delitti", "anno": 2020, "da": 2019, "calcolo": "variazione_pct", "tolleranza": 1},
+    {"testo": "60,3", "valore": 60300000, "file": "delitti_italia.json", "campo": "Popolazione", "anno": 2014, "tolleranza": 50000},
+    {"testo": "59,0", "valore": 59000000, "file": "delitti_italia.json", "campo": "Popolazione", "anno": 2024, "tolleranza": 50000},
+    {"testo": "~95%", "valore": 95, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Furti auto/moto", "area": "Italia", "edizione": "2022-2023"}, "campo": "pct"},
+    {"testo": "68,2%", "valore": 68.2, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Scippi", "area": "Italia", "edizione": "2022-2023"}, "campo": "pct"},
+    {"testo": "88,9%", "valore": 88.9, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Scippi", "area": "Italia", "edizione": "2015-2016"}, "campo": "pct"},
+    {"testo": "40,6%", "valore": 40.6, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Aggressioni", "area": "Italia", "edizione": "2022-2023"}, "campo": "pct"},
+    {"testo": "19,9%", "valore": 19.9, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Aggressioni", "area": "Italia", "edizione": "2015-2016"}, "campo": "pct"},
+    {"testo": "24,1%", "valore": 24.1, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Frodi/truffe", "area": "Italia", "edizione": "2022-2023"}, "campo": "pct"},
+    {"testo": "18,4%", "valore": 18.4, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Frodi/truffe", "area": "Italia", "edizione": "2015-2016"}, "campo": "pct"},
+    {"testo": "~11%", "valore": 10.5, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Violenza da partner", "area": "Italia", "edizione": "2025"}, "campo": "pct"},
+    {"testo": "10,5%", "valore": 10.5, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Violenza da partner", "area": "Italia", "edizione": "2025"}, "campo": "pct"},
+    {"testo": "52,6%", "valore": 52.6, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Reati proprietà individuale", "area": "Sud", "edizione": "2022-2023"}, "campo": "pct"},
+    {"testo": "44,7%", "valore": 44.7, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Reati proprietà individuale", "area": "Italia", "edizione": "2022-2023"}, "campo": "pct"},
+    {"testo": "58,6%", "valore": 58.6, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Reati violenti", "area": "Sud", "edizione": "2022-2023"}, "campo": "pct"},
+    {"testo": "41,6%", "valore": 41.6, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Reati violenti", "area": "Italia", "edizione": "2022-2023"}, "campo": "pct"}
+  ],
+  "esterni": [
+    {"testo": "~35.000", "fonte": "Crime Survey for England and Wales, dimensione del campione annuale"},
+    {"testo": "~160.000", "fonte": "National Crime Victimization Survey (USA), persone intervistate ogni anno"},
+    {"testo": "~29.000", "fonte": "ISTAT, Indagine sulla sicurezza dei cittadini 2022-2023, dimensione del campione"},
+    {"testo": "12,6%", "fonte": "https://www.istat.it/comunicato-stampa/la-violenza-contro-le-donne-dentro-e-fuori-la-famiglia-primi-risultati-anno-2025/"},
+    {"testo": "28,8", "fonte": "https://www.ons.gov.uk/aboutus/transparencyandgovernance/freedomofinformationfoi/costsforthecrimesurveyforenglandandwalescontract"},
+    {"testo": "5,8", "fonte": "28,8 milioni di sterline su 5 anni"},
+    {"testo": "182.343", "fonte": "https://www.ons.gov.uk/aboutus/transparencyandgovernance/freedomofinformationfoi/costsforthecrimesurveyforenglandandwalescontract"},
+    {"testo": "0,03%", "fonte": "stima: costo annuo di un'indagine annuale sul budget del Ministero dell'Interno 2025 (circa 31 miliardi)"},
+    {"testo": "0,12", "fonte": "stima: lo stesso costo diviso per la popolazione residente"},
+    {"testo": "0,2", "fonte": "docs/confronto-sole24ore.md"},
+    {"testo": "1,5%", "fonte": "docs/confronto-sole24ore.md"}
+  ],
+  "a_mano": [
+    {"testo": "2%", "calcolo": "somma dei 6 reati di reati_allarme_sociale.json su Delitti di delitti_italia.json: fra 0,39% (2014) e 0,48% (2024)"}
+  ],
+  "liberi": ["100.000", "150.000"]
+}

@@ -19,7 +19,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from generate_insights import COVID_YEARS
 from generate_report import MIN_PUNTI_TREND, RIPARTIZIONI_DELITTI, generate_report_data
-from tests.test_coerenza_insights import ANNO, DATA_DIR, NUMERO, carica, tolleranza
+from tests.fatti import ANNO, DATA_DIR, NUMERO, carica, tolleranza
 
 REPORT = [
     pytest.param(json.loads(p.read_text(encoding="utf-8")), id=p.stem)
