@@ -60,8 +60,7 @@ export default function Metodologia() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const base = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-    fetch(`${base}/data/methodology.md`)
+    fetch("/data/methodology.md")
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.text();

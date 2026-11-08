@@ -136,7 +136,6 @@ function ExecutiveSummary({
   data,
 }: {
   data: ReportData["executive_summary"];
-  anno: number;
 }) {
   const items = [
     {
@@ -552,9 +551,7 @@ function ChartPercezione({ anno }: { anno: number }) {
             line: { color: COLORS.primary, dash: "dash" },
             marker: {
               size: anni.map((a) => (a === anno ? 12 : 6)),
-              color: anni.map((a) =>
-                a === anno ? COLORS.primary : COLORS.primary
-              ),
+              color: COLORS.primary,
               line: {
                 color: anni.map((a) => (a === anno ? "#000" : COLORS.primary)),
                 width: anni.map((a) => (a === anno ? 2 : 0)),
@@ -655,7 +652,7 @@ export function ReportContent({ anno }: { anno: string }) {
         <h2 className="text-xl sm:text-2xl font-semibold text-primary">
           Sintesi
         </h2>
-        <ExecutiveSummary data={es} anno={annoNum} />
+        <ExecutiveSummary data={es} />
         <p>
           Nel {annoNum} sono stati denunciati{" "}
           <strong>{fmtNum(es.delitti_totali)}</strong> delitti
