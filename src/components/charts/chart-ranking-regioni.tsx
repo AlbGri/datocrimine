@@ -37,13 +37,15 @@ export function ChartRankingRegioni({ anno }: Props) {
 
   const nomi = sorted.map((d) => d.Territorio);
   const tassi = sorted.map((d) => d.Tasso_per_1000);
+  // Scala e grigi uguali per tutti gli anni e alla mappa, cosi' gli anni restano confrontabili
+  const tassoMax = Math.max(...data.map((d) => d.Tasso_per_1000));
   const media =
     dataAnno.reduce((s, d) => s + d.Delitti, 0) /
     dataAnno.reduce((s, d) => s + d.Popolazione, 0) *
     1000;
 
   const colors = tassi.map((t) => {
-    const ratio = Math.min(t / 100, 1);
+    const ratio = t / tassoMax;
     const gray = Math.round(245 - ratio * 210);
     return `rgb(${gray},${gray},${gray})`;
   });
@@ -67,7 +69,7 @@ export function ChartRankingRegioni({ anno }: Props) {
           separators: PLOTLY_IT_SEPARATORS,
           xaxis: { ...AXIS_FIXED,
             title: { text: "Tasso per 1000 ab." },
-            range: [0, Math.max(...tassi) * 1.15],
+            range: [0, tassoMax * 1.15],
           },
           yaxis: { ...AXIS_FIXED,
             automargin: true,

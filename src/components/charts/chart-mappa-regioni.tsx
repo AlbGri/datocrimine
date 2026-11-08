@@ -79,6 +79,8 @@ export function ChartMappaRegioni({ anno }: Props) {
   const codiciIstat = dataAnno.map((d) => NUTS_TO_ISTAT[d.REF_AREA]);
   const tassi = dataAnno.map((d) => d.Tasso_per_1000);
   const nomi = dataAnno.map((d) => d.Territorio);
+  // Scala uguale per tutti gli anni, cosi' gli anni restano confrontabili
+  const tassoMax = Math.max(...data.map((d) => d.Tasso_per_1000));
 
   const annoPrecedente = anno - 1;
   const dataPrev = data.filter((d) => d.Anno === annoPrecedente);
@@ -166,7 +168,7 @@ export function ChartMappaRegioni({ anno }: Props) {
                 [1, "#252525"],
               ],
               zmin: 0,
-              zmax: 100,
+              zmax: tassoMax,
               marker: { line: { color: "white", width: 1.5 } },
               colorbar: {
                 title: { text: "Tasso per 1000 ab.", side: "right" },
