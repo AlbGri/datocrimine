@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-08 — Nomi e categorie dei reati
+- Corretti i nomi di cinque reati nella sezione Persone denunciate (gli incendi boschivi comparivano come "porto abusivo di armi", le ingiurie come "resistenza a pubblico ufficiale"); ogni reato ha ora lo stesso nome in tutte le pagine
+- Grafico dei delitti per tipologia: le categorie sommano al totale, senza reati contati due volte; le ingiurie, depenalizzate nel 2016, sono una categoria a parte
+- Profili per reato: i sottotipi (come i furti in esercizi commerciali) non compaiono piu' accanto alla voce che li contiene
+
 ## 2026-03-29 — Revisione grafica
 - Colori di stranieri, maschi, femmine e minori distinguibili e uguali su tutto il sito
 - Caratteri e legende dei grafici uniformi, tolti i titoli d'asse ripetuti
