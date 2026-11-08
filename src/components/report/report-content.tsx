@@ -239,7 +239,8 @@ function ChartContributi({ dati, anno }: { dati: Contributi; anno: number }) {
           height: isMobile ? CHART_HEIGHT_SMALL : CHART_HEIGHT,
           xaxis: {
             ...AXIS_FIXED,
-            title: { text: `Delitti in più o in meno rispetto al ${base}` },
+            // Su telefono l'area delle barre e' stretta e il titolo verrebbe tagliato
+            title: { text: isMobile ? "" : `Differenza rispetto al ${base}` },
             zeroline: true,
             zerolinecolor: "#999",
             zerolinewidth: 1,
