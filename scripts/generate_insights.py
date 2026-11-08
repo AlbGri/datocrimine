@@ -1210,7 +1210,7 @@ def score_candidates(df: pd.DataFrame) -> pd.DataFrame:
 # Report markdown leggibile
 # ---------------------------------------------------------------------------
 
-def generate_report(df: pd.DataFrame, output_path: Path) -> None:
+def generate_report(df: pd.DataFrame, output_path: Path, n_testate: int) -> None:
     """Genera un report markdown leggibile con i candidati top."""
     sig = df[df["fdr_significant"] == True].copy()
     lines = []
@@ -1219,7 +1219,8 @@ def generate_report(df: pd.DataFrame, output_path: Path) -> None:
     lines.append("")
     lines.append(f"Generato: {pd.Timestamp.now().strftime('%Y-%m-%d %H:%M')}")
     lines.append("")
-    lines.append(f"- Candidati totali analizzati: {len(df)}")
+    lines.append(f"- Combinazioni testate: {n_testate}")
+    lines.append(f"- Candidati dopo il filtro di rilevanza: {len(df)}")
     lines.append(f"- FDR significativi (p < 0.05 dopo correzione): {len(sig)}")
     lines.append(f"- Confidenza alta: {(sig['confidence'] == 'high').sum()}")
     lines.append(f"- Confidenza media: {(sig['confidence'] == 'medium').sum()}")
@@ -1529,6 +1530,11 @@ def main():
     all_candidates.extend(analyze_rapporto_autori_vittime(data["avt"]))
 
     log.info(f"Totale candidati pre-FDR: {len(all_candidates)}")
+    # La pagina Insights cita quante combinazioni sono state testate: il numero viene da qui
+    meta = {"combinazioni_analizzate": len(all_candidates)}
+    (PROJECT_ROOT / "src" / "data" / "insights_meta.json").write_text(
+        json.dumps(meta, indent=2) + "\n", encoding="utf-8"
+    )
 
     # DataFrame
     df = pd.DataFrame(all_candidates)
@@ -1569,7 +1575,7 @@ def main():
 
     # Output report markdown
     output_report = PROJECT_ROOT / "docs" / "insights_report.md"
-    generate_report(df, output_report)
+    generate_report(df, output_report, meta["combinazioni_analizzate"])
 
     # Statistiche riassuntive
     log.info("\n--- Riepilogo ---")

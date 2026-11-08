@@ -6,6 +6,8 @@ import { ChevronRight } from "lucide-react";
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
 import type { InsightChartConfig } from "@/components/charts/insight-mini-chart";
 import insightsData from "@/data/insights.json";
+import insightsMeta from "@/data/insights_meta.json";
+import { fmtNum } from "@/lib/format";
 
 const InsightMiniChart = lazy(
   () =>
@@ -287,7 +289,7 @@ export default function Insights() {
         <div className="text-sm text-muted-foreground space-y-3">
           <p>
             Gli insight sono stati estratti analizzando sistematicamente{" "}
-            <strong>4.537 combinazioni</strong> di reato, dimensione
+            <strong>{fmtNum(insightsMeta.combinazioni_analizzate)} combinazioni</strong> di reato, dimensione
             demografica, territorio e periodo temporale. Ogni insight riporta un
             badge con il tipo di analisi statistica che lo supporta. Su queste
             combinazioni sono stati applicati i seguenti test:

@@ -1,8 +1,9 @@
 # Insights Candidates Report
 
-Generato: 2026-11-08 18:19
+Generato: 2026-11-08 23:10
 
-- Candidati totali analizzati: 2215
+- Combinazioni testate: 4537
+- Candidati dopo il filtro di rilevanza: 2215
 - FDR significativi (p < 0.05 dopo correzione): 927
 - Confidenza alta: 188
 - Confidenza media: 735
