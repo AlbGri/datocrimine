@@ -717,7 +717,7 @@ export default function Insights() {
         <div className="text-sm text-muted-foreground space-y-3">
           <p>
             Gli insight sono stati estratti analizzando sistematicamente{" "}
-            <strong>2.209 combinazioni</strong> di reato, dimensione
+            <strong>4.537 combinazioni</strong> di reato, dimensione
             demografica, territorio e periodo temporale. Ogni insight riporta un
             badge con il tipo di analisi statistica che lo supporta. Su queste
             combinazioni sono stati applicati i seguenti test:
@@ -828,7 +828,9 @@ export default function Insights() {
                 Benjamini-Hochberg (FDR)
               </a>
             </strong>{" "}
-            al 5%, separatamente per ogni tipo di analisi. Tutti gli insight
+            al 5%, separatamente per ogni tipo di analisi. La correzione tiene
+            conto di tutte le combinazioni analizzate, anche di quelle scartate
+            dopo perch&eacute; l&apos;effetto era troppo piccolo. Tutti gli insight
             presentati in questa pagina hanno superato questa correzione.
           </p>
 
@@ -839,11 +841,12 @@ export default function Insights() {
               per essere affidabili)
             </li>
             <li>Serie con meno di 5 anni di dati disponibili</li>
-            <li>
-              Variazioni inferiori a 3 punti percentuali sull&apos;intero
-              periodo
-            </li>
           </ul>
+          <p>
+            Dopo la correzione sono stati scartati i risultati con un effetto
+            troppo piccolo per essere rilevanti: variazioni sotto i 3 punti
+            percentuali, correlazioni fra reati sotto 0,7.
+          </p>
 
           <p>
             Ogni candidato &egrave; stato poi valutato manualmente per escludere
