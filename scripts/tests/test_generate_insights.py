@@ -16,16 +16,22 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from generate_insights import (
+    CATEGORIE_REATI,
+    MIN_RHO,
     apply_fdr,
+    build_serie_categorie,
+    build_serie_ripartizioni,
     calc_cv,
     calc_max_jump,
     calc_monotonicity,
     calc_zscore_last,
     analyze_series,
+    filtra_rilevanza,
     is_tautological_pair,
     interpret_with_propensione,
     score_candidates,
 )
+from reati import SOTTOTIPI
 
 
 # ===================================================================
@@ -428,3 +434,64 @@ class TestScoreCandidates:
         ], ignore_index=True)
         result = score_candidates(df)
         assert result.iloc[0]["score"] >= result.iloc[1]["score"]
+
+
+# ===================================================================
+# Serie aggregate per categoria e ripartizione
+# ===================================================================
+
+class TestSerieCategorie:
+    def test_nessun_sottotipo(self):
+        assert not set().union(*CATEGORIE_REATI.values()) & SOTTOTIPI
+
+    def test_paniere_costante(self):
+        # CP572 compare solo nel 2022: resta fuori, cosi' la serie non salta
+        rows = [
+            {"data_type": "VICTIM", "codice_reato": code, "anno": anno, "totale": 100,
+             "pct_stranieri": 10.0, "pct_maschi": 50.0, "pct_femmine": 50.0}
+            for code, anni in (("RAPE", range(2018, 2023)), ("CP572", [2022]))
+            for anno in anni
+        ]
+        serie = build_serie_categorie(pd.DataFrame(rows))
+        violenti = serie[serie["categoria"] == "violenti"].set_index("anno")["totale"]
+        assert (violenti == 100).all()
+
+    def test_percentuale_pesata(self):
+        rows = [
+            {"data_type": "OFFEND", "codice_reato": code, "anno": anno, "totale": tot,
+             "pct_stranieri": pct, "pct_maschi": 50.0, "pct_femmine": 50.0}
+            for code, tot, pct in (("THEFT", 900, 10.0), ("ROBBER", 100, 50.0))
+            for anno in range(2018, 2023)
+        ]
+        serie = build_serie_categorie(pd.DataFrame(rows))
+        assert serie["pct_stranieri"].iloc[0] == pytest.approx(14.0)
+
+
+class TestSerieRipartizioni:
+    def test_tasso_pesato_sulla_popolazione(self):
+        # Campania (5,6 milioni) e Molise (0,3 milioni): la media semplice darebbe 55
+        df = pd.DataFrame([
+            {"data_type": "VICTIM", "codice_reato": "ROBBER", "codice_regione": reg,
+             "anno": 2020, "tasso": tasso, "totale": 1, "pct_stranieri": None,
+             "pct_maschi": None, "pct_femmine": None}
+            for reg, tasso in (("ITF3", 100.0), ("ITF2", 10.0))
+        ])
+        pop = pd.DataFrame([
+            {"REF_AREA": "ITF3", "Anno": 2020, "Popolazione": 5_600_000},
+            {"REF_AREA": "ITF2", "Anno": 2020, "Popolazione": 300_000},
+        ])
+        serie = build_serie_ripartizioni(df, pop)
+        sud = serie[serie["ripartizione"] == "Sud e Isole"]["tasso"].iloc[0]
+        assert sud == pytest.approx((100 * 5.6 + 10 * 0.3) / 5.9)
+
+
+class TestFiltraRilevanza:
+    def test_correlazioni_deboli_scartate_dopo_fdr(self):
+        df = pd.DataFrame({
+            "analysis_type": ["correlazione_reati"] * 2,
+            "dimensione": ["correlazione positiva (detrended)"] * 2,
+            "last_value": [MIN_RHO + 0.1, MIN_RHO - 0.1],
+            "total_change_pp": [np.nan, np.nan],
+            "mk_p": [0.001, 0.001],
+        })
+        assert filtra_rilevanza(df)["last_value"].tolist() == [MIN_RHO + 0.1]

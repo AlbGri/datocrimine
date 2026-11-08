@@ -167,7 +167,8 @@ export default function DatiECodice() {
                   JSON in public/data/ + popolazione CSV
                 </td>
                 <td className="py-2 text-xs">
-                  insights_candidates.csv (2.209 combinazioni, 9 test statistici)
+                  insights_candidates.csv (2.209 combinazioni, 9 test statistici),
+                  insights_categorie.json, insights_ripartizioni.json
                 </td>
               </tr>
               <tr className="border-b">

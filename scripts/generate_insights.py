@@ -4,7 +4,8 @@ generate_insights.py - Fase 1: analisi statistica sistematica dei dati ISTAT
 Carica tutti i JSON del progetto, genera combinazioni reato x dimensione x tempo,
 applica test statistici e produce un CSV candidati per la curazione manuale.
 
-Output: data/processed/insights_candidates.csv
+Output: data/processed/insights_candidates.csv, docs/insights_report.md e, per i grafici
+degli insight, public/data/insights_categorie.json e insights_ripartizioni.json
 
 Dipendenze: scipy, pymannkendall, statsmodels, numpy, pandas
 """
@@ -37,6 +38,11 @@ MIN_DATA_POINTS = 5          # minima lunghezza serie
 MIN_EFFECT_PP = 3.0          # variazione minima in punti percentuali
 MIN_ABS_PRACTICAL = 200      # soglia pratica per confidenza alta
 
+# Soglie di rilevanza, applicate dopo la FDR (vedi filtra_rilevanza)
+MIN_RHO = 0.7                # correlazioni fra reati
+MIN_DELTA_RAPPORTO = 0.1     # variazione del rapporto autori/vittime
+MAX_P_CONFRONTI = 0.1        # confronti fra categorie e fra ripartizioni
+
 # FDR
 FDR_ALPHA = 0.05
 
@@ -48,17 +54,15 @@ KNOWN_EVENTS = {
     2018: "GDPR (impatto su reati informatici)",
 }
 
-# Classificazione reati per confronto trend tra categorie
+# Classificazione reati per confronto trend tra categorie. Solo codici che non sono
+# sottotipi (THEFT include gia' i tipi di furto, INTENHOM gli omicidi mafiosi, ecc.)
 REATI_VIOLENTI = {
-    "INTENHOM", "ATTEMPHOM", "MAFIAHOM", "ROBBHOM", "MANSHOM", "INFANTHOM",
+    "INTENHOM", "ATTEMPHOM", "MANSHOM", "INFANTHOM",
     "MASSMURD", "CULPINJU", "BLOWS", "RAPE", "RAPEUN18", "CP612BIS",
     "KIDNAPP", "MENACE", "CP572", "CORRUPUN18", "PORNO", "CP612TER",
 }
 REATI_PATRIMONIALI = {
-    "THEFT", "BAGTHEF", "BURGTHEF", "PICKTHEF", "SHOPTHEF", "CARTHEF",
-    "VEHITHEF", "MOPETHEF", "MOTORTHEF", "TRUCKTHEF", "ARTTHEF",
-    "ROBBER", "STREETROB", "HOUSEROB", "BANKROB", "SHOPROB", "POSTROB",
-    "EXTORT", "RECEIV", "USURY", "DAMAGE", "ARSON", "DAMARS",
+    "THEFT", "ROBBER", "EXTORT", "RECEIV", "USURY", "DAMAGE", "ARSON", "DAMARS",
 }
 REATI_INFORMATICI = {"CYBERCRIM", "SWINCYB"}
 REATI_DROGA = {"DRUG"}
@@ -176,6 +180,13 @@ def load_json(filename: str) -> list[dict]:
     path = DATA_DIR / filename
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def save_serie_json(serie: pd.DataFrame, filename: str) -> None:
+    """Salva in public/data/ le serie aggregate, che i grafici degli insight mostrano tali e quali."""
+    path = DATA_DIR / filename
+    serie.round(2).to_json(path, orient="records", force_ascii=False)
+    log.info(f"  {filename}: {len(serie)} righe, {path.stat().st_size / 1024:.0f} KB")
 
 
 def load_all_data() -> dict[str, pd.DataFrame]:
@@ -425,9 +436,6 @@ def analyze_trend_nazionale(df: pd.DataFrame) -> list[dict]:
                     continue
                 series = sub[col].values.astype(float)
                 anni_dim = sub["anno"].values
-                # Filtro variazione minima
-                if abs(series[-1] - series[0]) < MIN_EFFECT_PP:
-                    continue
 
                 result = analyze_series(series, anni_dim)
                 result.update({
@@ -475,10 +483,6 @@ def analyze_trend_regionali(df: pd.DataFrame) -> list[dict]:
                     continue
                 series = sub[col].values.astype(float)
                 anni = sub["anno"].values
-
-                if col in ("pct_stranieri", "pct_maschi", "pct_femmine", "pct_minori"):
-                    if abs(series[-1] - series[0]) < MIN_EFFECT_PP:
-                        continue
 
                 result = analyze_series(series, anni)
                 result.update({
@@ -779,10 +783,6 @@ def analyze_correlazioni_reati(df: pd.DataFrame) -> list[dict]:
 
                 corr, p_val = stats.spearmanr(diff_a, diff_b)
 
-                # Solo correlazioni forti
-                if abs(corr) < 0.7:
-                    continue
-
                 direction = "positiva" if corr > 0 else "negativa"
                 candidates.append({
                     "analysis_type": "correlazione_reati",
@@ -814,7 +814,7 @@ def analyze_correlazioni_reati(df: pd.DataFrame) -> list[dict]:
                     "sparkline": [],
                 })
 
-    log.info(f"Correlazioni tra reati: {len(candidates)} candidati (|rho| >= 0.7, detrended)")
+    log.info(f"Correlazioni tra reati: {len(candidates)} coppie testate (detrended)")
     return candidates
 
 
@@ -822,58 +822,61 @@ def analyze_correlazioni_reati(df: pd.DataFrame) -> list[dict]:
 # Analisi 9: Confronto trend tra categorie di reati
 # ---------------------------------------------------------------------------
 
-def analyze_confronto_trend_categorie(df: pd.DataFrame) -> list[dict]:
+DIMENSIONI_CATEGORIE = {
+    "totale": "totale",
+    "pct_stranieri": "% stranieri",
+    "pct_maschi": "% maschi",
+    "pct_femmine": "% femmine",
+}
+
+
+def build_serie_categorie(df: pd.DataFrame) -> pd.DataFrame:
+    """Serie annuali per categoria di reato: totale e percentuali pesate sul totale.
+
+    Paniere costante: per ogni dimensione entrano solo i codici con un valore in tutti gli
+    anni in cui la dimensione esiste, cosi' un codice che compare tardi (maltrattamenti dal
+    2022) non crea un salto finto. Le stesse serie vanno ai grafici degli insight.
+
+    Returns:
+        Una riga per data_type, categoria e anno, una colonna per dimensione.
+    """
+    tables = []
+    for data_type, dt_df in df.groupby("data_type"):
+        for cat_name, cat_codes in CATEGORIE_REATI.items():
+            cat_df = dt_df[dt_df["codice_reato"].isin(cat_codes)]
+            serie = {}
+            for col in DIMENSIONI_CATEGORIE:
+                n_anni = dt_df.dropna(subset=[col])["anno"].nunique()
+                sub = cat_df.dropna(subset=[col])
+                presenza = sub.groupby("codice_reato")["anno"].nunique()
+                sub = sub[sub["codice_reato"].isin(presenza[presenza == n_anni].index)]
+                if sub.empty:
+                    continue
+                if col == "totale":
+                    serie[col] = sub.groupby("anno")["totale"].sum()
+                else:
+                    pesi = sub.groupby("anno")["totale"].sum()
+                    serie[col] = (sub[col] * sub["totale"]).groupby(sub["anno"]).sum() / pesi
+            if not serie:
+                continue
+            table = pd.DataFrame(serie).rename_axis("anno").reset_index()
+            table.insert(0, "categoria", cat_name)
+            table.insert(0, "data_type", data_type)
+            tables.append(table)
+    return pd.concat(tables, ignore_index=True)
+
+
+def analyze_confronto_trend_categorie(serie: pd.DataFrame) -> list[dict]:
     """Confronta trend tra categorie di reati (violenti vs patrimoniali etc.)."""
     candidates = []
 
-    for data_type in ["OFFEND", "VICTIM"]:
-        dt_df = df[df["data_type"] == data_type]
-        dimensions = [
-            ("totale", "totale"),
-            ("pct_stranieri", "% stranieri"),
-            ("pct_maschi", "% maschi"),
-            ("pct_femmine", "% femmine"),
-        ]
-
-        # Per ogni categoria, calcola la serie aggregata per anno
-        cat_series = {}
-        for cat_name, cat_codes in CATEGORIE_REATI.items():
-            cat_df = dt_df[dt_df["codice_reato"].isin(cat_codes)]
-            if len(cat_df) == 0:
-                continue
-
-            for col, dim_label in dimensions:
-                if col == "totale":
-                    # Somma i totali per anno
-                    agg = cat_df.groupby("anno")["totale"].sum().sort_index()
-                else:
-                    # Media pesata delle % per anno (pesata sul totale)
-                    sub = cat_df.dropna(subset=[col])
-                    if len(sub) == 0:
-                        continue
-                    sub = sub.copy()
-                    sub["_weighted"] = sub[col] * sub["totale"]
-                    agg_num = sub.groupby("anno")["_weighted"].sum()
-                    agg_den = sub.groupby("anno")["totale"].sum()
-                    agg = (agg_num / agg_den).sort_index()
-
-                if len(agg) < MIN_DATA_POINTS:
-                    continue
-
-                cat_series[(cat_name, dim_label)] = agg
-
-        # Confronta coppie di categorie
-        cat_names = list(CATEGORIE_REATI.keys())
+    for data_type, dt_df in serie.groupby("data_type"):
+        cat_names = list(dt_df["categoria"].unique())
         for i, cat_a in enumerate(cat_names):
             for cat_b in cat_names[i + 1:]:
-                for _, dim_label in dimensions:
-                    key_a = (cat_a, dim_label)
-                    key_b = (cat_b, dim_label)
-                    if key_a not in cat_series or key_b not in cat_series:
-                        continue
-
-                    s_a = cat_series[key_a]
-                    s_b = cat_series[key_b]
+                for col, dim_label in DIMENSIONI_CATEGORIE.items():
+                    s_a = dt_df[dt_df["categoria"] == cat_a].set_index("anno")[col].dropna()
+                    s_b = dt_df[dt_df["categoria"] == cat_b].set_index("anno")[col].dropna()
 
                     # Allinea sugli anni comuni
                     common = s_a.index.intersection(s_b.index)
@@ -887,10 +890,6 @@ def analyze_confronto_trend_categorie(df: pd.DataFrame) -> list[dict]:
                     # Calcola la differenza e il suo trend
                     diff = vals_a - vals_b
                     result = analyze_series(diff, anni)
-
-                    # Solo se il trend della differenza e' significativo
-                    if result["mk_p"] > 0.1:
-                        continue
 
                     result.update({
                         "analysis_type": "confronto_trend_categorie",
@@ -910,100 +909,91 @@ def analyze_confronto_trend_categorie(df: pd.DataFrame) -> list[dict]:
 # Analisi 10: Confronti territoriali (Nord vs Centro vs Sud)
 # ---------------------------------------------------------------------------
 
-def analyze_confronti_territoriali(
+DIMENSIONI_RIPARTIZIONI = {
+    "pct_stranieri": "% stranieri",
+    "pct_maschi": "% maschi",
+    "pct_femmine": "% femmine",
+    "tasso": "tasso per 100k",
+}
+
+
+def build_serie_ripartizioni(
     df_regioni: pd.DataFrame, pop_regioni: pd.DataFrame
+) -> pd.DataFrame:
+    """Serie annuali per ripartizione: tasso pesato sulla popolazione, % pesate sul totale.
+
+    La media semplice delle regioni farebbe pesare il Molise quanto la Campania. Le stesse
+    serie vanno ai grafici degli insight.
+
+    Returns:
+        Una riga per data_type, codice_reato, ripartizione e anno, una colonna per dimensione.
+    """
+    pop = pop_regioni.rename(columns={"REF_AREA": "codice_regione", "Anno": "anno"})
+    df = df_regioni.merge(pop[["codice_regione", "anno", "Popolazione"]],
+                          on=["codice_regione", "anno"], how="left")
+    regione_to_rip = {reg: rip for rip, regs in RIPARTIZIONI.items() for reg in regs}
+    df["ripartizione"] = df["codice_regione"].map(regione_to_rip)
+
+    tables = []
+    keys = ["data_type", "codice_reato", "ripartizione"]
+    for key, grp in df.dropna(subset=["ripartizione"]).groupby(keys):
+        serie = {}
+        for col in DIMENSIONI_RIPARTIZIONI:
+            peso = "Popolazione" if col == "tasso" else "totale"
+            sub = grp.dropna(subset=[col, peso])
+            pesi = sub.groupby("anno")[peso].sum().replace(0, np.nan)
+            serie[col] = ((sub[col] * sub[peso]).groupby(sub["anno"]).sum() / pesi).dropna()
+        table = pd.DataFrame(serie).rename_axis("anno").reset_index()
+        for name, value in zip(reversed(keys), reversed(key)):
+            table.insert(0, name, value)
+        tables.append(table)
+    return pd.concat(tables, ignore_index=True)
+
+
+def analyze_confronti_territoriali(
+    serie: pd.DataFrame, df_regioni: pd.DataFrame
 ) -> list[dict]:
     """Confronta trend tra ripartizioni (Nord/Centro/Sud) per dimensione."""
     candidates = []
+    nomi = dict(zip(df_regioni["codice_reato"], df_regioni["reato"]))
 
-    dimensions = [
-        ("pct_stranieri", "% stranieri"),
-        ("pct_maschi", "% maschi"),
-        ("pct_femmine", "% femmine"),
-        ("tasso", "tasso per 100k"),
-    ]
+    for (data_type, codice_reato), reato_df in serie.groupby(["data_type", "codice_reato"]):
+        reato_label = nomi[codice_reato]
 
-    # Lookup popolazione: (codice_regione, anno) -> popolazione
-    pop_lookup = {}
-    for _, row in pop_regioni.iterrows():
-        pop_lookup[(row["REF_AREA"], int(row["Anno"]))] = row["Popolazione"]
+        for col, dim_label in DIMENSIONI_RIPARTIZIONI.items():
+            rip_series = {}
+            for rip_name in RIPARTIZIONI:
+                agg = reato_df[reato_df["ripartizione"] == rip_name].set_index(
+                    "anno")[col].dropna()
+                if len(agg) >= MIN_DATA_POINTS:
+                    rip_series[rip_name] = agg
 
-    for data_type in ["OFFEND", "VICTIM"]:
-        dt_df = df_regioni[df_regioni["data_type"] == data_type]
-
-        for codice_reato, reato_df in dt_df.groupby("codice_reato"):
-            reato_label = reato_df["reato"].iloc[0]
-
-            for col, dim_label in dimensions:
-                if col not in reato_df.columns:
-                    continue
-
-                # Calcola media per ripartizione e anno
-                rip_series = {}
-                for rip_name, rip_codes in RIPARTIZIONI.items():
-                    rip_df = reato_df[reato_df["codice_regione"].isin(rip_codes)]
-                    sub = rip_df.dropna(subset=[col])
-                    if len(sub) == 0:
+            # Confronta coppie di ripartizioni
+            rip_names = list(rip_series.keys())
+            for i, rip_a in enumerate(rip_names):
+                for rip_b in rip_names[i + 1:]:
+                    s_a = rip_series[rip_a]
+                    s_b = rip_series[rip_b]
+                    common = s_a.index.intersection(s_b.index)
+                    if len(common) < MIN_DATA_POINTS:
                         continue
 
-                    if col == "tasso":
-                        # Media pesata per popolazione
-                        sub = sub.copy()
-                        sub["_pop"] = sub.apply(
-                            lambda r: pop_lookup.get(
-                                (r["codice_regione"], int(r["anno"])), np.nan
-                            ),
-                            axis=1,
-                        )
-                        sub = sub.dropna(subset=["_pop"])
-                        if len(sub) == 0:
-                            continue
-                        sub["_w_tasso"] = sub[col] * sub["_pop"]
-                        agg_num = sub.groupby("anno")["_w_tasso"].sum()
-                        agg_den = sub.groupby("anno")["_pop"].sum()
-                        agg_den = agg_den.replace(0, np.nan)
-                        agg = (agg_num / agg_den).dropna().sort_index()
-                    else:
-                        # Media pesata delle % sul totale
-                        sub = sub.copy()
-                        sub["_w"] = sub[col] * sub["totale"]
-                        agg_num = sub.groupby("anno")["_w"].sum()
-                        agg_den = sub.groupby("anno")["totale"].sum()
-                        agg_den = agg_den.replace(0, np.nan)
-                        agg = (agg_num / agg_den).dropna().sort_index()
+                    vals_a = s_a.loc[common].values.astype(float)
+                    vals_b = s_b.loc[common].values.astype(float)
+                    anni = common.values
 
-                    if len(agg) >= MIN_DATA_POINTS:
-                        rip_series[rip_name] = agg
+                    diff = vals_a - vals_b
+                    result = analyze_series(diff, anni)
 
-                # Confronta coppie di ripartizioni
-                rip_names = list(rip_series.keys())
-                for i, rip_a in enumerate(rip_names):
-                    for rip_b in rip_names[i + 1:]:
-                        s_a = rip_series[rip_a]
-                        s_b = rip_series[rip_b]
-                        common = s_a.index.intersection(s_b.index)
-                        if len(common) < MIN_DATA_POINTS:
-                            continue
-
-                        vals_a = s_a.loc[common].values.astype(float)
-                        vals_b = s_b.loc[common].values.astype(float)
-                        anni = common.values
-
-                        diff = vals_a - vals_b
-                        result = analyze_series(diff, anni)
-
-                        if result["mk_p"] > 0.1:
-                            continue
-
-                        result.update({
-                            "analysis_type": "confronto_territoriale",
-                            "data_type": data_type,
-                            "codice_reato": codice_reato,
-                            "reato": reato_label,
-                            "dimensione": f"{dim_label} ({rip_a} - {rip_b})",
-                            "territorio": f"{rip_a} vs {rip_b}",
-                        })
-                        candidates.append(result)
+                    result.update({
+                        "analysis_type": "confronto_territoriale",
+                        "data_type": data_type,
+                        "codice_reato": codice_reato,
+                        "reato": reato_label,
+                        "dimensione": f"{dim_label} ({rip_a} - {rip_b})",
+                        "territorio": f"{rip_a} vs {rip_b}",
+                    })
+                    candidates.append(result)
 
     log.info(f"Confronti territoriali: {len(candidates)} candidati")
     return candidates
@@ -1052,10 +1042,6 @@ def analyze_rapporto_autori_vittime(df: pd.DataFrame) -> list[dict]:
             continue
 
         rapporto = autori / vittime
-
-        # Filtro: variazione minima del rapporto
-        if abs(rapporto[-1] - rapporto[0]) < 0.1:
-            continue
 
         result = analyze_series(rapporto, anni)
         result.update({
@@ -1118,6 +1104,26 @@ def apply_fdr(df: pd.DataFrame) -> pd.DataFrame:
         )
 
     return df
+
+
+def filtra_rilevanza(df: pd.DataFrame) -> pd.DataFrame:
+    """Scarta i risultati troppo piccoli per diventare un insight.
+
+    Va dopo apply_fdr: Benjamini-Hochberg deve ricevere l'intera famiglia di test, se no
+    la soglia diventa piu' permissiva del 5% dichiarato.
+    """
+    tipo = df["analysis_type"]
+    variazione = df["total_change_pp"].abs()
+    scarta = (
+        (tipo.isin(["trend_nazionale_pct", "trend_regionale"])
+         & df["dimensione"].str.startswith("%") & (variazione < MIN_EFFECT_PP))
+        | ((tipo == "correlazione_reati") & (df["last_value"].abs() < MIN_RHO))
+        | ((tipo == "rapporto_autori_vittime") & (variazione < MIN_DELTA_RAPPORTO))
+        | (tipo.isin(["confronto_trend_categorie", "confronto_territoriale"])
+           & (df["mk_p"] > MAX_P_CONFRONTI))
+    )
+    log.info(f"Filtro di rilevanza: {scarta.sum()} test scartati su {len(df)}")
+    return df[~scarta].reset_index(drop=True)
 
 
 # ---------------------------------------------------------------------------
@@ -1510,12 +1516,14 @@ def main():
     all_candidates.extend(analyze_correlazioni_reati(data["avt"]))
 
     log.info("Analisi confronto trend tra categorie di reati...")
-    all_candidates.extend(analyze_confronto_trend_categorie(data["avt"]))
+    serie_categorie = build_serie_categorie(data["avt"])
+    save_serie_json(serie_categorie, "insights_categorie.json")
+    all_candidates.extend(analyze_confronto_trend_categorie(serie_categorie))
 
     log.info("Analisi confronti territoriali (Nord/Centro/Sud)...")
-    all_candidates.extend(
-        analyze_confronti_territoriali(data["avr"], data["popolazione_regioni"])
-    )
+    serie_ripartizioni = build_serie_ripartizioni(data["avr"], data["popolazione_regioni"])
+    save_serie_json(serie_ripartizioni, "insights_ripartizioni.json")
+    all_candidates.extend(analyze_confronti_territoriali(serie_ripartizioni, data["avr"]))
 
     log.info("Analisi rapporto autori/vittime...")
     all_candidates.extend(analyze_rapporto_autori_vittime(data["avt"]))
@@ -1527,7 +1535,7 @@ def main():
 
     # FDR
     log.info("Applicazione FDR Benjamini-Hochberg...")
-    df = apply_fdr(df)
+    df = filtra_rilevanza(apply_fdr(df))
 
     # Scoring
     log.info("Scoring e ranking...")

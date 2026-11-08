@@ -18,10 +18,7 @@ export type InsightChartSeries = {
   dataType?: string;
   /** Filtro codice_reato singolo — solo per autori_vittime_trend */
   code?: string;
-  /** Filtro codici reato multipli — somma totale per anno.
-   *  Mutualmente esclusivo con code. */
-  codes?: string[];
-  /** Filtro Categoria — solo per delitti_categorie */
+  /** Filtro categoria — solo per insights_categorie (serie gia' aggregate dalla pipeline) */
   category?: string;
   /** Campo x (anno/Anno) */
   xField: string;
@@ -50,70 +47,41 @@ export type InsightChartConfig = {
   /** Label asse y destro (se dual-y) */
   y2AxisLabel?: string;
   /** Aggregazione territoriale:
-   *  - "ripartizione": 3 linee Nord/Centro/Sud dalla media delle regioni
+   *  - "ripartizione": 3 linee Nord/Centro/Sud e Isole da insights_ripartizioni
+   *    (medie gia' pesate dalla pipeline, le stesse dei testi)
    *  - "divergenza-regionale": area chart media +/- std-dev tra 20 regioni
    *  Usa la prima serie come template per filtro (dataType, code) e yField. */
   aggregation?: "ripartizione" | "divergenza-regionale";
 };
 
 /* ================================================================
-   Mapping regioni -> ripartizioni (per aggregation: "ripartizione")
+   Ripartizioni (per aggregation: "ripartizione")
    ================================================================ */
-
-const REGIONE_TO_RIPARTIZIONE: Record<string, string> = {
-  ITC1: "Nord", ITC2: "Nord", ITC3: "Nord", ITC4: "Nord",
-  "ITD1+ITD2": "Nord", ITD3: "Nord", ITD4: "Nord", ITD5: "Nord",
-  ITE1: "Centro", ITE2: "Centro", ITE3: "Centro", ITE4: "Centro",
-  ITF1: "Sud", ITF2: "Sud", ITF3: "Sud", ITF4: "Sud",
-  ITF5: "Sud", ITF6: "Sud", ITG1: "Sud", ITG2: "Sud",
-};
 
 const RIPARTIZIONE_COLORS: Record<string, string> = {
   Nord: "#2E86AB",
   Centro: "#ff7f0e",
-  Sud: "#E63946",
+  "Sud e Isole": "#E63946",
 };
-
-const RIPARTIZIONE_ORDER = ["Nord", "Centro", "Sud"];
 
 function buildRipartizioneTraces(
   rawData: Record<string, unknown>[],
   template: InsightChartSeries,
 ): Plotly.Data[] {
-  const filtered = rawData.filter((row) => {
-    if (template.dataType && row.data_type !== template.dataType) return false;
-    if (template.code && row.codice_reato !== template.code) return false;
-    return true;
-  });
-
-  // Raggruppa per ripartizione + anno, calcola media
-  const grouped = new Map<string, Map<number, number[]>>();
-  for (const rip of RIPARTIZIONE_ORDER) grouped.set(rip, new Map());
-
-  for (const row of filtered) {
-    const rip = REGIONE_TO_RIPARTIZIONE[row.codice_regione as string];
-    if (!rip) continue;
-    const anno = row[template.xField] as number;
-    const val = row[template.yField] as number;
-    if (val == null) continue;
-    const byAnno = grouped.get(rip)!;
-    if (!byAnno.has(anno)) byAnno.set(anno, []);
-    byAnno.get(anno)!.push(val);
-  }
-
   const isPct = template.yField.startsWith("pct_");
 
-  return RIPARTIZIONE_ORDER.map((rip) => {
-    const byAnno = grouped.get(rip)!;
-    const anni = [...byAnno.keys()].sort((a, b) => a - b);
-    const medie = anni.map((a) => {
-      const vals = byAnno.get(a)!;
-      return vals.reduce((s, v) => s + v, 0) / vals.length;
-    });
+  return Object.keys(RIPARTIZIONE_COLORS).map((rip) => {
+    const rows = rawData.filter(
+      (row) =>
+        row.ripartizione === rip &&
+        row.data_type === template.dataType &&
+        row.codice_reato === template.code &&
+        row[template.yField] != null
+    );
 
     return {
-      x: anni,
-      y: medie,
+      x: rows.map((r) => r[template.xField] as number),
+      y: rows.map((r) => r[template.yField] as number),
       type: "scatter" as const,
       mode: "lines+markers" as const,
       name: rip,
@@ -143,8 +111,6 @@ function buildDivergenzaTraces(
   // Raggruppa per anno, raccogli valori da tutte le regioni
   const byAnno = new Map<number, number[]>();
   for (const row of filtered) {
-    const reg = row.codice_regione as string;
-    if (!REGIONE_TO_RIPARTIZIONE[reg]) continue; // solo 20 regioni
     const anno = row[template.xField] as number;
     const val = row[template.yField] as number;
     if (val == null) continue;
@@ -240,27 +206,14 @@ export function InsightMiniChart({ config, ariaLabel }: { config: InsightChartCo
     : config.series.map((s) => {
         const filtered = rawData.filter((row) => {
           if (s.dataType && row.data_type !== s.dataType) return false;
-          if (s.codes && !s.codes.includes(row.codice_reato as string)) return false;
           if (s.code && row.codice_reato !== s.code) return false;
-          if (s.category && row.Categoria !== s.category) return false;
+          if (s.category && row.categoria !== s.category) return false;
           return true;
         });
 
-        // Se codes (multi-codice): aggrega sommando yField per anno
         let xVals: number[];
         let yVals: number[];
-        if (s.codes) {
-          const byAnno = new Map<number, number>();
-          for (const row of filtered) {
-            const anno = row[s.xField] as number;
-            const val = row[s.yField] as number;
-            if (val == null) continue;
-            byAnno.set(anno, (byAnno.get(anno) ?? 0) + val);
-          }
-          const sorted = [...byAnno.entries()].sort((a, b) => a[0] - b[0]);
-          xVals = sorted.map(([a]) => a);
-          yVals = sorted.map(([, v]) => v);
-        } else if (s.ratioDataType) {
+        if (s.ratioDataType) {
           // Ratio: numeratore (dataType) / denominatore (ratioDataType) per anno
           const denomFiltered = rawData.filter((row) => {
             if (row.data_type !== s.ratioDataType) return false;

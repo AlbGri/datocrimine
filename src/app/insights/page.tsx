@@ -446,10 +446,10 @@ const INSIGHTS: Insight[] = [
     period: "2007-2024",
     body: "La differenza nel numero di vittime tra reati patrimoniali e informatici si riduce significativamente nel tempo: le vittime di reati informatici crescono molto pi\u00f9 velocemente di quelle dei reati patrimoniali tradizionali (cambio: -1.018.000 nella differenza). Le truffe online stanno erodendo la predominanza dei furti fisici.",
     chart: {
-      file: "autori_vittime_trend.json",
+      file: "insights_categorie.json",
       series: [
-        { dataType: "VICTIM", codes: ["CYBERCRIM", "SWINCYB"], xField: "anno", yField: "totale", label: "Reati informatici", color: "#ff7f0e" },
-        { dataType: "VICTIM", codes: ["THEFT", "BAGTHEF", "BURGTHEF", "PICKTHEF", "SHOPTHEF", "CARTHEF", "VEHITHEF", "MOPETHEF", "MOTORTHEF", "TRUCKTHEF", "ARTTHEF", "ROBBER", "STREETROB", "HOUSEROB", "BANKROB", "SHOPROB", "POSTROB", "EXTORT", "RECEIV", "USURY", "DAMAGE", "ARSON", "DAMARS"], xField: "anno", yField: "totale", label: "Reati patrimoniali", color: "#1f77b4" },
+        { dataType: "VICTIM", category: "informatici", xField: "anno", yField: "totale", label: "Reati informatici", color: "#ff7f0e" },
+        { dataType: "VICTIM", category: "patrimoniali", xField: "anno", yField: "totale", label: "Reati patrimoniali", color: "#1f77b4" },
       ],
       yAxisLabel: "Vittime",
     },
@@ -464,10 +464,10 @@ const INSIGHTS: Insight[] = [
     period: "2007-2024",
     body: "La differenza nel numero di vittime tra reati violenti e patrimoniali cresce significativamente (+900.000): i reati patrimoniali calano pi\u00f9 di quelli violenti. Il profilo complessivo della criminalit\u00e0 denunciata si sta spostando: meno reati contro il patrimonio, tenuta dei reati contro la persona.",
     chart: {
-      file: "autori_vittime_trend.json",
+      file: "insights_categorie.json",
       series: [
-        { dataType: "VICTIM", codes: ["INTENHOM", "ATTEMPHOM", "MAFIAHOM", "ROBBHOM", "MANSHOM", "INFANTHOM", "MASSMURD", "CULPINJU", "BLOWS", "RAPE", "RAPEUN18", "CP612BIS", "KIDNAPP", "MENACE", "CP572", "CORRUPUN18", "PORNO", "CP612TER"], xField: "anno", yField: "totale", label: "Reati violenti", color: "#d62728" },
-        { dataType: "VICTIM", codes: ["THEFT", "BAGTHEF", "BURGTHEF", "PICKTHEF", "SHOPTHEF", "CARTHEF", "VEHITHEF", "MOPETHEF", "MOTORTHEF", "TRUCKTHEF", "ARTTHEF", "ROBBER", "STREETROB", "HOUSEROB", "BANKROB", "SHOPROB", "POSTROB", "EXTORT", "RECEIV", "USURY", "DAMAGE", "ARSON", "DAMARS"], xField: "anno", yField: "totale", label: "Reati patrimoniali", color: "#1f77b4" },
+        { dataType: "VICTIM", category: "violenti", xField: "anno", yField: "totale", label: "Reati violenti", color: "#d62728" },
+        { dataType: "VICTIM", category: "patrimoniali", xField: "anno", yField: "totale", label: "Reati patrimoniali", color: "#1f77b4" },
       ],
       yAxisLabel: "Vittime",
     },
@@ -504,7 +504,7 @@ const INSIGHTS: Insight[] = [
     period: "2007-2024",
     body: "Il tasso di rapine (vittime) al Nord cresce rispetto al Sud in modo costante, con la differenza che aumenta in circa 3 anni su 4. Sia nel confronto Nord vs Sud (+63 per 100k) sia Centro vs Sud (+61 per 100k). Il tradizionale divario con il Mezzogiorno si sta riducendo o invertendo per questo tipo di reato.",
     chart: {
-      file: "autori_vittime_regioni.json",
+      file: "insights_ripartizioni.json",
       series: [
         { dataType: "VICTIM", code: "ROBBER", xField: "anno", yField: "tasso", label: "Nord", color: "#2E86AB" },
       ],
@@ -521,7 +521,7 @@ const INSIGHTS: Insight[] = [
     period: "2007-2024",
     body: "Il tasso di truffe e frodi informatiche (vittime) al Nord cresce pi\u00f9 che al Sud (+118 per 100k nella differenza). Anche per gli autori, il divario Nord-Sud aumenta (+85 per 100k), con la differenza che cresce in 2 anni su 3. La digitalizzazione pi\u00f9 avanzata espone a maggiore vittimizzazione informatica.",
     chart: {
-      file: "autori_vittime_regioni.json",
+      file: "insights_ripartizioni.json",
       series: [
         { dataType: "VICTIM", code: "SWINCYB", xField: "anno", yField: "tasso", label: "Nord", color: "#2E86AB" },
       ],
@@ -541,7 +541,7 @@ const INSIGHTS: Insight[] = [
     caveat:
       "Questa divergenza potrebbe riflettere una maggiore propensione alla denuncia al Nord pi\u00f9 che una reale differenza nei tassi di violenza. Il numero oscuro delle violenze sessuali \u00e8 molto alto e varia per territorio.",
     chart: {
-      file: "autori_vittime_regioni.json",
+      file: "insights_ripartizioni.json",
       series: [
         { dataType: "OFFEND", code: "RAPE", xField: "anno", yField: "tasso", label: "Nord", color: "#2E86AB" },
       ],
@@ -558,7 +558,7 @@ const INSIGHTS: Insight[] = [
     period: "2007-2024",
     body: "La differenza nella percentuale di autori stranieri per stupefacenti tra Nord e Sud cresce di circa 10 punti percentuali, con un aumento presente in 2 anni su 3. Al Nord la quota di autori stranieri per droga aumenta molto pi\u00f9 che al Sud, coerentemente con la diversa composizione demografica dei territori.",
     chart: {
-      file: "autori_vittime_regioni.json",
+      file: "insights_ripartizioni.json",
       series: [
         { dataType: "OFFEND", code: "DRUG", xField: "anno", yField: "pct_stranieri", label: "Nord", color: "#2E86AB" },
       ],
