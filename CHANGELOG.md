@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-11-08 — Correzioni nei testi di metodo
+- Corretti in Metodologia e in Dati e codice il numero di reati per livello territoriale e le fonti della popolazione
+
 ## 2026-11-08 — Il quadro in una frase
 - In cima alla home e al report una frase riassume la tendenza: in calo nel lungo periodo, in risalita dal 2021. Si aggiorna da sola con i dati
 - Nel report il riferimento è il tasso del 2019, l'ultimo anno prima del COVID, al posto della media degli anni precedenti

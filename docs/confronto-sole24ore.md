@@ -71,7 +71,7 @@ var_2024_vs_2014 = (delitti_2024 - delitti_2014) / delitti_2014 * 100  # -14.70%
 File: public/data/delitti_province.json
 Struttura record:
 {
-  "REF_AREA": "ITC11",
+  "REF_AREA": "ITC45",
   "Territorio": "Milano",
   "Anno": 2024,
   "Delitti": 226860,

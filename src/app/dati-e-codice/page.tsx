@@ -143,7 +143,7 @@ export default function DatiECodice() {
               <tr className="border-b">
                 <td className="py-2 pr-4 font-mono text-xs">generate_popolazione.py</td>
                 <td className="py-2 pr-4 text-xs">
-                  3 fonti ISTAT popolazione (intercensuaria, POSAS, POPRES1)
+                  2 fonti ISTAT popolazione (intercensuaria 2014-2018, POPRES1 dal 2019)
                 </td>
                 <td className="py-2 text-xs">
                   popolazione_regioni_province.csv
