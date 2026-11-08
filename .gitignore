@@ -63,9 +63,6 @@ data/raw/popolazione/
 data/raw/geojson_regioni_italia.geojson
 data/raw/autvittps/
 data/raw/Vittime di delitto*
-scripts/download_autvittps.py
-scripts/download_delittips.py
-scripts/download_popolazione.py
 scripts/check_istat_updates.py
 
 # insights (rigenerabili con scripts/generate_insights.py)
