@@ -152,7 +152,6 @@ export function ChartMappaRegioni({ anno }: Props) {
 
       <ChartFullscreenWrapper ariaDescription={`Mappa coropleta Italia con tasso delitti per 1.000 abitanti per regione, anno ${anno}`}>
         <Plot
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           data={[
             {
               type: "choropleth",
