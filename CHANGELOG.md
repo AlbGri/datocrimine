@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-08 — Numeri verificati in automatico
+- I numeri della Metodologia, del Numero Oscuro e della pagina Insights vengono dai dati o sono verificati in automatico prima di ogni pubblicazione
+- Corretto nella Metodologia l'aumento delle denunce per violenze sessuali dal 2014 al 2024: +60,5%, non +60,4%
+
 ## 2026-11-08 — Correzioni nei testi di metodo
 - Corretti in Metodologia e in Dati e codice il numero di reati per livello territoriale e le fonti della popolazione
 
