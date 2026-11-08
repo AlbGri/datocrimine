@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-08 — Sito più leggero
+- Le pagine con grafici scaricano circa un terzo dei dati di prima (la home da 1,6 MB a circa 650 KB)
+- La mappa delle regioni scarica 42 KB invece di 1,2 MB
+- Le mappe non chiedono più nulla a siti esterni
+- Mappa del report senza i confini degli Stati vicini
+
 ## 2026-11-08 — Nuovo nome: DatoCrimine
 - Il sito si chiama DatoCrimine, come il suo indirizzo: "Osservatorio" faceva pensare a un ente pubblico
 - Condividendo una pagina, l'anteprima mostra titolo e indirizzo di quella pagina, non quelli della home; il Report 2024 ha di nuovo l'immagine
