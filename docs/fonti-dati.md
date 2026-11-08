@@ -87,6 +87,7 @@ non esistono come file di dati.
 | Uso | mappe regionali, unite ai dati con il codice ISTAT della regione (`reg_istat_code_num`) |
 | Download | manuale, in `data/raw/geojson_regioni_italia.geojson`, copiato in `public/data/` |
 | Scaricato | 22 febbraio 2026 |
+| Semplificato | `npx mapshaper@0.6 limits_IT_regions.geojson -simplify 10% keep-shapes -o geojson_regioni_italia.geojson precision=0.0001 gj2008`: da 2,9 MB a 140 KB, a scala regionale non si vede differenza. `gj2008` tiene i confini in senso orario, come vuole Plotly: senza, ogni regione riempie la mappa |
 
 ## 7. Dai dati grezzi al sito
 
