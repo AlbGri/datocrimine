@@ -22,12 +22,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install pandas==2.2.3 numpy==2.2.1 scipy==1.17.1 statsmodels==0.14.6 pymannkendall==1.4.3 pytest==9.0.2
+      - run: python -m pytest scripts/tests/ -q
+
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: npm
 
       - run: npm ci
+      - run: npm run lint
       - run: npm run build
 
       - uses: actions/upload-pages-artifact@v3
