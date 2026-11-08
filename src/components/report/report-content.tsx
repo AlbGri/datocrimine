@@ -435,6 +435,7 @@ function ChartMappaVariazione({
             showcoastlines: false,
             showland: false,
             showlakes: false,
+            showcountries: false,
             bgcolor: "white",
           },
           height: isMobile ? 350 : CHART_HEIGHT_MAP,

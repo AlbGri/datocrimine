@@ -133,6 +133,8 @@ export const PLOTLY_CONFIG: Partial<Plotly.Config> = {
   displayModeBar: false,
   scrollZoom: false,
   responsive: true,
+  // Fondo cartografico servito dal sito, non da cdn.plot.ly (le mappe usano scope "europe")
+  topojsonURL: "/topojson/",
   doubleClick: false,
   editable: false,
   edits: {

@@ -200,6 +200,7 @@ export function ChartMappaRegioni({ anno }: Props) {
             separators: PLOTLY_IT_SEPARATORS,
             geo: {
               projection: { type: "mercator", scale: 1 },
+              scope: "europe",
               center: { lat: 42.0, lon: 12.0 },
               showland: false,
               showlakes: false,
