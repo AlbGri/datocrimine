@@ -20,16 +20,16 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
 
       - run: pip install pandas==2.2.3 numpy==2.2.1 scipy==1.17.1 statsmodels==0.14.6 pymannkendall==1.4.3 pytest==9.0.2
       - run: python -m pytest scripts/tests/ -q
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
@@ -38,9 +38,9 @@ jobs:
       - run: npm run lint
       - run: npm run build
 
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: out
 
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
