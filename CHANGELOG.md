@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-08 — Insight corretti e verificati
+- Corretti i numeri degli insight su reati violenti, patrimoniali e informatici: alcuni reati erano contati due volte. Le vittime di reati violenti calano del 12,9% dal 2007, non crescono
+- I grafici per Nord, Centro e Sud usano le medie pesate per popolazione, le stesse dei testi
+- Nuovo insight sul quadro complessivo degli autori stranieri; titoli piu' precisi su rapine, violenze sessuali e omicidi di donne
+- Tolti due insight che non superano la correzione statistica; la pagina passa da 23 a 21 insight
+- Ogni numero degli insight e' ora verificato in automatico contro i dati
+
 ## 2026-11-08 — Nomi e categorie dei reati
 - Corretti i nomi di cinque reati nella sezione Persone denunciate (gli incendi boschivi comparivano come "porto abusivo di armi", le ingiurie come "resistenza a pubblico ufficiale"); ogni reato ha ora lo stesso nome in tutte le pagine
 - Grafico dei delitti per tipologia: le categorie sommano al totale, senza reati contati due volte; le ingiurie, depenalizzate nel 2016, sono una categoria a parte
