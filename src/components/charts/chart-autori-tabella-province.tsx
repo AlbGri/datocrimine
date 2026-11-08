@@ -44,8 +44,8 @@ export function ChartAutoriTabellaProvince({ dataType }: Props) {
   const setRegioneStable = useCallback((v: string) => setRegioneSelezionata(v), []);
   const [reatoSelezionato, setReatoSelezionato] = useState("TOT");
   const [annoSelezionato, setAnnoSelezionato] = useState(2022);
-  const [sortKey, setSortKey] = useState<SortKey>("pct_stranieri");
-  const [sortDir, setSortDir] = useState<SortDir>("desc");
+  const [sortKey, setSortKey] = useState<SortKey>("provincia");
+  const [sortDir, setSortDir] = useState<SortDir>("asc");
 
   // Anni disponibili per reato e dataType selezionati
   const anniDisponibili = useMemo(() => {

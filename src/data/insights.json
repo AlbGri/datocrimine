@@ -1,0 +1,2725 @@
+[
+  {
+    "id": "rapine-banca",
+    "title": "Rapine in banca: un reato in via di estinzione",
+    "category": "trend",
+    "dimensions": [],
+    "tests": [
+      "mann-kendall"
+    ],
+    "period": "2007-2024",
+    "body": "Gli autori denunciati per rapine in banca sono passati da 2.893 a 367, con un calo quasi ininterrotto nel tempo. La digitalizzazione dei servizi bancari e il rafforzamento delle misure di sicurezza fisiche hanno reso questo reato sempre meno praticabile.",
+    "chart": {
+      "file": "autori_vittime_trend.json",
+      "series": [
+        {
+          "dataType": "OFFEND",
+          "code": "BANKROB",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Autori denunciati",
+          "color": "#2E86AB"
+        }
+      ],
+      "yAxisLabel": "Persone"
+    },
+    "fatti": [
+      {
+        "testo": "2.893",
+        "valore": 2893,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "BANKROB"
+        },
+        "campo": "totale",
+        "anno": 2007
+      },
+      {
+        "testo": "367",
+        "valore": 367,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "BANKROB"
+        },
+        "campo": "totale",
+        "anno": 2024
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "trend_nazionale_assoluto",
+        "data_type": "OFFEND",
+        "codice_reato": "BANKROB",
+        "dimensione": "totale"
+      }
+    ]
+  },
+  {
+    "id": "stalking",
+    "title": "Stalking: emersione costante del fenomeno",
+    "category": "trend",
+    "dimensions": [],
+    "tests": [
+      "mann-kendall"
+    ],
+    "period": "2009-2024",
+    "body": "Le vittime di atti persecutori (stalking) sono passate da circa 5.000 a oltre 18.800 (+278%), con una crescita quasi costante anno dopo anno. L’introduzione del reato nel 2009 (art. 612-bis c.p.) e le successive campagne di sensibilizzazione hanno progressivamente ridotto il numero oscuro, portando più vittime a denunciare.",
+    "genderNote": "Il 74% delle vittime di stalking sono donne (2024).",
+    "caveat": "L’aumento delle denunce è un indicatore di emersione, non necessariamente di aumento del fenomeno reale.",
+    "chart": {
+      "file": "autori_vittime_trend.json",
+      "series": [
+        {
+          "dataType": "VICTIM",
+          "code": "CP612BIS",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Vittime",
+          "color": "#d62728"
+        }
+      ],
+      "yAxisLabel": "Persone"
+    },
+    "fatti": [
+      {
+        "testo": "circa 5.000",
+        "valore": 5000,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "CP612BIS"
+        },
+        "campo": "totale",
+        "anno": 2009,
+        "tolleranza": 500
+      },
+      {
+        "testo": "oltre 18.800",
+        "valore": 18800,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "CP612BIS"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "tolleranza": 100
+      },
+      {
+        "testo": "+278%",
+        "valore": 278,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "CP612BIS"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "da": 2009,
+        "calcolo": "variazione_pct"
+      },
+      {
+        "testo": "74%",
+        "valore": 74,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "CP612BIS"
+        },
+        "campo": "pct_femmine",
+        "anno": 2024,
+        "grafico": false
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "trend_nazionale_assoluto",
+        "data_type": "VICTIM",
+        "codice_reato": "CP612BIS",
+        "dimensione": "totale"
+      }
+    ],
+    "numeri_liberi": [
+      "art. 612-bis"
+    ]
+  },
+  {
+    "id": "truffe",
+    "title": "Truffe e frodi informatiche: il reato del decennio",
+    "category": "trend",
+    "dimensions": [],
+    "tests": [
+      "mann-kendall"
+    ],
+    "period": "2007-2024",
+    "body": "Le vittime di truffe e frodi informatiche sono più che raddoppiate: da 109.000 a 236.000, con una crescita graduale lungo l’intero periodo. Gli autori denunciati sono passati da 46.000 a 73.000. Il fenomeno riguarda tutto il territorio: in tutte le 20 regioni il tasso di vittime cresce in modo significativo.",
+    "chart": {
+      "file": "autori_vittime_trend.json",
+      "series": [
+        {
+          "dataType": "VICTIM",
+          "code": "SWINCYB",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Vittime",
+          "color": "#d62728"
+        },
+        {
+          "dataType": "OFFEND",
+          "code": "SWINCYB",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Autori",
+          "color": "#2E86AB",
+          "dash": "dash"
+        }
+      ],
+      "yAxisLabel": "Persone"
+    },
+    "fatti": [
+      {
+        "testo": "109.000",
+        "valore": 109000,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "SWINCYB"
+        },
+        "campo": "totale",
+        "anno": 2007,
+        "tolleranza": 500
+      },
+      {
+        "testo": "236.000",
+        "valore": 236000,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "SWINCYB"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "tolleranza": 500
+      },
+      {
+        "testo": "46.000",
+        "valore": 46000,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "SWINCYB"
+        },
+        "campo": "totale",
+        "anno": 2007,
+        "tolleranza": 500
+      },
+      {
+        "testo": "73.000",
+        "valore": 73000,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "SWINCYB"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "tolleranza": 500
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "trend_nazionale_assoluto",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "totale"
+      },
+      {
+        "analysis_type": "trend_nazionale_assoluto",
+        "data_type": "OFFEND",
+        "codice_reato": "SWINCYB",
+        "dimensione": "totale"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Piemonte"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Valle d'Aosta"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Liguria"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Lombardia"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Trentino-Alto Adige"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Veneto"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Friuli-Venezia Giulia"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Emilia-Romagna"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Toscana"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Umbria"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Marche"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Lazio"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Abruzzo"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Molise"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Campania"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Puglia"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Basilicata"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Calabria"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Sicilia"
+      },
+      {
+        "analysis_type": "trend_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k",
+        "territorio": "Sardegna"
+      }
+    ],
+    "numeri_liberi": [
+      "20 regioni: i 20 trend regionali sono fra i candidati verificati"
+    ]
+  },
+  {
+    "id": "omicidi",
+    "title": "Omicidi volontari in calo strutturale",
+    "category": "trend",
+    "dimensions": [],
+    "tests": [
+      "mann-kendall"
+    ],
+    "period": "2007-2024",
+    "body": "Gli autori denunciati per omicidio volontario sono scesi da 1.199 a 771 (-36%), le vittime da 631 a 328 (-48%), con un calo graduale lungo l’intero periodo. Il calo include gli omicidi di tipo mafioso, passati da 476 a 130 autori denunciati. Il trend è coerente con la tendenza europea di lungo periodo.",
+    "chart": {
+      "file": "autori_vittime_trend.json",
+      "series": [
+        {
+          "dataType": "VICTIM",
+          "code": "INTENHOM",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Vittime",
+          "color": "#d62728"
+        },
+        {
+          "dataType": "OFFEND",
+          "code": "INTENHOM",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Autori",
+          "color": "#2E86AB",
+          "dash": "dash"
+        }
+      ],
+      "yAxisLabel": "Persone"
+    },
+    "fatti": [
+      {
+        "testo": "1.199",
+        "valore": 1199,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "INTENHOM"
+        },
+        "campo": "totale",
+        "anno": 2007
+      },
+      {
+        "testo": "771",
+        "valore": 771,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "INTENHOM"
+        },
+        "campo": "totale",
+        "anno": 2024
+      },
+      {
+        "testo": "-36%",
+        "valore": -36,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "INTENHOM"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "da": 2007,
+        "calcolo": "variazione_pct"
+      },
+      {
+        "testo": "631",
+        "valore": 631,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "INTENHOM"
+        },
+        "campo": "totale",
+        "anno": 2007
+      },
+      {
+        "testo": "328",
+        "valore": 328,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "INTENHOM"
+        },
+        "campo": "totale",
+        "anno": 2024
+      },
+      {
+        "testo": "-48%",
+        "valore": -48,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "INTENHOM"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "da": 2007,
+        "calcolo": "variazione_pct"
+      },
+      {
+        "testo": "476",
+        "valore": 476,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "MAFIAHOM"
+        },
+        "campo": "totale",
+        "anno": 2007,
+        "grafico": false
+      },
+      {
+        "testo": "130",
+        "valore": 130,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "MAFIAHOM"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "grafico": false
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "trend_nazionale_assoluto",
+        "data_type": "VICTIM",
+        "codice_reato": "INTENHOM",
+        "dimensione": "totale"
+      },
+      {
+        "analysis_type": "trend_nazionale_assoluto",
+        "data_type": "OFFEND",
+        "codice_reato": "INTENHOM",
+        "dimensione": "totale"
+      }
+    ]
+  },
+  {
+    "id": "sequestri",
+    "title": "Sequestri di persona dimezzati",
+    "category": "trend",
+    "dimensions": [],
+    "tests": [
+      "mann-kendall"
+    ],
+    "period": "2007-2024",
+    "body": "Autori denunciati passati da 2.355 a 1.185, vittime da 2.095 a 737. Il calo è presente in circa 3 anni su 4, un reato che ha perso progressivamente attrattività criminale.",
+    "chart": {
+      "file": "autori_vittime_trend.json",
+      "series": [
+        {
+          "dataType": "VICTIM",
+          "code": "KIDNAPP",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Vittime",
+          "color": "#d62728"
+        },
+        {
+          "dataType": "OFFEND",
+          "code": "KIDNAPP",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Autori",
+          "color": "#2E86AB",
+          "dash": "dash"
+        }
+      ],
+      "yAxisLabel": "Persone"
+    },
+    "fatti": [
+      {
+        "testo": "2.355",
+        "valore": 2355,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "KIDNAPP"
+        },
+        "campo": "totale",
+        "anno": 2007
+      },
+      {
+        "testo": "1.185",
+        "valore": 1185,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "KIDNAPP"
+        },
+        "campo": "totale",
+        "anno": 2024
+      },
+      {
+        "testo": "2.095",
+        "valore": 2095,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "KIDNAPP"
+        },
+        "campo": "totale",
+        "anno": 2007
+      },
+      {
+        "testo": "737",
+        "valore": 737,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "KIDNAPP"
+        },
+        "campo": "totale",
+        "anno": 2024
+      },
+      {
+        "testo": "circa 3 anni su 4",
+        "valore": 0.75,
+        "tolleranza": 0.1,
+        "candidato": {
+          "analysis_type": "trend_nazionale_assoluto",
+          "data_type": "VICTIM",
+          "codice_reato": "KIDNAPP",
+          "dimensione": "totale"
+        },
+        "campo": "monotonicity"
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "trend_nazionale_assoluto",
+        "data_type": "VICTIM",
+        "codice_reato": "KIDNAPP",
+        "dimensione": "totale"
+      },
+      {
+        "analysis_type": "trend_nazionale_assoluto",
+        "data_type": "OFFEND",
+        "codice_reato": "KIDNAPP",
+        "dimensione": "totale"
+      }
+    ]
+  },
+  {
+    "id": "usura",
+    "title": "Usura: le denunce crollano, ma il sommerso resta",
+    "category": "trend",
+    "dimensions": [],
+    "tests": [
+      "mann-kendall"
+    ],
+    "period": "2007-2024",
+    "body": "Gli autori denunciati per usura sono passati da 1.392 a 495, le vittime da 298 a 106. Un calo graduale lungo l’intero periodo, che va letto con cautela.",
+    "caveat": "L’usura è per sua natura un reato con alta cifra oscura: il rapporto di dipendenza tra vittima e usuraio rende la denuncia rara. Il calo delle denunce non implica un calo del fenomeno.",
+    "chart": {
+      "file": "autori_vittime_trend.json",
+      "series": [
+        {
+          "dataType": "VICTIM",
+          "code": "USURY",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Vittime",
+          "color": "#d62728"
+        },
+        {
+          "dataType": "OFFEND",
+          "code": "USURY",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Autori",
+          "color": "#2E86AB",
+          "dash": "dash"
+        }
+      ],
+      "yAxisLabel": "Persone"
+    },
+    "fatti": [
+      {
+        "testo": "1.392",
+        "valore": 1392,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "USURY"
+        },
+        "campo": "totale",
+        "anno": 2007
+      },
+      {
+        "testo": "495",
+        "valore": 495,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "USURY"
+        },
+        "campo": "totale",
+        "anno": 2024
+      },
+      {
+        "testo": "298",
+        "valore": 298,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "USURY"
+        },
+        "campo": "totale",
+        "anno": 2007
+      },
+      {
+        "testo": "106",
+        "valore": 106,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "USURY"
+        },
+        "campo": "totale",
+        "anno": 2024
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "trend_nazionale_assoluto",
+        "data_type": "VICTIM",
+        "codice_reato": "USURY",
+        "dimensione": "totale"
+      },
+      {
+        "analysis_type": "trend_nazionale_assoluto",
+        "data_type": "OFFEND",
+        "codice_reato": "USURY",
+        "dimensione": "totale"
+      }
+    ]
+  },
+  {
+    "id": "estorsioni",
+    "title": "Estorsioni: più vittime, meno cittadini stranieri coinvolti",
+    "category": "trend",
+    "dimensions": [
+      "stranieri"
+    ],
+    "tests": [
+      "mann-kendall"
+    ],
+    "period": "2007-2024",
+    "body": "Le vittime di estorsione sono aumentate del 71%, da 6.704 a 11.433, con una crescita graduale nel tempo. Contemporaneamente, la percentuale di vittime di nazionalità straniera è scesa dal 16,4% all’8,8% con andamento altrettanto costante. L’estorsione colpisce in misura crescente cittadini italiani.",
+    "chart": {
+      "file": "autori_vittime_trend.json",
+      "series": [
+        {
+          "dataType": "VICTIM",
+          "code": "EXTORT",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Vittime",
+          "color": "#d62728"
+        },
+        {
+          "dataType": "VICTIM",
+          "code": "EXTORT",
+          "xField": "anno",
+          "yField": "pct_stranieri",
+          "label": "% stranieri",
+          "color": "#E63946",
+          "yaxis": "y2"
+        }
+      ],
+      "yAxisLabel": "Vittime",
+      "y2AxisLabel": "% stranieri"
+    },
+    "fatti": [
+      {
+        "testo": "71%",
+        "valore": 71,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "EXTORT"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "da": 2007,
+        "calcolo": "variazione_pct"
+      },
+      {
+        "testo": "6.704",
+        "valore": 6704,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "EXTORT"
+        },
+        "campo": "totale",
+        "anno": 2007
+      },
+      {
+        "testo": "11.433",
+        "valore": 11433,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "EXTORT"
+        },
+        "campo": "totale",
+        "anno": 2024
+      },
+      {
+        "testo": "16,4%",
+        "valore": 16.4,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "EXTORT"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2007
+      },
+      {
+        "testo": "8,8%",
+        "valore": 8.8,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "EXTORT"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "trend_nazionale_assoluto",
+        "data_type": "VICTIM",
+        "codice_reato": "EXTORT",
+        "dimensione": "totale"
+      },
+      {
+        "analysis_type": "trend_nazionale_pct",
+        "data_type": "VICTIM",
+        "codice_reato": "EXTORT",
+        "dimensione": "% stranieri"
+      }
+    ]
+  },
+  {
+    "id": "stranieri-quadro",
+    "title": "Autori stranieri: quota stabile, composizione che cambia",
+    "category": "demografica",
+    "dimensions": [
+      "stranieri"
+    ],
+    "tests": [],
+    "period": "2007-2024",
+    "body": "Fra gli autori denunciati, la quota di cittadini stranieri è passata dal 35,3% del 2007 al 33,0% del 2022, l’ultimo anno con il totale, restando fra il 29,2% e il 35,3%. Gli stranieri denunciati sono scesi da 303.339 a 270.567 (-10,8%), il totale degli autori da 859.790 a 818.832 (-4,8%). Cambia invece la composizione per reato. Dal 2007 al 2024 la quota di stranieri scende nei furti di autovetture (dal 35,8% al 24,4%), nei furti in abitazione (dal 53,2% al 47,7%) e nei delitti informatici (dal 37,2% al 20,0%). Sale nelle rapine (dal 35,5% al 52,4%), nelle lesioni dolose (dal 29,4% al 37,9%), nelle percosse (dal 21,5% al 31,2%) e nelle minacce (dal 18,5% al 25,2%). Su 32 tipi di reato con dati completi e almeno 1.000 autori nel 2024, la quota cresce di oltre 3 punti in 15, resta entro 3 punti in 9 e cala in 8.",
+    "caveat": "Sono persone denunciate, non condannate. Comprendono anche chi non risiede in Italia, come turisti, persone di passaggio e irregolari, quindi la quota non si confronta con quella degli stranieri residenti. Gli stranieri residenti sono in media più giovani degli italiani e con più uomini, e la propensione a essere denunciati varia molto per età e sesso.",
+    "chart": {
+      "file": "autori_vittime_trend.json",
+      "series": [
+        {
+          "dataType": "OFFEND",
+          "code": "TOT",
+          "xField": "anno",
+          "yField": "pct_stranieri",
+          "label": "% stranieri sul totale",
+          "color": "#E63946"
+        },
+        {
+          "dataType": "OFFEND",
+          "code": "TOT",
+          "xField": "anno",
+          "yField": "stranieri",
+          "label": "Stranieri denunciati",
+          "color": "#64748b",
+          "yaxis": "y2"
+        }
+      ],
+      "yAxisLabel": "% stranieri",
+      "y2AxisLabel": "Stranieri denunciati"
+    },
+    "contesto": true,
+    "fatti": [
+      {
+        "testo": "35,3%",
+        "valore": 35.3,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "TOT"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2007
+      },
+      {
+        "testo": "33,0%",
+        "valore": 33.0,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "TOT"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2022
+      },
+      {
+        "testo": "29,2%",
+        "valore": 29.2,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "TOT"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2016
+      },
+      {
+        "testo": "303.339",
+        "valore": 303339,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "TOT"
+        },
+        "campo": "stranieri",
+        "anno": 2007
+      },
+      {
+        "testo": "270.567",
+        "valore": 270567,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "TOT"
+        },
+        "campo": "stranieri",
+        "anno": 2022
+      },
+      {
+        "testo": "-10,8%",
+        "valore": -10.8,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "TOT"
+        },
+        "campo": "stranieri",
+        "anno": 2022,
+        "da": 2007,
+        "calcolo": "variazione_pct"
+      },
+      {
+        "testo": "859.790",
+        "valore": 859790,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "TOT"
+        },
+        "campo": "totale",
+        "anno": 2007,
+        "grafico": false
+      },
+      {
+        "testo": "818.832",
+        "valore": 818832,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "TOT"
+        },
+        "campo": "totale",
+        "anno": 2022,
+        "grafico": false
+      },
+      {
+        "testo": "-4,8%",
+        "valore": -4.8,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "TOT"
+        },
+        "campo": "totale",
+        "anno": 2022,
+        "da": 2007,
+        "calcolo": "variazione_pct",
+        "grafico": false
+      },
+      {
+        "testo": "35,8%",
+        "valore": 35.8,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "CARTHEF"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2007,
+        "grafico": false
+      },
+      {
+        "testo": "24,4%",
+        "valore": 24.4,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "CARTHEF"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024,
+        "grafico": false
+      },
+      {
+        "testo": "53,2%",
+        "valore": 53.2,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "BURGTHEF"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2007,
+        "grafico": false
+      },
+      {
+        "testo": "47,7%",
+        "valore": 47.7,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "BURGTHEF"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024,
+        "grafico": false
+      },
+      {
+        "testo": "37,2%",
+        "valore": 37.2,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "CYBERCRIM"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2007,
+        "grafico": false
+      },
+      {
+        "testo": "20,0%",
+        "valore": 20.0,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "CYBERCRIM"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024,
+        "grafico": false
+      },
+      {
+        "testo": "35,5%",
+        "valore": 35.5,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "ROBBER"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2007,
+        "grafico": false
+      },
+      {
+        "testo": "52,4%",
+        "valore": 52.4,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "ROBBER"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024,
+        "grafico": false
+      },
+      {
+        "testo": "29,4%",
+        "valore": 29.4,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "CULPINJU"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2007,
+        "grafico": false
+      },
+      {
+        "testo": "37,9%",
+        "valore": 37.9,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "CULPINJU"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024,
+        "grafico": false
+      },
+      {
+        "testo": "21,5%",
+        "valore": 21.5,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "BLOWS"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2007,
+        "grafico": false
+      },
+      {
+        "testo": "31,2%",
+        "valore": 31.2,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "BLOWS"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024,
+        "grafico": false
+      },
+      {
+        "testo": "18,5%",
+        "valore": 18.5,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "MENACE"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2007,
+        "grafico": false
+      },
+      {
+        "testo": "25,2%",
+        "valore": 25.2,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "MENACE"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024,
+        "grafico": false
+      }
+    ],
+    "numeri_liberi": [
+      "32 tipi di reato, 1.000 autori, 3 punti, 15, 9, 8: conteggio su autori_vittime_trend, non verificato dal test"
+    ]
+  },
+  {
+    "id": "rapine-stranieri",
+    "title": "Rapine: gli autori stranieri superano la metà dei denunciati",
+    "category": "demografica",
+    "dimensions": [
+      "stranieri"
+    ],
+    "tests": [
+      "mann-kendall"
+    ],
+    "period": "2007-2024",
+    "body": "La percentuale di autori stranieri denunciati per rapine è passata dal 35,5% al 52,4% (+16,9 punti percentuali), con un aumento graduale lungo l’intero periodo. Il trend è coerente su tutte le tipologie: rapine in strada (47% → 60%), in esercizi commerciali (36% → 50%). Anche tra le vittime di rapina, la quota di stranieri è salita dal 14% al 26%, con un aumento quasi costante anno dopo anno.",
+    "caveat": "Il dato riflette le denunce, non necessariamente la criminalità reale. Fattori come la maggiore visibilità e le pratiche di controllo differenziate possono influenzare la composizione degli autori denunciati.",
+    "chart": {
+      "file": "autori_vittime_trend.json",
+      "series": [
+        {
+          "dataType": "OFFEND",
+          "code": "ROBBER",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Autori denunciati",
+          "color": "#2E86AB"
+        },
+        {
+          "dataType": "OFFEND",
+          "code": "ROBBER",
+          "xField": "anno",
+          "yField": "pct_stranieri",
+          "label": "% stranieri",
+          "color": "#E63946",
+          "yaxis": "y2"
+        }
+      ],
+      "yAxisLabel": "Autori",
+      "y2AxisLabel": "% stranieri"
+    },
+    "fatti": [
+      {
+        "testo": "35,5%",
+        "valore": 35.5,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "ROBBER"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2007
+      },
+      {
+        "testo": "52,4%",
+        "valore": 52.4,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "ROBBER"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024
+      },
+      {
+        "testo": "+16,9",
+        "valore": 16.9,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "ROBBER"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024,
+        "da": 2007,
+        "calcolo": "variazione"
+      },
+      {
+        "testo": "47%",
+        "valore": 47,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "STREETROB"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2007,
+        "grafico": false
+      },
+      {
+        "testo": "60%",
+        "valore": 60,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "STREETROB"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024,
+        "grafico": false
+      },
+      {
+        "testo": "36%",
+        "valore": 36,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "SHOPROB"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2007,
+        "grafico": false
+      },
+      {
+        "testo": "50%",
+        "valore": 50,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "SHOPROB"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024,
+        "grafico": false
+      },
+      {
+        "testo": "14%",
+        "valore": 14,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "ROBBER"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2007,
+        "grafico": false
+      },
+      {
+        "testo": "26%",
+        "valore": 26,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "ROBBER"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024,
+        "grafico": false
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "trend_nazionale_pct",
+        "data_type": "OFFEND",
+        "codice_reato": "ROBBER",
+        "dimensione": "% stranieri"
+      }
+    ]
+  },
+  {
+    "id": "furti-strappo",
+    "title": "Furti con strappo: ribaltamento di genere tra le vittime",
+    "category": "demografica",
+    "dimensions": [
+      "genere",
+      "stranieri"
+    ],
+    "tests": [
+      "mann-kendall"
+    ],
+    "period": "2008-2024",
+    "body": "La percentuale di vittime donne di furti con strappo è scesa dall’81% al 54%, quella degli uomini è salita dal 19% al 46%. È la tendenza più regolare dell’intero dataset: in oltre 9 anni su 10 il valore si muove nella stessa direzione. Contemporaneamente, la quota di autori stranieri è salita dal 34% al 61%.",
+    "chart": {
+      "file": "autori_vittime_trend.json",
+      "series": [
+        {
+          "dataType": "VICTIM",
+          "code": "BAGTHEF",
+          "xField": "anno",
+          "yField": "pct_femmine",
+          "label": "% donne",
+          "color": "#db2777"
+        },
+        {
+          "dataType": "VICTIM",
+          "code": "BAGTHEF",
+          "xField": "anno",
+          "yField": "pct_maschi",
+          "label": "% uomini",
+          "color": "#2563eb"
+        },
+        {
+          "dataType": "VICTIM",
+          "code": "BAGTHEF",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Vittime totali",
+          "color": "#64748b",
+          "yaxis": "y2"
+        }
+      ],
+      "yAxisLabel": "%",
+      "y2AxisLabel": "Vittime"
+    },
+    "fatti": [
+      {
+        "testo": "81%",
+        "valore": 81,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "BAGTHEF"
+        },
+        "campo": "pct_femmine",
+        "anno": 2008
+      },
+      {
+        "testo": "54%",
+        "valore": 54,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "BAGTHEF"
+        },
+        "campo": "pct_femmine",
+        "anno": 2024
+      },
+      {
+        "testo": "19%",
+        "valore": 19,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "BAGTHEF"
+        },
+        "campo": "pct_maschi",
+        "anno": 2008
+      },
+      {
+        "testo": "46%",
+        "valore": 46,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "BAGTHEF"
+        },
+        "campo": "pct_maschi",
+        "anno": 2024
+      },
+      {
+        "testo": "oltre 9 anni su 10",
+        "valore": 0.9,
+        "tolleranza": 0.1,
+        "candidato": {
+          "analysis_type": "trend_nazionale_pct",
+          "data_type": "VICTIM",
+          "codice_reato": "BAGTHEF",
+          "dimensione": "% femmine"
+        },
+        "campo": "monotonicity"
+      },
+      {
+        "testo": "34%",
+        "valore": 34,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "BAGTHEF"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2007,
+        "grafico": false
+      },
+      {
+        "testo": "61%",
+        "valore": 61,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "BAGTHEF"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024,
+        "grafico": false
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "trend_nazionale_pct",
+        "data_type": "VICTIM",
+        "codice_reato": "BAGTHEF",
+        "dimensione": "% femmine"
+      }
+    ]
+  },
+  {
+    "id": "cybercrimine-genere",
+    "title": "Cybercrimine: convergenza di genere",
+    "category": "demografica",
+    "dimensions": [
+      "genere"
+    ],
+    "tests": [
+      "mann-kendall"
+    ],
+    "period": "2008-2024",
+    "body": "Tra le vittime di delitti informatici, le donne sono passate dal 34% al 49,6%, sfiorando la parità con gli uomini. Per truffe e frodi informatiche le vittime donne sono cresciute dal 34,5% al 43,4%, con un aumento quasi costante nel tempo. Il cybercrimine diventa progressivamente trasversale al genere.",
+    "chart": {
+      "file": "autori_vittime_trend.json",
+      "series": [
+        {
+          "dataType": "VICTIM",
+          "code": "CYBERCRIM",
+          "xField": "anno",
+          "yField": "pct_femmine",
+          "label": "% donne (delitti inform.)",
+          "color": "#db2777"
+        },
+        {
+          "dataType": "VICTIM",
+          "code": "SWINCYB",
+          "xField": "anno",
+          "yField": "pct_femmine",
+          "label": "% donne (truffe)",
+          "color": "#db2777",
+          "dash": "dash"
+        },
+        {
+          "dataType": "VICTIM",
+          "code": "CYBERCRIM",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Vittime delitti inform.",
+          "color": "#2E86AB",
+          "yaxis": "y2"
+        }
+      ],
+      "yAxisLabel": "% donne",
+      "y2AxisLabel": "Vittime"
+    },
+    "fatti": [
+      {
+        "testo": "34%",
+        "valore": 34,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "CYBERCRIM"
+        },
+        "campo": "pct_femmine",
+        "anno": 2008
+      },
+      {
+        "testo": "49,6%",
+        "valore": 49.6,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "CYBERCRIM"
+        },
+        "campo": "pct_femmine",
+        "anno": 2024
+      },
+      {
+        "testo": "34,5%",
+        "valore": 34.5,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "SWINCYB"
+        },
+        "campo": "pct_femmine",
+        "anno": 2008
+      },
+      {
+        "testo": "43,4%",
+        "valore": 43.4,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "SWINCYB"
+        },
+        "campo": "pct_femmine",
+        "anno": 2024
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "trend_nazionale_pct",
+        "data_type": "VICTIM",
+        "codice_reato": "CYBERCRIM",
+        "dimensione": "% femmine"
+      },
+      {
+        "analysis_type": "trend_nazionale_pct",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "% femmine"
+      }
+    ]
+  },
+  {
+    "id": "omicidi-donne",
+    "title": "Omicidi: la quota di vittime donne cresce",
+    "category": "demografica",
+    "dimensions": [
+      "genere"
+    ],
+    "tests": [
+      "mann-kendall"
+    ],
+    "period": "2008-2024",
+    "body": "Le vittime donne di omicidio volontario sono passate dal 24% al 34,5% del totale, con un aumento graduale nel tempo. Gli omicidi di donne calano, da 147 nel 2008 a 113 nel 2024, ma quelli di uomini calano molto di più, da 462 a 215; fra questi, gli omicidi di tipo mafioso passano da 103 a 17.",
+    "chart": {
+      "file": "autori_vittime_trend.json",
+      "series": [
+        {
+          "dataType": "VICTIM",
+          "code": "INTENHOM",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Vittime totali",
+          "color": "#2E86AB"
+        },
+        {
+          "dataType": "VICTIM",
+          "code": "INTENHOM",
+          "xField": "anno",
+          "yField": "pct_femmine",
+          "label": "% donne",
+          "color": "#db2777",
+          "yaxis": "y2"
+        }
+      ],
+      "yAxisLabel": "Vittime",
+      "y2AxisLabel": "% donne"
+    },
+    "fatti": [
+      {
+        "testo": "24%",
+        "valore": 24,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "INTENHOM"
+        },
+        "campo": "pct_femmine",
+        "anno": 2008
+      },
+      {
+        "testo": "34,5%",
+        "valore": 34.5,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "INTENHOM"
+        },
+        "campo": "pct_femmine",
+        "anno": 2024
+      },
+      {
+        "testo": "147",
+        "valore": 147,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "INTENHOM"
+        },
+        "campo": "femmine",
+        "anno": 2008,
+        "grafico": false
+      },
+      {
+        "testo": "113",
+        "valore": 113,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "INTENHOM"
+        },
+        "campo": "femmine",
+        "anno": 2024,
+        "grafico": false
+      },
+      {
+        "testo": "462",
+        "valore": 462,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "INTENHOM"
+        },
+        "campo": "maschi",
+        "anno": 2008,
+        "grafico": false
+      },
+      {
+        "testo": "215",
+        "valore": 215,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "INTENHOM"
+        },
+        "campo": "maschi",
+        "anno": 2024,
+        "grafico": false
+      },
+      {
+        "testo": "103",
+        "valore": 103,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "MAFIAHOM"
+        },
+        "campo": "maschi",
+        "anno": 2008,
+        "grafico": false
+      },
+      {
+        "testo": "17",
+        "valore": 17,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "MAFIAHOM"
+        },
+        "campo": "maschi",
+        "anno": 2024,
+        "grafico": false
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "trend_nazionale_pct",
+        "data_type": "VICTIM",
+        "codice_reato": "INTENHOM",
+        "dimensione": "% femmine"
+      }
+    ]
+  },
+  {
+    "id": "violenze-sessuali-straniere",
+    "title": "Violenze sessuali: vittime in risalita dal 2015, quota di vittime straniere in calo",
+    "category": "demografica",
+    "dimensions": [
+      "stranieri"
+    ],
+    "tests": [
+      "mann-kendall"
+    ],
+    "period": "2007-2024",
+    "body": "Le vittime di violenze sessuali denunciate scendono fino a 3.567 nel 2015 e poi risalgono a 5.642 nel 2024, sopra il livello del 2007 (4.686). Nello stesso periodo la percentuale di vittime di nazionalità straniera scende dal 31% al 22,5% (-8,5 punti percentuali).",
+    "genderNote": "Il 90% delle vittime di violenze sessuali sono donne (2024).",
+    "caveat": "L’aumento delle denunce riflette principalmente campagne di sensibilizzazione (es. #MeToo) e maggiore fiducia nelle istituzioni. È un segnale positivo di emersione del sommerso, non necessariamente di aumento del fenomeno.",
+    "chart": {
+      "file": "autori_vittime_trend.json",
+      "series": [
+        {
+          "dataType": "VICTIM",
+          "code": "RAPE",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Vittime totali",
+          "color": "#2E86AB"
+        },
+        {
+          "dataType": "VICTIM",
+          "code": "RAPE",
+          "xField": "anno",
+          "yField": "pct_stranieri",
+          "label": "% naz. straniera",
+          "color": "#E63946",
+          "yaxis": "y2"
+        }
+      ],
+      "yAxisLabel": "Vittime",
+      "y2AxisLabel": "% naz. straniera"
+    },
+    "fatti": [
+      {
+        "testo": "3.567",
+        "valore": 3567,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "RAPE"
+        },
+        "campo": "totale",
+        "anno": 2015
+      },
+      {
+        "testo": "5.642",
+        "valore": 5642,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "RAPE"
+        },
+        "campo": "totale",
+        "anno": 2024
+      },
+      {
+        "testo": "4.686",
+        "valore": 4686,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "RAPE"
+        },
+        "campo": "totale",
+        "anno": 2007
+      },
+      {
+        "testo": "31%",
+        "valore": 31,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "RAPE"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2007
+      },
+      {
+        "testo": "22,5%",
+        "valore": 22.5,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "RAPE"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024
+      },
+      {
+        "testo": "-8,5",
+        "valore": -8.5,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "RAPE"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024,
+        "da": 2007,
+        "calcolo": "variazione"
+      },
+      {
+        "testo": "90%",
+        "valore": 90,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "RAPE"
+        },
+        "campo": "pct_femmine",
+        "anno": 2024,
+        "grafico": false
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "trend_nazionale_pct",
+        "data_type": "VICTIM",
+        "codice_reato": "RAPE",
+        "dimensione": "% stranieri"
+      }
+    ]
+  },
+  {
+    "id": "percezione",
+    "title": "Percezione e realtà: trend simili, nesso incerto",
+    "category": "anomalie",
+    "dimensions": [],
+    "tests": [
+      "spearman"
+    ],
+    "period": "2014-2024",
+    "body": "Dal 2015 al 2020 entrambe le serie calano; dal 2021 entrambe risalgono. La correlazione sui livelli è positiva e significativa (Spearman), ma con soli 11 punti e un possibile cambio metodologico nel 2015 va interpretata con cautela. La somiglianza dei trend potrebbe riflettere fattori comuni (COVID, ciclo mediatico) più che un nesso diretto tra criminalità reale e percezione.",
+    "caveat": "La percezione di insicurezza è influenzata dalla copertura mediatica, dal clima politico e da fattori locali che i dati aggregati non catturano. Il salto 2014-2015 potrebbe riflettere un cambio metodologico ISTAT.",
+    "chart": {
+      "file": "percezione_vs_dati.json",
+      "series": [
+        {
+          "xField": "Anno",
+          "yField": "Tasso_per_1000",
+          "label": "Tasso delitti per 1.000",
+          "color": "#2E86AB"
+        },
+        {
+          "xField": "Anno",
+          "yField": "Percezione_pct",
+          "label": "Percezione insicurezza %",
+          "color": "#E63946",
+          "yaxis": "y2"
+        }
+      ],
+      "yAxisLabel": "Tasso per 1.000",
+      "y2AxisLabel": "Percezione %"
+    },
+    "candidati": [
+      {
+        "analysis_type": "percezione_vs_dati",
+        "data_type": "PERCEZIONE",
+        "codice_reato": "PERCEZIONE",
+        "dimensione": "correlazione"
+      }
+    ],
+    "numeri_liberi": [
+      "11 punti: gli anni 2014-2024"
+    ]
+  },
+  {
+    "id": "violenze-divergenza",
+    "title": "Violenze sessuali: divergenza regionale crescente",
+    "category": "anomalie",
+    "dimensions": [
+      "territoriale"
+    ],
+    "tests": [
+      "divergenza"
+    ],
+    "period": "2007-2024",
+    "body": "La dispersione dei tassi di violenze sessuali tra regioni aumenta significativamente nel tempo, sia per gli autori sia per le vittime. Il fenomeno non è uniforme sul territorio: alcune regioni mostrano aumenti marcati, altre stagnazione. Questo può riflettere differenze nella propensione alla denuncia più che nella diffusione del reato.",
+    "genderNote": "Il 90% delle vittime di violenze sessuali sono donne (2024).",
+    "chart": {
+      "file": "autori_vittime_regioni.json",
+      "series": [
+        {
+          "dataType": "VICTIM",
+          "code": "RAPE",
+          "xField": "anno",
+          "yField": "tasso",
+          "label": "Tasso vittime",
+          "color": "#8B008B"
+        }
+      ],
+      "aggregation": "divergenza-regionale",
+      "yAxisLabel": "Tasso per 100k"
+    },
+    "chartInfo": "L’area colorata rappresenta la dispersione (media ± 1 deviazione standard) del tasso di violenze sessuali tra le 20 regioni italiane. Un’area che si allarga nel tempo indica che le regioni stanno divergendo tra loro.",
+    "fatti": [
+      {
+        "testo": "90%",
+        "valore": 90,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "RAPE"
+        },
+        "campo": "pct_femmine",
+        "anno": 2024,
+        "grafico": false
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "divergenza_regionale",
+        "data_type": "VICTIM",
+        "codice_reato": "RAPE",
+        "dimensione": "dispersione tasso per 100k"
+      },
+      {
+        "analysis_type": "divergenza_regionale",
+        "data_type": "OFFEND",
+        "codice_reato": "RAPE",
+        "dimensione": "dispersione tasso per 100k"
+      }
+    ],
+    "numeri_liberi": [
+      "20 regioni",
+      "1 deviazione standard"
+    ]
+  },
+  {
+    "id": "reati-fisici-digitali",
+    "title": "Reati fisici e digitali: due velocità investigative",
+    "category": "anomalie",
+    "dimensions": [],
+    "tests": [
+      "rapporto-av"
+    ],
+    "period": "2007-2024",
+    "body": "Per i reati fisici, il rapporto tra autori identificati e vittime migliora costantemente: nelle rapine passa da 0,45 a 1,05 (oggi si identifica più di un autore per ogni vittima), nelle rapine in esercizi commerciali da 0,64 a 1,87. Per i reati digitali accade l’opposto: nei delitti informatici il rapporto crolla da 0,29 a 0,08 (un autore ogni 12 vittime), nelle truffe da 0,43 a 0,31. Le vittime digitali crescono molto più velocemente della capacità di identificare gli autori.",
+    "chart": {
+      "file": "autori_vittime_trend.json",
+      "series": [
+        {
+          "dataType": "OFFEND",
+          "ratioDataType": "VICTIM",
+          "code": "ROBBER",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Rapine",
+          "color": "#8B4513"
+        },
+        {
+          "dataType": "OFFEND",
+          "ratioDataType": "VICTIM",
+          "code": "SHOPROB",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Rapine in esercizi",
+          "color": "#bcbd22"
+        },
+        {
+          "dataType": "OFFEND",
+          "ratioDataType": "VICTIM",
+          "code": "CYBERCRIM",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Delitti informatici",
+          "color": "#2E86AB"
+        },
+        {
+          "dataType": "OFFEND",
+          "ratioDataType": "VICTIM",
+          "code": "SWINCYB",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Truffe e frodi inf.",
+          "color": "#ff7f0e"
+        }
+      ],
+      "yAxisLabel": "Rapporto autori/vittime"
+    },
+    "chartInfo": "Il rapporto autori/vittime indica quanti autori vengono identificati per ogni vittima che denuncia. Un valore sopra 1 significa che si identificano più autori che vittime; sotto 1 significa che molte vittime restano senza un autore identificato.",
+    "fatti": [
+      {
+        "testo": "0,45",
+        "valore": 0.45,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "ROBBER"
+        },
+        "campo": "totale",
+        "anno": 2007,
+        "diviso": {
+          "data_type": "VICTIM",
+          "codice_reato": "ROBBER"
+        }
+      },
+      {
+        "testo": "1,05",
+        "valore": 1.05,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "ROBBER"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "diviso": {
+          "data_type": "VICTIM",
+          "codice_reato": "ROBBER"
+        }
+      },
+      {
+        "testo": "0,64",
+        "valore": 0.64,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "SHOPROB"
+        },
+        "campo": "totale",
+        "anno": 2007,
+        "diviso": {
+          "data_type": "VICTIM",
+          "codice_reato": "SHOPROB"
+        }
+      },
+      {
+        "testo": "1,87",
+        "valore": 1.87,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "SHOPROB"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "diviso": {
+          "data_type": "VICTIM",
+          "codice_reato": "SHOPROB"
+        }
+      },
+      {
+        "testo": "0,29",
+        "valore": 0.29,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "CYBERCRIM"
+        },
+        "campo": "totale",
+        "anno": 2007,
+        "diviso": {
+          "data_type": "VICTIM",
+          "codice_reato": "CYBERCRIM"
+        }
+      },
+      {
+        "testo": "0,08",
+        "valore": 0.08,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "CYBERCRIM"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "diviso": {
+          "data_type": "VICTIM",
+          "codice_reato": "CYBERCRIM"
+        }
+      },
+      {
+        "testo": "0,43",
+        "valore": 0.43,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "SWINCYB"
+        },
+        "campo": "totale",
+        "anno": 2007,
+        "diviso": {
+          "data_type": "VICTIM",
+          "codice_reato": "SWINCYB"
+        }
+      },
+      {
+        "testo": "0,31",
+        "valore": 0.31,
+        "file": "autori_vittime_trend.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "SWINCYB"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "diviso": {
+          "data_type": "VICTIM",
+          "codice_reato": "SWINCYB"
+        }
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "rapporto_autori_vittime",
+        "data_type": "RAPPORTO",
+        "codice_reato": "ROBBER",
+        "dimensione": "autori/vittime"
+      },
+      {
+        "analysis_type": "rapporto_autori_vittime",
+        "data_type": "RAPPORTO",
+        "codice_reato": "SHOPROB",
+        "dimensione": "autori/vittime"
+      },
+      {
+        "analysis_type": "rapporto_autori_vittime",
+        "data_type": "RAPPORTO",
+        "codice_reato": "CYBERCRIM",
+        "dimensione": "autori/vittime"
+      },
+      {
+        "analysis_type": "rapporto_autori_vittime",
+        "data_type": "RAPPORTO",
+        "codice_reato": "SWINCYB",
+        "dimensione": "autori/vittime"
+      }
+    ],
+    "numeri_liberi": [
+      "un autore ogni 12 vittime: inverso di 0,08",
+      "sopra 1",
+      "sotto 1"
+    ]
+  },
+  {
+    "id": "informatici-patrimoniali",
+    "title": "Reati informatici e patrimoniali: la distanza tra le vittime si riduce",
+    "category": "categorie",
+    "dimensions": [],
+    "tests": [
+      "confronto-categorie"
+    ],
+    "period": "2007-2024",
+    "body": "Le vittime di reati patrimoniali restano molte di più, ma la distanza con quelle di reati informatici si riduce di 958.566 tra il 2007 e il 2024. I reati patrimoniali passano da 1.905.658 a 1.090.680 vittime (-42,8%), quelli informatici da 112.020 a 255.608, più che raddoppiati.",
+    "chart": {
+      "file": "insights_categorie.json",
+      "series": [
+        {
+          "dataType": "VICTIM",
+          "category": "informatici",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Reati informatici",
+          "color": "#ff7f0e"
+        },
+        {
+          "dataType": "VICTIM",
+          "category": "patrimoniali",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Reati patrimoniali",
+          "color": "#1f77b4"
+        }
+      ],
+      "yAxisLabel": "Vittime"
+    },
+    "chartInfo": "Reati informatici: delitti informatici, truffe e frodi informatiche. Reati patrimoniali: furti, rapine, estorsioni, usura, danneggiamenti, danneggiamenti seguiti da incendio, incendi; la ricettazione non ha vittime nei dati ISTAT. Ogni reato è contato una sola volta: i tipi di furto e di rapina sono già compresi nei totali di furti e rapine.",
+    "fatti": [
+      {
+        "testo": "958.566",
+        "valore": -958566,
+        "file": "insights_categorie.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "categoria": "patrimoniali"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "da": 2007,
+        "calcolo": "variazione",
+        "meno": {
+          "data_type": "VICTIM",
+          "categoria": "informatici"
+        }
+      },
+      {
+        "testo": "1.905.658",
+        "valore": 1905658,
+        "file": "insights_categorie.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "categoria": "patrimoniali"
+        },
+        "campo": "totale",
+        "anno": 2007
+      },
+      {
+        "testo": "1.090.680",
+        "valore": 1090680,
+        "file": "insights_categorie.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "categoria": "patrimoniali"
+        },
+        "campo": "totale",
+        "anno": 2024
+      },
+      {
+        "testo": "42,8%",
+        "valore": -42.8,
+        "file": "insights_categorie.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "categoria": "patrimoniali"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "da": 2007,
+        "calcolo": "variazione_pct"
+      },
+      {
+        "testo": "112.020",
+        "valore": 112020,
+        "file": "insights_categorie.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "categoria": "informatici"
+        },
+        "campo": "totale",
+        "anno": 2007
+      },
+      {
+        "testo": "255.608",
+        "valore": 255608,
+        "file": "insights_categorie.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "categoria": "informatici"
+        },
+        "campo": "totale",
+        "anno": 2024
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "confronto_trend_categorie",
+        "data_type": "VICTIM",
+        "codice_reato": "patrimoniali_vs_informatici",
+        "dimensione": "totale"
+      }
+    ]
+  },
+  {
+    "id": "violenti-patrimoniali",
+    "title": "Reati violenti e patrimoniali: calano entrambi, i patrimoniali molto di più",
+    "category": "categorie",
+    "dimensions": [],
+    "tests": [
+      "confronto-categorie"
+    ],
+    "period": "2007-2024",
+    "body": "Tra il 2007 e il 2024 le vittime di reati violenti calano del 12,9% (da 168.734 a 146.952), quelle di reati patrimoniali del 42,8% (da 1.905.658 a 1.090.680). La distanza fra le due categorie si riduce di 793.196 vittime.",
+    "chart": {
+      "file": "insights_categorie.json",
+      "series": [
+        {
+          "dataType": "VICTIM",
+          "category": "violenti",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Reati violenti",
+          "color": "#d62728"
+        },
+        {
+          "dataType": "VICTIM",
+          "category": "patrimoniali",
+          "xField": "anno",
+          "yField": "totale",
+          "label": "Reati patrimoniali",
+          "color": "#1f77b4"
+        }
+      ],
+      "yAxisLabel": "Vittime"
+    },
+    "chartInfo": "Reati violenti: omicidi volontari, tentati e preterintenzionali, lesioni dolose, percosse, minacce, sequestri di persona, violenze sessuali, atti sessuali con minorenne, corruzione di minorenne, pornografia minorile. Reati patrimoniali: furti, rapine, estorsioni, usura, danneggiamenti, danneggiamenti seguiti da incendio, incendi. Maltrattamenti in famiglia, atti persecutori e diffusione illecita di immagini sessuali sono esclusi: ISTAT li rileva solo dal 2009 o dal 2022, e includerli farebbe crescere la serie solo per il loro ingresso. La ricettazione non ha vittime nei dati ISTAT. Ogni reato è contato una sola volta: i tipi di furto e di rapina sono già compresi nei totali di furti e rapine.",
+    "fatti": [
+      {
+        "testo": "12,9%",
+        "valore": -12.9,
+        "file": "insights_categorie.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "categoria": "violenti"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "da": 2007,
+        "calcolo": "variazione_pct"
+      },
+      {
+        "testo": "168.734",
+        "valore": 168734,
+        "file": "insights_categorie.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "categoria": "violenti"
+        },
+        "campo": "totale",
+        "anno": 2007
+      },
+      {
+        "testo": "146.952",
+        "valore": 146952,
+        "file": "insights_categorie.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "categoria": "violenti"
+        },
+        "campo": "totale",
+        "anno": 2024
+      },
+      {
+        "testo": "1.905.658",
+        "valore": 1905658,
+        "file": "insights_categorie.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "categoria": "patrimoniali"
+        },
+        "campo": "totale",
+        "anno": 2007
+      },
+      {
+        "testo": "1.090.680",
+        "valore": 1090680,
+        "file": "insights_categorie.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "categoria": "patrimoniali"
+        },
+        "campo": "totale",
+        "anno": 2024
+      },
+      {
+        "testo": "42,8%",
+        "valore": -42.8,
+        "file": "insights_categorie.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "categoria": "patrimoniali"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "da": 2007,
+        "calcolo": "variazione_pct"
+      },
+      {
+        "testo": "793.196",
+        "valore": 793196,
+        "file": "insights_categorie.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "categoria": "violenti"
+        },
+        "campo": "totale",
+        "anno": 2024,
+        "da": 2007,
+        "calcolo": "variazione",
+        "meno": {
+          "data_type": "VICTIM",
+          "categoria": "patrimoniali"
+        }
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "confronto_trend_categorie",
+        "data_type": "VICTIM",
+        "codice_reato": "violenti_vs_patrimoniali",
+        "dimensione": "totale"
+      }
+    ]
+  },
+  {
+    "id": "rapine-nord-sud",
+    "title": "Rapine: in calo ovunque, il Sud passa dal tasso più alto al più basso",
+    "category": "territoriali",
+    "dimensions": [
+      "territoriale"
+    ],
+    "tests": [
+      "confronto-territoriale"
+    ],
+    "period": "2007-2024",
+    "body": "Il tasso di vittime di rapina cala in tutte le ripartizioni, ma molto più al Sud. Dal 2007 al 2024 passa da 105,2 a 28,0 per 100k al Sud e nelle Isole, da 55,8 a 41,6 al Nord e da 58,3 a 41,9 al Centro. La differenza fra Nord e Sud cresce di 63 per 100k, quella fra Centro e Sud di 61, con un aumento in circa 3 anni su 4.",
+    "chart": {
+      "file": "insights_ripartizioni.json",
+      "series": [
+        {
+          "dataType": "VICTIM",
+          "code": "ROBBER",
+          "xField": "anno",
+          "yField": "tasso",
+          "label": "Nord",
+          "color": "#2E86AB"
+        }
+      ],
+      "yAxisLabel": "Tasso per 100k",
+      "aggregation": "ripartizione"
+    },
+    "fatti": [
+      {
+        "testo": "105,2",
+        "valore": 105.2,
+        "file": "insights_ripartizioni.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "ROBBER",
+          "ripartizione": "Sud e Isole"
+        },
+        "campo": "tasso",
+        "anno": 2007
+      },
+      {
+        "testo": "28,0",
+        "valore": 28.0,
+        "file": "insights_ripartizioni.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "ROBBER",
+          "ripartizione": "Sud e Isole"
+        },
+        "campo": "tasso",
+        "anno": 2024
+      },
+      {
+        "testo": "55,8",
+        "valore": 55.8,
+        "file": "insights_ripartizioni.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "ROBBER",
+          "ripartizione": "Nord"
+        },
+        "campo": "tasso",
+        "anno": 2007
+      },
+      {
+        "testo": "41,6",
+        "valore": 41.6,
+        "file": "insights_ripartizioni.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "ROBBER",
+          "ripartizione": "Nord"
+        },
+        "campo": "tasso",
+        "anno": 2024
+      },
+      {
+        "testo": "58,3",
+        "valore": 58.3,
+        "file": "insights_ripartizioni.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "ROBBER",
+          "ripartizione": "Centro"
+        },
+        "campo": "tasso",
+        "anno": 2007
+      },
+      {
+        "testo": "41,9",
+        "valore": 41.9,
+        "file": "insights_ripartizioni.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "ROBBER",
+          "ripartizione": "Centro"
+        },
+        "campo": "tasso",
+        "anno": 2024
+      },
+      {
+        "testo": "63",
+        "valore": 63,
+        "file": "insights_ripartizioni.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "ROBBER",
+          "ripartizione": "Nord"
+        },
+        "campo": "tasso",
+        "anno": 2024,
+        "da": 2007,
+        "calcolo": "variazione",
+        "meno": {
+          "data_type": "VICTIM",
+          "codice_reato": "ROBBER",
+          "ripartizione": "Sud e Isole"
+        }
+      },
+      {
+        "testo": "61",
+        "valore": 61,
+        "file": "insights_ripartizioni.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "ROBBER",
+          "ripartizione": "Centro"
+        },
+        "campo": "tasso",
+        "anno": 2024,
+        "da": 2007,
+        "calcolo": "variazione",
+        "meno": {
+          "data_type": "VICTIM",
+          "codice_reato": "ROBBER",
+          "ripartizione": "Sud e Isole"
+        }
+      },
+      {
+        "testo": "circa 3 anni su 4",
+        "valore": 0.75,
+        "tolleranza": 0.1,
+        "candidato": {
+          "analysis_type": "confronto_territoriale",
+          "data_type": "VICTIM",
+          "codice_reato": "ROBBER",
+          "dimensione": "tasso per 100k (Nord - Sud e Isole)"
+        },
+        "campo": "monotonicity"
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "confronto_territoriale",
+        "data_type": "VICTIM",
+        "codice_reato": "ROBBER",
+        "dimensione": "tasso per 100k (Nord - Sud e Isole)"
+      },
+      {
+        "analysis_type": "confronto_territoriale",
+        "data_type": "VICTIM",
+        "codice_reato": "ROBBER",
+        "dimensione": "tasso per 100k (Centro - Sud e Isole)"
+      }
+    ],
+    "numeri_liberi": [
+      "per 100k"
+    ]
+  },
+  {
+    "id": "truffe-nord",
+    "title": "Truffe e frodi informatiche: il Nord corre di più",
+    "category": "territoriali",
+    "dimensions": [
+      "territoriale"
+    ],
+    "tests": [
+      "confronto-territoriale"
+    ],
+    "period": "2007-2024",
+    "body": "Il tasso di truffe e frodi informatiche (vittime) al Nord cresce più che al Sud (+118 per 100k nella differenza). Anche per gli autori, il divario Nord-Sud aumenta (+84 per 100k), con la differenza che cresce in 2 anni su 3.",
+    "chart": {
+      "file": "insights_ripartizioni.json",
+      "series": [
+        {
+          "dataType": "VICTIM",
+          "code": "SWINCYB",
+          "xField": "anno",
+          "yField": "tasso",
+          "label": "Nord",
+          "color": "#2E86AB"
+        }
+      ],
+      "yAxisLabel": "Tasso per 100k",
+      "aggregation": "ripartizione"
+    },
+    "fatti": [
+      {
+        "testo": "+118",
+        "valore": 118,
+        "file": "insights_ripartizioni.json",
+        "filtro": {
+          "data_type": "VICTIM",
+          "codice_reato": "SWINCYB",
+          "ripartizione": "Nord"
+        },
+        "campo": "tasso",
+        "anno": 2024,
+        "da": 2007,
+        "calcolo": "variazione",
+        "meno": {
+          "data_type": "VICTIM",
+          "codice_reato": "SWINCYB",
+          "ripartizione": "Sud e Isole"
+        }
+      },
+      {
+        "testo": "+84",
+        "valore": 84,
+        "file": "insights_ripartizioni.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "SWINCYB",
+          "ripartizione": "Nord"
+        },
+        "campo": "tasso",
+        "anno": 2024,
+        "da": 2007,
+        "calcolo": "variazione",
+        "meno": {
+          "data_type": "OFFEND",
+          "codice_reato": "SWINCYB",
+          "ripartizione": "Sud e Isole"
+        },
+        "grafico": false
+      },
+      {
+        "testo": "2 anni su 3",
+        "valore": 0.67,
+        "tolleranza": 0.1,
+        "candidato": {
+          "analysis_type": "confronto_territoriale",
+          "data_type": "OFFEND",
+          "codice_reato": "SWINCYB",
+          "dimensione": "tasso per 100k (Nord - Sud e Isole)"
+        },
+        "campo": "monotonicity"
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "confronto_territoriale",
+        "data_type": "VICTIM",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k (Nord - Sud e Isole)"
+      },
+      {
+        "analysis_type": "confronto_territoriale",
+        "data_type": "OFFEND",
+        "codice_reato": "SWINCYB",
+        "dimensione": "tasso per 100k (Nord - Sud e Isole)"
+      }
+    ],
+    "numeri_liberi": [
+      "per 100k"
+    ]
+  },
+  {
+    "id": "stupefacenti-stranieri",
+    "title": "Autori stranieri per stupefacenti: divario Nord-Sud crescente",
+    "category": "territoriali",
+    "dimensions": [
+      "stranieri",
+      "territoriale"
+    ],
+    "tests": [
+      "confronto-territoriale"
+    ],
+    "period": "2007-2024",
+    "body": "La differenza nella percentuale di autori stranieri per stupefacenti tra Nord e Sud cresce di circa 10 punti percentuali, con un aumento presente in 2 anni su 3. Al Nord la quota di autori stranieri per droga aumenta molto più che al Sud, coerentemente con la diversa composizione demografica dei territori.",
+    "chart": {
+      "file": "insights_ripartizioni.json",
+      "series": [
+        {
+          "dataType": "OFFEND",
+          "code": "DRUG",
+          "xField": "anno",
+          "yField": "pct_stranieri",
+          "label": "Nord",
+          "color": "#2E86AB"
+        }
+      ],
+      "yAxisLabel": "% stranieri",
+      "aggregation": "ripartizione"
+    },
+    "fatti": [
+      {
+        "testo": "circa 10 punti",
+        "valore": 10,
+        "file": "insights_ripartizioni.json",
+        "filtro": {
+          "data_type": "OFFEND",
+          "codice_reato": "DRUG",
+          "ripartizione": "Nord"
+        },
+        "campo": "pct_stranieri",
+        "anno": 2024,
+        "da": 2007,
+        "calcolo": "variazione",
+        "meno": {
+          "data_type": "OFFEND",
+          "codice_reato": "DRUG",
+          "ripartizione": "Sud e Isole"
+        }
+      },
+      {
+        "testo": "2 anni su 3",
+        "valore": 0.67,
+        "tolleranza": 0.1,
+        "candidato": {
+          "analysis_type": "confronto_territoriale",
+          "data_type": "OFFEND",
+          "codice_reato": "DRUG",
+          "dimensione": "% stranieri (Nord - Sud e Isole)"
+        },
+        "campo": "monotonicity"
+      }
+    ],
+    "candidati": [
+      {
+        "analysis_type": "confronto_territoriale",
+        "data_type": "OFFEND",
+        "codice_reato": "DRUG",
+        "dimensione": "% stranieri (Nord - Sud e Isole)"
+      }
+    ]
+  }
+]

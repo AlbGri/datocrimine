@@ -1,0 +1,71 @@
+[
+  {
+    "descrizione": "Vittime di omicidio volontario 2024",
+    "file": "autori_vittime_trend.json",
+    "filtro": {"data_type": "VICTIM", "codice_reato": "INTENHOM"},
+    "campo": "totale", "anno": 2024, "valore": 328, "tolleranza": 0,
+    "fonte": "ISTAT, Rapporto BES 2026, cap. 7 Sicurezza, p. 123",
+    "url": "https://www.istat.it/wp-content/uploads/2026/10/07-Sicurezza.pdf"
+  },
+  {
+    "descrizione": "Vittime di omicidio volontario 2023",
+    "file": "autori_vittime_trend.json",
+    "filtro": {"data_type": "VICTIM", "codice_reato": "INTENHOM"},
+    "campo": "totale", "anno": 2023, "valore": 344, "tolleranza": 0,
+    "fonte": "ISTAT, Rapporto BES 2026, cap. 7 Sicurezza, p. 123",
+    "url": "https://www.istat.it/wp-content/uploads/2026/10/07-Sicurezza.pdf"
+  },
+  {
+    "descrizione": "Vittime di omicidio 2024 nel report dedicato (estrazione diversa dal BES: 327)",
+    "file": "autori_vittime_trend.json",
+    "filtro": {"data_type": "VICTIM", "codice_reato": "INTENHOM"},
+    "campo": "totale", "anno": 2024, "valore": 327, "tolleranza": 3,
+    "fonte": "ISTAT, Le vittime di omicidio - Anno 2024, p. 1",
+    "url": "https://www.istat.it/wp-content/uploads/2025/11/Report_Le-vittime-di-omicidio_Anno-2024.pdf"
+  },
+  {
+    "descrizione": "Donne vittime di omicidio 2024 (report dedicato: 116)",
+    "file": "autori_vittime_trend.json",
+    "filtro": {"data_type": "VICTIM", "codice_reato": "INTENHOM"},
+    "campo": "femmine", "anno": 2024, "valore": 116, "tolleranza": 5,
+    "fonte": "ISTAT, Le vittime di omicidio - Anno 2024, p. 1",
+    "url": "https://www.istat.it/wp-content/uploads/2025/11/Report_Le-vittime-di-omicidio_Anno-2024.pdf"
+  },
+  {
+    "descrizione": "Tasso di omicidi 2024 per 100 mila abitanti",
+    "file": "reati_allarme_sociale.json",
+    "filtro": {"Reato": "Omicidi volontari consumati"},
+    "campo": "Tasso_per_100k", "anno": 2024, "valore": 0.55, "tolleranza": 0.01,
+    "fonte": "ISTAT, Le vittime di omicidio - Anno 2024, p. 1",
+    "url": "https://www.istat.it/wp-content/uploads/2025/11/Report_Le-vittime-di-omicidio_Anno-2024.pdf"
+  },
+  {
+    "descrizione": "Tasso di omicidi 2014 per 100 mila abitanti",
+    "file": "reati_allarme_sociale.json",
+    "filtro": {"Reato": "Omicidi volontari consumati"},
+    "campo": "Tasso_per_100k", "anno": 2014, "valore": 0.79, "tolleranza": 0.01,
+    "fonte": "ISTAT, Rapporto BES 2026, cap. 7 Sicurezza, tabella 1",
+    "url": "https://www.istat.it/wp-content/uploads/2026/10/07-Sicurezza.pdf"
+  },
+  {
+    "descrizione": "Famiglie che vedono rischio di criminalita' nella zona, 2014",
+    "file": "percezione_vs_dati.json", "filtro": {},
+    "campo": "Percezione_pct", "anno": 2014, "valore": 30.0, "tolleranza": 0,
+    "fonte": "ISTAT, Rapporto BES 2026, cap. 7 Sicurezza, tabella 1",
+    "url": "https://www.istat.it/wp-content/uploads/2026/10/07-Sicurezza.pdf"
+  },
+  {
+    "descrizione": "Famiglie che vedono rischio di criminalita' nella zona, 2015",
+    "file": "percezione_vs_dati.json", "filtro": {},
+    "campo": "Percezione_pct", "anno": 2015, "valore": 41.1, "tolleranza": 0,
+    "fonte": "ISTAT, Rapporto BES 2026, cap. 7 Sicurezza, p. 124",
+    "url": "https://www.istat.it/wp-content/uploads/2026/10/07-Sicurezza.pdf"
+  },
+  {
+    "descrizione": "Famiglie che vedono rischio di criminalita' nella zona, 2024",
+    "file": "percezione_vs_dati.json", "filtro": {},
+    "campo": "Percezione_pct", "anno": 2024, "valore": 26.6, "tolleranza": 0,
+    "fonte": "ISTAT, Rapporto BES 2026, cap. 7 Sicurezza, p. 124",
+    "url": "https://www.istat.it/wp-content/uploads/2026/10/07-Sicurezza.pdf"
+  }
+]

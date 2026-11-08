@@ -80,6 +80,7 @@ export function KpiAutoriVittime({ dataType }: KpiProps) {
       {
         label: `Stranieri ${ultimo.anno}`,
         value: fmtPct(ultimo.pct_stranieri),
+        subtitle: `era ${fmtPct(trendTot[0].pct_stranieri)} nel ${trendTot[0].anno}; denunciati, compresi i non residenti`,
       },
       ...(ultimo.pct_minori !== null
         ? [
