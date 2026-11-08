@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import { Pause, Play } from "lucide-react";
 import { ChartMappaRegioni } from "@/components/charts/chart-mappa-regioni";
 import { ChartRankingRegioni } from "@/components/charts/chart-ranking-regioni";
 import { ChartTrendRegione } from "@/components/charts/chart-trend-regione";
@@ -64,7 +65,7 @@ export default function AnalisiTerritoriale() {
             className="px-3 py-1.5 text-sm rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
             aria-label={playing ? "Pausa animazione anni" : "Avvia animazione anni"}
           >
-            {playing ? "||" : "\u25B6"}
+            {playing ? <Pause className="size-4" aria-hidden="true" /> : <Play className="size-4" aria-hidden="true" />}
           </button>
           {ANNI.map((a) => (
             <button

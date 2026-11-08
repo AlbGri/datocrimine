@@ -2,6 +2,7 @@
 
 import { useState, useMemo, lazy, Suspense } from "react";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
 import type { InsightChartConfig } from "@/components/charts/insight-mini-chart";
 import insightsData from "@/data/insights.json";
@@ -556,12 +557,10 @@ function InsightCard({
             onClick={() => setShowChart((v) => !v)}
             className="text-xs text-primary hover:underline cursor-pointer flex items-center gap-1"
           >
-            <span
-              className="inline-block transition-transform duration-200"
-              style={{ transform: showChart ? "rotate(90deg)" : "rotate(0deg)" }}
-            >
-              &#9654;
-            </span>
+            <ChevronRight
+              className={`size-3.5 transition-transform duration-200 ${showChart ? "rotate-90" : ""}`}
+              aria-hidden="true"
+            />
             {showChart ? "Nascondi grafico" : "Mostra il grafico"}
           </button>
           {showChart && (
