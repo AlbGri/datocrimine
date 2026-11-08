@@ -27,17 +27,14 @@ interface ReatiRecord {
   pct_minori: number | null;
 }
 
-/** Calcola variazione triennale: media(2020-2022) vs media(2017-2019).
- *  Periodi diversi da varTriennale globale (2014-2016 vs 2021-2023)
- *  perche' i dati autori AUTVITTPS finiscono al 2022. */
-function varTriennaleAutori(data: TrendRecord[]): number | null {
-  const recente = data.filter((d) => d.anno >= 2020 && d.anno <= 2022);
-  const precedente = data.filter((d) => d.anno >= 2017 && d.anno <= 2019);
-  if (recente.length < 2 || precedente.length < 2) return null;
-  const mr = recente.reduce((s, d) => s + d.totale, 0) / recente.length;
-  const mp = precedente.reduce((s, d) => s + d.totale, 0) / precedente.length;
-  if (mp === 0) return null;
-  return ((mr - mp) / mp) * 100;
+// Il totale autori finisce al 2022: il confronto e' con l'ultimo anno prima del COVID,
+// non con una media che conterrebbe il 2020 e il 2021
+const ANNO_PRE_COVID = 2019;
+
+function varDaPreCovid(data: TrendRecord[], ultimo: TrendRecord): number | null {
+  const base = data.find((d) => d.anno === ANNO_PRE_COVID);
+  if (!base || base.totale === 0 || ultimo.anno <= ANNO_PRE_COVID) return null;
+  return ((ultimo.totale - base.totale) / base.totale) * 100;
 }
 
 interface KpiProps {
@@ -70,7 +67,7 @@ export function KpiAutoriVittime({ dataType }: KpiProps) {
 
   if (dataType === "OFFEND" && trendTot && trendTot.length > 0) {
     const ultimo = trendTot[trendTot.length - 1];
-    const varTot = varTriennaleAutori(trendTot);
+    const varTot = varDaPreCovid(trendTot, ultimo);
 
     const items: { label: string; value: string; color?: string; subtitle?: string }[] = [
       {
@@ -96,7 +93,7 @@ export function KpiAutoriVittime({ dataType }: KpiProps) {
               label: "Variazione totale autori",
               value: fmtPctSigned(varTot),
               color: varTot < 0 ? "text-green-600" : "text-red-600",
-              subtitle: "media '17-'19 vs '20-'22 (denunciati, non condannati)",
+              subtitle: `${ultimo.anno} rispetto al ${ANNO_PRE_COVID}, ultimo anno prima del COVID (denunciati, non condannati)`,
             },
           ]
         : []),
