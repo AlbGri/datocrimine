@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { PLOTLY_CONFIG, AXIS_FIXED, MetricaProfilo, METRICHE_PROFILO, COLORS, MIN_CASI, TOP_N, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE } from "@/lib/config";
+import { PLOTLY_CONFIG, AXIS_FIXED, MetricaProfilo, METRICHE_PROFILO, COLORS, MIN_CASI, TOP_N, isVoceAutonoma, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE } from "@/lib/config";
 import { fmtNum, fmtPct, fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -143,7 +143,7 @@ export function ChartProfiloProvincia({ dataType }: Props) {
   if (isTasso) {
     const reatoGruppo = new Map<string, { totale: number; popolazione: number }>();
     for (const r of provData.filter(
-      (r) => r.data_type === dataType && r.anno === anno && r.codice_reato !== "TOT"
+      (r) => r.data_type === dataType && r.anno === anno && isVoceAutonoma(r.codice_reato)
     )) {
       const pop = popMap.get(`${r.ref_area}|${anno}`);
       if (!pop || pop === 0) continue;
@@ -162,7 +162,7 @@ export function ChartProfiloProvincia({ dataType }: Props) {
   } else {
     const reatoGruppo = new Map<string, { sum: number; totale: number }>();
     for (const r of provData.filter(
-      (r) => r.data_type === dataType && r.anno === anno && r.codice_reato !== "TOT" && r.totale >= MIN_CASI
+      (r) => r.data_type === dataType && r.anno === anno && isVoceAutonoma(r.codice_reato) && r.totale >= MIN_CASI
     )) {
       const val = r[metrica] as number | null;
       if (val === null) continue;
@@ -188,7 +188,7 @@ export function ChartProfiloProvincia({ dataType }: Props) {
       r.data_type === dataType &&
       r.provincia === provincia &&
       r.anno === anno &&
-      r.codice_reato !== "TOT" &&
+      isVoceAutonoma(r.codice_reato) &&
       r.totale >= MIN_CASI
   );
 

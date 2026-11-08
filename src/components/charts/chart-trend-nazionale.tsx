@@ -46,15 +46,17 @@ const COLORI_CATEGORIE: Record<string, string> = {
   Rapine: COLORS.rapine,
   Droga: COLORS.droga,
   Altro: COLORS.altro,
+  Ingiurie: COLORS.ingiurie,
 };
 
 const CATEGORIE_DETTAGLIO: Record<string, string> = {
   "Furti": "furti in abitazione, auto, con destrezza, con strappo, ecc.",
-  "Violenze contro la persona": "omicidi volontari e tentati, lesioni dolose, percosse, minacce, sequestri di persona, violenze sessuali, atti sessuali con minorenne, pornografia minorile, sfruttamento prostituzione",
+  "Violenze contro la persona": "omicidi volontari e tentati, omicidi preterintenzionali, infanticidi, stragi, lesioni dolose, percosse, minacce, sequestri di persona, violenze sessuali, atti sessuali con minorenne, corruzione di minorenne, pornografia minorile, sfruttamento e favoreggiamento della prostituzione",
   "Truffe e Frodi": "truffe e frodi informatiche, delitti informatici, contraffazione, violazione proprieta' intellettuale",
   "Rapine": "rapine in abitazione, in banca, in pubblica via, ecc.",
   "Droga": "produzione, traffico e spaccio di stupefacenti",
-  "Altro": "estorsioni, ricettazione, danneggiamenti, incendi dolosi, riciclaggio, usura, associazione per delinquere e di tipo mafioso, contrabbando, omicidi stradali e colposi, altri delitti",
+  "Altro": "estorsioni, ricettazione, danneggiamenti, incendi, danneggiamenti seguiti da incendio, riciclaggio, usura, associazione per delinquere e di tipo mafioso, contrabbando, attentati, omicidi colposi (anche stradali), altri delitti",
+  "Ingiurie": "depenalizzate nel 2016 (d.lgs. 7/2016): la serie si ferma al 2017",
 };
 
 type ViewMode = "totale" | "tipologia";

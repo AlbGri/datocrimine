@@ -19,6 +19,8 @@ import pymannkendall as mk
 from scipy import stats
 from statsmodels.stats.multitest import multipletests
 
+from reati import GERARCHIA
+
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 log = logging.getLogger(__name__)
 
@@ -79,41 +81,15 @@ RIPARTIZIONI = {
     "Sud e Isole": SUD_ISOLE,
 }
 
-# Gerarchie reati ISTAT per filtrare correlazioni tautologiche
-# Formato: genitore -> set di figli. Coppie genitore-figlio e fratelli
-# dello stesso genitore producono correlazioni spurie (~1.0)
-# Gerarchie strette: genitore -> figli diretti. Le correlazioni tra
-# genitore-figlio e tra fratelli dello stesso genitore sono tautologiche.
-# TOT e' un caso speciale: TOT vs qualsiasi reato e' tautologico,
-# ma due reati distinti sotto TOT NON lo sono (sono reati indipendenti).
-REATI_GERARCHIA_STRETTA = {
-    "THEFT": {  # Furti -> sotto-tipi
-        "BAGTHEF", "BURGTHEF", "PICKTHEF", "SHOPTHEF", "CARTHEF",
-        "VEHITHEF", "MOPETHEF", "MOTORTHEF", "TRUCKTHEF", "ARTTHEF",
-    },
-    "ROBBER": {  # Rapine -> sotto-tipi
-        "STREETROB", "HOUSEROB", "BANKROB", "SHOPROB", "POSTROB",
-    },
-    "ARSON": {"DAMARS"},  # Incendi -> incendi dolosi
-    "INTENHOM": {"MAFIAHOM", "ROBBHOM", "INFANTHOM"},  # Omicidi volontari -> sotto-tipi
-    "RAPE": {"RAPEUN18"},  # Violenze sessuali -> atti sessuali con minorenne
-}
-
-# TOT correla meccanicamente con qualsiasi suo componente
-_ALL_SPECIFIC_CODES = set()
-for _children in REATI_GERARCHIA_STRETTA.values():
-    _ALL_SPECIFIC_CODES.update(_children)
-for _parent in REATI_GERARCHIA_STRETTA:
-    _ALL_SPECIFIC_CODES.add(_parent)
-
-
 def is_tautological_pair(code_a: str, code_b: str) -> bool:
-    """Verifica se due codici reato sono in relazione gerarchica."""
-    # TOT vs qualsiasi altro reato
+    """Verifica se due codici reato sono in relazione gerarchica.
+
+    Padre-sottotipo e sottotipi dello stesso padre correlano per costruzione, e TOT con
+    qualsiasi reato; due voci autonome sotto TOT invece no.
+    """
     if code_a == "TOT" or code_b == "TOT":
         return True
-    # Genitore-figlio e fratelli nelle gerarchie strette
-    for parent, children in REATI_GERARCHIA_STRETTA.items():
+    for parent, children in GERARCHIA.items():
         if code_a == parent and code_b in children:
             return True
         if code_b == parent and code_a in children:

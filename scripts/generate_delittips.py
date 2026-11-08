@@ -26,6 +26,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from reati import ETICHETTE, SOTTOTIPI
+
 log = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 
@@ -36,42 +38,14 @@ FILTERS = {
     "DATA_TYPE": "CRIMEN",  # numeri assoluti
 }
 
-# Mapping codice SDMX -> etichetta reato
-CRIME_LABELS = {
-    "ARSON": "Incendi", "ARTTHEF": "Furti opere d'arte", "ATTACK": "Attentati",
-    "ATTEMPHOM": "Tentati omicidi", "BAGTHEF": "Furti con strappo",
-    "BANKROB": "Rapine in banca", "BLOWS": "Percosse", "BURGTHEF": "Furti in abitazioni",
-    "CARTHEF": "Furti di autovetture", "CORRUPUN18": "Corruzione di minorenne",
-    "COUNTER": "Contraffazione marchi", "CRIMASS": "Associazione per delinquere",
-    "CULPINJU": "Lesioni dolose", "CYBERCRIM": "Delitti informatici",
-    "DAMAGE": "Danneggiamenti", "DAMARS": "Danneggiamento seguito da incendio",
-    "DRUG": "Stupefacenti", "EXTORT": "Estorsioni", "FOREARS": "Incendi boschivi",
-    "HOUSEROB": "Rapine in abitazione", "INFANTHOM": "Infanticidi",
-    "INTENHOM": "Omicidi volontari consumati", "INTPROP": "Violazione proprietà intellettuale",
-    "KIDNAPP": "Sequestri di persona", "MAFIAHOM": "Omicidi tipo mafioso",
-    "MAFIASS": "Associazione tipo mafioso", "MANSHOM": "Omicidi preterintenzionali",
-    "MASSMURD": "Strage", "MENACE": "Minacce", "MONEYLAU": "Riciclaggio",
-    "MOPETHEF": "Furti ciclomotori", "MOTORTHEF": "Furti motocicli",
-    "OFFENCE": "Ingiurie", "OTHCRIM": "Altri delitti",
-    "PICKTHEF": "Furti con destrezza", "PORNO": "Pornografia minorile",
-    "POSTROB": "Rapine uffici postali", "PROSTI": "Sfruttamento prostituzione",
-    "RAPE": "Violenze sessuali", "RAPEUN18": "Atti sessuali con minorenne",
-    "RECEIV": "Ricettazione", "ROADHOM": "Omicidi colposi da incidente stradale",
-    "ROBBER": "Rapine", "ROBBHOM": "Omicidi a scopo furto/rapina",
-    "SHOPROB": "Rapine esercizi commerciali", "SHOPTHEF": "Furti esercizi commerciali",
-    "SMUGGL": "Contrabbando", "STREETROB": "Rapine pubblica via",
-    "SWINCYB": "Truffe e frodi informatiche", "TERRORHOM": "Omicidi a scopo terroristico",
-    "THEFT": "Furti", "TRUCKTHEF": "Furti automezzi pesanti",
-    "UNINTHOM": "Omicidi colposi", "USURY": "Usura", "VEHITHEF": "Furti in auto in sosta",
-}
-
-# Mapping codice -> categoria (mutuamente esclusive: solo codici padre per Furti/Rapine,
-# figli esclusi perche' gia' conteggiati nel padre ISTAT)
+# Mapping codice -> categoria, solo codici che non sono sottotipi (gia' contati nel padre):
+# cosi' le categorie si escludono a vicenda e sommano al totale
 CATEGORY_MAP = {
     "THEFT": "Furti",
     "ROBBER": "Rapine",
     "INTENHOM": "Violenze contro la persona", "ATTEMPHOM": "Violenze contro la persona",
-    "MANSHOM": "Violenze contro la persona",
+    "MANSHOM": "Violenze contro la persona", "INFANTHOM": "Violenze contro la persona",
+    "MASSMURD": "Violenze contro la persona",
     "BLOWS": "Violenze contro la persona", "CULPINJU": "Violenze contro la persona",
     "MENACE": "Violenze contro la persona", "KIDNAPP": "Violenze contro la persona",
     "RAPE": "Violenze contro la persona", "RAPEUN18": "Violenze contro la persona",
@@ -81,19 +55,17 @@ CATEGORY_MAP = {
     "COUNTER": "Truffe e Frodi", "INTPROP": "Truffe e Frodi",
     "DRUG": "Droga",
     "ARSON": "Altro", "ATTACK": "Altro", "CRIMASS": "Altro",
-    "DAMAGE": "Altro", "DAMARS": "Altro", "EXTORT": "Altro", "FOREARS": "Altro",
+    "DAMAGE": "Altro", "DAMARS": "Altro", "EXTORT": "Altro",
     "MAFIASS": "Altro", "MONEYLAU": "Altro", "OTHCRIM": "Altro", "RECEIV": "Altro",
-    "ROADHOM": "Altro", "SMUGGL": "Altro", "UNINTHOM": "Altro", "USURY": "Altro",
+    "SMUGGL": "Altro", "UNINTHOM": "Altro", "USURY": "Altro",
+    # A parte: depenalizzate nel 2016, dentro "Altro" ne falserebbero il trend
+    "OFFENCE": "Ingiurie",
 }
 
 # Reati allarme sociale
 ALLARME_CODES = {
-    "INTENHOM": "Omicidi volontari consumati",
-    "ATTEMPHOM": "Tentati omicidi",
-    "RAPE": "Violenze sessuali",
-    "RAPEUN18": "Atti sessuali con minorenne",
-    "KIDNAPP": "Sequestri di persona",
-    "HOUSEROB": "Rapine in abitazione",
+    code: ETICHETTE[code]
+    for code in ("INTENHOM", "ATTEMPHOM", "RAPE", "RAPEUN18", "KIDNAPP", "HOUSEROB")
 }
 
 # Mapping NUTS2 -> nome regione
@@ -248,7 +220,7 @@ def generate_province(df: pd.DataFrame, pop: pd.DataFrame, project_root: Path) -
 def generate_categorie(df: pd.DataFrame, pop: pd.DataFrame, project_root: Path) -> None:
     """Genera delitti_categorie_normalizzato.csv."""
     df_it = df[df["REF_AREA"] == "IT"].copy()
-    df_it = df_it[df_it["TYPE_CRIME"] != "TOT"]
+    df_it = df_it[(df_it["TYPE_CRIME"] != "TOT") & ~df_it["TYPE_CRIME"].isin(SOTTOTIPI)]
     df_it["Categoria"] = df_it["TYPE_CRIME"].map(CATEGORY_MAP)
 
     # Codici senza categoria

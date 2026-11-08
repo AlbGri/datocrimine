@@ -157,7 +157,8 @@ export default function DatiECodice() {
                   autori_vittime_trend.json,
                   autori_vittime_regioni.json,
                   autori_vittime_reati.json,
-                  autori_vittime_province.json
+                  autori_vittime_province.json,
+                  reati_gerarchia.json
                 </td>
               </tr>
               <tr className="border-b">

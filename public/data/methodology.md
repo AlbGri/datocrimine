@@ -107,7 +107,7 @@ Nuove leggi possono modificare:
 
 **Casi rilevanti nei dati:**
 
-- **D.Lgs. 7/2016** (in vigore dal 6 febbraio 2016): ha depenalizzato le ingiurie, trasformandole da reato penale a illecito civile. Questo spiega il calo del -23% nella categoria "Violenze contro la persona" tra 2015 e 2016: circa 50.000-60.000 denunce/anno per ingiurie sono uscite dalle statistiche penali. Non si tratta di un calo reale della violenza.
+- **D.Lgs. 7/2016** (in vigore dal 6 febbraio 2016): ha depenalizzato le ingiurie, trasformandole da reato penale a illecito civile. Le denunce per ingiurie passano da 58.620 nel 2015 a 15.781 nel 2016 e a 2.064 nel 2017, poi la voce scompare. Circa un quinto del calo del totale fra 2015 e 2016 (42.839 su 199.860) dipende da questo, non da meno reati. Nel grafico per tipologia le ingiurie sono una categoria a parte, per non falsare il trend delle altre.
 - **L. 69/2019 "Codice Rosso"** (in vigore dal 9 agosto 2019): ha introdotto procedure accelerate per violenza domestica e di genere (obbligo di ascolto vittima entro 3 giorni, nuovi reati come revenge porn). Può aver contribuito all'aumento delle denunce per violenze sessuali e maltrattamenti dal 2019 in poi, per effetto di maggiore fiducia nel sistema giudiziario, non necessariamente per aumento dei reati.
 
 ### Propensione a denunciare
@@ -143,14 +143,15 @@ La normalizzazione è essenziale perché la **popolazione italiana è diminuita*
 
 ### Aggregazione in macro-categorie
 
-I 56 tipi di delitto ISTAT sono stati aggregati in 6 macro-categorie **mutuamente esclusive**: ogni reato rientra in una sola categoria. Per Furti e Rapine si usa il codice padre ISTAT (che include tutti i sottotipi); per le altre categorie si usano i codici foglia. La somma delle categorie può differire lievemente dal totale nazionale per effetto delle aggregazioni interne ISTAT.
+I 55 tipi di delitto ISTAT sono aggregati in 7 macro-categorie **mutuamente esclusive**: ogni reato rientra in una sola categoria e la somma delle categorie è uguale al totale nazionale. Venti codici ISTAT sono sottotipi di un altro (i tipi di furto e di rapina, alcuni omicidi volontari, gli incendi boschivi, gli omicidi stradali) e si contano solo nel codice padre.
 
 1. **Furti**: codice padre ISTAT (include tutti i sottotipi: con strappo, destrezza, abitazioni, auto, moto, esercizi commerciali, ecc.)
 2. **Rapine**: codice padre ISTAT (include tutti i sottotipi: in abitazione, banca, uffici postali, esercizi commerciali, pubblica via)
-3. **Violenze contro la persona**: omicidi volontari consumati, tentati omicidi, omicidi preterintenzionali, percosse, lesioni, minacce, sequestri, violenze sessuali, atti con minori, pornografia minorile, corruzione di minorenne, sfruttamento prostituzione. Nota: gli omicidi colposi (stradali e non) sono classificati in "Altro" perché non sono violenza intenzionale
+3. **Violenze contro la persona**: omicidi volontari consumati, tentati omicidi, omicidi preterintenzionali, infanticidi, stragi, percosse, lesioni, minacce, sequestri, violenze sessuali, atti con minori, pornografia minorile, corruzione di minorenne, sfruttamento e favoreggiamento della prostituzione. Nota: gli omicidi colposi (stradali e non) sono classificati in "Altro" perché non sono violenza intenzionale
 4. **Truffe e Frodi**: truffe informatiche, delitti informatici, contraffazione marchi, violazione proprietà intellettuale
-5. **Droga**: normativa stupefacenti
-6. **Altro**: danneggiamenti, incendi, criminalità organizzata (mafia, riciclaggio, usura, estorsioni), ricettazione, contrabbando
+5. **Droga**: normativa sugli stupefacenti
+6. **Altro**: danneggiamenti (anche seguiti da incendio), incendi, criminalità organizzata (associazione per delinquere e di tipo mafioso, riciclaggio, usura, estorsioni), ricettazione, contrabbando, attentati, omicidi colposi, altri delitti
+7. **Ingiurie**: depenalizzate nel 2016, serie fino al 2017; a parte per non falsare il trend di "Altro"
 
 ### Reati ad alto allarme sociale
 

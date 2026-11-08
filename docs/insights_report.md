@@ -1,6 +1,6 @@
 # Insights Candidates Report
 
-Generato: 2026-03-23 21:57
+Generato: 2026-11-08 16:36
 
 - Candidati totali analizzati: 2212
 - FDR significativi (p < 0.05 dopo correzione): 1132
@@ -12,21 +12,21 @@ Generato: 2026-03-23 21:57
 ## 1. Trend nazionali - numeri assoluti
 
 - **Rapine in pubblica via** (autori) [medium]: trend crescente, 7503 -> 11571 (+4068), p=0.0016, monotonia=67%, z-ultimo=+3.19, 2007-2024
-- **Incendi dolosi** (vittime) [high]: trend decrescente, 10159 -> 5241 (-4918), p=0.0006, monotonia=73%, z-ultimo=-1.84, 2007-2024
-- **Incendi dolosi** (autori) [medium]: trend crescente, 1012 -> 1619 (+607), p=0.0026, monotonia=53%, z-ultimo=+2.37, 2007-2024
+- **Danneggiamento seguito da incendio** (vittime) [high]: trend decrescente, 10159 -> 5241 (-4918), p=0.0006, monotonia=73%, z-ultimo=-1.84, 2007-2024
+- **Danneggiamento seguito da incendio** (autori) [medium]: trend crescente, 1012 -> 1619 (+607), p=0.0026, monotonia=53%, z-ultimo=+2.37, 2007-2024
 - **Sequestri di persona** (autori) [high]: trend decrescente, 2355 -> 1185 (-1170), p=0.0002, monotonia=73%, z-ultimo=-1.69, 2007-2024
 - **Estorsioni** (vittime) [medium]: trend crescente, 6704 -> 11433 (+4729), p=0.0011, monotonia=67%, z-ultimo=+1.89, 2007-2024
 - **Associazione per delinquere** (autori) [medium]: trend decrescente, 11340 -> 5135 (-6205), p=0.0085, monotonia=67%, z-ultimo=-1.91, 2007-2024
 - **Rapine in banca** (autori) [high]: trend decrescente, 2893 -> 367 (-2526), p=0.0002, monotonia=87%, z-ultimo=-1.24, 2007-2024
 - **Atti persecutori (stalking)** (vittime) [high]: trend crescente, 4983 -> 18852 (+13869), p=0.0002, monotonia=85%, z-ultimo=+1.50, 2009-2024
-- **Sfruttamento della prostituzione** (autori) [high]: trend decrescente, 3845 -> 943 (-2902), p=0.0005, monotonia=73%, z-ultimo=-1.50, 2007-2024
+- **Sfruttamento e favoreggiamento della prostituzione** (autori) [high]: trend decrescente, 3845 -> 943 (-2902), p=0.0005, monotonia=73%, z-ultimo=-1.50, 2007-2024
 - **Sequestri di persona** (vittime) [high]: trend decrescente, 2095 -> 737 (-1358), p=0.0002, monotonia=73%, z-ultimo=-1.46, 2007-2024
 - **Omicidi volontari consumati** (autori) [medium]: trend decrescente, 1199 -> 771 (-428), p=0.0033, monotonia=67%, z-ultimo=-1.64, 2007-2024
 - **Truffe e frodi informatiche** (autori) [high]: trend crescente, 46354 -> 73373 (+27019), p=0.0002, monotonia=80%, z-ultimo=+1.16, 2007-2024
 - **Minacce** (vittime) [medium]: trend decrescente, 82803 -> 62860 (-19943), p=0.0033, monotonia=60%, z-ultimo=-1.78, 2007-2024
-- **Furti con destrezza** (vittime) [high]: trend decrescente, 22868 -> 10930 (-11938), p=0.0043, monotonia=80%, z-ultimo=-1.11, 2007-2024
+- **Furti con strappo** (vittime) [high]: trend decrescente, 22868 -> 10930 (-11938), p=0.0043, monotonia=80%, z-ultimo=-1.11, 2007-2024
 - **Omicidi volontari consumati** (vittime) [high]: trend decrescente, 631 -> 328 (-303), p=0.0002, monotonia=80%, z-ultimo=-1.02, 2007-2024
-- **Sfruttamento della prostituzione** (vittime) [medium]: trend decrescente, 796 -> 150 (-646), p=0.0009, monotonia=67%, z-ultimo=-1.42, 2007-2024
+- **Sfruttamento e favoreggiamento della prostituzione** (vittime) [medium]: trend decrescente, 796 -> 150 (-646), p=0.0009, monotonia=67%, z-ultimo=-1.42, 2007-2024
 - **Omicidi di tipo mafioso** (autori) [medium]: trend decrescente, 476 -> 130 (-346), p=0.0033, monotonia=53%, z-ultimo=-1.83, 2007-2024
 - **Usura** (autori) [medium]: trend decrescente, 1392 -> 495 (-897), p=0.0003, monotonia=60%, z-ultimo=-1.60, 2007-2024
 - **Delitti informatici** (vittime) [medium]: trend crescente, 2956 -> 19298 (+16342), p=0.0002, monotonia=67%, z-ultimo=+1.33, 2007-2024
@@ -38,21 +38,21 @@ Generato: 2026-03-23 21:57
 
 - **Furti** (vittime) | % stranieri [high]: trend crescente, 9.6% -> 13.6% (+4.0 pp), p=0.0002, monotonia=80%, 2007-2024
 - **Rapine in esercizi commerciali** (autori) | % stranieri [high]: trend crescente, 35.7% -> 50.4% (+14.7 pp), p=0.0069, monotonia=73%, 2007-2024
-- **Furti con destrezza** (vittime) | % stranieri [high]: trend crescente, 12.6% -> 21.0% (+8.4 pp), p=0.0002, monotonia=87%, 2007-2024
+- **Furti con strappo** (vittime) | % stranieri [high]: trend crescente, 12.6% -> 21.0% (+8.4 pp), p=0.0002, monotonia=87%, 2007-2024
 - **Rapine in pubblica via** (vittime) | % stranieri [high]: trend crescente, 15.9% -> 28.9% (+13.0 pp), p=0.0002, monotonia=80%, 2007-2024
 - **Rapine** (vittime) | % stranieri [high]: trend crescente, 13.8% -> 26.3% (+12.5 pp), p=0.0002, monotonia=87%, 2007-2024
 - **Incendi** (autori) | % stranieri [high]: trend crescente, 19.2% -> 31.7% (+12.5 pp), p=0.0015, monotonia=73%, 2007-2024
 - **Rapine** (autori) | % stranieri [medium]: trend crescente, 35.5% -> 52.4% (+16.9 pp), p=0.0016, monotonia=67%, 2007-2024
 - **Rapine in pubblica via** (autori) | % stranieri [medium]: trend crescente, 46.9% -> 60.0% (+13.1 pp), p=0.0021, monotonia=67%, 2007-2024
-- **Borseggi** (vittime) | % stranieri [medium]: trend crescente, 17.2% -> 26.1% (+8.9 pp), p=0.0006, monotonia=67%, 2007-2024
+- **Furti con destrezza** (vittime) | % stranieri [medium]: trend crescente, 17.2% -> 26.1% (+8.9 pp), p=0.0006, monotonia=67%, 2007-2024
 - **Lesioni dolose** (autori) | % stranieri [high]: trend crescente, 29.4% -> 37.9% (+8.5 pp), p=0.0023, monotonia=73%, 2007-2024
 - **Rapine in esercizi commerciali** (vittime) | % stranieri [high]: trend crescente, 7.2% -> 28.2% (+21.0 pp), p=0.0002, monotonia=93%, 2007-2024
-- **Furti con destrezza** (vittime) | % femmine [high]: trend decrescente, 81.0% -> 53.9% (-27.1 pp), p=0.0002, monotonia=93%, 2008-2024
-- **Furti con destrezza** (vittime) | % maschi [high]: trend crescente, 19.1% -> 46.1% (+27.0 pp), p=0.0002, monotonia=93%, 2008-2024
-- **Furti con destrezza** (autori) | % stranieri [medium]: trend crescente, 33.9% -> 61.0% (+27.1 pp), p=0.0005, monotonia=67%, 2007-2024
+- **Furti con strappo** (vittime) | % femmine [high]: trend decrescente, 81.0% -> 53.9% (-27.1 pp), p=0.0002, monotonia=93%, 2008-2024
+- **Furti con strappo** (vittime) | % maschi [high]: trend crescente, 19.1% -> 46.1% (+27.0 pp), p=0.0002, monotonia=93%, 2008-2024
+- **Furti con strappo** (autori) | % stranieri [medium]: trend crescente, 33.9% -> 61.0% (+27.1 pp), p=0.0005, monotonia=67%, 2007-2024
 - **Danneggiamenti** (autori) | % stranieri [high]: trend crescente, 27.3% -> 36.5% (+9.2 pp), p=0.0009, monotonia=73%, 2007-2024
 - **Minacce** (autori) | % stranieri [high]: trend crescente, 18.5% -> 25.2% (+6.7 pp), p=0.0015, monotonia=73%, 2007-2024
-- **Incendi dolosi** (autori) | % stranieri [medium]: trend crescente, 17.4% -> 34.0% (+16.6 pp), p=0.0429, monotonia=60%, 2007-2024
+- **Danneggiamento seguito da incendio** (autori) | % stranieri [medium]: trend crescente, 17.4% -> 34.0% (+16.6 pp), p=0.0429, monotonia=60%, 2007-2024
 - **Percosse** (autori) | % stranieri [medium]: trend crescente, 21.5% -> 31.2% (+9.7 pp), p=0.0011, monotonia=60%, 2007-2024
 - **Lesioni dolose** (vittime) | % femmine [high]: trend decrescente, 40.5% -> 33.7% (-6.8 pp), p=0.0010, monotonia=71%, 2008-2024
 - **Lesioni dolose** (vittime) | % maschi [high]: trend crescente, 59.4% -> 66.3% (+6.9 pp), p=0.0005, monotonia=71%, 2008-2024
@@ -61,8 +61,8 @@ Generato: 2026-03-23 21:57
 - **Truffe e frodi informatiche** (vittime) | % femmine [high]: trend crescente, 34.5% -> 43.4% (+8.9 pp), p=0.0011, monotonia=86%, 2008-2024
 - **Minacce** (vittime) | % femmine [high]: trend decrescente, 45.5% -> 40.7% (-4.8 pp), p=0.0005, monotonia=71%, 2008-2024
 - **Minacce** (vittime) | % maschi [high]: trend crescente, 54.5% -> 59.3% (+4.8 pp), p=0.0006, monotonia=71%, 2008-2024
-- **Sfruttamento della prostituzione** (vittime) | % maschi [high]: trend crescente, 12.2% -> 26.0% (+13.8 pp), p=0.0157, monotonia=79%, 2008-2024
-- **Sfruttamento della prostituzione** (vittime) | % femmine [high]: trend decrescente, 87.8% -> 74.0% (-13.8 pp), p=0.0157, monotonia=79%, 2008-2024
+- **Sfruttamento e favoreggiamento della prostituzione** (vittime) | % maschi [high]: trend crescente, 12.2% -> 26.0% (+13.8 pp), p=0.0157, monotonia=79%, 2008-2024
+- **Sfruttamento e favoreggiamento della prostituzione** (vittime) | % femmine [high]: trend decrescente, 87.8% -> 74.0% (-13.8 pp), p=0.0157, monotonia=79%, 2008-2024
 - **Furti di autovetture** (autori) | % stranieri [medium]: trend decrescente, 35.8% -> 24.4% (-11.4 pp), p=0.0016, monotonia=60%, 2007-2024
 - **Truffe e frodi informatiche** (vittime) | % maschi [high]: trend decrescente, 65.5% -> 56.6% (-8.9 pp), p=0.0014, monotonia=79%, 2008-2024
 - **Danneggiamenti** (vittime) | % maschi [high]: trend decrescente, 67.9% -> 63.8% (-4.1 pp), p=0.0003, monotonia=79%, 2008-2024
@@ -120,25 +120,25 @@ Misura come cambia la dispersione (deviazione standard) tra regioni nel tempo. U
 Correlazione di Spearman tra le variazioni anno-su-anno (detrended) di reati diversi. Valori prossimi a +1 indicano che i due reati co-variano, prossimi a -1 che variano in direzioni opposte.
 
 - **Atti persecutori (stalking) vs Rapine in pubblica via** (vittime): rho=+1.000, p=0.0000 [FDR sig.]
-- **Resistenza a pubblico ufficiale vs Furti** (vittime): rho=+0.976, p=0.0015 [FDR sig.]
-- **Incendi vs Porto abusivo di armi** (autori): rho=+0.976, p=0.0015 [FDR sig.]
-- **Resistenza a pubblico ufficiale vs Borseggi** (vittime): rho=+0.952, p=0.0059 [FDR sig.]
-- **Atti persecutori (stalking) vs Rapine** (vittime): rho=+0.952, p=0.0059 [FDR sig.]
-- **Resistenza a pubblico ufficiale vs Furti** (autori): rho=+0.952, p=0.0059 [FDR sig.]
-- **Associazione per delinquere vs Omicidi stradali** (autori): rho=-0.929, p=0.0084 [FDR sig.]
-- **Percosse vs Minacce** (autori): rho=+0.929, p=0.0084 [FDR sig.]
-- **Furti con destrezza vs Contraffazione** (autori): rho=-0.929, p=0.0084 [FDR sig.]
-- **Furti con destrezza vs Minacce** (vittime): rho=+0.929, p=0.0084 [FDR sig.]
-- **Rapine in esercizi commerciali vs Furti in esercizi commerciali** (autori): rho=+0.929, p=0.0084 [FDR sig.]
-- **Violazioni proprietà intellettuale vs Rapine** (autori): rho=-0.929, p=0.0084 [FDR sig.]
-- **Riciclaggio vs Furti di autoveicoli** (autori): rho=-0.929, p=0.0084 [FDR sig.]
-- **Resistenza a pubblico ufficiale vs Ricettazione** (autori): rho=+0.929, p=0.0084 [FDR sig.]
-- **Corruzione di minorenne vs Sequestri di persona** (autori): rho=-0.922, p=0.0101 [FDR sig.]
-- **Resistenza a pubblico ufficiale vs Borseggi** (autori): rho=+0.905, p=0.0125 [FDR sig.]
-- **Minacce vs Resistenza a pubblico ufficiale** (autori): rho=+0.905, p=0.0125 [FDR sig.]
-- **Percosse vs Minacce** (vittime): rho=+0.905, p=0.0125 [FDR sig.]
-- **Porto abusivo di armi vs Associazione di tipo mafioso** (autori): rho=-0.905, p=0.0125 [FDR sig.]
-- **Borseggi vs Rapine in esercizi commerciali** (autori): rho=+0.905, p=0.0125 [FDR sig.]
+- **Ingiurie vs Furti** (vittime): rho=+0.976, p=0.0023 [FDR sig.]
+- **Ingiurie vs Furti con destrezza** (vittime): rho=+0.952, p=0.0071 [FDR sig.]
+- **Ingiurie vs Furti** (autori): rho=+0.952, p=0.0071 [FDR sig.]
+- **Atti persecutori (stalking) vs Rapine** (vittime): rho=+0.952, p=0.0071 [FDR sig.]
+- **Furti con strappo vs Minacce** (vittime): rho=+0.929, p=0.0091 [FDR sig.]
+- **Rapine in esercizi commerciali vs Furti in esercizi commerciali** (autori): rho=+0.929, p=0.0091 [FDR sig.]
+- **Riciclaggio vs Furti in auto in sosta** (autori): rho=-0.929, p=0.0091 [FDR sig.]
+- **Ingiurie vs Ricettazione** (autori): rho=+0.929, p=0.0091 [FDR sig.]
+- **Violazione della proprietà intellettuale vs Rapine** (autori): rho=-0.929, p=0.0091 [FDR sig.]
+- **Associazione per delinquere vs Omicidi colposi da incidente stradale** (autori): rho=-0.929, p=0.0091 [FDR sig.]
+- **Furti con strappo vs Contraffazione di marchi** (autori): rho=-0.929, p=0.0091 [FDR sig.]
+- **Percosse vs Minacce** (autori): rho=+0.929, p=0.0091 [FDR sig.]
+- **Corruzione di minorenne vs Sequestri di persona** (autori): rho=-0.922, p=0.0109 [FDR sig.]
+- **Furti con destrezza vs Rapine in esercizi commerciali** (autori): rho=+0.905, p=0.0131 [FDR sig.]
+- **Minacce vs Rapine in pubblica via** (autori): rho=+0.905, p=0.0131 [FDR sig.]
+- **Ingiurie vs Furti con destrezza** (autori): rho=+0.905, p=0.0131 [FDR sig.]
+- **Incendi boschivi vs Associazione di tipo mafioso** (autori): rho=-0.905, p=0.0131 [FDR sig.]
+- **Minacce vs Ingiurie** (autori): rho=+0.905, p=0.0131 [FDR sig.]
+- **Percosse vs Minacce** (vittime): rho=+0.905, p=0.0131 [FDR sig.]
 
 ---
 
@@ -201,11 +201,11 @@ Trend della differenza tra ripartizioni per reato e dimensione. Un trend crescen
 
 Trend del rapporto autori/vittime per reato. Un rapporto in calo indica piu' vittime per ogni autore identificato.
 
-- **Incendi dolosi**: trend crescente, rapporto 0.10 -> 0.31 (+0.21), p=0.0000 [FDR sig.]
+- **Danneggiamento seguito da incendio**: trend crescente, rapporto 0.10 -> 0.31 (+0.21), p=0.0000 [FDR sig.]
 - **Incendi**: trend crescente, rapporto 0.16 -> 0.80 (+0.64), p=0.0000 [FDR sig.]
-- **Resistenza a pubblico ufficiale**: trend crescente, rapporto 0.68 -> 1.13 (+0.45), p=0.0001 [FDR sig.]
+- **Ingiurie**: trend crescente, rapporto 0.68 -> 1.13 (+0.45), p=0.0001 [FDR sig.]
 - **Lesioni dolose**: trend crescente, rapporto 0.78 -> 0.97 (+0.20), p=0.0000 [FDR sig.]
-- **Furti con destrezza**: trend crescente, rapporto 0.05 -> 0.20 (+0.15), p=0.0000 [FDR sig.]
+- **Furti con strappo**: trend crescente, rapporto 0.05 -> 0.20 (+0.15), p=0.0000 [FDR sig.]
 - **Rapine in pubblica via**: trend crescente, rapporto 0.29 -> 0.86 (+0.57), p=0.0001 [FDR sig.]
 - **Minacce**: trend crescente, rapporto 0.62 -> 0.77 (+0.15), p=0.0000 [FDR sig.]
 - **Rapine**: trend crescente, rapporto 0.45 -> 1.05 (+0.60), p=0.0001 [FDR sig.]
@@ -217,8 +217,8 @@ Trend del rapporto autori/vittime per reato. Un rapporto in calo indica piu' vit
 - **Sequestri di persona**: trend crescente, rapporto 1.12 -> 1.61 (+0.48), p=0.0032 [FDR sig.]
 - **Truffe e frodi informatiche**: trend decrescente, rapporto 0.43 -> 0.31 (-0.11), p=0.0025 [FDR sig.]
 - **Tentati omicidi**: trend crescente, rapporto 1.35 -> 1.96 (+0.61), p=0.0001 [FDR sig.]
-- **Sfruttamento della prostituzione**: trend crescente, rapporto 4.83 -> 6.29 (+1.46), p=0.0442 [FDR sig.]
-- **Omicidi a scopo di rapina**: trend crescente, rapporto 1.77 -> 3.22 (+1.45), p=0.0025 [FDR sig.]
+- **Sfruttamento e favoreggiamento della prostituzione**: trend crescente, rapporto 4.83 -> 6.29 (+1.46), p=0.0442 [FDR sig.]
+- **Omicidi a scopo di furto o rapina**: trend crescente, rapporto 1.77 -> 3.22 (+1.45), p=0.0025 [FDR sig.]
 - **Omicidi colposi**: trend decrescente, rapporto 1.49 -> 1.07 (-0.43), p=0.0046 [FDR sig.]
 - **Omicidi di tipo mafioso**: trend crescente, rapporto 3.93 -> 7.65 (+3.71), p=0.0004 [FDR sig.]
 
@@ -232,8 +232,8 @@ Trend del rapporto autori/vittime per reato. Un rapporto in calo indica piu' vit
 | 2 | 0.919 | medium | Furti | VICTIM | tasso per 100k (Nord - Centro) | Nord vs Centro | decreasing | -239.5 | 0.0019 | 60% |  | media |
 | 3 | 0.918 | medium | violenti vs droga | OFFEND | totale | Italia | increasing | +45749.0 | 0.0046 | 60% |  |  |
 | 4 | 0.914 | medium | Truffe e frodi informatiche | VICTIM | tasso per 100k | Valle d'Aosta | increasing | +342.1 | 0.0009 | 60% |  | bassa |
-| 5 | 0.902 | high | Incendi dolosi | VICTIM | totale | Italia | decreasing | -4918.0 | 0.0006 | 73% |  | media |
-| 6 | 0.898 | medium | Incendi dolosi | OFFEND | totale | Italia | increasing | +607.0 | 0.0026 | 53% |  | media |
+| 5 | 0.902 | high | Danneggiamento seguito da incendio | VICTIM | totale | Italia | decreasing | -4918.0 | 0.0006 | 73% |  | media |
+| 6 | 0.898 | medium | Danneggiamento seguito da incendio | OFFEND | totale | Italia | increasing | +607.0 | 0.0026 | 53% |  | media |
 | 7 | 0.894 | high | Sequestri di persona | OFFEND | totale | Italia | decreasing | -1170.0 | 0.0002 | 73% |  |  |
 | 8 | 0.894 | medium | Estorsioni | VICTIM | totale | Italia | increasing | +4729.0 | 0.0011 | 67% |  | bassa |
 | 9 | 0.893 | medium | Associazione per delinquere | OFFEND | totale | Italia | decreasing | -6205.0 | 0.0085 | 67% |  |  |
@@ -242,7 +242,7 @@ Trend del rapporto autori/vittime per reato. Un rapporto in calo indica piu' vit
 | 12 | 0.892 | high | Truffe e frodi informatiche | VICTIM | tasso per 100k | Veneto | increasing | +301.6 | 0.0006 | 73% |  | bassa |
 | 13 | 0.889 | medium | Truffe e frodi informatiche | VICTIM | tasso per 100k | Toscana | increasing | +301.7 | 0.0015 | 60% |  | bassa |
 | 14 | 0.885 | high | Atti persecutori (stalking) | VICTIM | totale | Italia | increasing | +13869.0 | 0.0002 | 85% |  | molto_bassa |
-| 15 | 0.885 | high | Sfruttamento della prostituzione | OFFEND | totale | Italia | decreasing | -2902.0 | 0.0005 | 73% |  | non_applicabile_consensuale |
+| 15 | 0.885 | high | Sfruttamento e favoreggiamento della prostituzione | OFFEND | totale | Italia | decreasing | -2902.0 | 0.0005 | 73% |  | non_applicabile_consensuale |
 | 16 | 0.885 | high | Danneggiamenti | VICTIM | tasso per 100k | Liguria | decreasing | -650.1 | 0.0002 | 80% |  | media |
 | 17 | 0.883 | high | Furti | VICTIM | tasso per 100k | Calabria | decreasing | -888.4 | 0.0011 | 73% |  | media |
 | 18 | 0.883 | high | Sequestri di persona | VICTIM | totale | Italia | decreasing | -1358.0 | 0.0002 | 73% |  |  |
@@ -252,13 +252,13 @@ Trend del rapporto autori/vittime per reato. Un rapporto in calo indica piu' vit
 | 22 | 0.878 | high | Truffe e frodi informatiche | OFFEND | totale | Italia | increasing | +27019.0 | 0.0002 | 80% |  | bassa |
 | 23 | 0.878 | medium | Minacce | VICTIM | totale | Italia | decreasing | -19943.0 | 0.0033 | 60% |  | bassa |
 | 24 | 0.876 | medium | Truffe e frodi informatiche | VICTIM | tasso per 100k | Piemonte | increasing | +293.4 | 0.0009 | 67% |  | bassa |
-| 25 | 0.874 | high | Furti con destrezza | VICTIM | totale | Italia | decreasing | -11938.0 | 0.0043 | 80% |  | media |
+| 25 | 0.874 | high | Furti con strappo | VICTIM | totale | Italia | decreasing | -11938.0 | 0.0043 | 80% |  | media |
 | 26 | 0.874 | medium | Furti | VICTIM | tasso per 100k | Basilicata | decreasing | -380.9 | 0.0167 | 67% |  | media |
 | 27 | 0.874 | medium | Furti | VICTIM | tasso per 100k | Puglia | decreasing | -872.4 | 0.0389 | 67% |  | media |
 | 28 | 0.873 | high | Furti | VICTIM | tasso per 100k | Lombardia | decreasing | -1429.1 | 0.0021 | 80% |  | media |
 | 29 | 0.871 | high | Furti | VICTIM | tasso per 100k | Valle d'Aosta | decreasing | -1238.9 | 0.0004 | 73% |  | media |
 | 30 | 0.871 | high | Omicidi volontari consumati | VICTIM | totale | Italia | decreasing | -303.0 | 0.0002 | 80% |  | non_applicabile_automatica |
-| 31 | 0.871 | medium | Sfruttamento della prostituzione | VICTIM | totale | Italia | decreasing | -646.0 | 0.0009 | 67% |  | non_applicabile_consensuale |
+| 31 | 0.871 | medium | Sfruttamento e favoreggiamento della prostituzione | VICTIM | totale | Italia | decreasing | -646.0 | 0.0009 | 67% |  | non_applicabile_consensuale |
 | 32 | 0.870 | medium | Omicidi di tipo mafioso | OFFEND | totale | Italia | decreasing | -346.0 | 0.0033 | 53% |  | non_applicabile_automatica |
 | 33 | 0.870 | medium | Usura | OFFEND | totale | Italia | decreasing | -897.0 | 0.0003 | 60% |  | molto_bassa |
 | 34 | 0.868 | medium | Truffe e frodi informatiche | VICTIM | tasso per 100k | Liguria | increasing | +250.1 | 0.0011 | 60% |  | bassa |
@@ -273,7 +273,7 @@ Trend del rapporto autori/vittime per reato. Un rapporto in calo indica piu' vit
 | 43 | 0.860 | medium | Ricettazione | OFFEND | totale | Italia | decreasing | -21334.0 | 0.0033 | 60% |  | bassa |
 | 44 | 0.859 | medium | Furti | VICTIM | tasso per 100k | Liguria | decreasing | -2199.3 | 0.0011 | 67% |  | media |
 | 45 | 0.859 | medium | Truffe e frodi informatiche | VICTIM | totale | Italia | increasing | +127246.0 | 0.0006 | 60% |  | bassa |
-| 46 | 0.859 | medium | Furti con destrezza | OFFEND | totale | Italia | increasing | +1023.0 | 0.0135 | 60% |  | media |
+| 46 | 0.859 | medium | Furti con strappo | OFFEND | totale | Italia | increasing | +1023.0 | 0.0135 | 60% |  | media |
 | 47 | 0.858 | medium | Furti | VICTIM | tasso per 100k | Emilia-Romagna | decreasing | -1848.1 | 0.0167 | 67% |  | media |
 | 48 | 0.858 | medium | Lesioni dolose | OFFEND | totale | Italia | increasing | +8277.0 | 0.0254 | 67% | ! | media |
 | 49 | 0.857 | medium | Incendi | VICTIM | totale | Italia | decreasing | -8849.0 | 0.0002 | 67% |  |  |

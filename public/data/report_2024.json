@@ -10,7 +10,7 @@
   },
   "top_crescita": [
     {
-      "reato": "Violazioni proprietà intellettuale",
+      "reato": "Violazione della proprietà intellettuale",
       "codice": "INTPROP",
       "yoy_pct": 70.3,
       "valore_corrente": 402,
@@ -96,7 +96,7 @@
       "nota": "La diminuzione della violenza mafiosa è una tendenza consolidata dagli anni '90, legata alla transizione verso attività economiche meno visibili."
     },
     {
-      "reato": "Sfruttamento della prostituzione",
+      "reato": "Sfruttamento e favoreggiamento della prostituzione",
       "codice": "PROSTI",
       "yoy_pct": -14.0,
       "valore_corrente": 943,

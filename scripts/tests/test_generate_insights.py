@@ -49,6 +49,17 @@ class TestIsTautologicalPair:
         assert is_tautological_pair("THEFT", "ROBBER") is False
         assert is_tautological_pair("DRUG", "RAPE") is False
 
+    def test_voci_autonome(self):
+        # Nomi simili ma voci distinte nel totale ISTAT
+        assert is_tautological_pair("ARSON", "DAMARS") is False
+        assert is_tautological_pair("RAPE", "RAPEUN18") is False
+        assert is_tautological_pair("INTENHOM", "INFANTHOM") is False
+
+    def test_sottotipi_singoli(self):
+        assert is_tautological_pair("ARSON", "FOREARS") is True
+        assert is_tautological_pair("UNINTHOM", "ROADHOM") is True
+        assert is_tautological_pair("TERRORHOM", "MAFIAHOM") is True
+
     def test_cross_hierarchy(self):
         # Figli di genitori diversi non sono tautologici
         assert is_tautological_pair("BAGTHEF", "STREETROB") is False

@@ -1,3 +1,11 @@
+import gerarchiaReati from "../../public/data/reati_gerarchia.json";
+
+// I sottotipi ISTAT (es. furti con destrezza) sono gia' contati nel padre (furti):
+// nei confronti fra reati si mostra solo il padre
+const SOTTOTIPI_REATO = new Set<string>(Object.values(gerarchiaReati).flat());
+export const isVoceAutonoma = (codice: string) =>
+  codice !== "TOT" && !SOTTOTIPI_REATO.has(codice);
+
 export const COLORS = {
   primary: "#2E86AB",
   secondary: "#E63946",
@@ -8,6 +16,7 @@ export const COLORS = {
   rapine: "#8B4513",
   droga: "#9467bd",
   altro: "#7f7f7f",
+  ingiurie: "#17becf",
 
   omicidi: "#d62728",
   tentati_omicidi: "#ff7f0e",

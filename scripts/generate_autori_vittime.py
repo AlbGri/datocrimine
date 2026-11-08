@@ -30,86 +30,12 @@ from pathlib import Path
 
 import pandas as pd
 
+from reati import ETICHETTE, GERARCHIA
+
 log = logging.getLogger(__name__)
 
 # Anno di riferimento (ultimo con TOT per OFFEND)
 ANNO_REF = 2022
-
-# ---------------------------------------------------------------------------
-# Mappatura codici reato -> label italiane
-# I codici senza prefisso sono abbreviazioni ISTAT standard.
-# I codici CP*** fanno riferimento ad articoli del codice penale (verificati
-# su brocardi.it). STALK e CP612BIS sono unificati: vedi docstring modulo.
-# ---------------------------------------------------------------------------
-CRIME_NAMES = {
-    "TOT": "Totale",
-    # Omicidi
-    "INTENHOM": "Omicidi volontari consumati",
-    "ATTEMPHOM": "Tentati omicidi",
-    "MANSHOM": "Omicidi preterintenzionali",
-    "INFANTHOM": "Infanticidi",
-    "MAFIAHOM": "Omicidi di tipo mafioso",
-    "TERRORHOM": "Omicidi per terrorismo",
-    "MASSMURD": "Stragi",
-    "ROBBHOM": "Omicidi a scopo di rapina",
-    "ROADHOM": "Omicidi stradali",
-    "UNINTHOM": "Omicidi colposi",
-    # Violenza contro la persona
-    "CULPINJU": "Lesioni dolose",
-    "BLOWS": "Percosse",
-    "MENACE": "Minacce",
-    # Reati sessuali e contro minori
-    "RAPE": "Violenze sessuali",
-    "RAPEUN18": "Atti sessuali con minorenne",
-    "CORRUPUN18": "Corruzione di minorenne",
-    "PORNO": "Pornografia minorile",
-    "CP572": "Maltrattamenti in famiglia",
-    "CP612BIS": "Atti persecutori (stalking)",
-    "CP612TER": "Diffusione illecita immagini sessuali",
-    "PROSTI": "Sfruttamento della prostituzione",
-    # Sequestri e rapine
-    "KIDNAPP": "Sequestri di persona",
-    "ROBBER": "Rapine",
-    "BANKROB": "Rapine in banca",
-    "POSTROB": "Rapine in ufficio postale",
-    "HOUSEROB": "Rapine in abitazione",
-    "SHOPROB": "Rapine in esercizi commerciali",
-    "STREETROB": "Rapine in pubblica via",
-    # Estorsione e usura
-    "EXTORT": "Estorsioni",
-    "USURY": "Usura",
-    # Furti
-    "THEFT": "Furti",
-    "PICKTHEF": "Furti con destrezza",
-    "SHOPTHEF": "Furti in esercizi commerciali",
-    "BAGTHEF": "Furti con strappo",
-    "BURGTHEF": "Furti con scasso",
-    "VEHITHEF": "Furti di autoveicoli",
-    "CARTHEF": "Furti di autovetture",
-    "MOPETHEF": "Furti di ciclomotori",
-    "MOTORTHEF": "Furti di motocicli",
-    "TRUCKTHEF": "Furti di autocarri",
-    "ARTTHEF": "Furti di opere d'arte",
-    # Ricettazione e danni
-    "RECEIV": "Ricettazione",
-    "DAMAGE": "Danneggiamenti",
-    "DAMARS": "Incendi dolosi",
-    "ARSON": "Incendi",
-    # Frodi e informatica
-    "SWINCYB": "Truffe e frodi informatiche",
-    "CYBERCRIM": "Delitti informatici",
-    "INTPROP": "Violazioni proprietà intellettuale",
-    "COUNTER": "Contraffazione",
-    # Criminalita' organizzata e altro
-    "SMUGGL": "Contrabbando",
-    "DRUG": "Stupefacenti",
-    "MONEYLAU": "Riciclaggio",
-    "CRIMASS": "Associazione per delinquere",
-    "MAFIASS": "Associazione di tipo mafioso",
-    "FOREARS": "Porto abusivo di armi",
-    "ATTACK": "Attentati",
-    "OFFENCE": "Resistenza a pubblico ufficiale",
-}
 
 # Ripartizioni geografiche
 RIPARTIZIONI = {
@@ -392,7 +318,7 @@ def generate_trend(
         df_it = df[df["REF_AREA"] == "IT"]
 
         for crime_code in sorted(df_it["TYPE_CRIME"].unique()):
-            if crime_code not in CRIME_NAMES:
+            if crime_code not in ETICHETTE:
                 continue
             df_crime = df_it[df_it["TYPE_CRIME"] == crime_code]
 
@@ -404,7 +330,7 @@ def generate_trend(
                 records.append({
                     "data_type": data_type,
                     "codice_reato": crime_code,
-                    "reato": CRIME_NAMES[crime_code],
+                    "reato": ETICHETTE[crime_code],
                     "anno": int(anno),
                     **metrics,
                 })
@@ -443,7 +369,7 @@ def generate_reati(
             records.append({
                 "data_type": data_type,
                 "codice_reato": crime_code,
-                "reato": CRIME_NAMES.get(crime_code, crime_code),
+                "reato": ETICHETTE.get(crime_code, crime_code),
                 **metrics,
             })
 
@@ -475,7 +401,7 @@ def generate_province(
         for (ref_area, crime_code, anno), group in df_prov.groupby(
             ["REF_AREA", "TYPE_CRIME", "TIME_PERIOD"]
         ):
-            if crime_code not in CRIME_NAMES:
+            if crime_code not in ETICHETTE:
                 continue
             metrics = extract_metrics(group)
             if metrics["totale"] == 0:
@@ -487,7 +413,7 @@ def generate_province(
                 "provincia": territory_names.get(ref_area, ref_area),
                 "regione": get_region_name(ref_area),
                 "codice_reato": crime_code,
-                "reato": CRIME_NAMES.get(crime_code, crime_code),
+                "reato": ETICHETTE.get(crime_code, crime_code),
                 "anno": int(anno),
                 **metrics,
             })
@@ -519,7 +445,7 @@ def generate_regioni(
         df_reg = df[df["REF_AREA"].isin(REGIONI)]
 
         for crime_code in sorted(REATI_REGIONI):
-            if crime_code not in CRIME_NAMES:
+            if crime_code not in ETICHETTE:
                 continue
             df_crime = df_reg[df_reg["TYPE_CRIME"] == crime_code]
 
@@ -554,7 +480,7 @@ def generate_regioni(
                         "codice_regione": reg_code,
                         "regione": reg_name,
                         "codice_reato": crime_code,
-                        "reato": CRIME_NAMES[crime_code],
+                        "reato": ETICHETTE[crime_code],
                         "anno": int(anno),
                         "tasso": tasso,
                         **metrics,
@@ -567,6 +493,14 @@ def generate_regioni(
     n_crimes = len({r["codice_reato"] for r in records})
     log.info("OK  %-45s (%d regioni, %d reati, %d record, %.1f KB)",
              out_path.name, n_regioni, n_crimes, len(records), size_kb)
+
+
+def generate_gerarchia(out_dir: Path) -> None:
+    """Genera reati_gerarchia.json: padre -> sottotipi, per non contare due volte nel frontend."""
+    gerarchia = {padre: sorted(figli) for padre, figli in GERARCHIA.items()}
+    out_path = out_dir / "reati_gerarchia.json"
+    out_path.write_text(json.dumps(gerarchia, ensure_ascii=False), encoding="utf-8")
+    log.info("OK  %-45s (%d codici padre)", out_path.name, len(gerarchia))
 
 
 def main() -> None:
@@ -587,6 +521,7 @@ def main() -> None:
     generate_reati(df_offend, df_victim, out_dir)
     generate_province(df_offend, df_victim, territory_names, out_dir)
     generate_regioni(df_offend, df_victim, popolazione, out_dir)
+    generate_gerarchia(out_dir)
 
     log.info("\nCompletato.")
 

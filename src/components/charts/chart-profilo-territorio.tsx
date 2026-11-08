@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { PLOTLY_CONFIG, AXIS_FIXED, MetricaProfilo, METRICHE_PROFILO, COLORS, MIN_CASI, TOP_N, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE } from "@/lib/config";
+import { PLOTLY_CONFIG, AXIS_FIXED, MetricaProfilo, METRICHE_PROFILO, COLORS, MIN_CASI, TOP_N, isVoceAutonoma, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE } from "@/lib/config";
 import { fmtNum, fmtPct, fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -144,7 +144,7 @@ export function ChartProfiloTerritorio({ dataType }: Props) {
       r.data_type === dataType &&
       r.regione === regione &&
       r.anno === anno &&
-      r.codice_reato !== "TOT" &&
+      isVoceAutonoma(r.codice_reato) &&
       r.totale >= MIN_CASI
   );
 
