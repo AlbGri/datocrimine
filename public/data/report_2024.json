@@ -222,7 +222,7 @@
       "Territorio": "Sardegna",
       "tasso_corrente": 27.4,
       "tasso_precedente": 26.98,
-      "variazione_pct": 1.6
+      "variazione_pct": 1.5
     },
     {
       "REF_AREA": "ITF2",
@@ -250,7 +250,7 @@
       "Territorio": "Campania",
       "tasso_corrente": 38.51,
       "tasso_precedente": 38.76,
-      "variazione_pct": -0.6
+      "variazione_pct": -0.7
     },
     {
       "REF_AREA": "ITF4",
@@ -304,21 +304,21 @@
       "reato": "Atti sessuali con minorenne",
       "tasso_corrente": 1.01,
       "tasso_precedente": 0.87,
-      "variazione_pct": 16.1,
+      "variazione_pct": 15.9,
       "delitti_corrente": 593
     },
     {
       "reato": "Sequestri di persona",
       "tasso_corrente": 1.2,
       "tasso_precedente": 1.36,
-      "variazione_pct": -11.8,
+      "variazione_pct": -12.2,
       "delitti_corrente": 705
     },
     {
       "reato": "Tentati omicidi",
       "tasso_corrente": 1.94,
       "tasso_precedente": 1.75,
-      "variazione_pct": 10.9,
+      "variazione_pct": 10.7,
       "delitti_corrente": 1143
     },
     {
@@ -332,14 +332,14 @@
       "reato": "Omicidi volontari consumati",
       "tasso_corrente": 0.55,
       "tasso_precedente": 0.58,
-      "variazione_pct": -5.2,
+      "variazione_pct": -4.4,
       "delitti_corrente": 326
     },
     {
       "reato": "Rapine in abitazione",
       "tasso_corrente": 3.21,
       "tasso_precedente": 3.15,
-      "variazione_pct": 1.9,
+      "variazione_pct": 1.8,
       "delitti_corrente": 1891
     }
   ]

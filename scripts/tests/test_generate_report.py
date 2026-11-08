@@ -101,8 +101,8 @@ class TestBuildExecutiveSummary:
             {"Anno": 2024, "Delitti": 2600000, "Popolazione": 59800000, "Tasso_per_1000": 43.48},
         ])
         result = build_executive_summary(df, 2024)
-        # media_storica = mean(40.0, 41.67) = 40.835
-        assert result["media_storica"] == pytest.approx(40.84, abs=0.01)
+        # media_storica = mean(40.0, 41.667) = 40.833
+        assert result["media_storica"] == 40.83
 
     def test_anno_mancante_raises(self):
         df = _make_df_italia([
@@ -350,8 +350,10 @@ class TestBuildReatiAllarme:
         """Helper: (reato, tasso_prev, tasso_curr, delitti_prev, delitti_curr)."""
         rows = []
         for reato, t_prev, t_curr, d_prev, d_curr in reati:
-            rows.append({"Reato": reato, "Anno": 2023, "Tasso_per_100k": t_prev, "Delitti": d_prev})
-            rows.append({"Reato": reato, "Anno": 2024, "Tasso_per_100k": t_curr, "Delitti": d_curr})
+            rows.append({"Reato": reato, "Anno": 2023, "Tasso_per_100k": t_prev, "Delitti": d_prev,
+                         "Popolazione": 60_000_000})
+            rows.append({"Reato": reato, "Anno": 2024, "Tasso_per_100k": t_curr, "Delitti": d_curr,
+                         "Popolazione": 60_000_000})
         return pd.DataFrame(rows)
 
     def test_basic(self):
@@ -373,14 +375,15 @@ class TestBuildReatiAllarme:
 
     def test_anno_mancante(self):
         df = pd.DataFrame([
-            {"Reato": "Furti in abitazione", "Anno": 2022, "Tasso_per_100k": 200.0, "Delitti": 120000},
+            {"Reato": "Furti in abitazione", "Anno": 2022, "Tasso_per_100k": 200.0, "Delitti": 120000,
+             "Popolazione": 60_000_000},
         ])
         result = build_reati_allarme(df, 2024)
         assert len(result) == 0
 
     def test_tasso_zero_prev(self):
         df = self._make_df_allarme([
-            ("Reato raro", 0.0, 5.0, 0, 300),
+            ("Reato raro", 0.0, 5.0, 0, 3000),
         ])
         result = build_reati_allarme(df, 2024)
         assert len(result) == 1
@@ -393,6 +396,14 @@ class TestBuildReatiAllarme:
         result = build_reati_allarme(df, 2024)
         assert result[0]["variazione_pct"] == 20.0
         assert result[0]["delitti_corrente"] == 72000
+
+    def test_variazione_su_valori_esatti(self):
+        # Tassi arrotondati 0,57 -> 0,54 darebbero -5,3%; i delitti 341 -> 326 danno -4,4%
+        df = self._make_df_allarme([
+            ("Omicidi", 0.57, 0.54, 341, 326),
+        ])
+        result = build_reati_allarme(df, 2024)
+        assert result[0]["variazione_pct"] == -4.4
 
 
 # ===================================================================

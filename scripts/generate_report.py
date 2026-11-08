@@ -103,6 +103,11 @@ RIPARTIZIONI_DELITTI = {
 }
 
 
+def _tasso(row: pd.Series, per: int) -> float:
+    """Tasso dai valori esatti: i tassi nei JSON sono arrotondati e falserebbero le variazioni."""
+    return float(row["Delitti"]) / float(row["Popolazione"]) * per
+
+
 def _trend_strutturale_with_covid(
     series: np.ndarray, anni: np.ndarray
 ) -> str:
@@ -126,12 +131,13 @@ def build_executive_summary(
             f"Dati mancanti per {target_year} o {target_year - 1} in delitti_italia"
         )
 
-    tasso_curr = float(row_curr.iloc[0]["Tasso_per_1000"])
-    tasso_prev = float(row_prev.iloc[0]["Tasso_per_1000"])
+    tasso_curr = _tasso(row_curr.iloc[0], 1000)
+    tasso_prev = _tasso(row_prev.iloc[0], 1000)
     variazione_pct = (tasso_curr - tasso_prev) / abs(tasso_prev) * 100
 
     # Media storica (tutti gli anni disponibili escluso il target)
-    media_storica = float(df[df["Anno"] < target_year]["Tasso_per_1000"].mean())
+    precedenti = df[df["Anno"] < target_year]
+    media_storica = float((precedenti["Delitti"] / precedenti["Popolazione"] * 1000).mean())
 
     return {
         "tasso_totale": round(tasso_curr, 2),
@@ -310,8 +316,8 @@ def build_variazione_regioni(
         row_prev = grp[grp["Anno"] == target_year - 1]
         if row_curr.empty or row_prev.empty:
             continue
-        tasso_curr = float(row_curr.iloc[0]["Tasso_per_1000"])
-        tasso_prev = float(row_prev.iloc[0]["Tasso_per_1000"])
+        tasso_curr = _tasso(row_curr.iloc[0], 1000)
+        tasso_prev = _tasso(row_prev.iloc[0], 1000)
         var_pct = (tasso_curr - tasso_prev) / abs(tasso_prev) * 100
         results.append({
             "REF_AREA": row_curr.iloc[0]["REF_AREA"],
@@ -374,8 +380,8 @@ def build_reati_allarme(
         row_prev = grp[grp["Anno"] == target_year - 1]
         if row_curr.empty or row_prev.empty:
             continue
-        tasso_curr = float(row_curr.iloc[0]["Tasso_per_100k"])
-        tasso_prev = float(row_prev.iloc[0]["Tasso_per_100k"])
+        tasso_curr = _tasso(row_curr.iloc[0], 100_000)
+        tasso_prev = _tasso(row_prev.iloc[0], 100_000)
         var_pct = (tasso_curr - tasso_prev) / abs(tasso_prev) * 100 if tasso_prev != 0 else 0
         results.append({
             "reato": reato,
