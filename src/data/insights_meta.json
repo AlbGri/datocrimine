@@ -1,3 +1,9 @@
 {
-  "combinazioni_analizzate": 4537
+  "combinazioni_analizzate": 4537,
+  "candidati_rilevanti": 2215,
+  "fdr_alpha": 0.05,
+  "min_persone_anno": 50,
+  "min_anni": 5,
+  "min_effetto_pp": 3.0,
+  "min_rho": 0.7
 }

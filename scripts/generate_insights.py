@@ -1530,11 +1530,7 @@ def main():
     all_candidates.extend(analyze_rapporto_autori_vittime(data["avt"]))
 
     log.info(f"Totale candidati pre-FDR: {len(all_candidates)}")
-    # La pagina Insights cita quante combinazioni sono state testate: il numero viene da qui
-    meta = {"combinazioni_analizzate": len(all_candidates)}
-    (PROJECT_ROOT / "src" / "data" / "insights_meta.json").write_text(
-        json.dumps(meta, indent=2) + "\n", encoding="utf-8"
-    )
+    n_testate = len(all_candidates)
 
     # DataFrame
     df = pd.DataFrame(all_candidates)
@@ -1573,9 +1569,23 @@ def main():
     df.to_csv(output_csv, index=False, encoding="utf-8-sig")
     log.info(f"CSV: {output_csv} ({len(df)} candidati)")
 
+    # Le pagine del sito citano conteggi e soglie: li leggono da qui, non li riscrivono a mano
+    meta = {
+        "combinazioni_analizzate": n_testate,
+        "candidati_rilevanti": len(df),
+        "fdr_alpha": FDR_ALPHA,
+        "min_persone_anno": MIN_ABS_PER_YEAR,
+        "min_anni": MIN_DATA_POINTS,
+        "min_effetto_pp": MIN_EFFECT_PP,
+        "min_rho": MIN_RHO,
+    }
+    (PROJECT_ROOT / "src" / "data" / "insights_meta.json").write_text(
+        json.dumps(meta, indent=2) + "\n", encoding="utf-8"
+    )
+
     # Output report markdown
     output_report = PROJECT_ROOT / "docs" / "insights_report.md"
-    generate_report(df, output_report, meta["combinazioni_analizzate"])
+    generate_report(df, output_report, n_testate)
 
     # Statistiche riassuntive
     log.info("\n--- Riepilogo ---")

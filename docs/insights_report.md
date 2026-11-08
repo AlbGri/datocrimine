@@ -1,6 +1,6 @@
 # Insights Candidates Report
 
-Generato: 2026-11-08 23:10
+Generato: 2026-11-08 23:15
 
 - Combinazioni testate: 4537
 - Candidati dopo il filtro di rilevanza: 2215

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/metadata";
+import { fmtNum } from "@/lib/format";
+import insightsMeta from "@/data/insights_meta.json";
 
 export const metadata: Metadata = pageMetadata(
   "Dati e Codice Sorgente",
@@ -168,8 +170,8 @@ export default function DatiECodice() {
                   JSON in public/data/ + popolazione CSV
                 </td>
                 <td className="py-2 text-xs">
-                  insights_candidates.csv (4.537 combinazioni analizzate, 2.215 oltre le soglie di
-                  rilevanza, 9 test statistici),
+                  insights_candidates.csv ({fmtNum(insightsMeta.combinazioni_analizzate)} combinazioni analizzate,{" "}
+                  {fmtNum(insightsMeta.candidati_rilevanti)} oltre le soglie di rilevanza, 9 test statistici),
                   insights_categorie.json, insights_ripartizioni.json
                 </td>
               </tr>

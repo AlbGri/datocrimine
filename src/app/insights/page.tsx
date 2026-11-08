@@ -7,7 +7,7 @@ import { CollapsibleSection } from "@/components/ui/collapsible-section";
 import type { InsightChartConfig } from "@/components/charts/insight-mini-chart";
 import insightsData from "@/data/insights.json";
 import insightsMeta from "@/data/insights_meta.json";
-import { fmtNum } from "@/lib/format";
+import { fmtNum, fmtPct } from "@/lib/format";
 
 const InsightMiniChart = lazy(
   () =>
@@ -400,7 +400,7 @@ export default function Insights() {
                 Benjamini-Hochberg (FDR)
               </a>
             </strong>{" "}
-            al 5%, separatamente per ogni tipo di analisi. La correzione tiene
+            al {fmtPct(insightsMeta.fdr_alpha * 100, 0)}, separatamente per ogni tipo di analisi. La correzione tiene
             conto di tutte le combinazioni analizzate, anche di quelle scartate
             dopo perch&eacute; l&apos;effetto era troppo piccolo. Tutti gli insight
             di questa pagina hanno superato questa correzione, tranne quello
@@ -411,15 +411,16 @@ export default function Insights() {
           <p>Sono state inoltre escluse dall&apos;analisi:</p>
           <ul className="list-disc pl-6 space-y-2">
             <li>
-              Combinazioni con meno di 50 persone/anno (numeri troppo piccoli
+              Combinazioni con meno di {insightsMeta.min_persone_anno} persone/anno (numeri troppo piccoli
               per essere affidabili)
             </li>
-            <li>Serie con meno di 5 anni di dati disponibili</li>
+            <li>Serie con meno di {insightsMeta.min_anni} anni di dati disponibili</li>
           </ul>
           <p>
             Dopo la correzione sono stati scartati i risultati con un effetto
-            troppo piccolo per essere rilevanti: variazioni sotto i 3 punti
-            percentuali, correlazioni fra reati sotto 0,7.
+            troppo piccolo per essere rilevanti: variazioni sotto i{" "}
+            {fmtNum(insightsMeta.min_effetto_pp)} punti percentuali, correlazioni fra reati sotto{" "}
+            {fmtNum(insightsMeta.min_rho, 1)}.
           </p>
 
           <p>

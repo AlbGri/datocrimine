@@ -1,0 +1,25 @@
+{
+  "nota": "Numeri ammessi scritti a mano nelle pagine (src/app, src/components). Tutti gli altri numeri da dato vanno calcolati dai dati nel codice.",
+  "tutte": {
+    "numeri": ["1.000", "100.000"],
+    "perche": "unita' di misura: tassi per 1.000 o per 100.000 abitanti"
+  },
+  "file": {
+    "src/app/guida/page.tsx": {
+      "numeri": ["4,5%", "4.500", "20%", "50%", "80%", "5%"],
+      "perche": "esempi di lettura dei dati, non dati"
+    },
+    "src/app/reati-allarme-sociale/page.tsx": {
+      "numeri": ["2%"],
+      "perche": "\"meno del 2%\": verificato a mano, calcolo in numeri_metodologia.json (a_mano)"
+    },
+    "src/components/charts/chart-numero-oscuro.tsx": {
+      "numeri": ["35%"],
+      "perche": "soglia ISTAT dell'errore campionario per l'asterisco"
+    },
+    "src/components/charts/chart-tabella-province.tsx": {
+      "numeri": ["150.000"],
+      "perche": "soglia sotto cui una provincia e' piccola, come in methodology.md"
+    }
+  }
+}
