@@ -143,7 +143,7 @@ export function ChartMappaRegioni({ anno }: Props) {
           con alta presenza turistica o pendolarismo mostrano tassi elevati
           perch&eacute; il denominatore &egrave; la popolazione residente, non quella
           effettiva. La propensione alla denuncia varia per tipo di reato e
-          territorio (vedi sezione Numero Oscuro in Home). I dati mostrano
+          territorio (vedi la sezione Il Numero Oscuro nella pagina Il contesto). I dati mostrano
           delitti denunciati, non criminalit&agrave; reale.
         </AlertDescription>
       </Alert>
@@ -248,7 +248,7 @@ export function ChartMappaRegioni({ anno }: Props) {
         <Card>
           <CardContent className="py-2 sm:pt-4 sm:pb-2 text-center">
             <p className="text-xs sm:text-sm text-muted-foreground">
-              Piu alto: {top.Territorio}
+              Pi&ugrave; alto: {top.Territorio}
             </p>
             <p className="text-lg sm:text-2xl font-bold">
               {fmtNum(top.Tasso_per_1000, 1)}{varIndicator(top.Tasso_per_1000, prevMap.get(top.REF_AREA))}
@@ -258,7 +258,7 @@ export function ChartMappaRegioni({ anno }: Props) {
         <Card>
           <CardContent className="py-2 sm:pt-4 sm:pb-2 text-center">
             <p className="text-xs sm:text-sm text-muted-foreground">
-              Piu basso: {bottom.Territorio}
+              Pi&ugrave; basso: {bottom.Territorio}
             </p>
             <p className="text-lg sm:text-2xl font-bold">
               {fmtNum(bottom.Tasso_per_1000, 1)}{varIndicator(bottom.Tasso_per_1000, prevMap.get(bottom.REF_AREA))}

@@ -276,7 +276,7 @@ export function ChartNumeroOscuro() {
         </div>
       )}
 
-      <ChartFullscreenWrapper ariaDescription="Grafico propensione alla denuncia per macro-area geografica e tipo di reato, 2022-2023. Il Sud denuncia piu' della media per reati violenti e contro la proprieta'">
+      <ChartFullscreenWrapper ariaDescription="Grafico propensione alla denuncia per macro-area geografica e tipo di reato, 2022-2023. Il Sud denuncia più della media per reati violenti e contro la proprietà">
         <Plot
           data={[
             ...Object.entries(macroCat2023).map(([cat, vals], i) => ({
