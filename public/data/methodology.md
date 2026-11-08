@@ -378,4 +378,4 @@ Questo progetto è stato sviluppato con **VS Code** e **[Claude Code](https://do
 
 La statistica **non è una scienza esatta**: è uno strumento interpretativo, e come tale **uno strumento politico** in senso ampio. Le stesse cifre possono **sostenere narrative opposte** a seconda di cosa si sceglie di mostrare, come lo si aggrega e cosa si omette. Per questo il paradigma utile non è quello dell'"agente autonomo che esegue", ma quello del **collaboratore intelligente** che propone e lascia decidere. Il modello **non decide la storia** da raccontare: aiuta a **raccontare meglio** quella che l'analista ha già scelto di raccontare.
 
-Tutti i dati raw, script di elaborazione e codice sorgente della dashboard sono disponibili pubblicamente su GitHub: https://github.com/AlbGri/datocrimine
+Codice sorgente, script di elaborazione e script per scaricare i dati dall'ISTAT sono pubblici su GitHub: https://github.com/AlbGri/datocrimine. I dati grezzi di delitti, autori e vittime non sono nel repository per le dimensioni: si riscaricano con gli script `download_*.py`.

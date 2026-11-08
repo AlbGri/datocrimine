@@ -201,8 +201,14 @@ cd datocrimine
 npm install
 npm run dev
 
-# Rigenerare JSON (richiede conda + environment osservatorio)
+# Scaricare i dati grezzi dall'ISTAT (può richiedere molto tempo:
+# il servizio accetta poche richieste al minuto)
 conda activate osservatorio
+python scripts/download_popolazione.py
+python scripts/download_delittips.py
+python scripts/download_autvittps.py
+
+# Rigenerare JSON (richiede conda + environment osservatorio)
 python scripts/generate_popolazione.py
 python scripts/generate_delittips.py
 python scripts/generate_autori_vittime.py
@@ -211,9 +217,11 @@ python scripts/generate_insights.py
 python scripts/generate_report.py`}</code>
         </pre>
         <p className="text-sm text-muted-foreground">
-          I dati raw ISTAT (CSV ~80 MB) non sono nel repository per dimensioni.
-          Sono rigenerabili scaricandoli dalle fonti ISTAT indicate sopra.
-          I JSON processati sono gi&agrave; inclusi nel repository.
+          I dati grezzi ISTAT (circa 185 MB) non sono nel repository per le
+          dimensioni: si scaricano con i tre script <code>download_*.py</code>. La
+          popolazione 2014-2018 (ricostruzione intercensuaria) &egrave; gi&agrave; nel
+          repository, in <code>data/raw/popolazione/</code>. I JSON elaborati sono
+          gi&agrave; inclusi.
         </p>
       </section>
 
