@@ -1,10 +1,10 @@
-# Osservatorio Criminalità
+# DatoCrimine
 
 Un progetto open source per rendere accessibili e comprensibili i dati ufficiali ISTAT sulla criminalità in Italia. Nasce dalla constatazione che il dibattito pubblico sulla sicurezza si basa spesso su percezioni e titoli di giornale anziché sui dati: questo sito mette i numeri a disposizione di tutti, con metodologia trasparente e codice aperto.
 
 **[Vai al sito](https://datocrimine.it)**
 
-![Osservatorio Criminalità](public/og-image.png)
+![DatoCrimine](public/og-image.png)
 
 ## Contenuti
 
@@ -67,4 +67,4 @@ Genera il sito statico nella cartella `out/`.
 
 - **Codice**: [AGPL-3.0](LICENSE)
 - **Documentazione e testi**: [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/)
-- **Dati ISTAT**: [CC BY 3.0 IT](https://creativecommons.org/licenses/by/3.0/it/) - elaborati da Osservatorio Criminalità
+- **Dati ISTAT**: [CC BY 3.0 IT](https://creativecommons.org/licenses/by/3.0/it/) - elaborati da DatoCrimine

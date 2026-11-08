@@ -1,15 +1,23 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 import { KpiSummary } from "@/components/charts/kpi-summary";
 import { ChartTrendNazionale } from "@/components/charts/chart-trend-nazionale";
 import { ChartPercezioneVsDati } from "@/components/charts/chart-percezione-vs-dati";
 import { ChartNumeroOscuro } from "@/components/charts/chart-numero-oscuro";
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
 
+export const metadata: Metadata = pageMetadata(
+  "DatoCrimine - Dati ISTAT sulla criminalità in Italia",
+  "Dati e analisi sulla criminalità in Italia 2014-2024 con fonti ufficiali ISTAT",
+  "/",
+);
+
 export default function Home() {
   return (
     <main className="mx-auto max-w-7xl px-4 py-4 sm:py-8 space-y-6 sm:space-y-10">
       <h1 className="text-2xl sm:text-4xl font-bold">
-        Osservatorio Criminalit&agrave;
+        La criminalit&agrave; in Italia nei dati ISTAT
       </h1>
 
       <p className="text-sm text-muted-foreground">

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { FilterSyncProvider } from "@/lib/filter-sync-context";
+import { SITE_NAME, SITE_URL } from "@/lib/metadata";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,33 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: "Osservatorio Criminalit\u00e0",
-    template: "%s | Osservatorio Criminalit\u00e0",
-  },
+  metadataBase: new URL(SITE_URL),
+  title: SITE_NAME,
   description: "Dati e analisi sulla criminalit\u00e0 in Italia con fonti ufficiali ISTAT",
-  openGraph: {
-    title: "Osservatorio Criminalit\u00e0",
-    description: "Dati e analisi sulla criminalit\u00e0 in Italia 2014-2024 con fonti ufficiali ISTAT",
-    type: "website",
-    locale: "it_IT",
-    url: "https://datocrimine.it",
-    siteName: "Osservatorio Criminalit\u00e0",
-    images: [
-      {
-        url: "https://datocrimine.it/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Osservatorio Criminalit\u00e0 - Dati e analisi sulla criminalit\u00e0 in Italia",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Osservatorio Criminalit\u00e0",
-    description: "Dati e analisi sulla criminalit\u00e0 in Italia 2014-2024 con fonti ufficiali ISTAT",
-    images: ["https://datocrimine.it/og-image.png"],
-  },
 };
 
 export default function RootLayout({
@@ -53,15 +30,15 @@ export default function RootLayout({
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Osservatorio Criminalit\u00e0",
-    url: "https://datocrimine.it",
+    name: SITE_NAME,
+    url: SITE_URL,
     description:
       "Dati e analisi interattive sulla criminalit\u00e0 in Italia con fonti ufficiali ISTAT",
     inLanguage: "it",
     publisher: {
       "@type": "Organization",
-      name: "Osservatorio Criminalit\u00e0",
-      url: "https://datocrimine.it",
+      name: SITE_NAME,
+      url: SITE_URL,
     },
     dataset: {
       "@type": "Dataset",

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 
 export async function generateMetadata({
   params,
@@ -6,14 +7,11 @@ export async function generateMetadata({
   params: Promise<{ anno: string }>;
 }): Promise<Metadata> {
   const { anno } = await params;
-  return {
-    title: `Criminalità in Italia ${anno}: i dati ISTAT`,
-    description: `Report annuale sulla criminalità in Italia: cosa è cambiato nel ${anno}, variazioni per reato e territorio, confronto con gli anni precedenti. Dati ISTAT.`,
-    openGraph: {
-      title: `Criminalità in Italia ${anno}: i dati ISTAT`,
-      description: `Report annuale sulla criminalità in Italia: variazioni ${anno} per reato e territorio. Dati ufficiali ISTAT.`,
-    },
-  };
+  return pageMetadata(
+    `Criminalità in Italia ${anno}: i dati ISTAT`,
+    `Report annuale sulla criminalità in Italia: cosa è cambiato nel ${anno}, variazioni per reato e territorio, confronto con gli anni precedenti. Dati ISTAT.`,
+    `/report/${anno}`,
+  );
 }
 
 export default function Layout({ children }: { children: React.ReactNode }) {

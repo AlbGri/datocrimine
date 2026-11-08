@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Dati e Codice Sorgente",
-  description:
-    "Fonti dati ISTAT, dataset scaricabili e codice sorgente dell\u0027Osservatorio Criminalit\u00e0.",
-};
+export const metadata: Metadata = pageMetadata(
+  "Dati e Codice Sorgente",
+  "Fonti dati ISTAT, dataset scaricabili e codice sorgente di DatoCrimine.",
+  "/dati-e-codice",
+);
 
 export default function DatiECodice() {
   return (
@@ -260,7 +261,7 @@ python scripts/generate_report.py`}</code>
             >
               CC BY 3.0 IT
             </a>{" "}
-            - elaborati da Osservatorio Criminalit&agrave;
+            - elaborati da DatoCrimine
           </li>
         </ul>
       </section>

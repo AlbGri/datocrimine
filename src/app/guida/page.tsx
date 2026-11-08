@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
-  title: "Guida alla Lettura",
-  description:
-    "Come interpretare i dati sulla criminalit\u00e0: tassi per abitante, trend, bias noti e cosa non si pu\u00f2 concludere.",
-};
+export const metadata: Metadata = pageMetadata(
+  "Guida alla Lettura",
+  "Come interpretare i dati sulla criminalit\u00e0: tassi per abitante, trend, bias noti e cosa non si pu\u00f2 concludere.",
+  "/guida",
+);
 
 export default function Guida() {
   return (
