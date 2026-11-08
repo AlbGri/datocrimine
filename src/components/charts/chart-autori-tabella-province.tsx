@@ -3,7 +3,7 @@
 import { useState, useMemo, useCallback } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
-import { fmtNum, fmtPct } from "@/lib/format";
+import { fmtNum, fmtPct, csvNum } from "@/lib/format";
 
 interface ProvinciaRecord {
   data_type: "OFFEND" | "VICTIM";
@@ -186,9 +186,9 @@ export function ChartAutoriTabellaProvince({ dataType }: Props) {
       r.regione,
       r.totale,
       r.stranieri,
-      r.pct_stranieri,
+      csvNum(r.pct_stranieri, 1),
       r.minori,
-      r.pct_minori ?? "",
+      r.pct_minori != null ? csvNum(r.pct_minori, 1) : "",
     ]);
     const csv = [header, ...rows].map((row) => row.join(";")).join("\n");
     const blob = new Blob(["\uFEFF" + csv], {

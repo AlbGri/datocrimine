@@ -5,7 +5,7 @@ import { useFetchData } from "@/lib/use-fetch-data";
 import { varTriennale, TRIENNALE_LABEL } from "@/lib/config";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
-import { fmtNum } from "@/lib/format";
+import { fmtNum, csvNum } from "@/lib/format";
 
 interface DelittiProvincia {
   REF_AREA: string;
@@ -124,8 +124,8 @@ export function ChartTabellaProvince({ anno }: Props) {
     const rows = righe.map((r) => [
       r.Territorio,
       r.Regione,
-      r.Tasso_per_1000.toFixed(1),
-      r.variazione !== "-" ? r.variazione : "",
+      csvNum(r.Tasso_per_1000, 1),
+      r.varNum != null ? csvNum(r.varNum, 1) : "",
       r.Delitti,
       r.Popolazione,
     ]);
