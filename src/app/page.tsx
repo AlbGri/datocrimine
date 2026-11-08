@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/metadata";
 import { KpiSummary } from "@/components/charts/kpi-summary";
+import { SintesiNazionale } from "@/components/charts/sintesi-nazionale";
 import { ChartTrendNazionale } from "@/components/charts/chart-trend-nazionale";
 import { ChartPercezioneVsDati } from "@/components/charts/chart-percezione-vs-dati";
 import { ChartNumeroOscuro } from "@/components/charts/chart-numero-oscuro";
@@ -19,6 +20,8 @@ export default function Home() {
       <h1 className="text-2xl sm:text-4xl font-bold">
         La criminalit&agrave; in Italia nei dati ISTAT
       </h1>
+
+      <SintesiNazionale />
 
       <p className="text-sm text-muted-foreground">
         I dati si riferiscono ai delitti denunciati alle Forze dell&apos;ordine

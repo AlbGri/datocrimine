@@ -170,13 +170,18 @@ export function getAxisYear(isMobile: boolean) {
   return { ...AXIS_FIXED, tickformat: "d", dtick: isMobile ? 2 : 1 };
 }
 
+export const TRIENNIO_INIZIALE = [2014, 2016] as const;
+export const TRIENNIO_FINALE = [2022, 2024] as const;
+
 /** Variazione % media triennale: media(2022-2024) vs media(2014-2016).
  *  Piu robusto del confronto puntuale perche smussa outlier annuali. */
 export function varTriennale(
   values: { anno: number; tasso: number }[]
 ): number | null {
-  const primi = values.filter((v) => v.anno >= 2014 && v.anno <= 2016);
-  const ultimi = values.filter((v) => v.anno >= 2022 && v.anno <= 2024);
+  const [i0, i1] = TRIENNIO_INIZIALE;
+  const [f0, f1] = TRIENNIO_FINALE;
+  const primi = values.filter((v) => v.anno >= i0 && v.anno <= i1);
+  const ultimi = values.filter((v) => v.anno >= f0 && v.anno <= f1);
   if (primi.length < 2 || ultimi.length < 2) return null;
   const mp = primi.reduce((s, v) => s + v.tasso, 0) / primi.length;
   const mu = ultimi.reduce((s, v) => s + v.tasso, 0) / ultimi.length;
