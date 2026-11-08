@@ -123,7 +123,7 @@ export default function DatiECodice() {
                   CSV raw ISTAT DELITTIPS + popolazione
                 </td>
                 <td className="py-2 text-xs">
-                  6 CSV in data/processed/,
+                  7 CSV in data/processed/,
                   reati_allarme_sociale_regioni.json,
                   reati_allarme_sociale_province.json
                 </td>

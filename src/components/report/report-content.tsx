@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useFetchData } from "@/lib/use-fetch-data";
@@ -15,7 +16,7 @@ import {
   COLORI_ALLARME,
   getAxisYear,
 } from "@/lib/config";
-import { fmtNum, fmtPct, fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { fmtNum, fmtPctSigned, fmtSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Card, CardContent } from "@/components/ui/card";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -35,32 +36,7 @@ interface ReportData {
     popolazione: number;
     delitti_totali: number;
   };
-  top_crescita: {
-    reato: string;
-    codice: string;
-    yoy_pct: number;
-    valore_corrente: number;
-    valore_precedente: number;
-    trend_strutturale: string | null;
-    inizio_serie: number;
-    contesto: string | null;
-    caveat: string | null;
-    insight_id: string | null;
-    nota: string | null;
-  }[];
-  top_calo: {
-    reato: string;
-    codice: string;
-    yoy_pct: number;
-    valore_corrente: number;
-    valore_precedente: number;
-    trend_strutturale: string | null;
-    inizio_serie: number;
-    contesto: string | null;
-    caveat: string | null;
-    insight_id: string | null;
-    nota: string | null;
-  }[];
+  contributi: Contributi[];
   variazione_regioni: {
     REF_AREA: string;
     Territorio: string;
@@ -86,6 +62,33 @@ interface ReportData {
     variazione_pct: number;
     delitti_corrente: number;
   }[];
+}
+
+interface VoceContributo {
+  codice: string;
+  reato: string;
+  delitti_base: number;
+  delitti_corrente: number;
+  differenza: number;
+  variazione_pct: number;
+  trend_strutturale: string | null;
+  inizio_serie: number;
+  contesto: string | null;
+  caveat: string | null;
+  insight_id: string | null;
+  nota: string | null;
+}
+
+interface Contributi {
+  anno_base: number;
+  delitti_base: number;
+  delitti_corrente: number;
+  differenza: number;
+  variazione_pct: number;
+  sintesi: string;
+  aumenti: VoceContributo[];
+  cali: VoceContributo[];
+  altri: { differenza: number; n_reati: number };
 }
 
 interface PercezioneRow {
@@ -184,34 +187,40 @@ function ExecutiveSummary({
   );
 }
 
-function ChartTopVariazioni({
-  crescita,
-  calo,
-  anno,
-}: {
-  crescita: ReportData["top_crescita"];
-  calo: ReportData["top_calo"];
-  anno: number;
-}) {
+function ChartContributi({ dati, anno }: { dati: Contributi; anno: number }) {
   const isMobile = useIsMobile();
-  const allItems = [
-    ...calo.slice().reverse(),
-    ...crescita,
+  const base = dati.anno_base;
+  // Plotly disegna dal basso: cali piu' forti in fondo, aumenti piu' forti in cima
+  const voci = [...dati.cali, ...dati.aumenti.slice().reverse()];
+  const etichettaAltri = `Restanti ${dati.altri.n_reati} reati`;
+  const reati = [
+    ...dati.cali.map((d) => d.reato),
+    etichettaAltri,
+    ...dati.aumenti.slice().reverse().map((d) => d.reato),
   ];
-  const reati = allItems.map((d) => d.reato);
-  const values = allItems.map((d) => d.yoy_pct);
-  const colors = allItems.map((d) =>
-    d.yoy_pct >= 0 ? COLORS.secondary : COLORS.verdeCalo
+  const values = [
+    ...dati.cali.map((d) => d.differenza),
+    dati.altri.differenza,
+    ...dati.aumenti.slice().reverse().map((d) => d.differenza),
+  ];
+  const colors = values.map((v, i) =>
+    reati[i] === etichettaAltri
+      ? COLORS.grigioAltro
+      : v >= 0 ? COLORS.secondary : COLORS.verdeCalo
   );
-  const customdata = allItems.map((d) => [
-    d.valore_corrente,
-    d.valore_precedente,
-    trendToItalian(d.trend_strutturale, d.inizio_serie),
-  ]);
+  const hover = (d: VoceContributo) =>
+    `<b>${d.reato}</b><br>Differenza: ${fmtSigned(d.differenza, 0)} (${fmtPctSigned(d.variazione_pct)})<br>` +
+    `Delitti ${base}: ${fmtNum(d.delitti_base)}<br>Delitti ${anno}: ${fmtNum(d.delitti_corrente)}<br>` +
+    `Trend storico: ${trendToItalian(d.trend_strutturale, d.inizio_serie)}`;
+  const hovertext = [
+    ...dati.cali.map(hover),
+    `<b>${etichettaAltri}</b><br>Differenza complessiva: ${fmtSigned(dati.altri.differenza, 0)}`,
+    ...dati.aumenti.slice().reverse().map(hover),
+  ];
 
   return (
     <ChartFullscreenWrapper
-      ariaDescription={`Grafico a barre orizzontali: top 5 reati in crescita e top 5 in calo nel ${anno}`}
+      ariaDescription={`Grafico a barre orizzontali: delitti denunciati in più e in meno per reato, ${anno} rispetto al ${base}. ${voci.length} reati più una barra con i restanti`}
     >
       <Plot
         data={[
@@ -221,12 +230,8 @@ function ChartTopVariazioni({
             y: reati,
             x: values,
             marker: { color: colors },
-            customdata: customdata,
-            hovertemplate:
-              "<b>%{y}</b><br>Variazione: %{x:+.1f}%<br>" +
-              `Autori denunciati ${anno}: %{customdata[0]:,.0f}<br>` +
-              `Autori denunciati ${anno - 1}: %{customdata[1]:,.0f}<br>` +
-              "Trend storico: %{customdata[2]}<extra></extra>",
+            hovertext,
+            hovertemplate: "%{hovertext}<extra></extra>",
           },
         ]}
         layout={{
@@ -234,7 +239,7 @@ function ChartTopVariazioni({
           height: isMobile ? CHART_HEIGHT_SMALL : CHART_HEIGHT,
           xaxis: {
             ...AXIS_FIXED,
-            title: { text: "Variazione % anno su anno" },
+            title: { text: `Delitti in più o in meno rispetto al ${base}` },
             zeroline: true,
             zerolinecolor: "#999",
             zerolinewidth: 1,
@@ -253,6 +258,105 @@ function ChartTopVariazioni({
         className="w-full"
       />
     </ChartFullscreenWrapper>
+  );
+}
+
+function ListaContributi({
+  titolo,
+  colore,
+  voci,
+}: {
+  titolo: string;
+  colore: string;
+  voci: VoceContributo[];
+}) {
+  return (
+    <div>
+      <h3 className={`font-semibold ${colore} mb-2`}>{titolo}</h3>
+      <ul className="space-y-3">
+        {voci.map((d) => (
+          <li key={d.codice}>
+            <div className="flex flex-wrap items-baseline gap-x-2">
+              <span className="font-medium">{d.reato}</span>
+              <span className={`${colore} font-semibold`}>
+                {fmtSigned(d.differenza, 0)}
+              </span>
+              <span className="text-xs text-muted-foreground">
+                ({fmtPctSigned(d.variazione_pct)})
+              </span>
+              <TrendLabel trend={d.trend_strutturale} inizio={d.inizio_serie} />
+            </div>
+            {d.contesto && (
+              <p className="text-xs text-muted-foreground mt-0.5">{d.contesto}</p>
+            )}
+            {d.nota && (
+              <p className="text-xs text-muted-foreground mt-0.5 italic">{d.nota}</p>
+            )}
+            {d.caveat && (
+              <p className="text-xs text-amber-700 mt-0.5 border-l-2 border-amber-300 pl-2">
+                {d.caveat}
+              </p>
+            )}
+            {d.insight_id && (
+              <Link
+                href={`/insights#${d.insight_id}`}
+                className="text-xs text-primary hover:underline mt-0.5 inline-block"
+              >
+                Approfondimento negli Insights &rarr;
+              </Link>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function SezioneContributi({
+  contributi,
+  anno,
+}: {
+  contributi: Contributi[];
+  anno: number;
+}) {
+  const [indice, setIndice] = useState(0);
+  const dati = contributi[indice];
+  if (!dati) return null;
+
+  return (
+    <section className="space-y-3">
+      <h2 className="text-xl sm:text-2xl font-semibold text-primary">
+        Cosa &egrave; cambiato
+      </h2>
+      <div className="flex flex-wrap gap-2" role="group" aria-label="Anno di confronto">
+        {contributi.map((c, i) => (
+          <button
+            key={c.anno_base}
+            onClick={() => setIndice(i)}
+            aria-pressed={indice === i}
+            className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
+              indice === i
+                ? "bg-primary text-primary-foreground"
+                : "bg-muted text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Rispetto al {c.anno_base}
+          </button>
+        ))}
+      </div>
+      <p>{dati.sintesi}</p>
+      <p className="text-sm text-muted-foreground">
+        Delitti denunciati in pi&ugrave; e in meno per reato: i{" "}
+        {dati.aumenti.length} aumenti e i {dati.cali.length} cali maggiori in
+        valore assoluto. La barra grigia somma i restanti reati, cos&igrave; le
+        barre insieme danno la variazione totale.
+      </p>
+      <ChartContributi dati={dati} anno={anno} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+        <ListaContributi titolo="Aumenti maggiori" colore="text-red-600" voci={dati.aumenti} />
+        <ListaContributi titolo="Cali maggiori" colore="text-green-600" voci={dati.cali} />
+      </div>
+    </section>
   );
 }
 
@@ -564,104 +668,7 @@ export function ReportContent({ anno }: { anno: string }) {
       </section>
 
       {/* 2. Cosa e' cambiato */}
-      <section className="space-y-3">
-        <h2 className="text-xl sm:text-2xl font-semibold text-primary">
-          Cosa &egrave; cambiato
-        </h2>
-        <p className="text-sm text-muted-foreground">
-          Top 5 reati in crescita e in calo per numero di autori denunciati,{" "}
-          {annoNum} vs {annoNum - 1}.
-        </p>
-        <ChartTopVariazioni
-          crescita={data.top_crescita}
-          calo={data.top_calo}
-          anno={annoNum}
-        />
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-          <div>
-            <h3 className="font-semibold text-red-600 mb-2">
-              Maggiore crescita
-            </h3>
-            <ul className="space-y-3">
-              {data.top_crescita.map((d) => (
-                <li key={d.codice}>
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-medium">{d.reato}</span>
-                    <span className="text-red-600 font-semibold">
-                      {fmtPctSigned(d.yoy_pct)}
-                    </span>
-                    <TrendLabel trend={d.trend_strutturale} inizio={d.inizio_serie} />
-                  </div>
-                  {d.contesto && (
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      {d.contesto}
-                    </p>
-                  )}
-                  {d.nota && (
-                    <p className="text-xs text-muted-foreground mt-0.5 italic">
-                      {d.nota}
-                    </p>
-                  )}
-                  {d.caveat && (
-                    <p className="text-xs text-amber-700 mt-0.5 border-l-2 border-amber-300 pl-2">
-                      {d.caveat}
-                    </p>
-                  )}
-                  {d.insight_id && (
-                    <Link
-                      href={`/insights#${d.insight_id}`}
-                      className="text-xs text-primary hover:underline mt-0.5 inline-block"
-                    >
-                      Approfondimento negli Insights &rarr;
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold text-green-600 mb-2">
-              Maggiore calo
-            </h3>
-            <ul className="space-y-3">
-              {data.top_calo.map((d) => (
-                <li key={d.codice}>
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-medium">{d.reato}</span>
-                    <span className="text-green-600 font-semibold">
-                      {fmtPct(d.yoy_pct)}
-                    </span>
-                    <TrendLabel trend={d.trend_strutturale} inizio={d.inizio_serie} />
-                  </div>
-                  {d.contesto && (
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      {d.contesto}
-                    </p>
-                  )}
-                  {d.nota && (
-                    <p className="text-xs text-muted-foreground mt-0.5 italic">
-                      {d.nota}
-                    </p>
-                  )}
-                  {d.caveat && (
-                    <p className="text-xs text-amber-700 mt-0.5 border-l-2 border-amber-300 pl-2">
-                      {d.caveat}
-                    </p>
-                  )}
-                  {d.insight_id && (
-                    <Link
-                      href={`/insights#${d.insight_id}`}
-                      className="text-xs text-primary hover:underline mt-0.5 inline-block"
-                    >
-                      Approfondimento negli Insights &rarr;
-                    </Link>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
+      <SezioneContributi contributi={data.contributi} anno={annoNum} />
 
       {/* 3. Mappa variazione regionale */}
       <section className="space-y-3">
@@ -729,7 +736,7 @@ export function ReportContent({ anno }: { anno: string }) {
             Reati di allarme sociale
           </h2>
           <p className="text-sm text-muted-foreground">
-            I sei reati che generano maggiore allarme nell&apos;opinione
+            I {data.reati_allarme_sociale.length} reati che generano maggiore allarme nell&apos;opinione
             pubblica: tasso per 100.000 abitanti e variazione rispetto al{" "}
             {annoNum - 1}.
           </p>

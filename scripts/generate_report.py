@@ -1,8 +1,9 @@
 """
 generate_report.py - Genera il JSON per il report annuale interattivo.
 
-Carica i dati del progetto, calcola variazioni anno-su-anno per l'anno target
-e produce public/data/report_{anno}.json per il frontend.
+Carica i dati del progetto, calcola le variazioni dell'anno target rispetto all'anno
+precedente e all'ultimo anno prima del COVID, e produce public/data/report_{anno}.json
+per il frontend.
 
 Uso: python generate_report.py [--anno 2024]
 
@@ -22,7 +23,6 @@ from generate_insights import (
     DATA_DIR,
     PROJECT_ROOT,
     PROPENSIONE_DENUNCIA,
-    calc_year_on_year,
     interpret_with_propensione,
     load_json,
     run_mann_kendall,
@@ -31,71 +31,31 @@ from generate_insights import (
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 log = logging.getLogger(__name__)
 
-# Soglia minima valore assoluto per includere un reato nel top crescita/calo.
-# Variazioni % su numeri piccoli sono rumore statistico.
-MIN_ABS_REPORT = 100
+# Confronto di lungo periodo: l'ultimo anno prima del COVID
+ANNO_PRE_COVID = min(COVID_YEARS) - 1
+
+# Reati mostrati per lato (aumenti, cali); gli altri finiscono in una sola barra
+N_CONTRIBUTI = 5
 
 # Anni fuori dal COVID sotto i quali una tendenza storica non si dichiara
 MIN_PUNTI_TREND = 8
 
-# Sotto questa soglia, il contesto segnala che la % puo' essere amplificata.
-SOGLIA_NUMERI_BASSI = 500
-
 # Mappa codice reato ISTAT -> id insight curato (per link nel frontend)
 CODICE_TO_INSIGHT_ID: dict[str, str] = {
-    "BANKROB": "rapine-banca",
-    "CP612BIS": "stalking",
     "SWINCYB": "truffe",
     "INTENHOM": "omicidi",
     "KIDNAPP": "sequestri",
     "USURY": "usura",
     "EXTORT": "estorsioni",
-    "BAGTHEF": "furti-strappo",
-    "RAPE": "violenze-sessuali-straniere",
 }
 
-
-# Note di contesto esterno per reati specifici, non derivabili dai dati.
-# Chiave: codice reato ISTAT. Valore: testo breve con fonte implicita.
+# Note sui dati di reati specifici, non derivabili dai numeri
 NOTE_MANUALI: dict[str, str] = {
-    "CP572": (
-        "Il Codice Rosso (L. 69/2019) ha introdotto corsie preferenziali "
-        "per le denunce di violenza domestica. L'aumento riflette anche "
-        "campagne istituzionali di sensibilizzazione."
-    ),
-    "PORNO": (
-        "L'aumento è legato all'intensificazione delle indagini della "
-        "Polizia Postale e alla crescita dell'uso di piattaforme digitali "
-        "tra minori."
-    ),
-    "BANKROB": (
-        "Il calo strutturale è legato alla smaterializzazione del contante "
-        "e all'automazione delle filiali bancarie. Il rimbalzo annuale è "
-        "volatilità su numeri molto piccoli."
-    ),
-    "BAGTHEF": (
-        "La ripresa dei flussi turistici post-COVID ha riportato le "
-        "opportunità per questo tipo di reato ai livelli pre-pandemia."
-    ),
-    "MAFIAHOM": (
-        "La diminuzione della violenza mafiosa è una tendenza consolidata "
-        "dagli anni '90, legata alla transizione verso attività economiche "
-        "meno visibili."
-    ),
-    "KIDNAPP": (
-        "Il crollo dei sequestri di persona a scopo estorsivo è un fenomeno "
-        "storico iniziato negli anni '90."
+    "OTHCRIM": (
+        "Voce residua dell'ISTAT: raccoglie i delitti che non rientrano nelle altre voci "
+        "e con questi dati non si può scomporre."
     ),
 }
-
-
-def _fix_accenti(text: str) -> str:
-    """Sostituisce apostrofi usati come accenti (dalla pipeline ISTAT) con accenti."""
-    import re
-    mapping = {"a": "à", "e": "è", "i": "ì", "o": "ò", "u": "ù"}
-    def _replace(m: re.Match) -> str:
-        return mapping[m.group(1)] + m.group(2)
-    return re.sub(r"([aeiou])'(\s|$|,|\.|;|:|\))", _replace, text)
 
 
 # Ripartizioni per delitti_regioni.json (ITD12 = Trentino-Alto Adige unificato)
@@ -153,160 +113,134 @@ def build_executive_summary(
 
 
 def _build_contesto(
-    yoy_pct: float,
-    trend: str | None,
-    valore_corrente: int,
-    valore_precedente: int,
-    series: np.ndarray,
-    anni: np.ndarray,
-    target_year: int,
+    trend: str | None, series: np.ndarray, anni: np.ndarray
 ) -> str | None:
-    """Genera testo di contesto per una top variazione. Ritorna None se non serve."""
-    frasi = []
-
-    # Regola 1: YoY vs trend strutturale
-    positivo = yoy_pct > 0
-    etichette = {
-        (True, "decreasing"): "Rimbalzo: crescita annuale su un trend storico in calo",
-        (True, "no trend"): "Aumento senza una tendenza storica netta",
-        (True, "increasing"): "Prosegue il trend storico di crescita",
-        (False, "decreasing"): "Prosegue il trend storico di calo",
-        (False, "no trend"): "Calo senza una tendenza storica netta",
-        (False, "increasing"): "Frenata: calo annuale su un trend storico in crescita",
-    }
-    frasi.append(etichette.get((positivo, trend), ""))
-
-    # Regola 2: numeri assoluti bassi
-    val_max = max(valore_corrente, valore_precedente)
-    if val_max < SOGLIA_NUMERI_BASSI:
-        num_fmt = f"{valore_corrente:,}".replace(",", ".")
-        frasi.append(
-            f"Su numeri assoluti contenuti ({num_fmt} autori denunciati), "
-            "le variazioni percentuali possono essere amplificate"
-        )
-
-    # Regola 3: post-COVID (solo se target_year e' 2022 o 2023)
-    if target_year in (2022, 2023):
-        frasi.append(
-            f"Il confronto con il {target_year - 1} risente della "
-            "normalizzazione post-COVID"
-        )
-
-    # Regola 4: sensibilita' COVID (trend diverge con/senza anni COVID)
-    if trend is not None and any(a in COVID_YEARS for a in anni):
-        trend_full = run_mann_kendall(series)["mk_trend"]
-        if trend_full != trend:
-            frasi.append(
-                "Il trend strutturale cambia rimuovendo gli anni COVID (2020-2021)"
-            )
-
-    frasi = [f for f in frasi if f]
-    return ". ".join(frasi) + "." if frasi else None
+    """Segnala se la tendenza storica cambia includendo gli anni COVID. None se non serve."""
+    if trend is None or run_mann_kendall(series)["mk_trend"] == trend:
+        return None
+    return "La tendenza storica cambia se si includono gli anni COVID (2020-2021)."
 
 
-def _build_caveat(
-    codice: str,
-    trend: str | None,
-    yoy_pct: float,
-) -> str | None:
-    """Genera caveat per una top variazione. Ritorna None se non serve."""
-    parti = []
+def _build_caveat(codice: str, differenza: int) -> str | None:
+    """Avviso sulla propensione alla denuncia. Ritorna None se non serve.
 
-    # Regola A: propensione alla denuncia
-    # Senza trend strutturale vale la direzione della variazione, che e' cio' che il lettore vede
-    propensione = PROPENSIONE_DENUNCIA.get(codice)
-    if propensione is not None:
-        trend_per_propensione = trend
-        if trend in (None, "no trend") and yoy_pct != 0:
-            trend_per_propensione = "increasing" if yoy_pct > 0 else "decreasing"
-        interp = interpret_with_propensione(trend_per_propensione, propensione)
-        if interp == "emersione_probabile":
-            parti.append(
-                "La propensione alla denuncia per questo reato è molto bassa: "
-                "l'aumento potrebbe riflettere maggiore emersione "
-                "più che un aumento reale"
-            )
-        elif interp == "calo_ambiguo":
-            parti.append(
-                "La propensione alla denuncia per questo reato è molto bassa: "
-                "il calo delle denunce non implica necessariamente "
-                "un calo del fenomeno"
-            )
-        elif interp in ("aumento_misto", "calo_misto"):
-            parti.append(
-                "Il dato riflette sia variazioni reali sia possibili "
-                "cambiamenti nella propensione alla denuncia"
-            )
-
-    return ". ".join(parti) + "." if parti else None
-
-
-def build_top_variazioni(
-    df_avt: pd.DataFrame, target_year: int, n: int = 5
-) -> tuple[list[dict], list[dict]]:
-    """Top N reati in crescita e in calo per variazione anno-su-anno.
-
-    Usa solo OFFEND + colonna 'totale' per i singoli reati con dati nel target_year.
-    Esclude TOT (assente 2023-2024).
+    Segue il verso della differenza mostrata, non la tendenza storica: l'avviso commenta
+    il numero che il lettore ha davanti.
     """
-    offend = df_avt[
-        (df_avt["data_type"] == "OFFEND")
-        & (df_avt["codice_reato"] != "TOT")
-    ].copy()
-
-    results = []
-    for codice_reato, grp in offend.groupby("codice_reato"):
-        grp = grp.sort_values("anno")
-        anni = grp["anno"].values
-        totali = grp["totale"].values.astype(float)
-        yoy = calc_year_on_year(totali, anni, target_year)
-        if np.isnan(yoy["yoy_pct"]):
-            continue
-        if max(yoy["curr_value"], yoy["prev_value"]) < MIN_ABS_REPORT:
-            continue
-        # Trend strutturale
-        trend = _trend_strutturale_with_covid(totali, anni)
-        codice_str = str(codice_reato)
-        val_curr = int(yoy["curr_value"])
-        val_prev = int(yoy["prev_value"])
-        yoy_pct = round(yoy["yoy_pct"], 1)
-
-        contesto = _build_contesto(
-            yoy_pct, trend, val_curr, val_prev, totali, anni, target_year,
+    propensione = PROPENSIONE_DENUNCIA.get(codice)
+    verso = "increasing" if differenza > 0 else "decreasing"
+    interp = interpret_with_propensione(verso, propensione)
+    livello = (propensione or "").replace("_", " ")
+    if interp == "emersione_probabile":
+        return (
+            f"La propensione alla denuncia per questo reato è {livello}: l'aumento "
+            "potrebbe riflettere maggiore emersione più che un aumento reale."
         )
-        caveat = _build_caveat(codice_str, trend, yoy_pct)
-        insight_id = CODICE_TO_INSIGHT_ID.get(codice_str)
-        nota = NOTE_MANUALI.get(codice_str)
+    if interp == "calo_ambiguo":
+        return (
+            f"La propensione alla denuncia per questo reato è {livello}: il calo delle "
+            "denunce non implica necessariamente un calo del fenomeno."
+        )
+    if interp in ("aumento_misto", "calo_misto"):
+        return (
+            "Il dato riflette sia variazioni reali sia possibili cambiamenti nella "
+            "propensione alla denuncia."
+        )
+    return None
 
-        results.append({
-            "reato": _fix_accenti(grp["reato"].iloc[0]),
+
+def _fmt_int(n: int) -> str:
+    return f"{n:,}".replace(",", ".")
+
+
+def _fmt_signed(n: int) -> str:
+    return ("+" if n > 0 else "") + _fmt_int(n)
+
+
+def _sintesi_contributi(
+    base_year: int, differenza: int, variazione_pct: float,
+    aumenti: list[dict], cali: list[dict],
+) -> str:
+    """Frase d'apertura: variazione totale e i due reati che pesano di piu' per lato."""
+    verso = "aumentati" if differenza >= 0 else "diminuiti"
+    pct = f"{variazione_pct:+.1f}%".replace(".", ",")
+    frase = (
+        f"Rispetto al {base_year} i delitti denunciati sono {verso} di "
+        f"{_fmt_int(abs(differenza))} ({pct})."
+    )
+    parti = []
+    for voci, verbo in ((aumenti, "aumentano"), (cali, "calano")):
+        if voci:
+            elenco = " e ".join(
+                f"{v['reato'][0].lower()}{v['reato'][1:]} ({_fmt_signed(v['differenza'])})"
+                for v in voci[:2]
+            )
+            parti.append(f"{verbo} soprattutto {elenco}")
+    if parti:
+        testo = "; ".join(parti)
+        frase += f" {testo[0].upper()}{testo[1:]}."
+    return frase
+
+
+def build_contributi(
+    df_reati: pd.DataFrame, df_italia: pd.DataFrame, target_year: int, base_year: int
+) -> dict:
+    """Contributo di ogni reato alla variazione dei delitti fra base_year e target_year.
+
+    Usa solo i codici che non sono sottotipi: sommano al totale, quindi i contributi
+    piu' la voce "altri" sommano alla differenza totale.
+    """
+    totali = df_italia.set_index("Anno")["Delitti"]
+    delitti_base = int(totali[base_year])
+    delitti_corrente = int(totali[target_year])
+    differenza = delitti_corrente - delitti_base
+
+    voci = []
+    for codice, grp in df_reati[df_reati["Anno"] <= target_year].groupby("Codice"):
+        serie = grp.sort_values("Anno").set_index("Anno")["Delitti"]
+        if base_year not in serie.index or target_year not in serie.index:
+            continue
+        anni = serie.index.to_numpy()
+        valori = serie.to_numpy(dtype=float)
+        trend = _trend_strutturale_with_covid(valori, anni)
+        val_base = int(serie[base_year])
+        diff = int(serie[target_year]) - val_base
+        codice_str = str(codice)
+        voci.append({
             "codice": codice_str,
-            "yoy_pct": yoy_pct,
-            "valore_corrente": val_curr,
-            "valore_precedente": val_prev,
+            "reato": grp["Reato"].iloc[0],
+            "delitti_base": val_base,
+            "delitti_corrente": int(serie[target_year]),
+            "differenza": diff,
+            "variazione_pct": round(diff / val_base * 100, 1),
             "trend_strutturale": trend,
             "inizio_serie": int(anni[0]),
-            "contesto": contesto,
-            "caveat": caveat,
-            "insight_id": insight_id,
-            "nota": nota,
+            "contesto": _build_contesto(trend, valori, anni),
+            "caveat": _build_caveat(codice_str, diff),
+            "insight_id": CODICE_TO_INSIGHT_ID.get(codice_str),
+            "nota": NOTE_MANUALI.get(codice_str),
         })
 
-    df_res = pd.DataFrame(results)
-    if df_res.empty:
-        return [], []
+    aumenti = sorted((v for v in voci if v["differenza"] > 0), key=lambda v: -v["differenza"])
+    cali = sorted((v for v in voci if v["differenza"] < 0), key=lambda v: v["differenza"])
+    aumenti, cali = aumenti[:N_CONTRIBUTI], cali[:N_CONTRIBUTI]
+    mostrate = aumenti + cali
+    variazione_pct = round(differenza / delitti_base * 100, 1)
 
-    top_crescita = (
-        df_res.sort_values("yoy_pct", ascending=False)
-        .head(n)
-        .to_dict("records")
-    )
-    top_calo = (
-        df_res.sort_values("yoy_pct", ascending=True)
-        .head(n)
-        .to_dict("records")
-    )
-    return top_crescita, top_calo
+    return {
+        "anno_base": base_year,
+        "delitti_base": delitti_base,
+        "delitti_corrente": delitti_corrente,
+        "differenza": differenza,
+        "variazione_pct": variazione_pct,
+        "sintesi": _sintesi_contributi(base_year, differenza, variazione_pct, aumenti, cali),
+        "aumenti": aumenti,
+        "cali": cali,
+        "altri": {
+            "differenza": differenza - sum(v["differenza"] for v in mostrate),
+            "n_reati": len(voci) - len(mostrate),
+        },
+    }
 
 
 def build_variazione_regioni(
@@ -403,7 +337,7 @@ def generate_report_data(target_year: int) -> dict:
 
     df_italia = pd.DataFrame(load_json("delitti_italia.json"))
     df_regioni = pd.DataFrame(load_json("delitti_regioni.json"))
-    df_avt = pd.DataFrame(load_json("autori_vittime_trend.json"))
+    df_reati = pd.DataFrame(load_json("delitti_reati_italia.json"))
     df_perc = pd.DataFrame(load_json("percezione_vs_dati.json"))
     df_allarme = pd.DataFrame(load_json("reati_allarme_sociale.json"))
 
@@ -417,8 +351,12 @@ def generate_report_data(target_year: int) -> dict:
     log.info("Executive summary...")
     summary = build_executive_summary(df_italia, target_year)
 
-    log.info("Top variazioni reati (autori denunciati)...")
-    top_crescita, top_calo = build_top_variazioni(df_avt, target_year)
+    log.info("Contributi dei reati alla variazione...")
+    contributi = [
+        build_contributi(df_reati, df_italia, target_year, base)
+        for base in dict.fromkeys([target_year - 1, ANNO_PRE_COVID])
+        if base < target_year
+    ]
 
     log.info("Variazione regioni...")
     var_regioni = build_variazione_regioni(df_regioni, target_year)
@@ -435,8 +373,7 @@ def generate_report_data(target_year: int) -> dict:
     report = {
         "anno": target_year,
         "executive_summary": summary,
-        "top_crescita": top_crescita,
-        "top_calo": top_calo,
+        "contributi": contributi,
         "variazione_regioni": var_regioni,
         "variazione_ripartizioni": var_ripartizioni,
         "percezione": percezione,

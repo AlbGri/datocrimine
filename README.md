@@ -9,7 +9,7 @@ Un progetto open source per rendere accessibili e comprensibili i dati ufficiali
 ## Contenuti
 
 **Navigazione principale:**
-- **Report 2024** - Executive summary dell'anno: top crescita/calo reati, mappa variazione regionale, confronto ripartizioni, reati di allarme sociale, percezione vs realtà
+- **Report 2024** - Executive summary dell'anno: reati che spiegano la variazione dei delitti (sull'anno prima e sul 2019), mappa variazione regionale, confronto ripartizioni, reati di allarme sociale, percezione vs realtà
 - **Esplora i dati** - Hub con 3 sezioni: Analisi Territoriale (mappa coropletica, ranking, trend, tabelle province), Reati di Allarme Sociale (6 reati gravi), Persone Denunciate (profilo criminale a 3 livelli)
 - **Insights** - 23 analisi statistiche curate su trend, composizione demografica, anomalie, confronti tra categorie e territori. Filtri per categoria e dimensione, badge test statistici cliccabili
 - **Il contesto** - KPI nazionali, trend delitti denunciati, percezione vs dati, numero oscuro e propensione alla denuncia

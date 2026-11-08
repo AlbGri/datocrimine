@@ -12,6 +12,7 @@ Output CSV (data/processed/):
   - delitti_regioni_normalizzato.csv
   - delitti_province_normalizzato.csv
   - delitti_categorie_normalizzato.csv
+  - delitti_reati_italia.csv
   - reati_allarme_sociale.csv
   - percezione_vs_dati.csv
 
@@ -240,6 +241,24 @@ def generate_categorie(df: pd.DataFrame, pop: pd.DataFrame, project_root: Path) 
     log.info(f"  {out.name}: {len(result)} righe, categorie: {sorted(result['Categoria'].unique())}")
 
 
+def generate_reati_italia(df: pd.DataFrame, pop: pd.DataFrame, project_root: Path) -> None:
+    """Genera delitti_reati_italia.csv: Italia, un reato per riga, solo codici che non sono
+    sottotipi (sommano al totale)."""
+    df_it = df[df["REF_AREA"] == "IT"].copy()
+    df_it = df_it[(df_it["TYPE_CRIME"] != "TOT") & ~df_it["TYPE_CRIME"].isin(SOTTOTIPI)]
+    df_it["Reato"] = df_it["TYPE_CRIME"].map(ETICHETTE)
+
+    pop_it = pop[pop["livello"] == "italia"][["Anno", "Popolazione"]]
+    result = df_it.merge(pop_it, on="Anno", how="left")
+    result = result.rename(columns={"TYPE_CRIME": "Codice"})
+    result = result[["Anno", "Codice", "Reato", "Delitti", "Popolazione"]]
+    result = result.sort_values(["Anno", "Codice"])
+
+    out = project_root / "data" / "processed" / "delitti_reati_italia.csv"
+    result.to_csv(out, index=False)
+    log.info(f"  {out.name}: {len(result)} righe, {result['Codice'].nunique()} reati")
+
+
 def generate_allarme_sociale(df: pd.DataFrame, pop: pd.DataFrame, project_root: Path) -> None:
     """Genera reati_allarme_sociale.csv (Italia)."""
     df_it = df[df["REF_AREA"] == "IT"].copy()
@@ -366,6 +385,7 @@ def main():
     generate_regioni(df, pop, project_root)
     generate_province(df, pop, project_root)
     generate_categorie(df, pop, project_root)
+    generate_reati_italia(df, pop, project_root)
     generate_allarme_sociale(df, pop, project_root)
     generate_percezione(df, pop, project_root)
 

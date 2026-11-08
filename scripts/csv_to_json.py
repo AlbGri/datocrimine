@@ -33,6 +33,10 @@ CSV_CONFIG = {
         "output": "delitti_province.json",
         "round": {"Tasso_per_1000": 2},
     },
+    "delitti_reati_italia.csv": {
+        "output": "delitti_reati_italia.json",
+        "round": {},
+    },
     "reati_allarme_sociale.csv": {
         "output": "reati_allarme_sociale.json",
         "round": {"Tasso_per_100k": 2},

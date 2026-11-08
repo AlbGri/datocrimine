@@ -16,59 +16,17 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 import numpy as np
 
 from generate_report import (
-    MIN_ABS_REPORT,
-    SOGLIA_NUMERI_BASSI,
+    N_CONTRIBUTI,
     _build_caveat,
     _build_contesto,
-    _fix_accenti,
     _trend_strutturale_with_covid,
+    build_contributi,
     build_executive_summary,
     build_percezione,
     build_reati_allarme,
-    build_top_variazioni,
     build_variazione_regioni,
     build_variazione_ripartizioni,
 )
-
-
-# ===================================================================
-# _fix_accenti
-# ===================================================================
-
-class TestFixAccenti:
-    def test_apostrofo_fine_parola(self):
-        assert _fix_accenti("criminalita' ") == "criminalità "
-        assert _fix_accenti("proprieta' intellettuale") == "proprietà intellettuale"
-
-    def test_vocali_diverse(self):
-        # La funzione usa sempre accento grave (sufficiente per i nomi reati ISTAT)
-        assert _fix_accenti("perche' ") == "perchè "
-        assert _fix_accenti("cosi' ") == "così "
-        assert _fix_accenti("pero' ") == "però "
-        assert _fix_accenti("gioventu' ") == "gioventù "
-
-    def test_fine_stringa(self):
-        assert _fix_accenti("citta'") == "città"
-
-    def test_punteggiatura(self):
-        assert _fix_accenti("citta', paese") == "città, paese"
-        assert _fix_accenti("citta'.") == "città."
-        assert _fix_accenti("citta';") == "città;"
-        assert _fix_accenti("citta':") == "città:"
-
-    def test_apostrofo_legittimo(self):
-        # d'arte non e' un accento
-        assert _fix_accenti("opere d'arte") == "opere d'arte"
-        assert _fix_accenti("Valle d'Aosta") == "Valle d'Aosta"
-
-    def test_stringa_senza_apostrofi(self):
-        assert _fix_accenti("Omicidi volontari") == "Omicidi volontari"
-
-    def test_stringa_vuota(self):
-        assert _fix_accenti("") == ""
-
-    def test_multipli_accenti(self):
-        assert _fix_accenti("citta' e civilta' ") == "città e civiltà "
 
 
 # ===================================================================
@@ -129,94 +87,77 @@ class TestBuildExecutiveSummary:
 
 
 # ===================================================================
-# build_top_variazioni
+# build_contributi
 # ===================================================================
 
-def _make_df_avt(rows: list[dict]) -> pd.DataFrame:
-    """Helper: crea DataFrame autori_vittime_trend con campi minimi."""
-    return pd.DataFrame(rows)
+def _make_df_reati(valori: dict[str, list[int]], start_year: int = 2014) -> pd.DataFrame:
+    """Helper: {codice: delitti per anno da start_year} -> delitti_reati_italia."""
+    return pd.DataFrame([
+        {"Anno": start_year + i, "Codice": codice, "Reato": f"Reato {codice}",
+         "Delitti": delitti, "Popolazione": 60_000_000}
+        for codice, serie in valori.items()
+        for i, delitti in enumerate(serie)
+    ])
 
 
-class TestBuildTopVariazioni:
-    def _base_rows(self, codice: str, reato: str, totali: list[tuple[int, int]]):
-        """Genera righe OFFEND per un reato con lista (anno, totale)."""
-        return [
-            {"data_type": "OFFEND", "codice_reato": codice, "reato": reato,
-             "anno": anno, "totale": tot}
-            for anno, tot in totali
-        ]
+def _totali(df_reati: pd.DataFrame) -> pd.DataFrame:
+    return df_reati.groupby("Anno", as_index=False)["Delitti"].sum()
 
-    def test_basic_crescita_calo(self):
-        rows = (
-            self._base_rows("THEFT", "Furti", [(2022, 500), (2023, 600), (2024, 900)])
-            + self._base_rows("DRUG", "Stupefacenti", [(2022, 400), (2023, 300), (2024, 200)])
+
+class TestBuildContributi:
+    def test_ordinati_per_differenza_assoluta(self):
+        # B cresce di piu' in assoluto, A di piu' in percentuale
+        df = _make_df_reati({"A": [100, 200], "B": [10000, 10500], "C": [5000, 4000]})
+        result = build_contributi(df, _totali(df), 2015, 2014)
+        assert [v["codice"] for v in result["aumenti"]] == ["B", "A"]
+        assert [v["codice"] for v in result["cali"]] == ["C"]
+        assert result["aumenti"][1]["variazione_pct"] == 100.0
+
+    def test_somma_alla_differenza_totale(self):
+        valori = {f"R{i}": [1000, 1000 + i * 10 - 60] for i in range(15)}
+        df = _make_df_reati(valori)
+        result = build_contributi(df, _totali(df), 2015, 2014)
+        assert len(result["aumenti"]) == N_CONTRIBUTI
+        assert len(result["cali"]) == N_CONTRIBUTI
+        mostrate = sum(v["differenza"] for v in result["aumenti"] + result["cali"])
+        assert mostrate + result["altri"]["differenza"] == result["differenza"]
+        assert result["altri"]["n_reati"] == 15 - 2 * N_CONTRIBUTI
+
+    def test_reato_senza_uno_dei_due_anni_escluso(self):
+        df = _make_df_reati({"A": [100, 200], "B": [50]})
+        result = build_contributi(df, _totali(df), 2015, 2014)
+        codici = [v["codice"] for v in result["aumenti"] + result["cali"]]
+        assert codici == ["A"]
+
+    def test_anni_dopo_il_target_ignorati(self):
+        # Il trend del report 2024 non dipende da dati usciti dopo
+        crescente = list(range(100, 111))
+        df = _make_df_reati({"A": crescente + [0, 0, 0, 0, 0, 0]})
+        result = build_contributi(df, _totali(df), 2024, 2023)
+        assert result["aumenti"][0]["trend_strutturale"] == "increasing"
+
+    def test_sintesi(self):
+        df = _make_df_reati({"FURTI": [10000, 43483], "TRUFFE": [20000, 4066]})
+        df["Reato"] = df["Codice"].map({"FURTI": "Furti", "TRUFFE": "Truffe"})
+        result = build_contributi(df, _totali(df), 2015, 2014)
+        assert result["sintesi"] == (
+            "Rispetto al 2014 i delitti denunciati sono aumentati di 17.549 (+58,5%). "
+            "Aumentano soprattutto furti (+33.483); calano soprattutto truffe (-15.934)."
         )
-        df = _make_df_avt(rows)
-        crescita, calo = build_top_variazioni(df, 2024, n=5)
-        assert len(crescita) >= 1
-        assert len(calo) >= 1
-        assert crescita[0]["codice"] == "THEFT"
-        assert crescita[0]["yoy_pct"] > 0
-        assert calo[0]["codice"] == "DRUG"
-        assert calo[0]["yoy_pct"] < 0
 
-    def test_exclude_tot(self):
-        rows = self._base_rows("TOT", "Totale", [(2023, 1000), (2024, 2000)])
-        df = _make_df_avt(rows)
-        crescita, calo = build_top_variazioni(df, 2024)
-        assert len(crescita) == 0
-        assert len(calo) == 0
+    def test_sintesi_in_calo(self):
+        df = _make_df_reati({"A": [2000, 1000]})
+        result = build_contributi(df, _totali(df), 2015, 2014)
+        assert result["sintesi"].startswith(
+            "Rispetto al 2014 i delitti denunciati sono diminuiti di 1.000 (-50,0%).")
 
-    def test_soglia_minima(self):
-        # Entrambi i valori sotto MIN_ABS_REPORT
-        rows = self._base_rows("MASSMURD", "Stragi", [(2023, 9), (2024, 18)])
-        df = _make_df_avt(rows)
-        crescita, calo = build_top_variazioni(df, 2024)
-        assert len(crescita) == 0
-
-    def test_soglia_superata_se_uno_sopra(self):
-        # prev sotto, curr sopra -> max >= MIN_ABS_REPORT -> incluso
-        rows = self._base_rows("ROBBER", "Rapine", [(2023, 50), (2024, MIN_ABS_REPORT + 50)])
-        df = _make_df_avt(rows)
-        crescita, calo = build_top_variazioni(df, 2024)
-        assert len(crescita) == 1
-
-    def test_anno_mancante_skip(self):
-        rows = self._base_rows("THEFT", "Furti", [(2022, 500)])
-        df = _make_df_avt(rows)
-        crescita, calo = build_top_variazioni(df, 2024)
-        assert len(crescita) == 0
-
-    def test_ignora_victim(self):
-        rows = [
-            {"data_type": "VICTIM", "codice_reato": "THEFT", "reato": "Furti",
-             "anno": 2023, "totale": 500},
-            {"data_type": "VICTIM", "codice_reato": "THEFT", "reato": "Furti",
-             "anno": 2024, "totale": 900},
-        ]
-        df = _make_df_avt(rows)
-        crescita, calo = build_top_variazioni(df, 2024)
-        assert len(crescita) == 0
-
-    def test_top_n_limit(self):
-        rows = []
-        for i in range(10):
-            rows += self._base_rows(
-                f"R{i}", f"Reato {i}",
-                [(2023, 200), (2024, 200 + (i + 1) * 50)],
-            )
-        df = _make_df_avt(rows)
-        crescita, calo = build_top_variazioni(df, 2024, n=3)
-        assert len(crescita) == 3
-
-    def test_fix_accenti_applicata(self):
-        rows = self._base_rows(
-            "INTPROP", "Violazioni proprieta' intellettuale",
-            [(2023, 200), (2024, 400)],
-        )
-        df = _make_df_avt(rows)
-        crescita, _ = build_top_variazioni(df, 2024)
-        assert crescita[0]["reato"] == "Violazioni proprietà intellettuale"
+    def test_nota_e_insight(self):
+        df = _make_df_reati({"OTHCRIM": [100, 200], "SWINCYB": [100, 300]})
+        result = build_contributi(df, _totali(df), 2015, 2014)
+        voci = {v["codice"]: v for v in result["aumenti"]}
+        assert voci["OTHCRIM"]["nota"] is not None
+        assert voci["SWINCYB"]["insight_id"] == "truffe"
+        assert voci["SWINCYB"]["nota"] is None
 
 
 # ===================================================================
@@ -418,84 +359,19 @@ def _make_series(values: list[int], start_year: int = 2014) -> tuple[np.ndarray,
 
 
 class TestBuildContesto:
-    def test_rimbalzo(self):
-        # YoY positivo + trend decreasing -> rimbalzo
-        series, anni = _make_series([100, 90, 80, 70, 60, 50, 40, 30, 20, 10, 50])
-        result = _build_contesto(100.0, "decreasing", 50, 10, series, anni, 2024)
-        assert "Rimbalzo" in result
-
-    def test_prosegue_crescita(self):
-        series, anni = _make_series([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 120])
-        result = _build_contesto(20.0, "increasing", 120, 100, series, anni, 2024)
-        assert "Prosegue il trend storico di crescita" in result
-
-    def test_prosegue_calo(self):
-        series, anni = _make_series([100, 90, 80, 70, 60, 50, 40, 30, 20, 15, 10])
-        result = _build_contesto(-33.3, "decreasing", 10, 15, series, anni, 2024)
-        assert "Prosegue il trend storico di calo" in result
-
-    def test_frenata(self):
-        series, anni = _make_series([10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 95])
-        result = _build_contesto(-5.0, "increasing", 95, 100, series, anni, 2024)
-        assert "Frenata" in result
-
-    def test_picco_stabile(self):
-        series, anni = _make_series([50, 52, 48, 51, 49, 50, 52, 48, 51, 49, 60])
-        result = _build_contesto(22.4, "no trend", 60, 49, series, anni, 2024)
-        assert "Aumento senza una tendenza storica netta" in result
-
-    def test_calo_stabile(self):
-        series, anni = _make_series([50, 52, 48, 51, 49, 50, 52, 48, 51, 49, 40])
-        result = _build_contesto(-18.4, "no trend", 40, 49, series, anni, 2024)
-        assert "Calo senza una tendenza storica netta" in result
-
-    def test_numeri_bassi(self):
-        series, anni = _make_series([200, 180, 160, 140, 120])
-        result = _build_contesto(-14.3, "decreasing", 120, 140, series, anni, 2018)
-        assert "numeri assoluti contenuti" in result
-        assert "120" in result
-
-    def test_numeri_alti_no_caveat(self):
-        series, anni = _make_series([600, 650, 700, 750, 800])
-        result = _build_contesto(6.7, "increasing", 800, 750, series, anni, 2018)
-        assert "numeri assoluti" not in result
-
-    def test_soglia_numeri_bassi_esatta(self):
-        # Valore esattamente a soglia -> non segnalato
-        series, anni = _make_series([400, 450, SOGLIA_NUMERI_BASSI])
-        result = _build_contesto(11.1, "increasing", SOGLIA_NUMERI_BASSI, 450, series, anni, 2016)
-        assert "numeri assoluti" not in result
-
-    def test_post_covid_2022(self):
-        series, anni = _make_series([100, 110, 120, 130, 140, 150, 160, 170, 180])
-        result = _build_contesto(5.9, "increasing", 180, 170, series, anni, 2022)
-        assert "post-COVID" in result
-
-    def test_no_post_covid_2024(self):
-        series, anni = _make_series([100, 110, 120, 130, 140, 150, 160, 170, 180])
-        result = _build_contesto(5.9, "increasing", 180, 170, series, anni, 2024)
-        assert "post-COVID" not in result
+    def test_trend_uguale_con_e_senza_covid(self):
+        series, anni = _make_series(list(range(100, 111)))
+        assert _build_contesto("increasing", series, anni) is None
 
     def test_sensibile_covid(self):
-        # Serie dove COVID cambia il trend: crescente senza COVID, stabile/decrescente con
-        # Pre-COVID crescente, COVID crollo, post-COVID ripresa parziale
-        series = np.array([100, 120, 140, 160, 50, 60, 170, 180, 190, 200, 210], dtype=float)
-        anni = np.arange(2014, 2025)
-        # Trend senza COVID (esclude 2020-2021): 100,120,140,160,170,180,190,200,210 -> increasing
-        # Trend con COVID: 100,120,140,160,50,60,170,180,190,200,210 -> potrebbe divergere
-        result = _build_contesto(5.0, "increasing", 210, 200, series, anni, 2024)
-        # Il test verifica che la funzione non crashi; se i trend coincidono, niente nota
-        assert result.endswith(".")
+        # La serie completa e' in crescita, quella senza COVID (passata come trend) no
+        series, anni = _make_series(list(range(100, 111)))
+        result = _build_contesto("no trend", series, anni)
+        assert result is not None and "COVID" in result
 
-    def test_serie_corta_senza_tendenza(self):
+    def test_serie_corta(self):
         series, anni = _make_series([18921, 19500, 21911], start_year=2022)
-        result = _build_contesto(12.4, None, 21911, 19500, series, anni, 2024)
-        assert result is None
-
-    def test_termina_con_punto(self):
-        series, anni = _make_series([100, 200])
-        result = _build_contesto(100.0, "increasing", 200, 100, series, anni, 2015)
-        assert result.endswith(".")
+        assert _build_contesto(None, series, anni) is None
 
 
 class TestTrendStrutturale:
@@ -515,100 +391,29 @@ class TestTrendStrutturale:
 # ===================================================================
 
 class TestBuildCaveat:
-    def test_propensione_bassa_crescita(self):
-        # CP612BIS: molto_bassa, trend increasing -> emersione_probabile
-        result = _build_caveat("CP612BIS", "increasing", 10.0)
-        assert result is not None
+    def test_bassa_aumento(self):
+        result = _build_caveat("SWINCYB", 73980)
+        assert result.startswith("La propensione alla denuncia per questo reato è bassa:")
         assert "emersione" in result
 
-    def test_propensione_bassa_calo(self):
-        # RAPE: molto_bassa, trend decreasing -> calo_ambiguo
-        result = _build_caveat("RAPE", "decreasing", -10.0)
-        assert result is not None
+    def test_segue_la_differenza_non_la_tendenza(self):
+        # Truffe in calo nell'anno: l'avviso parla del calo, anche se la serie e' in crescita
+        result = _build_caveat("SWINCYB", -15934)
         assert "non implica necessariamente" in result
 
-    def test_propensione_media_misto(self):
-        # BAGTHEF: media, trend increasing -> aumento_misto
-        result = _build_caveat("BAGTHEF", "increasing", 13.4)
-        assert result is not None
+    def test_molto_bassa(self):
+        result = _build_caveat("RAPE", 100)
+        assert "è molto bassa:" in result
+
+    def test_media_misto(self):
+        result = _build_caveat("THEFT", 33483)
         assert "propensione alla denuncia" in result
 
-    def test_propensione_alta_no_caveat(self):
-        # BANKROB: alta, trend decreasing -> calo_reale_probabile -> nessun caveat
-        result = _build_caveat("BANKROB", "decreasing", -5.0)
-        assert result is None
+    def test_alta_nessun_avviso(self):
+        assert _build_caveat("BANKROB", -5) is None
 
-    def test_propensione_non_applicabile(self):
-        # INTENHOM: non_applicabile_automatica -> nessun caveat
-        result = _build_caveat("INTENHOM", "decreasing", -5.0)
-        assert result is None
+    def test_non_applicabile(self):
+        assert _build_caveat("INTENHOM", -5) is None
 
-    def test_codice_sconosciuto(self):
-        result = _build_caveat("CODICE_INESISTENTE", "increasing", 10.0)
-        assert result is None
-
-    def test_insight_non_nel_caveat(self):
-        # Il link insight e' gestito dal campo insight_id, non dal caveat
-        # KIDNAPP: no propensione, ha insight -> caveat deve essere None
-        result = _build_caveat("KIDNAPP", "decreasing", -7.9)
-        assert result is None
-
-    def test_propensione_molto_bassa_no_trend_yoy_positivo(self):
-        # CP572: molto_bassa, trend "no trend" ma YoY +15.8% -> usa direzione YoY
-        result = _build_caveat("CP572", "no trend", 15.8)
-        assert result is not None
-        assert "emersione" in result
-
-    def test_propensione_molto_bassa_no_trend_yoy_negativo(self):
-        # PORNO: molto_bassa, trend "no trend" ma YoY -10% -> calo_ambiguo
-        result = _build_caveat("PORNO", "no trend", -10.0)
-        assert result is not None
-        assert "non implica necessariamente" in result
-
-    def test_no_insight_no_propensione(self):
-        # SMUGGL: non in PROPENSIONE_DENUNCIA, non in CODICE_TO_INSIGHT_ID
-        result = _build_caveat("SMUGGL", "decreasing", -37.0)
-        assert result is None
-
-    def test_caveat_termina_con_punto(self):
-        result = _build_caveat("CP612BIS", "increasing", 10.0)
-        assert result is not None
-        assert result.endswith(".")
-
-
-# ===================================================================
-# build_top_variazioni: campi contesto/caveat/insight_id
-# ===================================================================
-
-class TestBuildTopVariazioniNarrativi:
-    def _base_rows(self, codice: str, reato: str, totali: list[tuple[int, int]]):
-        return [
-            {"data_type": "OFFEND", "codice_reato": codice, "reato": reato,
-             "anno": anno, "totale": tot}
-            for anno, tot in totali
-        ]
-
-    def test_campi_presenti(self):
-        rows = self._base_rows("THEFT", "Furti", [(2022, 500), (2023, 600), (2024, 900)])
-        df = pd.DataFrame(rows)
-        crescita, _ = build_top_variazioni(df, 2024)
-        assert len(crescita) >= 1
-        r = crescita[0]
-        assert "contesto" in r
-        assert "caveat" in r
-        assert "insight_id" in r
-        # Tre anni: nessuna tendenza dichiarata
-        assert r["trend_strutturale"] is None
-        assert r["contesto"] is None
-
-    def test_insight_id_corretto(self):
-        rows = self._base_rows("BANKROB", "Rapine in banca", [(2022, 200), (2023, 300), (2024, 400)])
-        df = pd.DataFrame(rows)
-        crescita, _ = build_top_variazioni(df, 2024)
-        assert crescita[0]["insight_id"] == "rapine-banca"
-
-    def test_insight_id_null_se_non_mappato(self):
-        rows = self._base_rows("SMUGGL", "Contrabbando", [(2022, 500), (2023, 400), (2024, 200)])
-        df = pd.DataFrame(rows)
-        _, calo = build_top_variazioni(df, 2024)
-        assert calo[0]["insight_id"] is None
+    def test_codice_senza_propensione(self):
+        assert _build_caveat("SMUGGL", -37) is None
