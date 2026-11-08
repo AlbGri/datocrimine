@@ -35,6 +35,9 @@ log = logging.getLogger(__name__)
 # Variazioni % su numeri piccoli sono rumore statistico.
 MIN_ABS_REPORT = 100
 
+# Anni fuori dal COVID sotto i quali una tendenza storica non si dichiara
+MIN_PUNTI_TREND = 8
+
 # Sotto questa soglia, il contesto segnala che la % puo' essere amplificata.
 SOGLIA_NUMERI_BASSI = 500
 
@@ -110,13 +113,13 @@ def _tasso(row: pd.Series, per: int) -> float:
 
 def _trend_strutturale_with_covid(
     series: np.ndarray, anni: np.ndarray
-) -> str:
-    """Mann-Kendall escludendo anni COVID."""
+) -> str | None:
+    """Mann-Kendall escludendo anni COVID; None se la serie e' troppo breve."""
     mask = ~np.isin(anni, list(COVID_YEARS))
     clean = series[mask]
-    if len(clean) >= 5:
-        return run_mann_kendall(clean)["mk_trend"]
-    return run_mann_kendall(series)["mk_trend"]
+    if len(clean) < MIN_PUNTI_TREND:
+        return None
+    return run_mann_kendall(clean)["mk_trend"]
 
 
 def build_executive_summary(
@@ -151,24 +154,24 @@ def build_executive_summary(
 
 def _build_contesto(
     yoy_pct: float,
-    trend: str,
+    trend: str | None,
     valore_corrente: int,
     valore_precedente: int,
     series: np.ndarray,
     anni: np.ndarray,
     target_year: int,
-) -> str:
-    """Genera testo di contesto per una top variazione."""
+) -> str | None:
+    """Genera testo di contesto per una top variazione. Ritorna None se non serve."""
     frasi = []
 
     # Regola 1: YoY vs trend strutturale
     positivo = yoy_pct > 0
     etichette = {
         (True, "decreasing"): "Rimbalzo: crescita annuale su un trend storico in calo",
-        (True, "no trend"): "Picco su un trend storico stabile",
+        (True, "no trend"): "Aumento senza una tendenza storica netta",
         (True, "increasing"): "Prosegue il trend storico di crescita",
         (False, "decreasing"): "Prosegue il trend storico di calo",
-        (False, "no trend"): "Calo su un trend storico stabile",
+        (False, "no trend"): "Calo senza una tendenza storica netta",
         (False, "increasing"): "Frenata: calo annuale su un trend storico in crescita",
     }
     frasi.append(etichette.get((positivo, trend), ""))
@@ -190,31 +193,31 @@ def _build_contesto(
         )
 
     # Regola 4: sensibilita' COVID (trend diverge con/senza anni COVID)
-    if len(anni) >= 5 and any(a in COVID_YEARS for a in anni):
+    if trend is not None and any(a in COVID_YEARS for a in anni):
         trend_full = run_mann_kendall(series)["mk_trend"]
         if trend_full != trend:
             frasi.append(
                 "Il trend strutturale cambia rimuovendo gli anni COVID (2020-2021)"
             )
 
-    return ". ".join(f for f in frasi if f) + "."
+    frasi = [f for f in frasi if f]
+    return ". ".join(frasi) + "." if frasi else None
 
 
 def _build_caveat(
     codice: str,
-    trend: str,
+    trend: str | None,
     yoy_pct: float,
 ) -> str | None:
     """Genera caveat per una top variazione. Ritorna None se non serve."""
     parti = []
 
     # Regola A: propensione alla denuncia
-    # Per il report YoY, usiamo la direzione annuale quando il trend strutturale
-    # e' "no trend", perche' il lettore vede la variazione dell'anno, non il trend.
+    # Senza trend strutturale vale la direzione della variazione, che e' cio' che il lettore vede
     propensione = PROPENSIONE_DENUNCIA.get(codice)
     if propensione is not None:
         trend_per_propensione = trend
-        if trend == "no trend" and yoy_pct != 0:
+        if trend in (None, "no trend") and yoy_pct != 0:
             trend_per_propensione = "increasing" if yoy_pct > 0 else "decreasing"
         interp = interpret_with_propensione(trend_per_propensione, propensione)
         if interp == "emersione_probabile":
@@ -282,6 +285,7 @@ def build_top_variazioni(
             "valore_corrente": val_curr,
             "valore_precedente": val_prev,
             "trend_strutturale": trend,
+            "inizio_serie": int(anni[0]),
             "contesto": contesto,
             "caveat": caveat,
             "insight_id": insight_id,

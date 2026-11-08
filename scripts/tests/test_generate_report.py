@@ -21,6 +21,7 @@ from generate_report import (
     _build_caveat,
     _build_contesto,
     _fix_accenti,
+    _trend_strutturale_with_covid,
     build_executive_summary,
     build_percezione,
     build_reati_allarme,
@@ -441,12 +442,12 @@ class TestBuildContesto:
     def test_picco_stabile(self):
         series, anni = _make_series([50, 52, 48, 51, 49, 50, 52, 48, 51, 49, 60])
         result = _build_contesto(22.4, "no trend", 60, 49, series, anni, 2024)
-        assert "Picco" in result
+        assert "Aumento senza una tendenza storica netta" in result
 
     def test_calo_stabile(self):
         series, anni = _make_series([50, 52, 48, 51, 49, 50, 52, 48, 51, 49, 40])
         result = _build_contesto(-18.4, "no trend", 40, 49, series, anni, 2024)
-        assert "Calo su un trend storico stabile" in result
+        assert "Calo senza una tendenza storica netta" in result
 
     def test_numeri_bassi(self):
         series, anni = _make_series([200, 180, 160, 140, 120])
@@ -486,10 +487,27 @@ class TestBuildContesto:
         # Il test verifica che la funzione non crashi; se i trend coincidono, niente nota
         assert result.endswith(".")
 
+    def test_serie_corta_senza_tendenza(self):
+        series, anni = _make_series([18921, 19500, 21911], start_year=2022)
+        result = _build_contesto(12.4, None, 21911, 19500, series, anni, 2024)
+        assert result is None
+
     def test_termina_con_punto(self):
         series, anni = _make_series([100, 200])
         result = _build_contesto(100.0, "increasing", 200, 100, series, anni, 2015)
         assert result.endswith(".")
+
+
+class TestTrendStrutturale:
+    def test_tre_anni_nessuna_tendenza(self):
+        series, anni = _make_series([18921, 19500, 21911], start_year=2022)
+        assert _trend_strutturale_with_covid(series, anni) is None
+
+    def test_soglia_senza_anni_covid(self):
+        # 2014-2024 sono 9 anni fuori dal COVID, 2016-2024 solo 7
+        series, anni = _make_series(list(range(100, 111)))
+        assert _trend_strutturale_with_covid(series, anni) == "increasing"
+        assert _trend_strutturale_with_covid(series[2:], anni[2:]) is None
 
 
 # ===================================================================
@@ -579,8 +597,9 @@ class TestBuildTopVariazioniNarrativi:
         assert "contesto" in r
         assert "caveat" in r
         assert "insight_id" in r
-        assert isinstance(r["contesto"], str)
-        assert len(r["contesto"]) > 0
+        # Tre anni: nessuna tendenza dichiarata
+        assert r["trend_strutturale"] is None
+        assert r["contesto"] is None
 
     def test_insight_id_corretto(self):
         rows = self._base_rows("BANKROB", "Rapine in banca", [(2022, 200), (2023, 300), (2024, 400)])

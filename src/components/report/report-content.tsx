@@ -41,8 +41,9 @@ interface ReportData {
     yoy_pct: number;
     valore_corrente: number;
     valore_precedente: number;
-    trend_strutturale: string;
-    contesto: string;
+    trend_strutturale: string | null;
+    inizio_serie: number;
+    contesto: string | null;
     caveat: string | null;
     insight_id: string | null;
     nota: string | null;
@@ -53,8 +54,9 @@ interface ReportData {
     yoy_pct: number;
     valore_corrente: number;
     valore_precedente: number;
-    trend_strutturale: string;
-    contesto: string;
+    trend_strutturale: string | null;
+    inizio_serie: number;
+    contesto: string | null;
     caveat: string | null;
     insight_id: string | null;
     nota: string | null;
@@ -105,20 +107,23 @@ function VariazioneIndicator({ value }: { value: number }) {
 const TREND_IT: Record<string, string> = {
   increasing: "in crescita",
   decreasing: "in calo",
-  "no trend": "stabile",
+  "no trend": "nessuna tendenza netta",
 };
 
-function trendToItalian(trend: string): string {
+function trendToItalian(trend: string | null, inizio: number): string {
+  if (trend === null) return `serie troppo breve (dal ${inizio})`;
   return TREND_IT[trend] ?? trend;
 }
 
-function TrendLabel({ trend }: { trend: string }) {
+function TrendLabel({ trend, inizio }: { trend: string | null; inizio: number }) {
   const labels: Record<string, { text: string; color: string }> = {
     increasing: { text: "trend storico: in crescita", color: "text-red-600" },
     decreasing: { text: "trend storico: in calo", color: "text-green-600" },
-    "no trend": { text: "trend storico: stabile", color: "text-muted-foreground" },
+    "no trend": { text: "nessuna tendenza storica netta", color: "text-muted-foreground" },
   };
-  const info = labels[trend] ?? { text: trend, color: "text-muted-foreground" };
+  const info = trend === null
+    ? { text: `serie troppo breve (dal ${inizio})`, color: "text-muted-foreground" }
+    : labels[trend] ?? { text: trend, color: "text-muted-foreground" };
   return <span className={`text-xs ${info.color}`}>{info.text}</span>;
 }
 
@@ -201,7 +206,7 @@ function ChartTopVariazioni({
   const customdata = allItems.map((d) => [
     d.valore_corrente,
     d.valore_precedente,
-    trendToItalian(d.trend_strutturale),
+    trendToItalian(d.trend_strutturale, d.inizio_serie),
   ]);
 
   return (
@@ -585,11 +590,13 @@ export function ReportContent({ anno }: { anno: string }) {
                     <span className="text-red-600 font-semibold">
                       {fmtPctSigned(d.yoy_pct)}
                     </span>
-                    <TrendLabel trend={d.trend_strutturale} />
+                    <TrendLabel trend={d.trend_strutturale} inizio={d.inizio_serie} />
                   </div>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {d.contesto}
-                  </p>
+                  {d.contesto && (
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {d.contesto}
+                    </p>
+                  )}
                   {d.nota && (
                     <p className="text-xs text-muted-foreground mt-0.5 italic">
                       {d.nota}
@@ -624,11 +631,13 @@ export function ReportContent({ anno }: { anno: string }) {
                     <span className="text-green-600 font-semibold">
                       {fmtPct(d.yoy_pct)}
                     </span>
-                    <TrendLabel trend={d.trend_strutturale} />
+                    <TrendLabel trend={d.trend_strutturale} inizio={d.inizio_serie} />
                   </div>
-                  <p className="text-xs text-muted-foreground mt-0.5">
-                    {d.contesto}
-                  </p>
+                  {d.contesto && (
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      {d.contesto}
+                    </p>
+                  )}
                   {d.nota && (
                     <p className="text-xs text-muted-foreground mt-0.5 italic">
                       {d.nota}
