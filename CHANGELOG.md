@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-08 — Correzioni su mappa, KPI e testi
+- Mappa e classifica delle regioni: la scala di colore arriva al tasso più alto registrato, non a 100, ed è uguale per tutti gli anni; le differenze fra regioni si vedono meglio
+- KPI "Variazione totale autori": confronto fra 2022 e 2019 (ultimo anno prima del COVID), non più fra medie che includevano il 2020 e il 2021
+- Corretti accenti e un rinvio a una sezione rinominata
+
 ## 2026-11-08 — Report 2024 rivisto
 - "Cosa è cambiato" mostra quali reati spiegano la variazione dei delitti denunciati, rispetto all'anno prima e al 2019 (ultimo anno prima del COVID). Sostituisce la classifica per variazione percentuale degli autori denunciati, dominata da reati con poche centinaia di casi
 - Niente più "trend storico stabile" su serie di pochi anni; dove non c'è una tendenza chiara il report scrive "nessuna tendenza storica netta"
