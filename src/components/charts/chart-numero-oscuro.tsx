@@ -2,105 +2,73 @@
 
 import { useState } from "react";
 import { COLORS, CHART_HEIGHT_SMALL, PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
-import { PLOTLY_IT_SEPARATORS, fmtPct } from "@/lib/format";
+import { PLOTLY_IT_SEPARATORS, fmtPct, fmtSigned } from "@/lib/format";
+import propensione from "@/data/propensione_denuncia.json";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
 import { Plot } from "@/components/charts/plot";
 
-const URL_REATI_2023 =
-  "https://www.istat.it/comunicato-stampa/reati-contro-la-persona-e-contro-la-proprieta-vittime-ed-eventi-2022-2023/";
 const URL_REPORT_2025 =
   "https://www.istat.it/wp-content/uploads/2025/06/Report_REATI-CONTRO-LA-PERSONA-E-LA-PROPRIETA_VITTIME-ED-EVENTI.pdf";
-const URL_VIOLENZA_2025 =
-  "https://www.istat.it/comunicato-stampa/la-violenza-contro-le-donne-dentro-e-fuori-la-famiglia-primi-risultati-anno-2025/";
-const URL_REPORT_2019 =
-  "https://www.istat.it/it/files/2019/02/Reati-contro-la-persona-e-contro-la-proprieta.pdf";
+const { fonti, righe } = propensione;
 
-const categorie = [
-  "Violenza da partner",
-  "Frodi/truffe",
-  "Aggressioni",
-  "Scippi",
-  "Furti auto/moto",
+type Area = "Italia" | "Nord-ovest" | "Nord-est" | "Centro" | "Sud" | "Isole";
+type Edizione = "2015-2016" | "2022-2023" | "2025";
+
+function riga(reato: string, area: Area, edizione: Edizione) {
+  const r = righe.find((d) => d.reato === reato && d.area === area && d.edizione === edizione);
+  if (!r) throw new Error(`propensione_denuncia.json: manca ${reato}, ${area}, ${edizione}`);
+  return r;
+}
+const pct = (reato: string, area: Area, edizione: Edizione) => riga(reato, area, edizione).pct;
+// Testo: "40,6%"
+const p = (reato: string, area: Area, edizione: Edizione) => fmtPct(pct(reato, area, edizione));
+// Testo: "+46" punti fra le due edizioni dell'indagine
+const punti = (reato: string, area: Area) =>
+  fmtSigned(pct(reato, area, "2022-2023") - pct(reato, area, "2015-2016"), 0);
+
+// Quota denunciata a livello nazionale, edizione piu' recente per ogni reato
+const quotaNazionale: [string, Edizione][] = [
+  ["Violenza da partner", "2025"],
+  ["Frodi/truffe", "2022-2023"],
+  ["Aggressioni", "2022-2023"],
+  ["Scippi", "2022-2023"],
+  ["Furti auto/moto", "2022-2023"],
 ];
-const pctDenunciati = [11, 24, 41, 68, 95];
-const pctNonDenunciati = [89, 76, 59, 32, 5];
+const categorie = quotaNazionale.map(([reato]) => reato);
+// Il grafico mostra valori interi: con i decimali 100 - v darebbe 31,799999...
+const pctDenunciati = quotaNazionale.map(([reato, ed]) => Math.round(pct(reato, "Italia", ed)));
+const pctNonDenunciati = pctDenunciati.map((v) => 100 - v);
 
 const catConfronto = ["Frodi/truffe", "Aggressioni", "Scippi"];
-const pct2016 = [18.4, 19.9, 88.9];
-const pct2023 = [24.1, 40.6, 68.2];
+const pct2016 = catConfronto.map((r) => pct(r, "Italia", "2015-2016"));
+const pct2023 = catConfronto.map((r) => pct(r, "Italia", "2022-2023"));
 
-// Propensione denuncia per macroarea - ISTAT Tavola 6 (2022-2023)
-const macroaree = ["Nord-ovest", "Nord-est", "Centro", "Sud", "Isole"];
-const macroCat2023 = {
-  "Reati proprietà individuale": [45.5, 34.0, 44.6, 52.6, 34.6],
-  "Reati violenti": [37.3, 10.4, 65.2, 58.6, 13.0],
-  "Reati abitazione": [59.7, 67.3, 48.8, 48.1, 33.9],
-  "Reati veicoli": [40.1, 31.8, 43.2, 50.6, 43.4],
-};
-const mediaNazionale2023: Record<string, number> = {
-  "Reati proprietà individuale": 44.7,
-  "Reati violenti": 41.6,
-  "Reati abitazione": 55.3,
-  "Reati veicoli": 41.3,
-};
+const macroaree: Area[] = ["Nord-ovest", "Nord-est", "Centro", "Sud", "Isole"];
+const categorieMacro = ["Reati proprietà individuale", "Reati violenti", "Reati abitazione", "Reati veicoli"];
+const macroCat2023 = Object.fromEntries(
+  categorieMacro.map((cat) => [cat, macroaree.map((a) => pct(cat, a, "2022-2023"))]),
+);
+const mediaNazionale2023 = Object.fromEntries(
+  categorieMacro.map((cat) => [cat, pct(cat, "Italia", "2022-2023")]),
+);
 const coloriMacro = [COLORS.primary, COLORS.secondary, COLORS.truffe, COLORS.droga];
 
-// Confronto storico per macroarea - tutti i singoli reati
-// 2015-2016: Prospetto 6 report ISTAT 1 feb 2019
-// 2022-2023: Tavola 6 report ISTAT 9 giu 2025
-// Ordine: NO, NE, Centro, Sud, Isole
+// Confronto storico per macroarea, tutti i singoli reati
 const reatiStorico = [
   "Scippi", "Borseggi", "Rapine", "Furti oggetti personali",
   "Aggressioni", "Minacce",
   "Furti abitazione", "Furti veicoli", "Furti oggetti dai veicoli",
 ];
-const storico2016: Record<string, number[]> = {
-  "Scippi": [71.7, 64.4, 51.1, 46.9, 8.5],
-  "Borseggi": [62.5, 44.2, 37.1, 31.7, 33.2],
-  "Rapine": [59.9, 52.0, 32.1, 40.0, 22.5],
-  "Furti oggetti personali": [37.4, 16.3, 20.1, 30.8, 19.8],
-  "Aggressioni": [14.3, 26.2, 17.0, 9.2, 41.9],
-  "Minacce": [36.9, 26.9, 40.1, 22.2, 24.6],
-  "Furti abitazione": [73.1, 63.3, 51.3, 54.9, 64.0],
-  "Furti veicoli": [38.5, 30.3, 23.4, 49.2, 24.7],
-  "Furti oggetti dai veicoli": [42.9, 55.5, 48.4, 45.9, 34.6],
-};
+const perArea = <T,>(edizione: Edizione, campo: (r: ReturnType<typeof riga>) => T) =>
+  Object.fromEntries(reatiStorico.map((r) => [r, macroaree.map((a) => campo(riga(r, a, edizione)))]));
+const storico2016 = perArea("2015-2016", (r) => r.pct);
+const storico2023 = perArea("2022-2023", (r) => r.pct);
 // Asterisco (*) = errore campionario >35% nel report ISTAT
-const asterischi2016: Record<string, boolean[]> = {
-  "Scippi": [false, false, false, false, true],
-  "Borseggi": [false, false, false, false, false],
-  "Rapine": [false, false, false, false, true],
-  "Furti oggetti personali": [false, false, false, false, false],
-  "Aggressioni": [false, false, false, true, false],
-  "Minacce": [false, false, false, false, false],
-  "Furti abitazione": [false, false, false, false, false],
-  "Furti veicoli": [false, false, false, false, false],
-  "Furti oggetti dai veicoli": [false, false, false, false, false],
-};
-const storico2023: Record<string, number[]> = {
-  "Scippi": [33.9, 39.2, 63.0, 54.2, 52.9],
-  "Borseggi": [51.4, 47.8, 62.5, 68.5, 28.4],
-  "Rapine": [23.5, 23.5, 57.0, 74.7, 42.9],
-  "Furti oggetti personali": [45.5, 26.4, 15.9, 38.0, 33.2],
-  "Aggressioni": [42.3, 10.4, 69.0, 55.3, 11.1],
-  "Minacce": [34.6, 16.9, 13.8, 32.5, 16.0],
-  "Furti abitazione": [63.5, 79.3, 61.0, 68.9, 38.5],
-  "Furti veicoli": [38.3, 41.8, 44.6, 65.7, 55.9],
-  "Furti oggetti dai veicoli": [73.5, 68.9, 49.0, 57.6, 30.0],
-};
-const asterischi2023: Record<string, boolean[]> = {
-  "Scippi": [false, false, false, false, true],
-  "Borseggi": [false, false, false, false, true],
-  "Rapine": [false, true, false, false, true],
-  "Furti oggetti personali": [false, false, true, false, false],
-  "Aggressioni": [false, true, false, false, true],
-  "Minacce": [false, true, true, true, false],
-  "Furti abitazione": [false, false, false, false, false],
-  "Furti veicoli": [false, false, false, false, false],
-  "Furti oggetti dai veicoli": [false, false, false, false, true],
-};
+const asterischi2016 = perArea("2015-2016", (r) => r.errore_alto === true);
+const asterischi2023 = perArea("2022-2023", (r) => r.errore_alto === true);
+
 const fmtAst = (vals: number[], ast: boolean[]) =>
   vals.map((v, i) => `${fmtPct(v)}${ast[i] ? "*" : ""}`);
 
@@ -128,7 +96,7 @@ export function ChartNumeroOscuro() {
         </AlertDescription>
       </Alert>
 
-      <ChartFullscreenWrapper ariaDescription="Grafico numero oscuro: percentuale di reati denunciati vs non denunciati per tipologia. Violenza da partner denunciata solo nell'11% dei casi">
+      <ChartFullscreenWrapper ariaDescription={`Grafico numero oscuro: percentuale di reati denunciati vs non denunciati per tipologia. Violenza da partner denunciata solo nell'${fmtPct(pct("Violenza da partner", "Italia", "2025"), 0)} dei casi`}>
         <Plot
           data={[
             {
@@ -228,12 +196,11 @@ export function ChartNumeroOscuro() {
       </ChartFullscreenWrapper>
 
       <p>
-        Le aggressioni denunciate sono <strong>raddoppiate</strong> (da 19,9% a
-        40,6%), probabilmente per maggiore fiducia nelle istituzioni e campagne
+        Le aggressioni denunciate sono <strong>raddoppiate</strong> (da {p("Aggressioni", "Italia", "2015-2016")} a {p("Aggressioni", "Italia", "2022-2023")}), probabilmente per maggiore fiducia nelle istituzioni e campagne
         di sensibilizzazione. Gli scippi denunciati sono invece{" "}
-        <strong>calati</strong> (da 88,9% a 68,2%), forse per rassegnazione su
+        <strong>calati</strong> (da {p("Scippi", "Italia", "2015-2016")} a {p("Scippi", "Italia", "2022-2023")}), forse per rassegnazione su
         reati percepiti come a basso recupero. Le frodi/truffe mostrano un{" "}
-        <strong>lieve aumento</strong> (da 18,4% a 24,1%), probabilmente legato
+        <strong>lieve aumento</strong> (da {p("Frodi/truffe", "Italia", "2015-2016")} a {p("Frodi/truffe", "Italia", "2022-2023")}), probabilmente legato
         alla crescita delle truffe bancarie online dove c&apos;è maggiore
         consapevolezza e incentivo a denunciare.
       </p>
@@ -332,11 +299,13 @@ export function ChartNumeroOscuro() {
 
       <p>
         Il <strong>Sud</strong> denuncia più della media nazionale per reati
-        contro la proprietà (52,6% vs 44,7%), reati violenti (58,6% vs 41,6%) e
-        reati contro i veicoli (50,6% vs 41,3%). Sono il{" "}
+        contro la proprietà ({p("Reati proprietà individuale", "Sud", "2022-2023")} vs{" "}
+        {p("Reati proprietà individuale", "Italia", "2022-2023")}), reati violenti ({p("Reati violenti", "Sud", "2022-2023")} vs{" "}
+        {p("Reati violenti", "Italia", "2022-2023")}) e reati contro i veicoli ({p("Reati veicoli", "Sud", "2022-2023")} vs{" "}
+        {p("Reati veicoli", "Italia", "2022-2023")}). Sono il{" "}
         <strong>Nord-est</strong> e le <strong>Isole</strong> a denunciare meno
         per quasi tutte le categorie. Il <strong>Centro</strong> ha la
-        propensione più alta per i reati violenti (65,2%).
+        propensione più alta per i reati violenti ({p("Reati violenti", "Centro", "2022-2023")}).
       </p>
 
       <CollapsibleSection
@@ -404,14 +373,15 @@ export function ChartNumeroOscuro() {
         <p>
           I cambiamenti pi&ugrave; marcati riguardano i{" "}
           <strong>reati violenti al Centro-Sud</strong>: le aggressioni denunciate
-          al Sud passano da 9,2% a 55,3% (+46 punti), al Centro da 17,0% a 69,0%
-          (+52 punti). Le rapine al Sud passano da 40,0% a 74,7% (+35 punti).
+          al Sud passano da {p("Aggressioni", "Sud", "2015-2016")} a {p("Aggressioni", "Sud", "2022-2023")} ({punti("Aggressioni", "Sud")} punti), al Centro{" "}
+          da {p("Aggressioni", "Centro", "2015-2016")} a {p("Aggressioni", "Centro", "2022-2023")} ({punti("Aggressioni", "Centro")} punti). Le rapine al Sud passano{" "}
+          da {p("Rapine", "Sud", "2015-2016")} a {p("Rapine", "Sud", "2022-2023")} ({punti("Rapine", "Sud")} punti).
           Al contrario, gli scippi denunciati calano drasticamente al{" "}
-          <strong>Nord-ovest</strong> (da 71,7% a 33,9%) e al{" "}
-          <strong>Nord-est</strong> (da 64,4% a 39,2%). I borseggi aumentano
+          <strong>Nord-ovest</strong> (da {p("Scippi", "Nord-ovest", "2015-2016")} a {p("Scippi", "Nord-ovest", "2022-2023")}) e al{" "}
+          <strong>Nord-est</strong> (da {p("Scippi", "Nord-est", "2015-2016")} a {p("Scippi", "Nord-est", "2022-2023")}). I borseggi aumentano
           ovunque tranne che alle Isole. I furti di veicoli crescono fortemente al{" "}
-          <strong>Sud</strong> (da 49,2% a 65,7%) e alle{" "}
-          <strong>Isole</strong> (da 24,7% a 55,9%). I furti di oggetti dai
+          <strong>Sud</strong> (da {p("Furti veicoli", "Sud", "2015-2016")} a {p("Furti veicoli", "Sud", "2022-2023")}) e alle{" "}
+          <strong>Isole</strong> (da {p("Furti veicoli", "Isole", "2015-2016")} a {p("Furti veicoli", "Isole", "2022-2023")}). I furti di oggetti dai
           veicoli aumentano al Nord ma calano alle Isole.
         </p>
       </CollapsibleSection>
@@ -419,7 +389,7 @@ export function ChartNumeroOscuro() {
       <p className="text-xs text-muted-foreground">
         Fonti:{" "}
         <a
-          href={URL_REPORT_2019}
+          href={fonti.sicurezza_2015_2016.url}
           target="_blank"
           rel="noopener noreferrer"
           className="underline"
@@ -428,7 +398,7 @@ export function ChartNumeroOscuro() {
         </a>
         ,{" "}
         <a
-          href={URL_REATI_2023}
+          href={fonti.sicurezza_2022_2023.url}
           target="_blank"
           rel="noopener noreferrer"
           className="underline"
@@ -446,7 +416,7 @@ export function ChartNumeroOscuro() {
         </a>
         ,{" "}
         <a
-          href={URL_VIOLENZA_2025}
+          href={fonti.violenza_donne_2025.url}
           target="_blank"
           rel="noopener noreferrer"
           className="underline"
@@ -454,7 +424,7 @@ export function ChartNumeroOscuro() {
           ISTAT Violenza contro le donne 2025
         </a>
         . Violenza da partner non ha confronto storico diretto (fonte diversa).
-        Furti auto/moto stabili a ~95-98% in entrambe le edizioni.
+        Furti auto/moto stabili in entrambe le edizioni.
       </p>
     </div>
   );
