@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-08 — Report 2024 rivisto
+- "Cosa è cambiato" mostra quali reati spiegano la variazione dei delitti denunciati, rispetto all'anno prima e al 2019 (ultimo anno prima del COVID). Sostituisce la classifica per variazione percentuale degli autori denunciati, dominata da reati con poche centinaia di casi
+- Niente più "trend storico stabile" su serie di pochi anni; dove non c'è una tendenza chiara il report scrive "nessuna tendenza storica netta"
+- Corrette sette variazioni calcolate su tassi già arrotondati (omicidi volontari -4,4%, non -5,2%)
+- L'avviso sulla propensione alla denuncia commenta la variazione mostrata
+- Ogni numero del report è verificato in automatico contro i dati
+
 ## 2026-11-08 — Insight corretti e verificati
 - Corretti i numeri degli insight su reati violenti, patrimoniali e informatici: alcuni reati erano contati due volte. Le vittime di reati violenti calano del 12,9% dal 2007, non crescono
 - I grafici per Nord, Centro e Sud usano le medie pesate per popolazione, le stesse dei testi
