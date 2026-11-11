@@ -8,6 +8,8 @@ import { ChartAllarmeTabellaProvince } from "@/components/charts/chart-allarme-t
 import { ChartAllarmeTrendProvincia } from "@/components/charts/chart-allarme-trend-provincia";
 
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
+import { useFetchData } from "@/lib/use-fetch-data";
+import { fmtPct } from "@/lib/format";
 
 const REATI = [
   "Atti sessuali con minorenne",
@@ -20,9 +22,23 @@ const REATI = [
 
 const ANNI = Array.from({ length: 11 }, (_, i) => 2014 + i);
 
+type DelittiAnno = { Anno: number; Delitti: number };
+
+// Quota dei reati di allarme sociale sul totale dei delitti, nell'ultimo anno
+function quotaSulTotale(allarme: DelittiAnno[], italia: DelittiAnno[]) {
+  const ultimo = italia.reduce((a, b) => (b.Anno > a.Anno ? b : a));
+  const somma = allarme
+    .filter((d) => d.Anno === ultimo.Anno)
+    .reduce((tot, d) => tot + d.Delitti, 0);
+  return { anno: ultimo.Anno, pct: (somma / ultimo.Delitti) * 100 };
+}
+
 export default function ReatiAllarmeSociale() {
   const [reato, setReato] = useState(REATI[0]);
   const [anno, setAnno] = useState(2024);
+  const { data: allarme } = useFetchData<DelittiAnno[]>("/data/reati_allarme_sociale.json");
+  const { data: italia } = useFetchData<DelittiAnno[]>("/data/delitti_italia.json");
+  const quota = allarme && italia ? quotaSulTotale(allarme, italia) : null;
 
   return (
     <main className="mx-auto max-w-7xl px-4 py-4 sm:py-8 space-y-6 sm:space-y-10">
@@ -31,9 +47,10 @@ export default function ReatiAllarmeSociale() {
           Reati di Allarme Sociale
         </h1>
         <p className="mt-2 text-muted-foreground">
-          Focus su reati rari ma ad alto impatto: rappresentano meno del 2% dei
-          delitti totali ma dominano la percezione pubblica e la copertura
-          mediatica. Tutti i dati si riferiscono a delitti denunciati alle forze
+          Focus su reati rari ma ad alto impatto: sono una piccola parte dei
+          delitti denunciati
+          {quota && ` (${fmtPct(quota.pct, 2)} nel ${quota.anno})`} ma dominano
+          la percezione pubblica e la copertura mediatica. Tutti i dati si riferiscono a delitti denunciati alle forze
           dell&apos;ordine, non alla criminalit&agrave; reale.
         </p>
       </div>

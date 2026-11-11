@@ -9,10 +9,6 @@
       "numeri": ["4,5%", "4.500", "20%", "50%", "80%", "5%"],
       "perche": "esempi di lettura dei dati, non dati"
     },
-    "src/app/reati-allarme-sociale/page.tsx": {
-      "numeri": ["2%"],
-      "perche": "\"meno del 2%\": verificato a mano, calcolo in numeri_metodologia.json (a_mano)"
-    },
     "src/components/charts/chart-numero-oscuro.tsx": {
       "numeri": ["35%"],
       "perche": "soglia ISTAT dell'errore campionario per l'asterisco"

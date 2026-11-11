@@ -9,7 +9,9 @@ Un fatto dichiara da dove viene un numero:
 "file" e' un JSON di public/data/, o un percorso che parte da src/ (con le righe in "righe").
 Opzionali: "anno" (assente per dati senza anni), "da" + "calcolo" ("variazione" o
 "variazione_pct") per un cambiamento fra due anni, "meno" o "diviso" (un secondo filtro, con
-"campo" se diverso) per un divario o un rapporto, "tolleranza" per i numeri arrotondati a mano.
+"campo" e "file" se diversi) per un divario o un rapporto, "tolleranza" per i numeri arrotondati
+a mano. Un filtro con "somma": true somma le righe trovate invece di volerne una sola. "diviso"
+da' un rapporto, non una percentuale: 0,48% si dichiara con "valore": 0.0048.
 """
 
 import json
@@ -52,16 +54,21 @@ def carica(file: str) -> pd.DataFrame:
 
 
 def valore_serie(fatto: dict, filtro: dict, anno: int | None) -> float:
-    df = carica(fatto["file"])
     filtro = dict(filtro)
     campo = filtro.pop("campo", fatto["campo"])
+    file = filtro.pop("file", fatto["file"])
+    somma = filtro.pop("somma", False)
+    df = carica(file)
     mask = pd.Series(True, index=df.index)
     if anno is not None:
         mask &= df["anno" if "anno" in df.columns else "Anno"] == anno
     for chiave, valore in filtro.items():
         mask &= df[chiave] == valore
     righe = df.loc[mask, campo]
-    assert len(righe) == 1, f"{len(righe)} righe per {filtro} {anno} in {fatto['file']}"
+    if somma:
+        assert len(righe) > 0, f"nessuna riga per {filtro} {anno} in {file}"
+        return float(righe.sum())
+    assert len(righe) == 1, f"{len(righe)} righe per {filtro} {anno} in {file}"
     return float(righe.iloc[0])
 
 

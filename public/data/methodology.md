@@ -164,7 +164,7 @@ Per il focus su reati mediatici, sono stati selezionati 6 tipi specifici (non ag
 - Rapine in abitazione
 - Sequestri di persona
 
-Questi reati rappresentano **<2% dei delitti totali** ma dominano percezione pubblica e copertura mediatica.
+Questi reati sono **lo 0,48% dei delitti totali** nel 2024 (erano lo 0,39% nel 2014) ma dominano percezione pubblica e copertura mediatica.
 
 ## Indicatore di sicurezza percepita vs oggettiva
 
