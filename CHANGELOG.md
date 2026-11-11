@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-11 — Data di aggiornamento dei dati
+- In fondo a ogni pagina c'è la data a cui sono aggiornati i dati e l'ultimo anno coperto
+- Reati di allarme sociale: la quota sul totale dei delitti è calcolata dai dati (0,48% nel 2024) al posto di "meno del 2%"; in Metodologia c'è anche il confronto con il 2014
+- La sitemap dice ai motori di ricerca quando il sito è stato modificato l'ultima volta
+- Aggiornato Next.js alla 16.4.6
+
 ## 2026-11-08 — Numeri verificati in automatico
 - I numeri della Metodologia, del Numero Oscuro e della pagina Insights vengono dai dati o sono verificati in automatico prima di ogni pubblicazione
 - Corretto nella Metodologia l'aumento delle denunce per violenze sessuali dal 2014 al 2024: +60,5%, non +60,4%
