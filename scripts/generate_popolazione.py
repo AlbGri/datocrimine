@@ -63,7 +63,6 @@ REGIONI_ORDER = [
 ]
 
 # Mapping nome file provincia -> codice NUTS3
-# Derivato dal file DCIS_POPRES1 manuale (codice;nome)
 PROVINCE_FILE_TO_NUTS3 = {
     "Torino": "ITC11", "Vercelli": "ITC12", "Biella": "ITC13",
     "Verbano-Cusio-Ossola": "ITC14", "Novara": "ITC15", "Cuneo": "ITC16",
