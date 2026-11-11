@@ -31,6 +31,16 @@ export function fmtPctSigned(value: number, decimals: number = 1): string {
   return `${fmtSigned(value, decimals)}%`;
 }
 
+/** Data: "2026-03-17" → "17 marzo 2026" */
+export function fmtData(iso: string): string {
+  return new Date(iso).toLocaleDateString("it-IT", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
 /**
  * Separatori Plotly per formato italiano.
  * Primo carattere = separatore decimale, secondo = separatore migliaia.

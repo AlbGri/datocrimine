@@ -23,6 +23,7 @@ Output JSON (public/data/):
 
 import json
 import logging
+from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
@@ -31,6 +32,8 @@ from reati import ETICHETTE, SOTTOTIPI
 
 log = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
+
+RAW_DF1 = Path("data") / "raw" / "delittips" / "delittips_1.csv"
 
 # Filtri SDMX per DF_1
 FILTERS = {
@@ -109,8 +112,7 @@ def nuts3_to_regione(code: str) -> str:
 
 def load_delittips(project_root: Path) -> pd.DataFrame:
     """Carica e filtra DF_1 (Italia + tutti i territori)."""
-    filepath = project_root / "data" / "raw" / "delittips" / "delittips_1.csv"
-    df = pd.read_csv(filepath, sep=";", dtype={"REF_AREA": str}, low_memory=False)
+    df = pd.read_csv(project_root / RAW_DF1, sep=";", dtype={"REF_AREA": str}, low_memory=False)
 
     for col, val in FILTERS.items():
         df = df[df[col] == val]
@@ -370,6 +372,15 @@ def generate_percezione(df: pd.DataFrame, pop: pd.DataFrame, project_root: Path)
     log.info(f"  {out.name}: {len(result)} righe")
 
 
+def generate_meta(df: pd.DataFrame, project_root: Path) -> None:
+    """Genera dati_meta.json: ultimo anno dei dati e giorno in cui sono stati scaricati da ISTAT."""
+    scaricati = datetime.fromtimestamp((project_root / RAW_DF1).stat().st_mtime)
+    meta = {"ultimo_anno": int(df["Anno"].max()), "scaricati_il": scaricati.date().isoformat()}
+    out = project_root / "src" / "data" / "dati_meta.json"
+    out.write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
+    log.info(f"  {out.name}: {meta}")
+
+
 def main():
     project_root = Path(__file__).resolve().parent.parent
 
@@ -392,6 +403,7 @@ def main():
     log.info("\nGenerazione JSON allarme sociale...")
     generate_allarme_regioni_json(df, pop, project_root)
     generate_allarme_province_json(df, pop, project_root)
+    generate_meta(df, project_root)
 
     log.info("\nCompletato.")
 

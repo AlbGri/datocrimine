@@ -1,4 +1,6 @@
 import Link from "next/link";
+import datiMeta from "@/data/dati_meta.json";
+import { fmtData } from "@/lib/format";
 
 const FOOTER_LINKS = [
   { href: "/metodologia", label: "Metodologia" },
@@ -25,6 +27,10 @@ export function Footer() {
           <p>
             Progetto indipendente, non affiliato a istituzioni pubbliche. Dati
             elaborati da fonti ISTAT.
+          </p>
+          <p>
+            Dati aggiornati al {fmtData(datiMeta.scaricati_il)}, fino
+            all&apos;anno {datiMeta.ultimo_anno}.
           </p>
           <p>
             <a
