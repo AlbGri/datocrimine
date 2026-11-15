@@ -28,7 +28,7 @@ export default function Esplora() {
         <h1 className="text-2xl sm:text-4xl font-bold">
           Esplora i dati
         </h1>
-        <p className="text-muted-foreground max-w-2xl">
+        <p className="text-muted-foreground">
           Tre prospettive per esplorare i dati ISTAT sulla criminalit&agrave; in
           Italia. Ogni sezione offre grafici interattivi, filtri per territorio e
           periodo, e tabelle scaricabili.
