@@ -234,8 +234,14 @@ export default function Guida() {
           Segnalazione errori
         </h2>
         <p>
-          Se trovi errori nei dati, nei calcoli o nella comunicazione, segnalali
-          aprendo una{" "}
+          Se trovi errori nei dati, nei calcoli o nella comunicazione, scrivi a{" "}
+          <a
+            href="mailto:datocrimine@albgri.com?subject=Segnalazione%20DatoCrimine"
+            className="text-primary underline hover:no-underline"
+          >
+            datocrimine@albgri.com
+          </a>{" "}
+          oppure apri una{" "}
           <a
             href="https://github.com/AlbGri/datocrimine/issues"
             target="_blank"
@@ -243,8 +249,8 @@ export default function Guida() {
             className="text-primary underline hover:no-underline"
           >
             issue su GitHub
-          </a>
-          .
+          </a>{" "}
+          (serve un account).
         </p>
         <p>Ogni segnalazione viene presa seriamente e valutata.</p>
       </section>

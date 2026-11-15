@@ -33,6 +33,24 @@ export function Footer() {
             all&apos;anno {datiMeta.ultimo_anno}.
           </p>
           <p>
+            Segnala un errore:{" "}
+            <a
+              href="mailto:datocrimine@albgri.com?subject=Segnalazione%20DatoCrimine"
+              className="underline hover:text-foreground"
+            >
+              datocrimine@albgri.com
+            </a>{" "}
+            o{" "}
+            <a
+              href="https://github.com/AlbGri/datocrimine/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-foreground"
+            >
+              su GitHub
+            </a>
+          </p>
+          <p>
             <a
               href="https://github.com/AlbGri/datocrimine"
               target="_blank"

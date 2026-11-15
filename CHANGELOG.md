@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-11-15 — Segnalazioni per email
+- In fondo a ogni pagina e nella Guida c'è l'indirizzo datocrimine@albgri.com per segnalare un errore, oltre a GitHub
+
 ## 2026-11-11 — Data di aggiornamento dei dati
 - In fondo a ogni pagina c'è la data a cui sono aggiornati i dati e l'ultimo anno coperto
 - Reati di allarme sociale: la quota sul totale dei delitti è calcolata dai dati (0,48% nel 2024) al posto di "meno del 2%"; in Metodologia c'è anche il confronto con il 2014
