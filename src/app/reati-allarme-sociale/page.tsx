@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { ChartAllarmeTrendNazionale } from "@/components/charts/chart-allarme-trend-nazionale";
 import { ChartAllarmeRankingRegioni } from "@/components/charts/chart-allarme-ranking-regioni";
 import { ChartAllarmeTrendRegione } from "@/components/charts/chart-allarme-trend-regione";
@@ -21,6 +21,21 @@ const REATI = [
   "Violenze sessuali",
 ];
 
+// Scelta editoriale: si parte dal dato senza numero oscuro, non dal primo in ordine alfabetico
+const REATO_INIZIALE = "Omicidi volontari consumati";
+
+const slug = (testo: string) => testo.toLowerCase().replace(/[^a-z]+/g, "-");
+
+// ?reato=rapine-in-abitazione arriva dai riquadri della home; nell'HTML statico non c'e'
+function useReatoDaIndirizzo() {
+  const valore = useSyncExternalStore(
+    () => () => {},
+    () => new URLSearchParams(window.location.search).get("reato"),
+    () => null,
+  );
+  return REATI.find((r) => slug(r) === valore);
+}
+
 type DelittiAnno = { Anno: number; Delitti: number };
 
 // Quota dei reati di allarme sociale sul totale dei delitti, nell'ultimo anno
@@ -33,7 +48,9 @@ function quotaSulTotale(allarme: DelittiAnno[], italia: DelittiAnno[]) {
 }
 
 export default function ReatiAllarmeSociale() {
-  const [reato, setReato] = useState(REATI[0]);
+  const reatoDaIndirizzo = useReatoDaIndirizzo();
+  const [reatoScelto, setReato] = useState<string | null>(null);
+  const reato = reatoScelto ?? reatoDaIndirizzo ?? REATO_INIZIALE;
   const [anno, setAnno] = useState(ANNO_ULTIMO);
   const { data: allarme } = useFetchData<DelittiAnno[]>("/data/reati_allarme_sociale.json");
   const { data: italia } = useFetchData<DelittiAnno[]>("/data/delitti_italia.json");

@@ -118,6 +118,7 @@ export default function AnalisiTerritoriale() {
       <hr />
 
       <CollapsibleSection
+        id="province"
         title={`Dati Provinciali (${anno})`}
         description="Tabella con dati per provincia e variazioni temporali"
       >

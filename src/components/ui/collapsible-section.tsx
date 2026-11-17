@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { ChevronRight } from "lucide-react";
 
 interface CollapsibleSectionProps {
@@ -17,8 +18,17 @@ export function CollapsibleSection({
   id,
   children,
 }: CollapsibleSectionProps) {
+  const ref = useRef<HTMLDetailsElement>(null);
+  // Un link a /pagina#id apre la sezione: la home porta alla tabella delle province gia' aperta
+  useEffect(() => {
+    if (id && ref.current && window.location.hash === `#${id}`) {
+      ref.current.open = true;
+      ref.current.scrollIntoView();
+    }
+  }, [id]);
+
   return (
-    <details id={id} open={defaultOpen || undefined} className="group">
+    <details ref={ref} id={id} open={defaultOpen || undefined} className="group">
       <summary className="cursor-pointer list-none select-none">
         <div className="flex items-center gap-2">
           <ChevronRight
