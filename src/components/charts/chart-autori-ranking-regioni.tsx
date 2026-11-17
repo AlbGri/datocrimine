@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { PLOTLY_CONFIG, AXIS_FIXED, COLORS, VICTIM_DEFAULT, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE, MEDIA_ANNOTATION_FONT } from "@/lib/config";
+import { PLOTLY_CONFIG, AXIS_FIXED, COLORS, METRICHE_PROFILO, VICTIM_DEFAULT, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE, MEDIA_ANNOTATION_FONT } from "@/lib/config";
 import { fmtNum, fmtPct, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -155,11 +155,9 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
   const decimali = 1;
 
   const maxVal = Math.max(...valori, 0.1);
-  const colors = valori.map((v) => {
-    const ratio = Math.min(v / maxVal, 1);
-    const gray = Math.round(240 - ratio * 200);
-    return `rgb(${gray},${gray},${gray})`;
-  });
+  // Colore pieno della misura: le barre chiare di una sfumatura sparirebbero sul fondo
+  const barColor =
+    METRICHE_PROFILO.find((m) => m.value === effectiveMetrica)?.color ?? COLORS.primary;
 
   return (
     <div className="space-y-3">
@@ -233,7 +231,7 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
               y: nomi,
               x: valori,
               orientation: "h" as const,
-              marker: { color: colors },
+              marker: { color: barColor },
               text: valori.map((v) => effectiveMetrica !== "tasso" ? fmtPct(v, decimali) : fmtNum(v, decimali)),
               textposition: "outside" as const,
               hovertemplate: (() => {

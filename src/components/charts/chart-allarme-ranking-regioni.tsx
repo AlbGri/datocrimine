@@ -42,16 +42,8 @@ export function ChartAllarmeRankingRegioni({ anno, reato }: Props) {
   const totPop = dataAnno.reduce((s, d) => s + d.Popolazione, 0);
   const media = totPop > 0 ? (totDel / totPop) * 100_000 : 0;
 
+  // Colore pieno del reato: le barre chiare di una sfumatura sparirebbero sul fondo
   const barColor = COLORI_ALLARME[reato] ?? COLORS.primary;
-  const colors = tassi.map((t) => {
-    const maxT = Math.max(...tassi, 1);
-    const ratio = Math.min(t / maxT, 1);
-    const r = parseInt(barColor.slice(1, 3), 16);
-    const g = parseInt(barColor.slice(3, 5), 16);
-    const b = parseInt(barColor.slice(5, 7), 16);
-    const mix = (c: number) => Math.round(240 + (c - 240) * ratio);
-    return `rgb(${mix(r)},${mix(g)},${mix(b)})`;
-  });
 
   return (
     <ChartFullscreenWrapper ariaDescription={`Classifica regioni per ${reato}, tasso per 100.000 abitanti, anno ${anno}`}>
@@ -62,7 +54,7 @@ export function ChartAllarmeRankingRegioni({ anno, reato }: Props) {
             y: nomi,
             x: tassi,
             orientation: "h" as const,
-            marker: { color: colors },
+            marker: { color: barColor },
             text: tassi.map((t) => fmtNum(t, 2)),
             textposition: "outside" as const,
             hovertemplate:

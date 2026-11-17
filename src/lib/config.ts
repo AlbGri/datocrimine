@@ -52,6 +52,43 @@ export const COLORS = {
   testoScuro: "#26242b",
 } as const;
 
+/** Scale delle mappe dello stile comune (sez. 7, "Scale delle mappe"), tema chiaro.
+ *  Sequenziale dal valore basso all'alto; divergente blu sotto lo zero, ruggine sopra */
+export const SCALA_SEQ = ["#d2edfc", "#8fcae9", "#45a4d0", "#097ca6", "#015473"] as const;
+export const SCALA_DIV = [
+  "#026083", "#3294c0", "#90c6e3", "#e4e6ec", "#e4b196", "#be7449", "#814622",
+] as const;
+/** Bordo delle regioni nelle mappe (--border): il passo piu' chiaro non si confonde col fondo */
+export const COLORE_BORDO = "#caccd7";
+
+// Confini delle classi, uguali per tutti gli anni cosi' gli anni restano confrontabili
+export const CLASSI_TASSO_REGIONI = [30, 35, 40, 45] as const;
+export const CLASSI_VARIAZIONE_PCT = [-10, -5, -2, 2, 5, 10] as const;
+
+/** Indice della classe di un valore: 0 sotto il primo confine, confini.length dall'ultimo in su. */
+export const classeDi = (valore: number, confini: readonly number[]) =>
+  confini.filter((c) => valore >= c).length;
+
+/** Scala a gradini per una coropleta Plotly: z e' l'indice della classe e la legenda
+ *  scrive i confini fra un gradino e l'altro. */
+export function scalaAGradini(
+  colori: readonly string[],
+  confini: readonly number[],
+  etichetta: (confine: number) => string,
+) {
+  const n = colori.length;
+  return {
+    colorscale: colori.flatMap((c, i) => [[i / n, c], [(i + 1) / n, c]]),
+    zmin: -0.5,
+    zmax: n - 0.5,
+    colorbar: {
+      tickvals: confini.map((_, i) => i + 0.5),
+      ticktext: confini.map(etichetta),
+      outlinecolor: COLORE_BORDO,
+    },
+  };
+}
+
 export const COLORI_ALLARME: Record<string, string> = {
   "Omicidi volontari consumati": COLORS.omicidi,
   "Tentati omicidi": COLORS.tentati_omicidi,

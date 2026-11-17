@@ -8,6 +8,11 @@ import {
   PLOTLY_FONT,
   NUTS_TO_ISTAT,
   COLORS,
+  SCALA_SEQ,
+  COLORE_BORDO,
+  CLASSI_TASSO_REGIONI,
+  classeDi,
+  scalaAGradini,
 } from "@/lib/config";
 import { fmtNum, fmtSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
@@ -77,9 +82,9 @@ export function ChartMappaRegioni({ anno }: Props) {
   const dataAnno = data.filter((d) => d.Anno === anno);
   const codiciIstat = dataAnno.map((d) => NUTS_TO_ISTAT[d.REF_AREA]);
   const tassi = dataAnno.map((d) => d.Tasso_per_1000);
+  const classi = tassi.map((t) => classeDi(t, CLASSI_TASSO_REGIONI));
   const nomi = dataAnno.map((d) => d.Territorio);
-  // Scala uguale per tutti gli anni, cosi' gli anni restano confrontabili
-  const tassoMax = Math.max(...data.map((d) => d.Tasso_per_1000));
+  const scala = scalaAGradini(SCALA_SEQ, CLASSI_TASSO_REGIONI, (c) => fmtNum(c));
 
   const annoPrecedente = anno - 1;
   const dataPrev = data.filter((d) => d.Anno === annoPrecedente);
@@ -96,6 +101,7 @@ export function ChartMappaRegioni({ anno }: Props) {
       d.Delitti,
       diff != null ? fmtSigned(diff, 1) : "n/d",
       `${rankMap.get(d.REF_AREA)}/${dataAnno.length}`,
+      d.Tasso_per_1000,
     ];
   });
 
@@ -157,19 +163,14 @@ export function ChartMappaRegioni({ anno }: Props) {
               type: "choropleth",
               geojson: geojson,
               locations: codiciIstat,
-              z: tassi,
+              z: classi,
               featureidkey: "properties.reg_istat_code_num",
-              colorscale: [
-                [0, "#f5f5f5"],
-                [0.25, "#d9d9d9"],
-                [0.5, "#999999"],
-                [0.75, "#636363"],
-                [1, "#252525"],
-              ],
-              zmin: 0,
-              zmax: tassoMax,
-              marker: { line: { color: "white", width: 1.5 } },
+              colorscale: scala.colorscale,
+              zmin: scala.zmin,
+              zmax: scala.zmax,
+              marker: { line: { color: COLORE_BORDO, width: 1 } },
               colorbar: {
+                ...scala.colorbar,
                 title: { text: "Tasso per 1000 ab.", side: "right" },
                 x: 0.02,
                 y: 0.5,
@@ -179,7 +180,7 @@ export function ChartMappaRegioni({ anno }: Props) {
               text: nomi,
               customdata: customdata,
               hovertemplate:
-                "<b>%{text}</b><br>Tasso: %{z:.1f} per 1000 ab.<br>Delitti: %{customdata[1]:,.0f}<br>Popolazione: %{customdata[0]:,.0f}<br>Var. anno prec.: %{customdata[2]}<br>Ranking: %{customdata[3]}<extra></extra>",
+                "<b>%{text}</b><br>Tasso: %{customdata[4]:.1f} per 1000 ab.<br>Delitti: %{customdata[1]:,.0f}<br>Popolazione: %{customdata[0]:,.0f}<br>Var. anno prec.: %{customdata[2]}<br>Ranking: %{customdata[3]}<extra></extra>",
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } as any,
             ...trendAnnotations.map((t) => ({

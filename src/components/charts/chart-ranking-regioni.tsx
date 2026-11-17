@@ -1,7 +1,18 @@
 "use client";
 
 import { useFetchData } from "@/lib/use-fetch-data";
-import { PLOTLY_CONFIG, AXIS_FIXED, COLORS, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE, MEDIA_ANNOTATION_FONT } from "@/lib/config";
+import {
+  PLOTLY_CONFIG,
+  AXIS_FIXED,
+  COLORS,
+  CHART_HEIGHT_RANKING,
+  CHART_HEIGHT_RANKING_MOBILE,
+  MEDIA_ANNOTATION_FONT,
+  SCALA_SEQ,
+  COLORE_BORDO,
+  CLASSI_TASSO_REGIONI,
+  classeDi,
+} from "@/lib/config";
 import { fmtNum, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -35,18 +46,32 @@ export function ChartRankingRegioni({ anno }: Props) {
 
   const nomi = sorted.map((d) => d.Territorio);
   const tassi = sorted.map((d) => d.Tasso_per_1000);
-  // Scala e grigi uguali per tutti gli anni e alla mappa, cosi' gli anni restano confrontabili
+  // Asse uguale per tutti gli anni, cosi' gli anni restano confrontabili
   const tassoMax = Math.max(...data.map((d) => d.Tasso_per_1000));
   const media =
     dataAnno.reduce((s, d) => s + d.Delitti, 0) /
     dataAnno.reduce((s, d) => s + d.Popolazione, 0) *
     1000;
 
-  const colors = tassi.map((t) => {
-    const ratio = t / tassoMax;
-    const gray = Math.round(245 - ratio * 210);
-    return `rgb(${gray},${gray},${gray})`;
-  });
+  // Barre nel colore della serie (quelle chiare della scala sparirebbero sul fondo); il quadratino
+  // fra nome e barra ha il colore della regione nella mappa, per ritrovarla
+  const quadratini = sorted.map((d) => ({
+    type: "rect" as const,
+    xref: "paper" as const,
+    xsizemode: "pixel" as const,
+    xanchor: 0,
+    x0: -15,
+    x1: -5,
+    yref: "y" as const,
+    ysizemode: "pixel" as const,
+    yanchor: d.Territorio,
+    y0: -5,
+    y1: 5,
+    fillcolor: SCALA_SEQ[classeDi(d.Tasso_per_1000, CLASSI_TASSO_REGIONI)],
+    line: { color: COLORE_BORDO, width: 1 },
+  }));
+  // Spazio per il quadratino fra nome e barra (i tipi di Plotly non hanno ancora ticklabelstandoff)
+  const yaxis = { ...AXIS_FIXED, automargin: true, ticklabelstandoff: 20 };
 
   return (
     <ChartFullscreenWrapper ariaDescription={`Classifica regioni per tasso delitti denunciati per 1.000 abitanti, anno ${anno}`}>
@@ -57,9 +82,11 @@ export function ChartRankingRegioni({ anno }: Props) {
             y: nomi,
             x: tassi,
             orientation: "h" as const,
-            marker: { color: colors },
+            marker: { color: COLORS.primary },
             text: tassi.map((t) => fmtNum(t, 1)),
             textposition: "outside" as const,
+            // sul telefono il valore della barra piu' lunga uscirebbe tagliato
+            cliponaxis: false,
             hovertemplate: "<b>%{y}</b><br>Tasso: %{x:.1f} per 1000 ab.<extra></extra>",
           },
         ]}
@@ -69,10 +96,9 @@ export function ChartRankingRegioni({ anno }: Props) {
             title: { text: "Tasso per 1000 ab." },
             range: [0, tassoMax * 1.15],
           },
-          yaxis: { ...AXIS_FIXED,
-            automargin: true,
-          },
+          yaxis,
           shapes: [
+            ...quadratini,
             {
               type: "line",
               x0: media,

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { AXIS_FIXED, CHART_HEIGHT, CHART_HEIGHT_SMALL, CHART_HEIGHT_MAP, CHART_HEIGHT_MINI, PLOTLY_CONFIG, NUTS_TO_ISTAT, COLORS, getAxisYear, ANNO_PRIMO } from "@/lib/config";
+import { AXIS_FIXED, CHART_HEIGHT, CHART_HEIGHT_SMALL, CHART_HEIGHT_MAP, CHART_HEIGHT_MINI, PLOTLY_CONFIG, NUTS_TO_ISTAT, COLORS, getAxisYear, ANNO_PRIMO, SCALA_DIV, COLORE_BORDO, CLASSI_VARIAZIONE_PCT, classeDi, scalaAGradini } from "@/lib/config";
 import { fmtNum, fmtPctSigned, fmtSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Card, CardContent } from "@/components/ui/card";
@@ -290,14 +290,15 @@ function ChartMappaVariazione({
   if (!geojson) return null;
 
   const locations = regioni.map((r) => NUTS_TO_ISTAT[r.REF_AREA]);
-  const values = regioni.map((r) => r.variazione_pct);
+  // Classi uguali per tutti gli anni: ruggine sopra lo zero, blu sotto (la direzione, non un giudizio)
+  const classi = regioni.map((r) => classeDi(r.variazione_pct, CLASSI_VARIAZIONE_PCT));
+  const scala = scalaAGradini(SCALA_DIV, CLASSI_VARIAZIONE_PCT, (c) => fmtSigned(c, 0));
   const nomi = regioni.map((r) => r.Territorio);
   const customdata = regioni.map((r) => [
     r.tasso_corrente,
     r.tasso_precedente,
+    r.variazione_pct,
   ]);
-
-  const maxAbs = Math.max(...values.map(Math.abs), 5);
 
   return (
     <ChartFullscreenWrapper
@@ -309,18 +310,14 @@ function ChartMappaVariazione({
             type: "choropleth",
             geojson: geojson,
             locations: locations,
-            z: values,
+            z: classi,
             featureidkey: "properties.reg_istat_code_num",
-            colorscale: [
-              [0, "#16a34a"],
-              [0.5, "#f5f5f5"],
-              [1, "#dc2626"],
-            ],
-            zmin: -maxAbs,
-            zmax: maxAbs,
-            zmid: 0,
-            marker: { line: { color: "white", width: 1.5 } },
+            colorscale: scala.colorscale,
+            zmin: scala.zmin,
+            zmax: scala.zmax,
+            marker: { line: { color: COLORE_BORDO, width: 1 } },
             colorbar: {
+              ...scala.colorbar,
               title: { text: "Var. %", side: "right" },
               x: 0.02,
               y: 0.5,
@@ -330,7 +327,7 @@ function ChartMappaVariazione({
             text: nomi,
             customdata: customdata,
             hovertemplate:
-              `<b>%{text}</b><br>Variazione: %{z:+.1f}%<br>Tasso ${anno}: %{customdata[0]:.1f}<br>Tasso ${anno - 1}: %{customdata[1]:.1f}<extra></extra>`,
+              `<b>%{text}</b><br>Variazione: %{customdata[2]:+.1f}%<br>Tasso ${anno}: %{customdata[0]:.1f}<br>Tasso ${anno - 1}: %{customdata[1]:.1f}<extra></extra>`,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } as any,
         ]}
@@ -566,7 +563,7 @@ export function ReportContent({ anno }: { anno: string }) {
         </h2>
         <p className="text-sm text-muted-foreground">
           Variazione del tasso di delitti denunciati per 1.000 abitanti rispetto
-          al {annoNum - 1}. Rosso = aumento, verde = calo.
+          al {annoNum - 1}. Ruggine = aumento, blu = calo.
         </p>
         <ChartMappaVariazione regioni={data.variazione_regioni} anno={annoNum} />
         <div className="text-sm space-y-1">
