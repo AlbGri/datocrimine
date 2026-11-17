@@ -15,6 +15,7 @@ import Link from "next/link";
 
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
 import { PERIODO_AUTORI } from "@/lib/config";
+import { Pulsante } from "@/components/ui/pulsante";
 
 type DataType = "OFFEND" | "VICTIM";
 
@@ -38,19 +39,11 @@ export default function PersoneDenunciate() {
           et&agrave; e tipo di reato. Fonte: ISTAT DCCV_AUTVITTPS ({PERIODO_AUTORI} per singoli
           reati, 2007-2022 per il totale).
         </p>
-        <div className="mt-4 flex gap-2">
+        <div className="mt-4 flex gap-1.5">
           {(["OFFEND", "VICTIM"] as DataType[]).map((dt) => (
-            <button
-              key={dt}
-              onClick={() => setDataType(dt)}
-              className={`px-4 py-2 text-sm rounded-md transition-colors ${
-                dataType === dt
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted text-muted-foreground hover:text-foreground"
-              }`}
-            >
+            <Pulsante key={dt} onClick={() => setDataType(dt)} premuto={dataType === dt}>
               {DATA_TYPE_LABELS[dt]}
-            </button>
+            </Pulsante>
           ))}
         </div>
       </div>

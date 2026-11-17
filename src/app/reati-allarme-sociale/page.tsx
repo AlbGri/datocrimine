@@ -11,6 +11,7 @@ import { CollapsibleSection } from "@/components/ui/collapsible-section";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { fmtPct, slug } from "@/lib/format";
 import { ANNI_DELITTI, ANNO_ULTIMO, PERIODO_DELITTI } from "@/lib/config";
+import { Pulsante } from "@/components/ui/pulsante";
 
 const REATI = [
   "Atti sessuali con minorenne",
@@ -95,20 +96,11 @@ export default function ReatiAllarmeSociale() {
           <legend className="block text-sm font-medium mb-1">
             Anno
           </legend>
-          <div className="flex flex-wrap gap-1" role="group" aria-label="Selezione anno">
+          <div className="flex flex-wrap gap-1.5">
             {ANNI_DELITTI.map((a) => (
-              <button
-                key={a}
-                onClick={() => setAnno(a)}
-                aria-pressed={anno === a}
-                className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
-                  anno === a
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted text-muted-foreground hover:text-foreground"
-                }`}
-              >
+              <Pulsante key={a} onClick={() => setAnno(a)} premuto={anno === a}>
                 {a}
-              </button>
+              </Pulsante>
             ))}
           </div>
         </fieldset>

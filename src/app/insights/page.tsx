@@ -9,6 +9,7 @@ import insightsData from "@/data/insights.json";
 import insightsMeta from "@/data/insights_meta.json";
 import { fmtNum, fmtPct } from "@/lib/format";
 import { ANNO_ULTIMO } from "@/lib/config";
+import { Pulsante } from "@/components/ui/pulsante";
 
 const InsightMiniChart = lazy(
   () =>
@@ -170,79 +171,75 @@ export default function Insights() {
       {/* Header */}
       <div className="space-y-3">
         <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em]">Analisi statistiche</h1>
-        <div className="rounded-lg border bg-muted p-4 text-sm space-y-2">
-          <p>
-            <strong>Sezione sperimentale.</strong> Gli insight sono estratti
-            tramite analisi statistica automatizzata sui dati ISTAT e curati con
-            l&apos;assistenza di intelligenza artificiale. I risultati
-            evidenziano correlazioni e trend statisticamente significativi, ma{" "}
-            <strong>non implicano causalit&agrave;</strong>.
-          </p>
-          <p>
-            I dati riflettono le denunce alle forze dell&apos;ordine, non i
-            crimini reali. Variazioni nei numeri possono dipendere da
-            cambiamenti nella propensione alla denuncia, nelle norme o nelle
-            pratiche investigative. Interpretare con cautela.
-          </p>
-        </div>
+        <p>
+          Sezione sperimentale: analisi automatiche sui dati delle denunce, che mostrano tendenze e
+          non cause.{" "}
+          <a href="#nota-metodologica" className="rimando">
+            Come sono fatte
+          </a>
+        </p>
       </div>
 
-      {/* Filtri */}
-      <div className="space-y-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-            Categoria
-          </span>
-          <FilterPill
-            active={categoryFilter === null}
-            onClick={() => setCategoryFilter(null)}
-          >
-            Tutte
-          </FilterPill>
-          {CATEGORY_ORDER.map((cat) => (
-            <FilterPill
-              key={cat}
-              active={categoryFilter === cat}
-              onClick={() =>
-                setCategoryFilter(categoryFilter === cat ? null : cat)
-              }
+      {/* Filtri ripiegati, cosi' la prima scheda arriva subito dopo il titolo */}
+      <details className="group">
+        <summary className="cursor-pointer text-sm font-medium">
+          Filtra le schede
+          {hasFilter && (
+            <span className="font-normal text-muted-foreground">
+              {" "}({sorted.length} su {INSIGHTS.length})
+            </span>
+          )}
+        </summary>
+        <div className="mt-3 space-y-3">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-sm font-medium">
+              Categoria
+            </span>
+            <Pulsante
+              premuto={categoryFilter === null}
+              onClick={() => setCategoryFilter(null)}
             >
-              {CATEGORIES[cat].label}
-            </FilterPill>
-          ))}
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-            Dimensione
-          </span>
-          <FilterPill
-            active={dimensionFilter === null}
-            onClick={() => setDimensionFilter(null)}
-          >
-            Tutte
-          </FilterPill>
-          {DIMENSION_OPTIONS.map((d) => (
-            <FilterPill
-              key={d.value}
-              active={dimensionFilter === d.value}
-              onClick={() =>
-                setDimensionFilter(
-                  dimensionFilter === d.value ? null : d.value
-                )
-              }
+              Tutte
+            </Pulsante>
+            {CATEGORY_ORDER.map((cat) => (
+              <Pulsante
+                key={cat}
+                premuto={categoryFilter === cat}
+                onClick={() =>
+                  setCategoryFilter(categoryFilter === cat ? null : cat)
+                }
+              >
+                {CATEGORIES[cat].label}
+              </Pulsante>
+            ))}
+          </div>
+  
+          <div className="flex flex-wrap items-center gap-1.5">
+            <span className="text-sm font-medium">
+              Dimensione
+            </span>
+            <Pulsante
+              premuto={dimensionFilter === null}
+              onClick={() => setDimensionFilter(null)}
             >
-              {d.label}
-            </FilterPill>
-          ))}
+              Tutte
+            </Pulsante>
+            {DIMENSION_OPTIONS.map((d) => (
+              <Pulsante
+                key={d.value}
+                premuto={dimensionFilter === d.value}
+                onClick={() =>
+                  setDimensionFilter(
+                    dimensionFilter === d.value ? null : d.value
+                  )
+                }
+              >
+                {d.label}
+              </Pulsante>
+            ))}
+          </div>
         </div>
-
-        {hasFilter && (
-          <p className="text-sm text-muted-foreground">
-            {sorted.length} insight su {INSIGHTS.length}
-          </p>
-        )}
-      </div>
+      </details>
 
       {/* Insight */}
       {hasFilter ? (
@@ -277,11 +274,19 @@ export default function Insights() {
       )}
 
       {/* Nota metodologica */}
-      <section className="space-y-3 border-t pt-6">
+      <section id="nota-metodologica" className="scroll-mt-20 space-y-3 border-t pt-6">
         <h2 className="text-lg font-semibold text-primary">
           Nota metodologica
         </h2>
         <div className="text-sm text-muted-foreground space-y-3">
+          <p>
+            Gli insight sono estratti tramite analisi statistica automatizzata sui dati ISTAT e
+            curati con l&apos;assistenza di intelligenza artificiale. Evidenziano correlazioni e
+            trend statisticamente significativi, ma <strong>non implicano causalit&agrave;</strong>.
+            I dati riflettono le denunce alle forze dell&apos;ordine, non i crimini reali: le
+            variazioni possono dipendere da cambiamenti nella propensione alla denuncia, nelle norme
+            o nelle pratiche investigative.
+          </p>
           <p>
             Gli insight sono stati estratti analizzando sistematicamente{" "}
             <strong>{fmtNum(insightsMeta.combinazioni_analizzate)} combinazioni</strong> di reato, dimensione
@@ -476,29 +481,6 @@ export default function Insights() {
 /* ================================================================
    Componenti locali
    ================================================================ */
-
-function FilterPill({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`text-xs px-3 py-1.5 rounded-full border transition-colors ${
-        active
-          ? "bg-primary text-primary-foreground border-primary"
-          : "bg-background text-muted-foreground border-border hover:bg-muted"
-      }`}
-    >
-      {children}
-    </button>
-  );
-}
 
 function TestBadge({ test }: { test: TestType }) {
   const meta = TESTS[test];

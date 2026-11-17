@@ -24,6 +24,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
 import { NotaIngiurie } from "@/components/charts/nota-ingiurie";
+import { Pulsante, SEGMENTO } from "@/components/ui/pulsante";
 
 interface DelittiItalia {
   Anno: number;
@@ -136,27 +137,13 @@ export function ChartTrendNazionale() {
         {showToggle && (
           <div>
             <span className="block text-sm font-medium mb-1">Visualizzazione</span>
-            <div className="inline-flex rounded-md border border-border overflow-hidden text-sm">
-              <button
-                onClick={() => setView("totale")}
-                className={`px-3 py-1.5 transition-colors ${
-                  view === "totale"
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-background text-muted-foreground hover:bg-muted"
-                }`}
-              >
+            <div className="inline-flex">
+              <Pulsante className={SEGMENTO} onClick={() => setView("totale")} premuto={view === "totale"}>
                 Totale
-              </button>
-              <button
-                onClick={() => setView("tipologia")}
-                className={`px-3 py-1.5 transition-colors ${
-                  view === "tipologia"
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-background text-muted-foreground hover:bg-muted"
-                }`}
-              >
+              </Pulsante>
+              <Pulsante className={SEGMENTO} onClick={() => setView("tipologia")} premuto={view === "tipologia"}>
                 Per tipologia
-              </button>
+              </Pulsante>
             </div>
           </div>
         )}

@@ -10,6 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
 import { SintesiNazionale } from "@/components/charts/sintesi-nazionale";
+import { Pulsante } from "@/components/ui/pulsante";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type GeoJSON = any;
@@ -303,20 +304,11 @@ function SezioneContributi({
       <h2 className="text-xl sm:text-2xl font-semibold text-primary">
         Cosa &egrave; cambiato
       </h2>
-      <div className="flex flex-wrap gap-2" role="group" aria-label="Anno di confronto">
+      <div className="flex flex-wrap gap-1.5" role="group" aria-label="Anno di confronto">
         {contributi.map((c, i) => (
-          <button
-            key={c.anno_base}
-            onClick={() => setIndice(i)}
-            aria-pressed={indice === i}
-            className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
-              indice === i
-                ? "bg-primary text-primary-foreground"
-                : "bg-muted text-muted-foreground hover:text-foreground"
-            }`}
-          >
+          <Pulsante key={c.anno_base} onClick={() => setIndice(i)} premuto={indice === i}>
             Rispetto al {c.anno_base}
-          </button>
+          </Pulsante>
         ))}
       </div>
       <p>{dati.sintesi}</p>

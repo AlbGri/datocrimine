@@ -8,6 +8,7 @@ import { ChartTrendRegione } from "@/components/charts/chart-trend-regione";
 import { ChartTabellaProvince } from "@/components/charts/chart-tabella-province";
 import { ChartTrendProvincia } from "@/components/charts/chart-trend-provincia";
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
+import { Pulsante } from "@/components/ui/pulsante";
 import { ANNI_DELITTI, ANNO_ULTIMO, PERIODO_DELITTI } from "@/lib/config";
 
 const PLAY_INTERVAL_MS = 1500;
@@ -59,32 +60,32 @@ export default function AnalisiTerritoriale() {
         <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em]">
           Territori
         </h1>
-        <div className="mt-4 flex flex-wrap items-center gap-2" role="group" aria-label="Selezione anno">
-          <button
-            onClick={togglePlay}
-            className="px-3 py-1.5 text-sm rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-            aria-label={playing ? "Pausa animazione anni" : "Avvia animazione anni"}
-          >
-            {playing ? <Pause className="size-4" aria-hidden="true" /> : <Play className="size-4" aria-hidden="true" />}
-          </button>
-          {ANNI_DELITTI.map((a) => (
-            <button
-              key={a}
-              onClick={() => {
-                stopPlay();
-                setAnno(a);
-              }}
-              aria-pressed={anno === a}
-              className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
-                anno === a
-                  ? "bg-primary text-primary-foreground"
-                  : "bg-muted text-muted-foreground hover:text-foreground"
-              }`}
+        <fieldset className="mt-4">
+          <legend className="mb-1 block text-sm font-medium">
+            Anno di mappa, classifica e tabella delle province
+          </legend>
+          <div className="flex flex-wrap items-center gap-1.5">
+            <Pulsante
+              onClick={togglePlay}
+              aria-label={playing ? "Pausa animazione anni" : "Avvia animazione anni"}
+              className="self-stretch"
             >
-              {a}
-            </button>
-          ))}
-        </div>
+              {playing ? <Pause className="size-4" aria-hidden="true" /> : <Play className="size-4" aria-hidden="true" />}
+            </Pulsante>
+            {ANNI_DELITTI.map((a) => (
+              <Pulsante
+                key={a}
+                onClick={() => {
+                  stopPlay();
+                  setAnno(a);
+                }}
+                premuto={anno === a}
+              >
+                {a}
+              </Pulsante>
+            ))}
+          </div>
+        </fieldset>
       </div>
 
       <hr />
