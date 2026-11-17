@@ -101,37 +101,31 @@ const DIMENSION_OPTIONS: { value: Dimension; label: string }[] = [
 
 const TESTS: Record<
   TestType,
-  { label: string; anchor: string; className: string }
+  { label: string; anchor: string }
 > = {
   "mann-kendall": {
     label: "Mann-Kendall",
     anchor: "test-mann-kendall",
-    className: "bg-blue-100 text-blue-800 hover:bg-blue-200",
   },
   spearman: {
     label: "Spearman",
     anchor: "test-spearman",
-    className: "bg-purple-100 text-purple-800 hover:bg-purple-200",
   },
   divergenza: {
     label: "Divergenza regionale",
     anchor: "test-divergenza",
-    className: "bg-amber-100 text-amber-800 hover:bg-amber-200",
   },
   "confronto-categorie": {
     label: "Confronto categorie",
     anchor: "test-confronto-categorie",
-    className: "bg-teal-100 text-teal-800 hover:bg-teal-200",
   },
   "confronto-territoriale": {
     label: "Confronto territoriale",
     anchor: "test-confronto-territoriale",
-    className: "bg-indigo-100 text-indigo-800 hover:bg-indigo-200",
   },
   "rapporto-av": {
     label: "Rapporto A/V",
     anchor: "test-rapporto-av",
-    className: "bg-rose-100 text-rose-800 hover:bg-rose-200",
   },
 };
 
@@ -176,7 +170,7 @@ export default function Insights() {
       {/* Header */}
       <div className="space-y-3">
         <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em]">Insights</h1>
-        <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 space-y-2">
+        <div className="rounded-lg border bg-muted p-4 text-sm space-y-2">
           <p>
             <strong>Sezione sperimentale.</strong> Gli insight sono estratti
             tramite analisi statistica automatizzata sui dati ISTAT e curati con
@@ -514,7 +508,7 @@ function TestBadge({ test }: { test: TestType }) {
         const el = document.getElementById(meta.anchor);
         if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
       }}
-      className={`text-xs px-2 py-0.5 rounded-full cursor-pointer transition-colors ${meta.className}`}
+      className="text-xs px-2 py-0.5 rounded-sm border bg-muted cursor-pointer transition-colors hover:border-foreground"
       title={`Vai alla spiegazione: ${meta.label}`}
     >
       {meta.label}
@@ -602,7 +596,7 @@ function InsightCard({
 
 function GenderNote({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-xs text-muted-foreground border-l-2 border-pink-400 pl-3 mt-2">
+    <p className="text-xs text-muted-foreground rounded-md border bg-muted px-3 py-2 mt-2">
       {children}
     </p>
   );
@@ -610,7 +604,7 @@ function GenderNote({ children }: { children: React.ReactNode }) {
 
 function Caveat({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-xs text-muted-foreground italic border-l-2 border-amber-300 pl-3 mt-2">
+    <p className="text-xs text-muted-foreground italic rounded-md border bg-muted px-3 py-2 mt-2">
       {children}
     </p>
   );

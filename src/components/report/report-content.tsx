@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { AXIS_FIXED, CHART_HEIGHT, CHART_HEIGHT_SMALL, CHART_HEIGHT_MAP, CHART_HEIGHT_MINI, PLOTLY_CONFIG, NUTS_TO_ISTAT, COLORS, COLORI_ALLARME, getAxisYear, ANNO_PRIMO } from "@/lib/config";
+import { AXIS_FIXED, CHART_HEIGHT, CHART_HEIGHT_SMALL, CHART_HEIGHT_MAP, CHART_HEIGHT_MINI, PLOTLY_CONFIG, NUTS_TO_ISTAT, COLORS, getAxisYear, ANNO_PRIMO } from "@/lib/config";
 import { fmtNum, fmtPctSigned, fmtSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Card, CardContent } from "@/components/ui/card";
@@ -281,7 +281,7 @@ function ListaContributi({
               <p className="text-xs text-muted-foreground mt-0.5 italic">{d.nota}</p>
             )}
             {d.caveat && (
-              <p className="text-xs text-amber-700 mt-0.5 border-l-2 border-amber-300 pl-2">
+              <p className="text-xs mt-1 rounded-md border bg-muted px-2 py-1">
                 {d.caveat}
               </p>
             )}
@@ -727,7 +727,7 @@ export function ReportContent({ anno }: { anno: string }) {
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
             {data.reati_allarme_sociale.map((r) => (
-              <Card key={r.reato} style={{ borderLeftWidth: 3, borderLeftColor: COLORI_ALLARME[r.reato] ?? COLORS.grigioMedia }}>
+              <Card key={r.reato}>
                 <CardContent className="py-0">
                   <p className="text-xs text-muted-foreground">{r.reato}</p>
                   <p className="text-lg font-bold">
