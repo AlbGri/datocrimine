@@ -9,7 +9,7 @@ import { ChartAllarmeTrendProvincia } from "@/components/charts/chart-allarme-tr
 
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { fmtPct } from "@/lib/format";
+import { fmtPct, slug } from "@/lib/format";
 import { ANNI_DELITTI, ANNO_ULTIMO, PERIODO_DELITTI } from "@/lib/config";
 
 const REATI = [
@@ -23,8 +23,6 @@ const REATI = [
 
 // Scelta editoriale: si parte dal dato senza numero oscuro, non dal primo in ordine alfabetico
 const REATO_INIZIALE = "Omicidi volontari consumati";
-
-const slug = (testo: string) => testo.toLowerCase().replace(/[^a-z]+/g, "-");
 
 // ?reato=rapine-in-abitazione arriva dai riquadri della home; nell'HTML statico non c'e'
 function useReatoDaIndirizzo() {

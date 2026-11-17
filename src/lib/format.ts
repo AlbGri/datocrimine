@@ -47,3 +47,8 @@ export function fmtData(iso: string): string {
  * Da aggiungere nel layout di ogni grafico Plotly.
  */
 export const PLOTLY_IT_SEPARATORS = ",.";
+
+/** Nome in indirizzo: "Rapine in abitazione" → "rapine-in-abitazione" */
+export function slug(testo: string): string {
+  return testo.toLowerCase().replace(/[^a-z]+/g, "-");
+}
