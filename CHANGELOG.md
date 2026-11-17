@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-11-17 — Nuova veste e mappa del sito
+- Al posto del menu c'è la mappa del sito: sul computer a sinistra, sul telefono dal pulsante "Mappa" in basso a destra. In cima a ogni pagina il percorso dice dove ti trovi
+- La home si apre con riquadri che danno già il dato e portano alle pagine: i numeri principali, la tua provincia, i sei reati di allarme sociale, le pagine che spiegano i dati
+- Percezione della sicurezza e Il numero oscuro hanno una pagina propria; prima erano sezioni chiuse in fondo alla home
+- Nuova pagina "Chi c'è dietro": chi cura il sito e come segnalare un errore
+- Reati di allarme sociale si apre sugli omicidi volontari. "Analisi territoriale" ora si chiama Territori e "Insights" Analisi statistiche; gli indirizzi delle pagine non cambiano
+- Nuova veste: caratteri più leggibili, ogni voce dei grafici ha sempre lo stesso colore, aumenti e cali senza verde e rosso
+
 ## 2026-11-17 — Totale dei delitti al netto delle ingiurie
 - Il totale dei delitti non comprende più le ingiurie, depenalizzate nel 2016: gli anni si confrontano a parità di reati. Il calo di lungo periodo passa da -10,5% a -8,9%; le ingiurie restano visibili nella loro serie
 - Persone denunciate: sotto gli andamenti del totale una nota spiega che fino al 2017 comprende chi era denunciato per ingiuria, e perché non si può togliere

@@ -8,14 +8,15 @@ Un progetto open source per rendere accessibili e comprensibili i dati ufficiali
 
 ## Contenuti
 
-**Navigazione principale:**
-- **Report 2024** - Executive summary dell'anno: reati che spiegano la variazione dei delitti (sull'anno prima e sul 2019), mappa variazione regionale, confronto ripartizioni, reati di allarme sociale, percezione vs realtà
-- **Esplora i dati** - Hub con 3 sezioni: Analisi Territoriale (mappa coropletica, ranking, trend, tabelle province), Reati di Allarme Sociale (6 reati gravi), Persone Denunciate (profilo criminale a 3 livelli)
-- **Insights** - 23 analisi statistiche curate su trend, composizione demografica, anomalie, confronti tra categorie e territori. Filtri per categoria e dimensione, badge test statistici cliccabili
-- **Il contesto** - KPI nazionali, trend delitti denunciati, percezione vs dati, numero oscuro e propensione alla denuncia
+La mappa del sito (a sinistra; sul telefono dal pulsante "Mappa") porta a:
+- **Home** - frase di sintesi, riquadri d'ingresso con i numeri principali, la tua provincia, i reati di allarme sociale e le pagine di metodo; trend nazionale in fondo
+- **Territori** (`/analisi-territoriale`) - mappa coropletica, ranking, trend, tabella delle province (`#province` la apre)
+- **Reati di allarme sociale** - 6 reati gravi su tre livelli territoriali; `?reato=` sceglie il reato iniziale
+- **Persone denunciate** - autori e vittime per sesso, età e cittadinanza
+- **Report 2024** - reati che spiegano la variazione dei delitti (sull'anno prima e sul 2019), mappa variazione regionale, confronto ripartizioni, reati di allarme sociale, percezione vs realtà
+- **Capire i dati** - Percezione della sicurezza, Il numero oscuro, Guida alla lettura, Metodologia, Analisi statistiche (`/insights`: trend, composizione demografica, anomalie, confronti, con test statistici), Dati e codice, Chi c'è dietro (`/progetto`)
 
-**Nel footer:**
-- Metodologia, Guida alla Lettura, Dati e Codice
+`/esplora`, il vecchio hub delle pagine dati, resta raggiungibile ma fuori dalla mappa.
 
 ## Stack
 
