@@ -50,7 +50,7 @@ RIPARTIZIONI = {
 # Regioni (NUTS2)
 REGIONI = {
     "ITC1": "Piemonte",
-    "ITC2": "Valle d'Aosta",
+    "ITC2": "Valle d'Aosta / Vallée d'Aoste",
     "ITC3": "Liguria",
     "ITC4": "Lombardia",
     "ITD1": "Provincia Autonoma Bolzano",
@@ -83,7 +83,7 @@ PROVINCE_SPECIALI = {
 # Regioni per l'output (20 regioni: Bolzano+Trento aggregate in Trentino-Alto Adige)
 REGIONI_OUTPUT = {
     "ITC1": "Piemonte",
-    "ITC2": "Valle d'Aosta",
+    "ITC2": "Valle d'Aosta / Vallée d'Aoste",
     "ITC3": "Liguria",
     "ITC4": "Lombardia",
     "ITD1+ITD2": "Trentino-Alto Adige",
@@ -162,6 +162,9 @@ def get_region_name(ref_area: str) -> str:
         return PROVINCE_SPECIALI[ref_area][1]
     # NUTS3: primi 4 caratteri = NUTS2 regione
     region_code = ref_area[:4] if len(ref_area) >= 5 else ref_area
+    # Bolzano e Trento stanno nella regione aggregata, con lo stesso nome del file regionale
+    if region_code in ("ITD1", "ITD2"):
+        return REGIONI_OUTPUT["ITD1+ITD2"]
     return REGIONI.get(region_code, region_code)
 
 

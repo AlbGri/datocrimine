@@ -1,6 +1,6 @@
 # Insights Candidates Report
 
-Generato: 2026-11-17 12:04
+Generato: 2026-11-17 22:08
 
 - Combinazioni testate: 4537
 - Candidati dopo il filtro di rilevanza: 2215
@@ -211,7 +211,7 @@ Trend del rapporto autori/vittime per reato. Un rapporto in calo indica piu' vit
 |---|-------|-------|-------|------|------------|------------|-------|--------|---------|------|-------|-------------|
 | 1 | 0.949 | medium | Rapine in pubblica via | OFFEND | totale | Italia | increasing | +4068.0 | 0.0023 | 67% |  | media |
 | 2 | 0.918 | medium | Furti | VICTIM | tasso per 100k (Nord - Centro) | Nord vs Centro | decreasing | -239.5 | 0.0046 | 60% |  | media |
-| 3 | 0.914 | medium | Truffe e frodi informatiche | VICTIM | tasso per 100k | Valle d'Aosta | increasing | +342.1 | 0.0012 | 60% |  | bassa |
+| 3 | 0.914 | medium | Truffe e frodi informatiche | VICTIM | tasso per 100k | Valle d'Aosta / Vallée d'Aoste | increasing | +342.1 | 0.0012 | 60% |  | bassa |
 | 4 | 0.902 | high | Danneggiamento seguito da incendio | VICTIM | totale | Italia | decreasing | -4918.0 | 0.0008 | 73% |  | media |
 | 5 | 0.897 | medium | Danneggiamento seguito da incendio | OFFEND | totale | Italia | increasing | +607.0 | 0.0036 | 53% |  | media |
 | 6 | 0.894 | high | Sequestri di persona | OFFEND | totale | Italia | decreasing | -1170.0 | 0.0003 | 73% |  |  |
@@ -235,7 +235,7 @@ Trend del rapporto autori/vittime per reato. Un rapporto in calo indica piu' vit
 | 24 | 0.874 | high | Furti con strappo | VICTIM | totale | Italia | decreasing | -11938.0 | 0.0058 | 80% |  | media |
 | 25 | 0.873 | high | Furti | VICTIM | tasso per 100k | Lombardia | decreasing | -1429.1 | 0.0029 | 80% |  | media |
 | 26 | 0.872 | medium | Furti | VICTIM | tasso per 100k | Basilicata | decreasing | -380.9 | 0.0223 | 67% |  | media |
-| 27 | 0.871 | high | Furti | VICTIM | tasso per 100k | Valle d'Aosta | decreasing | -1238.9 | 0.0006 | 73% |  | media |
+| 27 | 0.871 | high | Furti | VICTIM | tasso per 100k | Valle d'Aosta / Vallée d'Aoste | decreasing | -1238.9 | 0.0006 | 73% |  | media |
 | 28 | 0.871 | high | Omicidi volontari consumati | VICTIM | totale | Italia | decreasing | -303.0 | 0.0004 | 80% |  | non_applicabile_automatica |
 | 29 | 0.870 | medium | Sfruttamento e favoreggiamento della prostituzione | VICTIM | totale | Italia | decreasing | -646.0 | 0.0012 | 67% |  | non_applicabile_consensuale |
 | 30 | 0.870 | medium | Usura | OFFEND | totale | Italia | decreasing | -897.0 | 0.0005 | 60% |  | molto_bassa |

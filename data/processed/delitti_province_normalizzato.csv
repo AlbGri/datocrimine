@@ -296,28 +296,28 @@ ITC4B,Mantova,2021,11517,0,Lombardia,406061,28.36
 ITC4B,Mantova,2022,11813,0,Lombardia,404476,29.21
 ITC4B,Mantova,2023,11856,0,Lombardia,406119,29.19
 ITC4B,Mantova,2024,12543,0,Lombardia,407002,30.82
-ITD10,Bolzano / Bozen,2014,17498,364,Provincia Autonoma Bolzano / Bozen,515389,33.95
-ITD10,Bolzano / Bozen,2015,16935,330,Provincia Autonoma Bolzano / Bozen,517994,32.69
-ITD10,Bolzano / Bozen,2016,17192,86,Provincia Autonoma Bolzano / Bozen,520252,33.05
-ITD10,Bolzano / Bozen,2017,15974,11,Provincia Autonoma Bolzano / Bozen,523454,30.52
-ITD10,Bolzano / Bozen,2018,15251,0,Provincia Autonoma Bolzano / Bozen,526772,28.95
-ITD10,Bolzano / Bozen,2019,15112,0,Provincia Autonoma Bolzano / Bozen,530313,28.5
-ITD10,Bolzano / Bozen,2020,13041,0,Provincia Autonoma Bolzano / Bozen,532644,24.48
-ITD10,Bolzano / Bozen,2021,14581,0,Provincia Autonoma Bolzano / Bozen,534912,27.26
-ITD10,Bolzano / Bozen,2022,16258,0,Provincia Autonoma Bolzano / Bozen,532616,30.52
-ITD10,Bolzano / Bozen,2023,16693,0,Provincia Autonoma Bolzano / Bozen,534147,31.25
-ITD10,Bolzano / Bozen,2024,18112,0,Provincia Autonoma Bolzano / Bozen,537533,33.69
-ITD20,Trento,2014,18415,494,Provincia Autonoma Trento,536813,34.3
-ITD20,Trento,2015,18457,403,Provincia Autonoma Trento,538188,34.29
-ITD20,Trento,2016,16269,54,Provincia Autonoma Trento,539513,30.15
-ITD20,Trento,2017,16161,5,Provincia Autonoma Trento,540280,29.91
-ITD20,Trento,2018,15976,0,Provincia Autonoma Trento,541966,29.48
-ITD20,Trento,2019,14854,0,Provincia Autonoma Trento,543721,27.32
-ITD20,Trento,2020,11435,0,Provincia Autonoma Trento,545425,20.97
-ITD20,Trento,2021,12359,0,Provincia Autonoma Trento,542166,22.8
-ITD20,Trento,2022,14609,0,Provincia Autonoma Trento,540958,27.01
-ITD20,Trento,2023,14410,0,Provincia Autonoma Trento,542996,26.54
-ITD20,Trento,2024,16119,0,Provincia Autonoma Trento,545169,29.57
+ITD10,Bolzano / Bozen,2014,17498,364,Trentino-Alto Adige,515389,33.95
+ITD10,Bolzano / Bozen,2015,16935,330,Trentino-Alto Adige,517994,32.69
+ITD10,Bolzano / Bozen,2016,17192,86,Trentino-Alto Adige,520252,33.05
+ITD10,Bolzano / Bozen,2017,15974,11,Trentino-Alto Adige,523454,30.52
+ITD10,Bolzano / Bozen,2018,15251,0,Trentino-Alto Adige,526772,28.95
+ITD10,Bolzano / Bozen,2019,15112,0,Trentino-Alto Adige,530313,28.5
+ITD10,Bolzano / Bozen,2020,13041,0,Trentino-Alto Adige,532644,24.48
+ITD10,Bolzano / Bozen,2021,14581,0,Trentino-Alto Adige,534912,27.26
+ITD10,Bolzano / Bozen,2022,16258,0,Trentino-Alto Adige,532616,30.52
+ITD10,Bolzano / Bozen,2023,16693,0,Trentino-Alto Adige,534147,31.25
+ITD10,Bolzano / Bozen,2024,18112,0,Trentino-Alto Adige,537533,33.69
+ITD20,Trento,2014,18415,494,Trentino-Alto Adige,536813,34.3
+ITD20,Trento,2015,18457,403,Trentino-Alto Adige,538188,34.29
+ITD20,Trento,2016,16269,54,Trentino-Alto Adige,539513,30.15
+ITD20,Trento,2017,16161,5,Trentino-Alto Adige,540280,29.91
+ITD20,Trento,2018,15976,0,Trentino-Alto Adige,541966,29.48
+ITD20,Trento,2019,14854,0,Trentino-Alto Adige,543721,27.32
+ITD20,Trento,2020,11435,0,Trentino-Alto Adige,545425,20.97
+ITD20,Trento,2021,12359,0,Trentino-Alto Adige,542166,22.8
+ITD20,Trento,2022,14609,0,Trentino-Alto Adige,540958,27.01
+ITD20,Trento,2023,14410,0,Trentino-Alto Adige,542996,26.54
+ITD20,Trento,2024,16119,0,Trentino-Alto Adige,545169,29.57
 ITD31,Verona,2014,40307,891,Veneto,917081,43.95
 ITD31,Verona,2015,36099,799,Veneto,918450,39.3
 ITD31,Verona,2016,35671,191,Veneto,918050,38.86

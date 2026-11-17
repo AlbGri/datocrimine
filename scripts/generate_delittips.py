@@ -98,6 +98,9 @@ def nuts3_to_regione(code: str) -> str:
     """Deriva il nome regione dal codice NUTS3 della provincia."""
     if code in PROVINCE_TO_REGIONE:
         return PROVINCE_TO_REGIONE[code]
+    # Bolzano e Trento stanno nella regione aggregata, con lo stesso nome del file regionale
+    if code[:4] in ("ITD1", "ITD2"):
+        return "Trentino-Alto Adige"
     # Prefisso NUTS2: prime 4 lettere (es. ITC11 -> ITC1)
     prefix = code[:4]
     # Eccezione: ITC4x (ITC41-ITC4B) -> ITC4

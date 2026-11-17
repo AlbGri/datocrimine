@@ -62,3 +62,21 @@ def test_riferimenti_esterni(rif):
     assert mask.sum() == 1
     nostro = df.loc[mask, rif["campo"]].iloc[0]
     assert nostro == pytest.approx(rif["valore"], abs=rif["tolleranza"] + 1e-9), rif["fonte"]
+
+
+# Il sito filtra le province per nome di regione: un nome diverso svuota tabelle e grafici
+FILE_REGIONI = {
+    "delitti_regioni.json": "Territorio",
+    "reati_allarme_sociale_regioni.json": "Territorio",
+    "autori_vittime_regioni.json": "regione",
+    "delitti_province.json": "Regione",
+    "reati_allarme_sociale_province.json": "Regione",
+    "autori_vittime_province.json": "regione",
+}
+
+
+@pytest.mark.parametrize("file", FILE_REGIONI)
+def test_stessi_nomi_di_regione_in_tutti_i_file(file):
+    riferimento = set(carica("delitti_regioni.json")["Territorio"])
+    assert len(riferimento) == 20
+    assert set(carica(file)[FILE_REGIONI[file]]) == riferimento
