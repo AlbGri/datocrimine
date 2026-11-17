@@ -43,6 +43,9 @@ delitti, autori e vittime (circa 185 MB) non sono nel repository: si scaricano d
 script `download_*.py`, che possono richiedere molto tempo perché il servizio accetta poche
 richieste al minuto.
 
+Per sapere se l'ISTAT ha pubblicato anni nuovi rispetto ai dati del sito, senza riscaricare tutto:
+`python scripts/check_istat_updates.py` (riepilogo in `data/raw/check_updates.json`).
+
 ```bash
 conda activate osservatorio
 python scripts/download_popolazione.py
