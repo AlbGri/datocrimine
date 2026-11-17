@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronRight } from "lucide-react";
 
 interface CollapsibleSectionProps {
@@ -19,6 +19,8 @@ export function CollapsibleSection({
   children,
 }: CollapsibleSectionProps) {
   const ref = useRef<HTMLDetailsElement>(null);
+  // I figli si montano alla prima apertura: una sezione chiusa non scarica dati ne' disegna grafici
+  const [montata, setMontata] = useState(defaultOpen);
   // Un link a /pagina#id apre la sezione: la home porta alla tabella delle province gia' aperta
   useEffect(() => {
     if (id && ref.current && window.location.hash === `#${id}`) {
@@ -28,7 +30,13 @@ export function CollapsibleSection({
   }, [id]);
 
   return (
-    <details ref={ref} id={id} open={defaultOpen || undefined} className="group">
+    <details
+      ref={ref}
+      id={id}
+      open={defaultOpen || undefined}
+      onToggle={(e) => e.currentTarget.open && setMontata(true)}
+      className="group"
+    >
       <summary className="cursor-pointer list-none select-none">
         <div className="flex items-center gap-2">
           <ChevronRight
@@ -45,7 +53,7 @@ export function CollapsibleSection({
           </p>
         )}
       </summary>
-      <div className="mt-3 space-y-3">{children}</div>
+      <div className="mt-3 space-y-3">{montata && children}</div>
     </details>
   );
 }
