@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // File privati e strumenti locali, fuori dal sito
+    "_local/**",
   ]),
 ]);
 
