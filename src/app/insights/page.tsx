@@ -47,6 +47,8 @@ type Insight = {
   tests: TestType[];
   period: string;
   body: string;
+  /** Pezzo di body, copiato tale e quale, mostrato in grassetto */
+  chiave: string;
   caveat?: string;
   chart?: InsightChartConfig;
   /** Dettaglio espandibile sotto il grafico (es. composizione categorie aggregate) */
@@ -482,6 +484,17 @@ export default function Insights() {
    Componenti locali
    ================================================================ */
 
+function TestoConChiave({ testo, chiave }: { testo: string; chiave: string }) {
+  const i = testo.indexOf(chiave);
+  return (
+    <p>
+      {testo.slice(0, i)}
+      <strong>{chiave}</strong>
+      {testo.slice(i + chiave.length)}
+    </p>
+  );
+}
+
 function TestBadge({ test }: { test: TestType }) {
   const meta = TESTS[test];
   return (
@@ -527,7 +540,7 @@ function InsightCard({
         </div>
       </div>
       <div className="text-sm space-y-2">
-        <p>{insight.body}</p>
+        <TestoConChiave testo={insight.body} chiave={insight.chiave} />
         {insight.genderNote && <GenderNote>{insight.genderNote}</GenderNote>}
         {insight.caveat && <Caveat>{insight.caveat}</Caveat>}
       </div>

@@ -107,6 +107,12 @@ def riga_candidato(candidato: dict) -> pd.Series:
 
 
 @pytest.mark.parametrize("insight", INSIGHTS, ids=[i["id"] for i in INSIGHTS])
+def test_chiave_nel_testo(insight):
+    """La frase in grassetto e' un pezzo del testo, presente una volta sola."""
+    assert insight["body"].count(insight["chiave"]) == 1
+
+
+@pytest.mark.parametrize("insight", INSIGHTS, ids=[i["id"] for i in INSIGHTS])
 def test_supera_la_fdr(insight):
     if insight.get("contesto"):
         pytest.skip("insight di contesto: descrive un dato stabile, non un trend")

@@ -9,6 +9,7 @@
     ],
     "period": "2007-2024",
     "body": "Gli autori denunciati per rapine in banca sono passati da 2.893 a 367, con un calo quasi ininterrotto nel tempo. La digitalizzazione dei servizi bancari e il rafforzamento delle misure di sicurezza fisiche hanno reso questo reato sempre meno praticabile.",
+    "chiave": "Gli autori denunciati per rapine in banca sono passati da 2.893 a 367",
     "chart": {
       "file": "autori_vittime_trend.json",
       "series": [
@@ -66,6 +67,7 @@
     ],
     "period": "2009-2024",
     "body": "Le vittime di atti persecutori (stalking) sono passate da circa 5.000 a oltre 18.800 (+278%), con una crescita quasi costante anno dopo anno. L’introduzione del reato nel 2009 (art. 612-bis c.p.) e le successive campagne di sensibilizzazione hanno progressivamente ridotto il numero oscuro, portando più vittime a denunciare.",
+    "chiave": "Le vittime di atti persecutori (stalking) sono passate da circa 5.000 a oltre 18.800 (+278%)",
     "genderNote": "Il 74% delle vittime di stalking sono donne (2024).",
     "caveat": "L’aumento delle denunce è un indicatore di emersione, non necessariamente di aumento del fenomeno reale.",
     "chart": {
@@ -155,6 +157,7 @@
     ],
     "period": "2007-2024",
     "body": "Le vittime di truffe e frodi informatiche sono più che raddoppiate: da 109.000 a 236.000, con una crescita graduale lungo l’intero periodo. Gli autori denunciati sono passati da 46.000 a 73.000. Il fenomeno riguarda tutto il territorio: in tutte le 20 regioni il tasso di vittime cresce in modo significativo.",
+    "chiave": "Le vittime di truffe e frodi informatiche sono più che raddoppiate: da 109.000 a 236.000",
     "chart": {
       "file": "autori_vittime_trend.json",
       "series": [
@@ -396,6 +399,7 @@
     ],
     "period": "2007-2024",
     "body": "Gli autori denunciati per omicidio volontario sono scesi da 1.199 a 771 (-36%), le vittime da 631 a 328 (-48%), con un calo graduale lungo l’intero periodo. Il calo include gli omicidi di tipo mafioso, passati da 476 a 130 autori denunciati. Il trend è coerente con la tendenza europea di lungo periodo.",
+    "chiave": "Gli autori denunciati per omicidio volontario sono scesi da 1.199 a 771 (-36%), le vittime da 631 a 328 (-48%)",
     "chart": {
       "file": "autori_vittime_trend.json",
       "series": [
@@ -540,6 +544,7 @@
     ],
     "period": "2007-2024",
     "body": "Autori denunciati passati da 2.355 a 1.185, vittime da 2.095 a 737. Il calo è presente in circa 3 anni su 4, un reato che ha perso progressivamente attrattività criminale.",
+    "chiave": "Autori denunciati passati da 2.355 a 1.185, vittime da 2.095 a 737.",
     "chart": {
       "file": "autori_vittime_trend.json",
       "series": [
@@ -646,6 +651,7 @@
     ],
     "period": "2007-2024",
     "body": "Gli autori denunciati per usura sono passati da 1.392 a 495, le vittime da 298 a 106. Un calo graduale lungo l’intero periodo, che va letto con cautela.",
+    "chiave": "Gli autori denunciati per usura sono passati da 1.392 a 495, le vittime da 298 a 106.",
     "caveat": "L’usura è per sua natura un reato con alta cifra oscura: il rapporto di dipendenza tra vittima e usuraio rende la denuncia rara. Il calo delle denunce non implica un calo del fenomeno.",
     "chart": {
       "file": "autori_vittime_trend.json",
@@ -743,6 +749,7 @@
     ],
     "period": "2007-2024",
     "body": "Le vittime di estorsione sono aumentate del 71%, da 6.704 a 11.433, con una crescita graduale nel tempo. Contemporaneamente, la percentuale di vittime di nazionalità straniera è scesa dal 16,4% all’8,8% con andamento altrettanto costante. L’estorsione colpisce in misura crescente cittadini italiani.",
+    "chiave": "Le vittime di estorsione sono aumentate del 71%, da 6.704 a 11.433",
     "chart": {
       "file": "autori_vittime_trend.json",
       "series": [
@@ -851,6 +858,7 @@
     "tests": [],
     "period": "2007-2024",
     "body": "Fra gli autori denunciati, la quota di cittadini stranieri è passata dal 35,3% del 2007 al 33,0% del 2022, l’ultimo anno con il totale, restando fra il 29,2% e il 35,3%. Gli stranieri denunciati sono scesi da 303.339 a 270.567 (-10,8%), il totale degli autori da 859.790 a 818.832 (-4,8%). Cambia invece la composizione per reato. Dal 2007 al 2024 la quota di stranieri scende nei furti di autovetture (dal 35,8% al 24,4%), nei furti in abitazione (dal 53,2% al 47,7%) e nei delitti informatici (dal 37,2% al 20,0%). Sale nelle rapine (dal 35,5% al 52,4%), nelle lesioni dolose (dal 29,4% al 37,9%), nelle percosse (dal 21,5% al 31,2%) e nelle minacce (dal 18,5% al 25,2%). Su 32 tipi di reato con dati completi e almeno 1.000 autori nel 2024, la quota cresce di oltre 3 punti in 15, resta entro 3 punti in 9 e cala in 8.",
+    "chiave": "la quota di cittadini stranieri è passata dal 35,3% del 2007 al 33,0% del 2022",
     "caveat": "Sono persone denunciate, non condannate. Comprendono anche chi non risiede in Italia, come turisti, persone di passaggio e irregolari, quindi la quota non si confronta con quella degli stranieri residenti. Fino al 2017 il totale comprende anche le persone denunciate per ingiuria, depenalizzata nel 2016: una parte del calo del totale viene da lì. Gli stranieri residenti sono in media più giovani degli italiani e con più uomini, e la propensione a essere denunciati varia molto per età e sesso.",
     "chart": {
       "file": "autori_vittime_trend.json",
@@ -1169,6 +1177,7 @@
     ],
     "period": "2007-2024",
     "body": "La percentuale di autori stranieri denunciati per rapine è passata dal 35,5% al 52,4% (+16,9 punti percentuali), con un aumento graduale lungo l’intero periodo. Il trend è coerente su tutte le tipologie: rapine in strada (47% → 60%), in esercizi commerciali (36% → 50%). Anche tra le vittime di rapina, la quota di stranieri è salita dal 14% al 26%, con un aumento quasi costante anno dopo anno.",
+    "chiave": "La percentuale di autori stranieri denunciati per rapine è passata dal 35,5% al 52,4%",
     "caveat": "Il dato riflette le denunce, non necessariamente la criminalità reale. Fattori come la maggiore visibilità e le pratiche di controllo differenziate possono influenzare la composizione degli autori denunciati.",
     "chart": {
       "file": "autori_vittime_trend.json",
@@ -1325,6 +1334,7 @@
     ],
     "period": "2008-2024",
     "body": "La percentuale di vittime donne di furti con strappo è scesa dall’81% al 54%, quella degli uomini è salita dal 19% al 46%. È la tendenza più regolare dell’intero dataset: in oltre 9 anni su 10 il valore si muove nella stessa direzione. Contemporaneamente, la quota di autori stranieri è salita dal 34% al 61%.",
+    "chiave": "La percentuale di vittime donne di furti con strappo è scesa dall’81% al 54%",
     "chart": {
       "file": "autori_vittime_trend.json",
       "series": [
@@ -1460,6 +1470,7 @@
     ],
     "period": "2008-2024",
     "body": "Tra le vittime di delitti informatici, le donne sono passate dal 34% al 49,6%, sfiorando la parità con gli uomini. Per truffe e frodi informatiche le vittime donne sono cresciute dal 34,5% al 43,4%, con un aumento quasi costante nel tempo. Il cybercrimine diventa progressivamente trasversale al genere.",
+    "chiave": "Tra le vittime di delitti informatici, le donne sono passate dal 34% al 49,6%",
     "chart": {
       "file": "autori_vittime_trend.json",
       "series": [
@@ -1566,6 +1577,7 @@
     ],
     "period": "2008-2024",
     "body": "Le vittime donne di omicidio volontario sono passate dal 24% al 34,5% del totale, con un aumento graduale nel tempo. Gli omicidi di donne calano, da 147 nel 2008 a 113 nel 2024, ma quelli di uomini calano molto di più, da 462 a 215; fra questi, gli omicidi di tipo mafioso passano da 103 a 17.",
+    "chiave": "Gli omicidi di donne calano, da 147 nel 2008 a 113 nel 2024, ma quelli di uomini calano molto di più",
     "chart": {
       "file": "autori_vittime_trend.json",
       "series": [
@@ -1707,6 +1719,7 @@
     ],
     "period": "2007-2024",
     "body": "Le vittime di violenze sessuali denunciate scendono fino a 3.567 nel 2015 e poi risalgono a 5.642 nel 2024, sopra il livello del 2007 (4.686). Nello stesso periodo la percentuale di vittime di nazionalità straniera scende dal 31% al 22,5% (-8,5 punti percentuali).",
+    "chiave": "Le vittime di violenze sessuali denunciate scendono fino a 3.567 nel 2015 e poi risalgono a 5.642 nel 2024",
     "genderNote": "Il 90% delle vittime di violenze sessuali sono donne (2024).",
     "caveat": "L’aumento delle denunce riflette principalmente campagne di sensibilizzazione (es. #MeToo) e maggiore fiducia nelle istituzioni. È un segnale positivo di emersione del sommerso, non necessariamente di aumento del fenomeno.",
     "chart": {
@@ -1834,6 +1847,7 @@
     ],
     "period": "2014-2024",
     "body": "Dal 2015 al 2020 entrambe le serie calano; dal 2021 entrambe risalgono. La correlazione sui livelli è positiva e significativa (Spearman), ma con soli 11 punti e un possibile cambio metodologico nel 2015 va interpretata con cautela. La somiglianza dei trend potrebbe riflettere fattori comuni (COVID, ciclo mediatico) più che un nesso diretto tra criminalità reale e percezione.",
+    "chiave": "Dal 2015 al 2020 entrambe le serie calano; dal 2021 entrambe risalgono.",
     "caveat": "La percezione di insicurezza è influenzata dalla copertura mediatica, dal clima politico e da fattori locali che i dati aggregati non catturano. Il salto 2014-2015 potrebbe riflettere un cambio metodologico ISTAT.",
     "chart": {
       "file": "percezione_vs_dati.json",
@@ -1879,6 +1893,7 @@
     ],
     "period": "2007-2024",
     "body": "La dispersione dei tassi di violenze sessuali tra regioni aumenta significativamente nel tempo, sia per gli autori sia per le vittime. Il fenomeno non è uniforme sul territorio: alcune regioni mostrano aumenti marcati, altre stagnazione. Questo può riflettere differenze nella propensione alla denuncia più che nella diffusione del reato.",
+    "chiave": "La dispersione dei tassi di violenze sessuali tra regioni aumenta significativamente nel tempo",
     "genderNote": "Il 90% delle vittime di violenze sessuali sono donne (2024).",
     "chart": {
       "file": "autori_vittime_regioni.json",
@@ -1939,6 +1954,7 @@
     ],
     "period": "2007-2024",
     "body": "Per i reati fisici, il rapporto tra autori identificati e vittime migliora costantemente: nelle rapine passa da 0,45 a 1,05 (oggi si identifica più di un autore per ogni vittima), nelle rapine in esercizi commerciali da 0,64 a 1,87. Per i reati digitali accade l’opposto: nei delitti informatici il rapporto crolla da 0,29 a 0,08 (un autore ogni 12 vittime), nelle truffe da 0,43 a 0,31. Le vittime digitali crescono molto più velocemente della capacità di identificare gli autori.",
+    "chiave": "Le vittime digitali crescono molto più velocemente della capacità di identificare gli autori.",
     "chart": {
       "file": "autori_vittime_trend.json",
       "series": [
@@ -2146,6 +2162,7 @@
     ],
     "period": "2007-2024",
     "body": "Le vittime di reati patrimoniali restano molte di più, ma la distanza con quelle di reati informatici si riduce di 958.566 tra il 2007 e il 2024. I reati patrimoniali passano da 1.905.658 a 1.090.680 vittime (-42,8%), quelli informatici da 112.020 a 255.608, più che raddoppiati.",
+    "chiave": "I reati patrimoniali passano da 1.905.658 a 1.090.680 vittime (-42,8%), quelli informatici da 112.020 a 255.608, più che raddoppiati.",
     "chart": {
       "file": "insights_categorie.json",
       "series": [
@@ -2264,6 +2281,7 @@
     ],
     "period": "2007-2024",
     "body": "Tra il 2007 e il 2024 le vittime di reati violenti calano del 12,9% (da 168.734 a 146.952), quelle di reati patrimoniali del 42,8% (da 1.905.658 a 1.090.680). La distanza fra le due categorie si riduce di 793.196 vittime.",
+    "chiave": "le vittime di reati violenti calano del 12,9% (da 168.734 a 146.952), quelle di reati patrimoniali del 42,8%",
     "chart": {
       "file": "insights_categorie.json",
       "series": [
@@ -2397,6 +2415,7 @@
     ],
     "period": "2007-2024",
     "body": "Il tasso di vittime di rapina cala in tutte le ripartizioni, ma molto più al Sud. Dal 2007 al 2024 passa da 105,2 a 28,0 per 100k al Sud e nelle Isole, da 55,8 a 41,6 al Nord e da 58,3 a 41,9 al Centro. La differenza fra Nord e Sud cresce di 63 per 100k, quella fra Centro e Sud di 61, con un aumento in circa 3 anni su 4.",
+    "chiave": "Il tasso di vittime di rapina cala in tutte le ripartizioni, ma molto più al Sud.",
     "chart": {
       "file": "insights_ripartizioni.json",
       "series": [
@@ -2566,6 +2585,7 @@
     ],
     "period": "2007-2024",
     "body": "Il tasso di truffe e frodi informatiche (vittime) al Nord cresce più che al Sud (+118 per 100k nella differenza). Anche per gli autori, il divario Nord-Sud aumenta (+84 per 100k), con la differenza che cresce in 2 anni su 3.",
+    "chiave": "Il tasso di truffe e frodi informatiche (vittime) al Nord cresce più che al Sud",
     "chart": {
       "file": "insights_ripartizioni.json",
       "series": [
@@ -2665,6 +2685,7 @@
     ],
     "period": "2007-2024",
     "body": "La differenza nella percentuale di autori stranieri per stupefacenti tra Nord e Sud cresce di circa 10 punti percentuali, con un aumento presente in 2 anni su 3. Al Nord la quota di autori stranieri per droga aumenta molto più che al Sud, coerentemente con la diversa composizione demografica dei territori.",
+    "chiave": "La differenza nella percentuale di autori stranieri per stupefacenti tra Nord e Sud cresce di circa 10 punti percentuali",
     "chart": {
       "file": "insights_ripartizioni.json",
       "series": [
