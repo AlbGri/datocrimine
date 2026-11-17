@@ -169,7 +169,7 @@ export default function Insights() {
     <main className="space-y-8">
       {/* Header */}
       <div className="space-y-3">
-        <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em]">Insights</h1>
+        <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em]">Analisi statistiche</h1>
         <div className="rounded-lg border bg-muted p-4 text-sm space-y-2">
           <p>
             <strong>Sezione sperimentale.</strong> Gli insight sono estratti

@@ -277,7 +277,7 @@ function ListaContributi({
                 href={`/insights#${d.insight_id}`}
                 className="text-xs rimando mt-0.5 inline-block"
               >
-                Approfondimento negli Insights &rarr;
+                Approfondimento nelle analisi statistiche &rarr;
               </Link>
             )}
           </li>

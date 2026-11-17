@@ -3,7 +3,7 @@ import Link from "next/link";
 const SEZIONI = [
   {
     href: "/analisi-territoriale",
-    titolo: "Analisi Territoriale",
+    titolo: "Territori",
     descrizione:
       "Mappa interattiva e trend della criminalit\u00e0 per regione e provincia. Confronta tassi, classifica territori, esplora le differenze locali.",
   },

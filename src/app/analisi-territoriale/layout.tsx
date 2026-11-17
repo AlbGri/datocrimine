@@ -3,7 +3,7 @@ import { pageMetadata } from "@/lib/metadata";
 import { PERIODO_DELITTI } from "@/lib/config";
 
 export const metadata: Metadata = pageMetadata(
-  "Analisi Territoriale",
+  "Territori",
   `Mappa interattiva e trend della criminalit\u00e0 per regione e provincia in Italia. Dati ISTAT ${PERIODO_DELITTI}.`,
   "/analisi-territoriale",
 );

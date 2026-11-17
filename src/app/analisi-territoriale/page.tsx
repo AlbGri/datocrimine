@@ -57,7 +57,7 @@ export default function AnalisiTerritoriale() {
     <main className="space-y-6 sm:space-y-10">
       <div>
         <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em]">
-          Analisi Territoriale
+          Territori
         </h1>
         <div className="mt-4 flex flex-wrap items-center gap-2" role="group" aria-label="Selezione anno">
           <button

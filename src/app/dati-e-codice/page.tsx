@@ -61,7 +61,7 @@ export default function DatiECodice() {
                   <span className="text-xs">Delitti denunciati per provincia</span>
                 </td>
                 <td className="py-2 pr-4">{PERIODO_DELITTI}</td>
-                <td className="py-2">Il contesto, Analisi Territoriale, Allarme Sociale</td>
+                <td className="py-2">Home, Territori, Reati di allarme sociale</td>
               </tr>
               <tr className="border-b">
                 <td className="py-2 pr-4">
@@ -77,7 +77,7 @@ export default function DatiECodice() {
                   <span className="text-xs">Autori denunciati e vittime di delitto</span>
                 </td>
                 <td className="py-2 pr-4">{PERIODO_AUTORI}</td>
-                <td className="py-2">Persone Denunciate</td>
+                <td className="py-2">Persone denunciate</td>
               </tr>
               <tr className="border-b">
                 <td className="py-2 pr-4">
@@ -86,7 +86,7 @@ export default function DatiECodice() {
                   <span className="text-xs">Percezione sicurezza famiglie</span>
                 </td>
                 <td className="py-2 pr-4">2014-2024</td>
-                <td className="py-2">Il contesto (percezione vs dati)</td>
+                <td className="py-2">Percezione della sicurezza</td>
               </tr>
               <tr className="border-b">
                 <td className="py-2 pr-4">
