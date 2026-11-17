@@ -2,6 +2,23 @@
 
 import { useState, useEffect } from "react";
 
+// Una richiesta per file per pagina: piu' grafici sullo stesso JSON lo scaricano e lo leggono una volta
+const richieste = new Map<string, Promise<unknown>>();
+
+function carica(url: string): Promise<unknown> {
+  let richiesta = richieste.get(url);
+  if (!richiesta) {
+    richiesta = fetch(url).then((res) => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    });
+    // Un errore non resta in memoria: la prossima apertura riprova
+    richiesta.catch(() => richieste.delete(url));
+    richieste.set(url, richiesta);
+  }
+  return richiesta;
+}
+
 export function useFetchData<T>(url: string) {
   const [data, setData] = useState<T | null>(null);
   const [loading, setLoading] = useState(true);
@@ -10,14 +27,10 @@ export function useFetchData<T>(url: string) {
   useEffect(() => {
     let cancelled = false;
 
-    fetch(url)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then((json: T) => {
+    carica(url)
+      .then((json) => {
         if (!cancelled) {
-          setData(json);
+          setData(json as T);
           setLoading(false);
         }
       })
