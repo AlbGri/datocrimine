@@ -26,7 +26,8 @@ HEADERS = {"Accept": "application/vnd.sdmx.data+csv;version=1.0.0"}
 
 # Pausa tra richieste (secondi)
 DELAY = 15.0
-REQUEST_TIMEOUT = 60
+# AUTVITTPS risponde spesso in circa un minuto: con 60 secondi la richiesta salta
+REQUEST_TIMEOUT = 180
 
 ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = ROOT / "public" / "data"
@@ -72,7 +73,8 @@ def check_delittips() -> dict:
     log.info(f"  Dati locali: {locale}")
     log.info(f"  Controllo dal {anni.max() + 1} su DF_1 (Italia, numeri assoluti)...")
 
-    result = {"dataset": "DCCV_DELITTIPS", "locale": locale, "status": "errore"}
+    result = {"dataset": "DCCV_DELITTIPS", "locale": locale, "status": "errore",
+              "ultimo_anno": int(anni.max())}
 
     df = query_sdmx("IT1,73_67_DF_DCCV_DELITTIPS_1,1.0", int(anni.max()) + 1)
     if df is None:
@@ -97,6 +99,7 @@ def check_delittips() -> dict:
 
     result["status"] = "da_aggiornare"
     result["nuovi_anni"] = years
+    result["ultimo_anno"] = max(years)
     return result
 
 
@@ -165,8 +168,9 @@ def check_percezione() -> dict:
     return {"dataset": "Percezione (Multiscopo)", "locale": locale, "status": "verifica_manuale"}
 
 
-def check_popolazione() -> dict:
-    """DCIS_POPRES1: verifica ultimo anno disponibile."""
+def check_popolazione(serve_fino_al: int) -> dict:
+    """DCIS_POPRES1: serve solo fino all'ultimo anno dei delitti, che si dividono per la
+    popolazione dello stesso anno."""
     pop = pd.read_csv(ROOT / "data" / "processed" / "popolazione_regioni_province.csv")
     ultimo = int(pop["Anno"].max())
     log.info("=" * 60)
@@ -174,8 +178,8 @@ def check_popolazione() -> dict:
     log.info(f"  Dati locali: fino al {ultimo}")
 
     result = {"dataset": "DCIS_POPRES1", "locale": f"fino al {ultimo}", "status": "errore"}
-    if ultimo >= ANNO_CORRENTE:
-        log.info("  Gia' all'anno in corso")
+    if ultimo >= serve_fino_al:
+        log.info(f"  Copre gia' i delitti fino al {serve_fino_al}: non serve aggiornarla")
         result["status"] = "aggiornato"
         return result
 
@@ -204,7 +208,8 @@ def main():
 
     results = []
 
-    results.append(check_delittips())
+    delitti = check_delittips()
+    results.append(delitti)
     time.sleep(DELAY)
 
     results.append(check_autvittps())
@@ -213,7 +218,7 @@ def main():
     results.append(check_percezione())
     # Nessuna query API per percezione, niente pausa
 
-    results.append(check_popolazione())
+    results.append(check_popolazione(delitti["ultimo_anno"]))
 
     # Salva report JSON
     report_file = ROOT / "data" / "raw" / "check_updates.json"
