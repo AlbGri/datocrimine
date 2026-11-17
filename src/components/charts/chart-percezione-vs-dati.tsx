@@ -48,7 +48,7 @@ export function ChartPercezioneVsDati() {
         </AlertDescription>
       </Alert>
 
-      <ChartFullscreenWrapper ariaDescription={`Grafico percezione insicurezza vs tasso delitti denunciati dal ${ANNO_PRIMO} al ${ANNO_ULTIMO}: la percezione segue dinamiche diverse dai dati reali`}>
+      <ChartFullscreenWrapper ariaDescription={`Grafico percezione insicurezza vs tasso delitti denunciati dal ${ANNO_PRIMO} al ${ANNO_ULTIMO}: dal 2015 al 2020 entrambe le serie calano, dal 2021 risalgono`}>
         <Plot
           data={[
             {

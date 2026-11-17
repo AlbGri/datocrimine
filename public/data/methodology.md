@@ -81,7 +81,7 @@ La differenza tra reati commessi e reati denunciati (il "numero oscuro") varia s
 - **Frodi/truffe**: 24,1% denunciate (era 18,4% nel 2015-2016: lieve aumento, legato a crescita truffe bancarie online)
 - **Violenza da partner**: ~11% denunciata ([ISTAT Violenza donne 2025](https://www.istat.it/comunicato-stampa/la-violenza-contro-le-donne-dentro-e-fuori-la-famiglia-primi-risultati-anno-2025/))
 
-Il numero oscuro varia nel tempo: un aumento delle denunce può indicare maggiore propensione a denunciare (positivo), non necessariamente più reati. Il raddoppio delle denunce per aggressioni tra 2015-2016 e 2022-2023 ne è un esempio. Le due edizioni dell'indagine comparabili sono l'[Indagine 2015-2016](https://www.istat.it/it/files/2019/02/Reati-contro-la-persona-e-contro-la-proprieta.pdf) e quella 2022-2023.
+Il numero oscuro varia nel tempo: un aumento delle denunce può indicare maggiore propensione a denunciare (positivo), non necessariamente più reati. Il raddoppio della quota di aggressioni denunciate dalle vittime tra 2015-2016 e 2022-2023 ne è un esempio. Le due edizioni dell'indagine comparabili sono l'[Indagine 2015-2016](https://www.istat.it/it/files/2019/02/Reati-contro-la-persona-e-contro-la-proprieta.pdf) e quella 2022-2023.
 
 L'indagine esce ogni 5-7 anni; il confronto con altri paesi, con la posizione dell'autore, è nella pagina [Dati che mancano](/dati-che-mancano).
 
@@ -222,10 +222,10 @@ I confini regionali provengono dal dataset [openpolis/geojson-italy](https://git
 
 ### Delitti denunciati (ISTAT - esploradati.istat.it)
 
-ISTAT pubblica i dati sui delitti denunciati con un **ritardo strutturale di circa 2 anni** rispetto all'anno di riferimento. I dati provengono dalla banca dati interforze del Ministero dell'Interno (SDI/SSD) e vengono elaborati e strutturati dall'ISTAT prima della pubblicazione su [esploradati.istat.it](https://esploradati.istat.it/databrowser/#/it/dw/categories/IT1,Z0840JUS,1.0/JUS_CRIMINAL/DCCV_DELITTIPS/IT1,73_67_DF_DCCV_DELITTIPS_1,1.0).
+ISTAT pubblica i dati sui delitti denunciati con **oltre un anno di ritardo** rispetto all'anno di riferimento. I dati provengono dalla banca dati interforze del Ministero dell'Interno (SDI/SSD) e vengono elaborati e strutturati dall'ISTAT prima della pubblicazione su [esploradati.istat.it](https://esploradati.istat.it/databrowser/#/it/dw/categories/IT1,Z0840JUS,1.0/JUS_CRIMINAL/DCCV_DELITTIPS/IT1,73_67_DF_DCCV_DELITTIPS_1,1.0).
 
 - **Dati 2024**: pubblicati su esploradati.istat.it a inizio 2026 (attualmente in uso in questa dashboard)
-- **Dati 2025**: attesi indicativamente nel **2027-2028**
+- **Dati 2025**: attesi indicativamente a **inizio 2027**
 
 Non esiste un calendario fisso per questo aggiornamento. ISTAT pubblica un [calendario settimanale delle diffusioni](https://www.istat.it/attivita-e-servizi-per-tipo-di-utenti/giornalisti/appuntamenti/calendario-delle-diffusioni-e-degli-eventi/) che vale la pena monitorare. Schede qualità: [delitti denunciati da PdS, CC e GdF](https://www.istat.it/scheda-qualita/delitti-denunciati-allautorita-giudiziaria-da-polizia-di-stato-arma-dei-carabinieri-e-guardia-di-finanza/), [delitti con azione penale](https://www.istat.it/scheda-qualita/delitti-denunciati-per-i-quali-lautorita-giudiziaria-ha-iniziato-lazione-penale/).
 
@@ -235,7 +235,7 @@ Il **Sole 24 Ore** pubblica annualmente un [Indice della criminalità](https://l
 
 Il **Ministero dell'Interno** pubblica dati aggregati aperti (licenza CC-BY) su [dati-coll.dfp.gov.it](https://dati-coll.dfp.gov.it/dataset/?tags=delitti&tags=denunce&tags=capoluogo&organization=min-interni&license_id=CC-BY-4.0&res_format=JSON), ma a marzo 2026 il dataset risulta fermo al 2022. La banca dati CED/SDI interforze resta riservata alle forze dell'ordine.
 
-Di fatto, **l'unica fonte pubblica** con dati strutturati per provincia e tipologia di reato è ISTAT, con il suo ritardo di circa 2 anni. Questa è una **scelta deliberata** dell'architettura informativa italiana sulla criminalità, non un limite tecnico.
+Di fatto, **l'unica fonte pubblica** con dati strutturati per provincia e tipologia di reato è ISTAT, con il suo ritardo di oltre un anno. Questa è una **scelta deliberata** dell'architettura informativa italiana sulla criminalità, non un limite tecnico.
 
 ### Percezione di sicurezza (BES - ISTAT)
 
@@ -246,7 +246,7 @@ Il rapporto BES viene aggiornato **annualmente** in autunno:
 
 ### Omicidi (ISTAT)
 
-Questa dashboard utilizza i dati sugli omicidi dal dataset DCCV_DELITTIPS (delitti denunciati), che segue il ciclo di pubblicazione standard con **circa 2 anni di ritardo**. Tuttavia, per gli omicidi ISTAT pubblica anche un report separato con ciclo più rapido: "[Le vittime di omicidio](https://www.istat.it/comunicato-stampa/le-vittime-di-omicidio-anno-2024/)" con **dati 2024 già disponibili** (pubblicato a novembre 2025). Chi cerca dati più aggiornati sugli omicidi può consultare direttamente quel report.
+Questa dashboard utilizza i dati sugli omicidi dal dataset DCCV_DELITTIPS (delitti denunciati), che segue il ciclo di pubblicazione standard con **oltre un anno di ritardo**. Tuttavia, per gli omicidi ISTAT pubblica anche un report separato con ciclo più rapido: "[Le vittime di omicidio](https://www.istat.it/comunicato-stampa/le-vittime-di-omicidio-anno-2024/)" con **dati 2024 già disponibili** (pubblicato a novembre 2025). Chi cerca dati più aggiornati sugli omicidi può consultare direttamente quel report.
 
 ## Trasparenza
 

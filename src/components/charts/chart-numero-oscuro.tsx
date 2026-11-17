@@ -196,12 +196,12 @@ export function ChartNumeroOscuro() {
       </ChartFullscreenWrapper>
 
       <p>
-        Le aggressioni denunciate sono <strong>raddoppiate</strong> (da {p("Aggressioni", "Italia", "2015-2016")} a {p("Aggressioni", "Italia", "2022-2023")}), probabilmente per maggiore fiducia nelle istituzioni e campagne
-        di sensibilizzazione. Gli scippi denunciati sono invece{" "}
-        <strong>calati</strong> (da {p("Scippi", "Italia", "2015-2016")} a {p("Scippi", "Italia", "2022-2023")}), forse per rassegnazione su
-        reati percepiti come a basso recupero. Le frodi/truffe mostrano un{" "}
-        <strong>lieve aumento</strong> (da {p("Frodi/truffe", "Italia", "2015-2016")} a {p("Frodi/truffe", "Italia", "2022-2023")}), probabilmente legato
-        alla crescita delle truffe bancarie online dove c&apos;è maggiore
+        &Egrave; <strong>raddoppiata</strong> la quota di aggressioni che le vittime denunciano (da {p("Aggressioni", "Italia", "2015-2016")} a {p("Aggressioni", "Italia", "2022-2023")}), probabilmente per maggiore fiducia nelle istituzioni e campagne
+        di sensibilizzazione. &Egrave; invece{" "}
+        <strong>calata</strong> la quota di scippi denunciati dalle vittime (da {p("Scippi", "Italia", "2015-2016")} a {p("Scippi", "Italia", "2022-2023")}), forse per rassegnazione su
+        reati percepiti come a basso recupero. Per frodi e truffe la quota{" "}
+        <strong>sale di poco</strong> (da {p("Frodi/truffe", "Italia", "2015-2016")} a {p("Frodi/truffe", "Italia", "2022-2023")}), probabilmente per la
+        crescita delle truffe bancarie online dove c&apos;è maggiore
         consapevolezza e incentivo a denunciare.
       </p>
 

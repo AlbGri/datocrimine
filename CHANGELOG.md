@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-17 — Correzioni ai testi e tabelle da tastiera
+- Numero oscuro: si dice che è raddoppiata la quota di aggressioni denunciate dalle vittime, non il numero delle denunce; lo stesso per scippi e truffe
+- Il ritardo con cui l'ISTAT pubblica i delitti è "oltre un anno", non "circa 2 anni"; i dati 2025 sono attesi a inizio 2027
+- Le tabelle delle province si ordinano anche da tastiera, e sotto la tabella una legenda spiega il simbolo di controtendenza
+
 ## 2026-11-17 — Testi subito nella pagina
 - Report, Metodologia, Dati che mancano e la frase in cima alla home sono già scritti nella pagina: si leggono senza aspettare il caricamento, e li leggono anche i motori di ricerca e le anteprime dei link
 

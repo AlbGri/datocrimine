@@ -218,7 +218,7 @@ export default function Guida() {
           </li>
           <li>
             <strong>No dati real-time</strong> - ISTAT pubblica i delitti
-            denunciati con un ritardo di circa 2 anni (vedi Metodologia per il
+            denunciati con oltre un anno di ritardo (vedi Metodologia per il
             calendario atteso)
           </li>
           <li>
