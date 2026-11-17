@@ -117,8 +117,8 @@ def test_percezione(report):
 
 def test_codici_sommano_al_totale():
     reati = carica("delitti_reati_italia.json").groupby("Anno")["Delitti"].sum()
-    totale = carica("delitti_italia.json").set_index("Anno")["Delitti"]
-    assert reati.to_dict() == totale.to_dict()
+    italia = carica("delitti_italia.json").set_index("Anno")
+    assert reati.to_dict() == (italia["Delitti"] + italia["Ingiurie"]).to_dict()
 
 
 BLOCCHI = [

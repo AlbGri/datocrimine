@@ -1,12 +1,12 @@
 # Insights Candidates Report
 
-Generato: 2026-11-08 23:15
+Generato: 2026-11-17 12:04
 
 - Combinazioni testate: 4537
 - Candidati dopo il filtro di rilevanza: 2215
-- FDR significativi (p < 0.05 dopo correzione): 927
+- FDR significativi (p < 0.05 dopo correzione): 926
 - Confidenza alta: 188
-- Confidenza media: 735
+- Confidenza media: 734
 
 ---
 
@@ -102,15 +102,14 @@ Misura come cambia la dispersione (deviazione standard) tra regioni nel tempo. U
 
 ## 5. Delitti totali per regione
 
-- **Puglia**: trend decrescente, tasso 41.0 -> 31.8 per 1000 (-9.2), p=0.0023
-- **Calabria**: trend decrescente, tasso 33.9 -> 28.2 per 1000 (-5.7), p=0.0067
-- **Basilicata**: trend decrescente, tasso 25.4 -> 22.3 per 1000 (-3.1), p=0.0191
-- **Sardegna**: trend decrescente, tasso 32.9 -> 27.4 per 1000 (-5.5), p=0.0115
-- **Marche**: trend decrescente, tasso 34.9 -> 27.5 per 1000 (-7.4), p=0.0191
-- **Emilia-Romagna**: trend decrescente, tasso 58.4 -> 46.7 per 1000 (-11.7), p=0.0191
-- **Liguria**: trend decrescente, tasso 56.3 -> 46.0 per 1000 (-10.3), p=0.0307
-- **Toscana**: trend decrescente, tasso 50.7 -> 46.7 per 1000 (-4.0), p=0.0307
-- **Abruzzo**: trend decrescente, tasso 39.5 -> 31.2 per 1000 (-8.3), p=0.0494
+- **Puglia**: trend decrescente, tasso 39.8 -> 31.8 per 1000 (-8.1), p=0.0023
+- **Calabria**: trend decrescente, tasso 32.7 -> 28.2 per 1000 (-4.5), p=0.0067
+- **Basilicata**: trend decrescente, tasso 24.1 -> 22.3 per 1000 (-1.8), p=0.0307
+- **Sardegna**: trend decrescente, tasso 31.6 -> 27.4 per 1000 (-4.2), p=0.0115
+- **Marche**: trend decrescente, tasso 33.9 -> 27.5 per 1000 (-6.4), p=0.0191
+- **Emilia-Romagna**: trend decrescente, tasso 57.2 -> 46.7 per 1000 (-10.5), p=0.0191
+- **Liguria**: trend decrescente, tasso 55.3 -> 46.0 per 1000 (-9.3), p=0.0307
+- **Toscana**: trend decrescente, tasso 49.5 -> 46.7 per 1000 (-2.8), p=0.0375
 
 ---
 
@@ -235,7 +234,7 @@ Trend del rapporto autori/vittime per reato. Un rapporto in calo indica piu' vit
 | 23 | 0.876 | medium | Truffe e frodi informatiche | VICTIM | tasso per 100k | Piemonte | increasing | +293.4 | 0.0012 | 67% |  | bassa |
 | 24 | 0.874 | high | Furti con strappo | VICTIM | totale | Italia | decreasing | -11938.0 | 0.0058 | 80% |  | media |
 | 25 | 0.873 | high | Furti | VICTIM | tasso per 100k | Lombardia | decreasing | -1429.1 | 0.0029 | 80% |  | media |
-| 26 | 0.872 | medium | Furti | VICTIM | tasso per 100k | Basilicata | decreasing | -380.9 | 0.0222 | 67% |  | media |
+| 26 | 0.872 | medium | Furti | VICTIM | tasso per 100k | Basilicata | decreasing | -380.9 | 0.0223 | 67% |  | media |
 | 27 | 0.871 | high | Furti | VICTIM | tasso per 100k | Valle d'Aosta | decreasing | -1238.9 | 0.0006 | 73% |  | media |
 | 28 | 0.871 | high | Omicidi volontari consumati | VICTIM | totale | Italia | decreasing | -303.0 | 0.0004 | 80% |  | non_applicabile_automatica |
 | 29 | 0.870 | medium | Sfruttamento e favoreggiamento della prostituzione | VICTIM | totale | Italia | decreasing | -646.0 | 0.0012 | 67% |  | non_applicabile_consensuale |
@@ -258,5 +257,5 @@ Trend del rapporto autori/vittime per reato. Un rapporto in calo indica piu' vit
 | 46 | 0.857 | medium | Furti con strappo | OFFEND | totale | Italia | increasing | +1023.0 | 0.0183 | 60% |  | media |
 | 47 | 0.857 | medium | Incendi | VICTIM | totale | Italia | decreasing | -8849.0 | 0.0004 | 67% |  |  |
 | 48 | 0.857 | high | Atti persecutori (stalking) | OFFEND | totale | Italia | increasing | +8525.0 | 0.0015 | 85% |  | molto_bassa |
-| 49 | 0.856 | medium | Furti | VICTIM | tasso per 100k | Emilia-Romagna | decreasing | -1848.1 | 0.0222 | 67% |  | media |
+| 49 | 0.856 | medium | Furti | VICTIM | tasso per 100k | Emilia-Romagna | decreasing | -1848.1 | 0.0223 | 67% |  | media |
 | 50 | 0.856 | medium | Furti | VICTIM | tasso per 100k | Piemonte | decreasing | -1534.7 | 0.0116 | 67% |  | media |

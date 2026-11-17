@@ -123,6 +123,22 @@ def load_delittips(project_root: Path) -> pd.DataFrame:
     return df
 
 
+def totale_al_netto_ingiurie(df: pd.DataFrame) -> pd.DataFrame:
+    """Toglie le ingiurie (OFFENCE) dalle righe TOT e le mette nella colonna Ingiurie.
+
+    Depenalizzate nel 2016 (d.lgs. 7/2016), nel totale gonfierebbero ogni confronto con gli anni
+    2014-2017: il totale di riferimento e' quindi TOT - OFFENCE, il lordo e' Delitti + Ingiurie.
+    """
+    ingiurie = df[df["TYPE_CRIME"] == "OFFENCE"][["REF_AREA", "Anno", "Delitti"]]
+    ingiurie = ingiurie.rename(columns={"Delitti": "Ingiurie"})
+    df = df.merge(ingiurie, on=["REF_AREA", "Anno"], how="left")
+    df["Ingiurie"] = df["Ingiurie"].fillna(0).astype(int)
+    is_tot = df["TYPE_CRIME"] == "TOT"
+    df.loc[is_tot, "Delitti"] -= df.loc[is_tot, "Ingiurie"]
+    df.loc[~is_tot, "Ingiurie"] = 0
+    return df
+
+
 def load_popolazione(project_root: Path) -> pd.DataFrame:
     """Carica CSV popolazione."""
     filepath = project_root / "data" / "processed" / "popolazione_regioni_province.csv"
@@ -149,7 +165,7 @@ def generate_italia(df: pd.DataFrame, pop: pd.DataFrame, project_root: Path) -> 
 
     result = df_it.merge(pop_it, on="Anno", how="left")
     result["Tasso_per_1000"] = result["Delitti"] / result["Popolazione"] * 1000
-    result = result[["Anno", "Delitti", "Popolazione", "Tasso_per_1000"]].sort_values("Anno")
+    result = result[["Anno", "Delitti", "Ingiurie", "Popolazione", "Tasso_per_1000"]].sort_values("Anno")
 
     out = project_root / "data" / "processed" / "delitti_italia_normalizzato.csv"
     result.to_csv(out, index=False)
@@ -165,7 +181,7 @@ def generate_regioni(df: pd.DataFrame, pop: pd.DataFrame, project_root: Path) ->
     mask_trentino = df_reg["REF_AREA"].isin(["ITD1", "ITD2"])
     df_trentino = (
         df_reg[mask_trentino]
-        .groupby("Anno", as_index=False)["Delitti"]
+        .groupby("Anno", as_index=False)[["Delitti", "Ingiurie"]]
         .sum()
     )
     df_trentino["REF_AREA"] = "ITD12"
@@ -185,7 +201,7 @@ def generate_regioni(df: pd.DataFrame, pop: pd.DataFrame, project_root: Path) ->
 
     result = df_reg.merge(pop_reg[["REF_AREA", "Anno", "Territorio", "Popolazione"]], on=["REF_AREA", "Anno"], how="left")
     result["Tasso_per_1000"] = (result["Delitti"] / result["Popolazione"] * 1000).round(2)
-    result = result[["REF_AREA", "Territorio", "Anno", "Delitti", "Popolazione", "Tasso_per_1000"]]
+    result = result[["REF_AREA", "Territorio", "Anno", "Delitti", "Ingiurie", "Popolazione", "Tasso_per_1000"]]
     result = result.sort_values(["REF_AREA", "Anno"])
 
     out = project_root / "data" / "processed" / "delitti_regioni_normalizzato.csv"
@@ -208,7 +224,7 @@ def generate_province(df: pd.DataFrame, pop: pd.DataFrame, project_root: Path) -
     result = df_prov.merge(pop_prov, on=["REF_AREA", "Anno"], how="left")
     result["Regione"] = result["REF_AREA"].apply(nuts3_to_regione)
     result["Tasso_per_1000"] = (result["Delitti"] / result["Popolazione"] * 1000).round(2)
-    result = result[["REF_AREA", "Territorio", "Anno", "Delitti", "Regione", "Popolazione", "Tasso_per_1000"]]
+    result = result[["REF_AREA", "Territorio", "Anno", "Delitti", "Ingiurie", "Regione", "Popolazione", "Tasso_per_1000"]]
     result = result.sort_values(["REF_AREA", "Anno"])
 
     out = project_root / "data" / "processed" / "delitti_province_normalizzato.csv"
@@ -351,7 +367,6 @@ def generate_allarme_province_json(df: pd.DataFrame, pop: pd.DataFrame, project_
 
 def generate_percezione(df: pd.DataFrame, pop: pd.DataFrame, project_root: Path) -> None:
     """Genera percezione_vs_dati.csv."""
-    # Delitti Italia TOT
     df_it = df[(df["REF_AREA"] == "IT") & (df["TYPE_CRIME"] == "TOT")].copy()
     pop_it = pop[pop["livello"] == "italia"][["Anno", "Popolazione"]]
     result = df_it.merge(pop_it, on="Anno", how="left")
@@ -387,6 +402,7 @@ def main():
     log.info("Caricamento dati...")
     df = load_delittips(project_root)
     log.info(f"  DF_1 filtrato: {len(df)} righe, anni {df['Anno'].min()}-{df['Anno'].max()}")
+    df = totale_al_netto_ingiurie(df)
 
     pop = load_popolazione(project_root)
     log.info(f"  Popolazione: {len(pop)} righe")

@@ -2,6 +2,7 @@
 
 import { useFetchData } from "@/lib/use-fetch-data";
 import { fraseSintesi } from "@/lib/sintesi";
+import { NotaIngiurie } from "@/components/charts/nota-ingiurie";
 
 interface DelittiItalia {
   Anno: number;
@@ -18,5 +19,11 @@ export function SintesiNazionale({ anno }: { anno?: number }) {
     data.map((d) => ({ anno: d.Anno, tasso: d.Tasso_per_1000 })),
     anno,
   );
-  return frase ? <p className="text-base sm:text-lg">{frase}</p> : null;
+  if (!frase) return null;
+  return (
+    <div className="space-y-1">
+      <p className="text-base sm:text-lg">{frase}</p>
+      <NotaIngiurie />
+    </div>
+  );
 }

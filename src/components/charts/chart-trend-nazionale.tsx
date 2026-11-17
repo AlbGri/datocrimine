@@ -21,6 +21,7 @@ import { useIsMobile } from "@/lib/use-is-mobile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
+import { NotaIngiurie } from "@/components/charts/nota-ingiurie";
 
 interface DelittiItalia {
   Anno: number;
@@ -221,6 +222,8 @@ export function ChartTrendNazionale() {
           className="w-full"
         />
       </ChartFullscreenWrapper>
+
+      {!isTipologia && <NotaIngiurie />}
 
       {isTipologia && varFurti !== null && varTruffe !== null && (
         <p className="text-sm text-muted-foreground text-center">

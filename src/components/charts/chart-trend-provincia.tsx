@@ -20,6 +20,7 @@ import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 import { Plot } from "@/components/charts/plot";
+import { NotaIngiurie } from "@/components/charts/nota-ingiurie";
 
 interface DelittiProvincia {
   REF_AREA: string;
@@ -216,6 +217,7 @@ export function ChartTrendProvincia() {
           </span>
         </p>
       )}
+      <NotaIngiurie />
     </div>
   );
 }

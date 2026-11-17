@@ -6,6 +6,7 @@ import { varTriennale, TRIENNALE_LABEL } from "@/lib/config";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 import { fmtNum, csvNum } from "@/lib/format";
+import { NotaIngiurie } from "@/components/charts/nota-ingiurie";
 
 interface DelittiProvincia {
   REF_AREA: string;
@@ -246,6 +247,7 @@ export function ChartTabellaProvince({ anno }: Props) {
           </tbody>
         </table>
       </div>
+      <NotaIngiurie />
     </div>
   );
 }

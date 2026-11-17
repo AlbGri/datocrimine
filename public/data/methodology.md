@@ -107,7 +107,7 @@ Nuove leggi possono modificare:
 
 **Casi rilevanti nei dati:**
 
-- **D.Lgs. 7/2016** (in vigore dal 6 febbraio 2016): ha depenalizzato le ingiurie, trasformandole da reato penale a illecito civile. Le denunce per ingiurie passano da 58.620 nel 2015 a 15.781 nel 2016 e a 2.064 nel 2017, poi la voce scompare. Circa un quinto del calo del totale fra 2015 e 2016 (42.839 su 199.860) dipende da questo, non da meno reati. Nel grafico per tipologia le ingiurie sono una categoria a parte, per non falsare il trend delle altre.
+- **D.Lgs. 7/2016** (in vigore dal 6 febbraio 2016): ha depenalizzato le ingiurie, trasformandole da reato penale a illecito civile. Le denunce per ingiurie passano da 58.620 nel 2015 a 15.781 nel 2016 e a 2.064 nel 2017, poi la voce scompare. Nel totale ISTAT circa un quinto del calo fra 2015 e 2016 (42.839 su 199.860) dipende da questo, non da meno reati. Per questo in tutto il sito il totale dei delitti è **al netto delle ingiurie**: gli anni 2014-2017 si confrontano con i successivi a parità di reati. Il totale ISTAT si ottiene sommando la colonna `Ingiurie` dei dati scaricabili. Nel grafico per tipologia le ingiurie sono una categoria a parte, per non falsare il trend delle altre.
 - **L. 69/2019 "Codice Rosso"** (in vigore dal 9 agosto 2019): ha introdotto procedure accelerate per violenza domestica e di genere (obbligo di ascolto vittima entro 3 giorni, nuovi reati come revenge porn). Può aver contribuito all'aumento delle denunce per violenze sessuali e maltrattamenti dal 2019 in poi, per effetto di maggiore fiducia nel sistema giudiziario, non necessariamente per aumento dei reati.
 
 ### Propensione a denunciare
@@ -164,7 +164,7 @@ Per il focus su reati mediatici, sono stati selezionati 6 tipi specifici (non ag
 - Rapine in abitazione
 - Sequestri di persona
 
-Questi reati sono **lo 0,48% dei delitti totali** nel 2024 (erano lo 0,39% nel 2014) ma dominano percezione pubblica e copertura mediatica.
+Questi reati sono **lo 0,48% dei delitti totali** nel 2024 (erano lo 0,40% nel 2014) ma dominano percezione pubblica e copertura mediatica.
 
 ## Indicatore di sicurezza percepita vs oggettiva
 
