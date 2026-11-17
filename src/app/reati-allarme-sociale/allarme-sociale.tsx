@@ -173,6 +173,7 @@ export function AllarmeSociale({ territori }: { territori: Regione[] }) {
         fonte="delitti"
         parametri={{ reato, anno }}
         altezza={420}
+        immagine={false}
       >
         <ChartAllarmeTabellaProvince anno={anno} reato={reato} />
       </Grafico>

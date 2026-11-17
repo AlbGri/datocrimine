@@ -5,8 +5,8 @@ import { useFetchData } from "@/lib/use-fetch-data";
 import { varTriennale, TRIENNALE_LABEL, TRIENNIO_TITOLO } from "@/lib/config";
 import { IntestazioneOrdinabile } from "@/components/ui/intestazione-ordinabile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
-import { fmtNum, csvNum } from "@/lib/format";
+import { fmtNum } from "@/lib/format";
+import { useDatiGrafico } from "@/components/charts/grafico";
 import { NotaIngiurie } from "@/components/charts/nota-ingiurie";
 
 interface DelittiProvincia {
@@ -31,7 +31,6 @@ export function ChartTabellaProvince({ anno }: Props) {
     "/data/delitti_province.json"
   );
   const [regioneSelezionata, setRegioneSelezionata] = useState("Tutte le regioni");
-  const setRegioneStable = useCallback((v: string) => setRegioneSelezionata(v), []);
   const [sortKey, setSortKey] = useState<SortKey>("Tasso_per_1000");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
 
@@ -40,8 +39,6 @@ export function ChartTabellaProvince({ anno }: Props) {
     const set = new Set(data.map((d) => d.Regione));
     return Array.from(set).sort((a, b) => a.localeCompare(b, "it"));
   }, [data]);
-
-  const { handleSync } = useFilterSync("regione", regioneSelezionata, setRegioneStable);
 
   const handleSort = useCallback((key: SortKey) => {
     if (key === sortKey) {
@@ -117,31 +114,22 @@ export function ChartTabellaProvince({ anno }: Props) {
     });
   }, [data, anno, regioneSelezionata, sortKey, sortDir]);
 
+  const righeCsv = useCallback(() => [
+    ["Provincia", "Regione", `Tasso ${anno}`, `${TRIENNALE_LABEL} (%)`, `Delitti ${anno}`, "Popolazione"],
+    ...righe.map((r) => [
+      r.Territorio,
+      r.Regione,
+      Number(r.Tasso_per_1000.toFixed(1)),
+      r.varNum != null ? Number(r.varNum.toFixed(1)) : "",
+      r.Delitti,
+      r.Popolazione,
+    ]),
+  ], [righe, anno]);
+  useDatiGrafico(righeCsv);
+
   if (loading) return <div className="h-64 animate-pulse bg-muted rounded" />;
   if (error) return <p className="text-destructive">Errore: {error}</p>;
   if (!data) return null;
-
-  const handleDownloadCsv = () => {
-    const header = ["Provincia", "Regione", `Tasso ${anno}`, `${TRIENNALE_LABEL} (%)`, `Delitti ${anno}`, "Popolazione"];
-    const rows = righe.map((r) => [
-      r.Territorio,
-      r.Regione,
-      csvNum(r.Tasso_per_1000, 1),
-      r.varNum != null ? csvNum(r.varNum, 1) : "",
-      r.Delitti,
-      r.Popolazione,
-    ]);
-    const csv = [header, ...rows].map((row) => row.join(";")).join("\n");
-    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `province_${anno}${regioneSelezionata !== "Tutte le regioni" ? "_" + regioneSelezionata.replace(/\s/g, "_") : ""}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-
 
   return (
     <div className="space-y-4">
@@ -154,35 +142,23 @@ export function ChartTabellaProvince({ anno }: Props) {
         </AlertDescription>
       </Alert>
 
-      <div className="flex items-end gap-4 flex-wrap">
-        <div>
-          <label
-            htmlFor="regione-select"
-            className="text-sm font-medium mb-1 flex items-center"
-          >
-            Filtra per regione
-            <SyncButton onClick={() => handleSync()} />
-          </label>
-          <select
-            id="regione-select"
-            value={regioneSelezionata}
-            onChange={(e) => setRegioneSelezionata(e.target.value)}
-            className="border rounded-md px-3 py-2 text-sm bg-background"
-          >
-            <option>Tutte le regioni</option>
-            {regioni.map((r) => (
-              <option key={r} value={r}>
-                {r}
-              </option>
-            ))}
-          </select>
-        </div>
-        <button
-          onClick={handleDownloadCsv}
-          className="border rounded-md px-3 py-2 text-sm bg-background hover:bg-muted transition-colors"
+      <div>
+        <label htmlFor="tabella-regione-select" className="block text-sm font-medium mb-1">
+          Filtra per regione
+        </label>
+        <select
+          id="tabella-regione-select"
+          value={regioneSelezionata}
+          onChange={(e) => setRegioneSelezionata(e.target.value)}
+          className="border rounded-md px-3 py-2 text-sm bg-background"
         >
-          Scarica CSV
-        </button>
+          <option>Tutte le regioni</option>
+          {regioni.map((r) => (
+            <option key={r} value={r}>
+              {r}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="overflow-x-auto max-h-[250px] overflow-y-auto border rounded-lg">

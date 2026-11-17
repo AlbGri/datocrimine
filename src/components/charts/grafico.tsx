@@ -50,11 +50,22 @@ interface GraficoProps {
   parametri?: Record<string, string | number>;
   /** Altezza del segnaposto prima che il grafico entri nello schermo */
   altezza: number;
+  /** Falso per le tabelle, che non hanno un'immagine da scaricare */
+  immagine?: boolean;
   children: React.ReactNode;
 }
 
 /** Contenitore di ogni grafico e tabella: titolo, fonte, scarica immagine, copia link, scarica dati */
-export function Grafico({ id, titolo, sottotitolo, fonte, parametri, altezza, children }: GraficoProps) {
+export function Grafico({
+  id,
+  titolo,
+  sottotitolo,
+  fonte,
+  parametri,
+  altezza,
+  immagine = true,
+  children,
+}: GraficoProps) {
   const corpo = useRef<HTMLDivElement>(null);
   const [visibile, setVisibile] = useState(false);
   const [nota, setNota] = useState<string | null>(null);
@@ -128,7 +139,7 @@ export function Grafico({ id, titolo, sottotitolo, fonte, parametri, altezza, ch
       {nota && <p className="text-sm">{nota}</p>}
       <p className="text-sm text-muted-foreground">Fonte: {FONTI[fonte]}. Elaborazione DatoCrimine.</p>
       <div className="flex flex-wrap gap-2">
-        {!righe && (
+        {immagine && (
           <Pulsante onClick={scaricaImmagine} className="inline-flex items-center gap-1.5">
             <ImageDown className="size-4" aria-hidden="true" />
             Scarica immagine

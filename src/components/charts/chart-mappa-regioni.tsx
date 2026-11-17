@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { useCallback } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
   CHART_HEIGHT_MAP,
-  PLOTLY_CONFIG,
   PLOTLY_FONT,
   NUTS_TO_ISTAT,
   COLORS,
@@ -14,12 +14,12 @@ import {
   classeDi,
   scalaAGradini,
 } from "@/lib/config";
-import { fmtNum, fmtSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { fmtNum, fmtSigned } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card, CardContent } from "@/components/ui/card";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
+import { useDatiGrafico } from "@/components/charts/grafico";
 
 interface DelittiRegione {
   REF_AREA: string;
@@ -70,6 +70,15 @@ export function ChartMappaRegioni({ anno }: Props) {
     loading: geoLoading,
     error: geoError,
   } = useFetchData<GeoJSON>("/data/geojson_regioni_italia.geojson");
+
+  // Il CSV generico prenderebbe le classi di colore: qui servono i tassi
+  const righeCsv = useCallback(() => [
+    ["Regione", `Tasso per 1.000 ab. ${anno}`, `Delitti ${anno}`, "Popolazione"],
+    ...(data ?? [])
+      .filter((d) => d.Anno === anno)
+      .map((d) => [d.Territorio, d.Tasso_per_1000, d.Delitti, d.Popolazione]),
+  ], [data, anno]);
+  useDatiGrafico(righeCsv);
 
   if (loading || geoLoading)
     return <div className="h-[350px] sm:h-[550px] animate-pulse bg-muted rounded" />;
@@ -156,8 +165,8 @@ export function ChartMappaRegioni({ anno }: Props) {
         </AlertDescription>
       </Alert>
 
-      <ChartFullscreenWrapper ariaDescription={`Mappa coropleta Italia con tasso delitti per 1.000 abitanti per regione, anno ${anno}`}>
         <Plot
+          descrizione={`Mappa coropleta Italia con tasso delitti per 1.000 abitanti per regione, anno ${anno}`}
           data={[
             {
               type: "choropleth",
@@ -200,7 +209,6 @@ export function ChartMappaRegioni({ anno }: Props) {
             } as any)),
           ]}
           layout={{
-            separators: PLOTLY_IT_SEPARATORS,
             geo: {
               projection: { type: "mercator", scale: 1 },
               scope: "europe",
@@ -229,15 +237,8 @@ export function ChartMappaRegioni({ anno }: Props) {
             ],
             height: isMobile ? 350 : CHART_HEIGHT_MAP,
             margin: { r: 0, t: 10, l: 0, b: 50 },
-            dragmode: false,
-            plot_bgcolor: "rgba(0,0,0,0)",
-            paper_bgcolor: "rgba(0,0,0,0)",
           }}
-          config={PLOTLY_CONFIG}
-          useResizeHandler
-          className="w-full"
         />
-      </ChartFullscreenWrapper>
 
       <div className="grid grid-cols-3 gap-2 sm:gap-3">
         <Card>

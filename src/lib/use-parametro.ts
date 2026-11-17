@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useCallback, useState, useSyncExternalStore } from "react";
 import { slug } from "@/lib/format";
 
 /**
@@ -23,11 +23,14 @@ export function useParametro(
     opzioni.find((o) => slug(o) === daIndirizzo) ??
     (opzioni.includes(iniziale) ? iniziale : opzioni[0]);
 
-  const imposta = (nuovo: string) => {
-    setScelto(nuovo);
-    const parametri = new URLSearchParams(window.location.search);
-    parametri.set(nome, slug(nuovo));
-    window.history.replaceState(null, "", `?${parametri}${window.location.hash}`);
-  };
+  const imposta = useCallback(
+    (nuovo: string) => {
+      setScelto(nuovo);
+      const parametri = new URLSearchParams(window.location.search);
+      parametri.set(nome, slug(nuovo));
+      window.history.replaceState(null, "", `?${parametri}${window.location.hash}`);
+    },
+    [nome],
+  );
   return [valore, imposta];
 }

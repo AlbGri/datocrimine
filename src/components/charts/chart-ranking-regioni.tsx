@@ -2,7 +2,6 @@
 
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
-  PLOTLY_CONFIG,
   AXIS_FIXED,
   COLORS,
   CHART_HEIGHT_RANKING,
@@ -13,9 +12,8 @@ import {
   CLASSI_TASSO_REGIONI,
   classeDi,
 } from "@/lib/config";
-import { fmtNum, PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { fmtNum } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
 
 interface DelittiRegione {
@@ -74,8 +72,8 @@ export function ChartRankingRegioni({ anno }: Props) {
   const yaxis = { ...AXIS_FIXED, automargin: true, ticklabelstandoff: 20 };
 
   return (
-    <ChartFullscreenWrapper ariaDescription={`Classifica regioni per tasso delitti denunciati per 1.000 abitanti, anno ${anno}`}>
       <Plot
+        descrizione={`Classifica regioni per tasso delitti denunciati per 1.000 abitanti, anno ${anno}`}
         data={[
           {
             type: "bar",
@@ -91,7 +89,6 @@ export function ChartRankingRegioni({ anno }: Props) {
           },
         ]}
         layout={{
-          separators: PLOTLY_IT_SEPARATORS,
           xaxis: { ...AXIS_FIXED,
             title: { text: "Tasso per 1000 ab." },
             range: [0, tassoMax * 1.15],
@@ -122,14 +119,7 @@ export function ChartRankingRegioni({ anno }: Props) {
           ],
           height: isMobile ? CHART_HEIGHT_RANKING_MOBILE : CHART_HEIGHT_RANKING,
           margin: { l: isMobile ? 120 : 180, r: 50, t: 10, b: 40 },
-          dragmode: false,
-          plot_bgcolor: "rgba(0,0,0,0)",
-          paper_bgcolor: "rgba(0,0,0,0)",
         }}
-        config={PLOTLY_CONFIG}
-        useResizeHandler
-        className="w-full"
       />
-    </ChartFullscreenWrapper>
   );
 }
