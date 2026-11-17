@@ -165,11 +165,15 @@ export default function Guida() {
             Perch&eacute; le denunce per violenza sessuale aumentano?
           </h3>
           <p>
-            L&apos;aumento delle denunce riflette principalmente l&apos;effetto
-            di campagne di sensibilizzazione (es. #MeToo) e maggiore fiducia
-            nelle autorit&agrave;. Non indica necessariamente un aumento delle violenze
-            reali. &Egrave; un risultato <strong>positivo</strong>: il numero oscuro si
-            sta riducendo.
+            Con i soli dati delle denunce non si pu&ograve; dire: possono essere
+            aumentate le violenze, le denunce o entrambe. L&apos;indagine ISTAT 2025
+            sulla violenza contro le donne trova un numero di donne che hanno subito
+            violenza fisica o sessuale negli ultimi cinque anni sostanzialmente stabile
+            rispetto al 2014, e comportamenti di denuncia anch&apos;essi stabili.
+            L&apos;indagine per&ograve; riguarda le donne fra 16 e 75 anni e misura la
+            denuncia solo per le violenze del partner, quindi non copre tutto ci&ograve;
+            che contano le denunce. Campagne di sensibilizzazione e Codice Rosso (2019)
+            sono spiegazioni possibili, non dimostrate.
           </p>
         </div>
       </section>

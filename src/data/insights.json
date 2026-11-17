@@ -1,14 +1,14 @@
 [
   {
     "id": "rapine-banca",
-    "title": "Rapine in banca: un reato in via di estinzione",
+    "title": "Rapine in banca: autori denunciati in calo quasi continuo",
     "category": "trend",
     "dimensions": [],
     "tests": [
       "mann-kendall"
     ],
     "period": "2007-2024",
-    "body": "Gli autori denunciati per rapine in banca sono passati da 2.893 a 367, con un calo quasi ininterrotto nel tempo. La digitalizzazione dei servizi bancari e il rafforzamento delle misure di sicurezza fisiche hanno reso questo reato sempre meno praticabile.",
+    "body": "Gli autori denunciati per rapine in banca sono passati da 2.893 a 367, con un calo quasi ininterrotto nel tempo. Digitalizzazione dei servizi bancari e misure di sicurezza nelle filiali sono spiegazioni plausibili, che questi dati non misurano.",
     "chiave": "Gli autori denunciati per rapine in banca sono passati da 2.893 a 367",
     "chart": {
       "file": "autori_vittime_trend.json",
@@ -59,17 +59,17 @@
   },
   {
     "id": "stalking",
-    "title": "Stalking: emersione costante del fenomeno",
+    "title": "Stalking: vittime denunciate in crescita quasi costante",
     "category": "trend",
     "dimensions": [],
     "tests": [
       "mann-kendall"
     ],
     "period": "2009-2024",
-    "body": "Le vittime di atti persecutori (stalking) sono passate da circa 5.000 a oltre 18.800 (+278%), con una crescita quasi costante anno dopo anno. L’introduzione del reato nel 2009 (art. 612-bis c.p.) e le successive campagne di sensibilizzazione hanno progressivamente ridotto il numero oscuro, portando più vittime a denunciare.",
+    "body": "Le vittime di atti persecutori (stalking) sono passate da circa 5.000 a oltre 18.800 (+278%), con una crescita quasi costante anno dopo anno. Il reato esiste dal 2009 (art. 612-bis c.p.).",
     "chiave": "Le vittime di atti persecutori (stalking) sono passate da circa 5.000 a oltre 18.800 (+278%)",
     "genderNote": "Il 74% delle vittime di stalking sono donne (2024).",
-    "caveat": "L’aumento delle denunce è un indicatore di emersione, non necessariamente di aumento del fenomeno reale.",
+    "caveat": "Con i soli dati delle denunce non si distingue fra più casi e più denunce.",
     "chart": {
       "file": "autori_vittime_trend.json",
       "series": [
@@ -543,7 +543,7 @@
       "mann-kendall"
     ],
     "period": "2007-2024",
-    "body": "Autori denunciati passati da 2.355 a 1.185, vittime da 2.095 a 737. Il calo è presente in circa 3 anni su 4, un reato che ha perso progressivamente attrattività criminale.",
+    "body": "Autori denunciati passati da 2.355 a 1.185, vittime da 2.095 a 737. Il calo è presente in circa 3 anni su 4.",
     "chiave": "Autori denunciati passati da 2.355 a 1.185, vittime da 2.095 a 737.",
     "chart": {
       "file": "autori_vittime_trend.json",
@@ -1721,7 +1721,7 @@
     "body": "Le vittime di violenze sessuali denunciate scendono fino a 3.567 nel 2015 e poi risalgono a 5.642 nel 2024, sopra il livello del 2007 (4.686). Nello stesso periodo la percentuale di vittime di nazionalità straniera scende dal 31% al 22,5% (-8,5 punti percentuali).",
     "chiave": "Le vittime di violenze sessuali denunciate scendono fino a 3.567 nel 2015 e poi risalgono a 5.642 nel 2024",
     "genderNote": "Il 90% delle vittime di violenze sessuali sono donne (2024).",
-    "caveat": "L’aumento delle denunce riflette principalmente campagne di sensibilizzazione (es. #MeToo) e maggiore fiducia nelle istituzioni. È un segnale positivo di emersione del sommerso, non necessariamente di aumento del fenomeno.",
+    "caveat": "Con i soli dati delle denunce non si distingue fra più violenze e più denunce. L’indagine ISTAT 2025 sulle donne trova stabili, rispetto al 2014, sia le vittime di violenza fisica o sessuale sia i comportamenti di denuncia.",
     "chart": {
       "file": "autori_vittime_trend.json",
       "series": [

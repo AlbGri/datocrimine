@@ -393,12 +393,12 @@ class TestBuildCaveat:
     def test_bassa_aumento(self):
         result = _build_caveat("SWINCYB", 73980)
         assert result.startswith("La propensione alla denuncia per questo reato è bassa:")
-        assert "emersione" in result
+        assert "più reati, più denunce" in result
 
     def test_segue_la_differenza_non_la_tendenza(self):
         # Truffe in calo nell'anno: l'avviso parla del calo, anche se la serie e' in crescita
         result = _build_caveat("SWINCYB", -15934)
-        assert "non implica necessariamente" in result
+        assert "meno reati, meno denunce" in result
 
     def test_molto_bassa(self):
         result = _build_caveat("RAPE", 100)

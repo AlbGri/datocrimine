@@ -83,7 +83,7 @@
           "trend_strutturale": "decreasing",
           "inizio_serie": 2014,
           "contesto": null,
-          "caveat": "La propensione alla denuncia per questo reato è bassa: l'aumento potrebbe riflettere maggiore emersione più che un aumento reale.",
+          "caveat": "La propensione alla denuncia per questo reato è bassa: l'aumento può voler dire più reati, più denunce o entrambe le cose.",
           "insight_id": null,
           "nota": null
         }
@@ -99,7 +99,7 @@
           "trend_strutturale": "increasing",
           "inizio_serie": 2014,
           "contesto": null,
-          "caveat": "La propensione alla denuncia per questo reato è bassa: il calo delle denunce non implica necessariamente un calo del fenomeno.",
+          "caveat": "La propensione alla denuncia per questo reato è bassa: il calo può voler dire meno reati, meno denunce o entrambe le cose.",
           "insight_id": "truffe",
           "nota": null
         },
@@ -113,7 +113,7 @@
           "trend_strutturale": "increasing",
           "inizio_serie": 2014,
           "contesto": null,
-          "caveat": "La propensione alla denuncia per questo reato è bassa: il calo delle denunce non implica necessariamente un calo del fenomeno.",
+          "caveat": "La propensione alla denuncia per questo reato è bassa: il calo può voler dire meno reati, meno denunce o entrambe le cose.",
           "insight_id": null,
           "nota": null
         },
@@ -183,7 +183,7 @@
           "trend_strutturale": "increasing",
           "inizio_serie": 2014,
           "contesto": null,
-          "caveat": "La propensione alla denuncia per questo reato è bassa: l'aumento potrebbe riflettere maggiore emersione più che un aumento reale.",
+          "caveat": "La propensione alla denuncia per questo reato è bassa: l'aumento può voler dire più reati, più denunce o entrambe le cose.",
           "insight_id": "truffe",
           "nota": null
         },
@@ -225,7 +225,7 @@
           "trend_strutturale": "increasing",
           "inizio_serie": 2014,
           "contesto": null,
-          "caveat": "La propensione alla denuncia per questo reato è bassa: l'aumento potrebbe riflettere maggiore emersione più che un aumento reale.",
+          "caveat": "La propensione alla denuncia per questo reato è bassa: l'aumento può voler dire più reati, più denunce o entrambe le cose.",
           "insight_id": null,
           "nota": null
         },
@@ -283,7 +283,7 @@
           "trend_strutturale": "decreasing",
           "inizio_serie": 2014,
           "contesto": null,
-          "caveat": "La propensione alla denuncia per questo reato è bassa: il calo delle denunce non implica necessariamente un calo del fenomeno.",
+          "caveat": "La propensione alla denuncia per questo reato è bassa: il calo può voler dire meno reati, meno denunce o entrambe le cose.",
           "insight_id": null,
           "nota": null
         },
@@ -297,7 +297,7 @@
           "trend_strutturale": "decreasing",
           "inizio_serie": 2014,
           "contesto": null,
-          "caveat": "La propensione alla denuncia per questo reato è bassa: il calo delle denunce non implica necessariamente un calo del fenomeno.",
+          "caveat": "La propensione alla denuncia per questo reato è bassa: il calo può voler dire meno reati, meno denunce o entrambe le cose.",
           "insight_id": null,
           "nota": null
         },

@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-17 — Aumenti e cali letti allo stesso modo
+- Guida, Metodologia, Numero oscuro, Report e alcune analisi statistiche non danno più per certe le cause dei cambiamenti: un aumento delle denunce può voler dire più reati, più denunce o entrambe le cose, e lo stesso vale per i cali
+- Violenze sessuali: si cita l'indagine ISTAT 2025 sulla violenza contro le donne, che trova vittime e comportamenti di denuncia stabili rispetto al 2014, con i suoi limiti
+
 ## 2026-11-17 — Correzioni ai testi e tabelle da tastiera
 - Numero oscuro: si dice che è raddoppiata la quota di aggressioni denunciate dalle vittime, non il numero delle denunce; lo stesso per scippi e truffe
 - Il ritardo con cui l'ISTAT pubblica i delitti è "oltre un anno", non "circa 2 anni"; i dati 2025 sono attesi a inizio 2027

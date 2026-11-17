@@ -76,12 +76,12 @@ I dati NON mostrano:
 La differenza tra reati commessi e reati denunciati (il "numero oscuro") varia significativamente per tipo di reato. Dati dall'[Indagine ISTAT sulla Sicurezza dei Cittadini 2022-2023](https://www.istat.it/comunicato-stampa/reati-contro-la-persona-e-contro-la-proprieta-vittime-ed-eventi-2022-2023/) e dal [Report ISTAT Reati contro la persona e la proprietà 2025](https://www.istat.it/wp-content/uploads/2025/06/Report_REATI-CONTRO-LA-PERSONA-E-LA-PROPRIETA_VITTIME-ED-EVENTI.pdf):
 
 - **Furti auto/moto**: ~95% denunciati (necessità assicurativa; stabile tra le due edizioni)
-- **Scippi**: 68,2% denunciati (era 88,9% nel 2015-2016: calo per rassegnazione)
-- **Aggressioni**: 40,6% denunciate (era 19,9% nel 2015-2016: forte miglioramento)
+- **Scippi**: 68,2% denunciati (era 88,9% nel 2015-2016)
+- **Aggressioni**: 40,6% denunciate (era 19,9% nel 2015-2016)
 - **Frodi/truffe**: 24,1% denunciate (era 18,4% nel 2015-2016: lieve aumento, legato a crescita truffe bancarie online)
 - **Violenza da partner**: ~11% denunciata ([ISTAT Violenza donne 2025](https://www.istat.it/comunicato-stampa/la-violenza-contro-le-donne-dentro-e-fuori-la-famiglia-primi-risultati-anno-2025/))
 
-Il numero oscuro varia nel tempo: un aumento delle denunce può indicare maggiore propensione a denunciare (positivo), non necessariamente più reati. Il raddoppio della quota di aggressioni denunciate dalle vittime tra 2015-2016 e 2022-2023 ne è un esempio. Le due edizioni dell'indagine comparabili sono l'[Indagine 2015-2016](https://www.istat.it/it/files/2019/02/Reati-contro-la-persona-e-contro-la-proprieta.pdf) e quella 2022-2023.
+Il numero oscuro varia nel tempo: un aumento delle denunce può voler dire più reati, più propensione a denunciare o entrambe le cose; un calo, allo stesso modo, meno reati o meno denunce. Il raddoppio della quota di aggressioni denunciate dalle vittime tra 2015-2016 e 2022-2023 ne è un esempio. Le due edizioni dell'indagine comparabili sono l'[Indagine 2015-2016](https://www.istat.it/it/files/2019/02/Reati-contro-la-persona-e-contro-la-proprieta.pdf) e quella 2022-2023.
 
 L'indagine esce ogni 5-7 anni; il confronto con altri paesi, con la posizione dell'autore, è nella pagina [Dati che mancano](/dati-che-mancano).
 
@@ -107,7 +107,7 @@ Nuove leggi possono modificare:
 **Casi rilevanti nei dati:**
 
 - **D.Lgs. 7/2016** (in vigore dal 6 febbraio 2016): ha depenalizzato le ingiurie, trasformandole da reato penale a illecito civile. Le denunce per ingiurie passano da 58.620 nel 2015 a 15.781 nel 2016 e a 2.064 nel 2017, poi la voce scompare. Nel totale ISTAT circa un quinto del calo fra 2015 e 2016 (42.839 su 199.860) dipende da questo, non da meno reati. Per questo in tutto il sito il totale dei delitti è **al netto delle ingiurie**: gli anni 2014-2017 si confrontano con i successivi a parità di reati. Il totale ISTAT si ottiene sommando la colonna `Ingiurie` dei dati scaricabili. Nel grafico per tipologia le ingiurie sono una categoria a parte, per non falsare il trend delle altre.
-- **L. 69/2019 "Codice Rosso"** (in vigore dal 9 agosto 2019): ha introdotto procedure accelerate per violenza domestica e di genere (obbligo di ascolto vittima entro 3 giorni, nuovi reati come revenge porn). Può aver contribuito all'aumento delle denunce per violenze sessuali e maltrattamenti dal 2019 in poi, per effetto di maggiore fiducia nel sistema giudiziario, non necessariamente per aumento dei reati.
+- **L. 69/2019 "Codice Rosso"** (in vigore dal 9 agosto 2019): ha introdotto procedure accelerate per violenza domestica e di genere (obbligo di ascolto vittima entro 3 giorni, nuovi reati come revenge porn). Può aver contribuito all'aumento delle denunce per violenze sessuali e maltrattamenti dal 2019 in poi; quanto, i dati non lo dicono.
 
 ### Propensione a denunciare
 
@@ -117,7 +117,7 @@ La propensione a denunciare varia per:
 - **Gravità del reato**: crimini gravi più probabilmente denunciati
 - **Utilità pratica**: denunce per assicurazione vs rassegnazione per piccoli furti
 
-**Esempio critico**: l'aumento delle denunce per violenze sessuali (+60,5% in numeri assoluti dal 2014 al 2024, da 4.257 a 6.831) riflette principalmente l'effetto di campagne come #MeToo e maggiore fiducia nelle autorità, NON necessariamente un aumento delle violenze reali. Questo è un risultato positivo: il numero oscuro si sta riducendo.
+**Esempio critico**: l'aumento delle denunce per violenze sessuali (+60,5% in numeri assoluti dal 2014 al 2024, da 4.257 a 6.831) non distingue fra più violenze e più denunce. L'indagine ISTAT 2025 sulle donne trova stabili, rispetto al 2014, sia le vittime di violenza fisica o sessuale sia i comportamenti di denuncia, ma copre solo le donne fra 16 e 75 anni e misura la denuncia solo per le violenze del partner (vedi [Guida alla lettura](/guida)).
 
 ### Anno di riferimento
 
@@ -235,7 +235,7 @@ Il **Sole 24 Ore** pubblica annualmente un [Indice della criminalità](https://l
 
 Il **Ministero dell'Interno** pubblica dati aggregati aperti (licenza CC-BY) su [dati-coll.dfp.gov.it](https://dati-coll.dfp.gov.it/dataset/?tags=delitti&tags=denunce&tags=capoluogo&organization=min-interni&license_id=CC-BY-4.0&res_format=JSON), ma a marzo 2026 il dataset risulta fermo al 2022. La banca dati CED/SDI interforze resta riservata alle forze dell'ordine.
 
-Di fatto, **l'unica fonte pubblica** con dati strutturati per provincia e tipologia di reato è ISTAT, con il suo ritardo di oltre un anno. Questa è una **scelta deliberata** dell'architettura informativa italiana sulla criminalità, non un limite tecnico.
+Di fatto, **l'unica fonte pubblica** con dati strutturati per provincia e tipologia di reato è ISTAT, con il suo ritardo di oltre un anno.
 
 ### Percezione di sicurezza (BES - ISTAT)
 

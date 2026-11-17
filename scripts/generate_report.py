@@ -131,12 +131,12 @@ def _build_caveat(codice: str, differenza: int) -> str | None:
     if interp == "emersione_probabile":
         return (
             f"La propensione alla denuncia per questo reato è {livello}: l'aumento "
-            "potrebbe riflettere maggiore emersione più che un aumento reale."
+            "può voler dire più reati, più denunce o entrambe le cose."
         )
     if interp == "calo_ambiguo":
         return (
-            f"La propensione alla denuncia per questo reato è {livello}: il calo delle "
-            "denunce non implica necessariamente un calo del fenomeno."
+            f"La propensione alla denuncia per questo reato è {livello}: il calo "
+            "può voler dire meno reati, meno denunce o entrambe le cose."
         )
     if interp in ("aumento_misto", "calo_misto"):
         return (
