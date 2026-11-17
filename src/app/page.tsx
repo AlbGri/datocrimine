@@ -18,7 +18,7 @@ export const metadata: Metadata = pageMetadata(
 export default function Home() {
   return (
     <main className="mx-auto max-w-7xl px-4 py-4 sm:py-8 space-y-6 sm:space-y-10">
-      <h1 className="text-2xl sm:text-4xl font-bold">
+      <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em]">
         La criminalit&agrave; in Italia nei dati ISTAT
       </h1>
 

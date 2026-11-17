@@ -153,7 +153,7 @@ function ExecutiveSummary({
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
       {items.map((item) => (
         <Card key={item.label}>
-          <CardContent className="py-0 text-center">
+          <CardContent className="py-0 px-2 sm:px-6 text-center">
             <p className="text-xs sm:text-sm text-muted-foreground">
               {item.label}
             </p>
@@ -163,7 +163,7 @@ function ExecutiveSummary({
               {item.value}
             </p>
             {"subtitle" in item && item.subtitle && (
-              <p className="text-[10px] sm:text-xs text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 {item.subtitle}
               </p>
             )}
@@ -627,7 +627,7 @@ export function ReportContent({ anno }: { anno: string }) {
   return (
     <main className="mx-auto max-w-4xl px-4 py-4 sm:py-8 space-y-10">
       <header>
-        <h1 className="text-2xl sm:text-4xl font-bold">
+        <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em]">
           Criminalit&agrave; in Italia {annoNum}
         </h1>
         <div className="mt-2">

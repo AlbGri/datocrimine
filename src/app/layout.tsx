@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Alegreya, Atkinson_Hyperlegible_Next } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ContaVisite } from "@/components/layout/conta-visite";
@@ -8,14 +8,17 @@ import { SITE_NAME, SITE_URL } from "@/lib/metadata";
 import { ANNO_PRIMO_AUTORI, ANNO_ULTIMO } from "@/lib/config";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Caratteri dello stile comune, serviti dal sito (nessuna richiesta a Google)
+const testo = Atkinson_Hyperlegible_Next({
+  variable: "--font-testo",
   subsets: ["latin"],
+  fallback: ["Segoe UI", "Roboto", "sans-serif"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const titoli = Alegreya({
+  variable: "--font-titoli",
   subsets: ["latin"],
+  fallback: ["Palatino", "Georgia", "serif"],
 });
 
 export const metadata: Metadata = {
@@ -70,7 +73,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${testo.variable} ${titoli.variable} antialiased`}
       >
         <FilterSyncProvider>
         <Header />

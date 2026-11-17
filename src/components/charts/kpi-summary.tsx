@@ -58,11 +58,11 @@ export function KpiSummary() {
     <div className="grid grid-cols-3 gap-2 sm:gap-3">
       {items.map((item) => (
         <Card key={item.label}>
-          <CardContent className="py-0 text-center">
+          <CardContent className="py-0 px-2 sm:px-6 text-center">
             <p className="text-xs sm:text-sm text-muted-foreground">{item.label}</p>
             <p className={`text-xl sm:text-2xl font-bold ${item.color ?? ""}`}>{item.value}</p>
             {item.subtitle && (
-              <p className="text-[10px] sm:text-xs text-muted-foreground">{item.subtitle}</p>
+              <p className="text-xs text-muted-foreground">{item.subtitle}</p>
             )}
           </CardContent>
         </Card>

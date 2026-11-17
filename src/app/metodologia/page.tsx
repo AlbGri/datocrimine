@@ -7,7 +7,7 @@ type P = { children?: ReactNode };
 
 const components = {
   h1: ({ children }: P) => (
-    <h1 className="text-2xl sm:text-4xl font-bold mt-8 first:mt-0">
+    <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em] mt-8 first:mt-0">
       {children}
     </h1>
   ),

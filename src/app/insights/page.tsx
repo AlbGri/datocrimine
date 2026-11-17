@@ -175,7 +175,7 @@ export default function Insights() {
     <main className="mx-auto max-w-4xl px-4 py-4 sm:py-8 space-y-8">
       {/* Header */}
       <div className="space-y-3">
-        <h1 className="text-2xl sm:text-4xl font-bold">Insights</h1>
+        <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em]">Insights</h1>
         <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 space-y-2">
           <p>
             <strong>Sezione sperimentale.</strong> Gli insight sono estratti
@@ -580,14 +580,13 @@ function InsightCard({
                 <div className="mt-1">
                   <button
                     onClick={() => setShowInfo((v) => !v)}
-                    className="text-muted-foreground hover:text-foreground text-xs flex items-center gap-1 transition-colors"
+                    className="text-muted-foreground hover:text-foreground text-xs underline underline-offset-2 transition-colors"
                     aria-expanded={showInfo}
                   >
-                    <span className="inline-flex items-center justify-center w-4 h-4 rounded-full border border-current text-[10px] font-medium">i</span>
                     <span>{showInfo ? "Nascondi dettaglio" : "Cosa include ogni categoria?"}</span>
                   </button>
                   {showInfo && (
-                    <p className="text-xs text-muted-foreground mt-1 pl-5">
+                    <p className="text-xs text-muted-foreground mt-1">
                       {insight.chartInfo}
                     </p>
                   )}
