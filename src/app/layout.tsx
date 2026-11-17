@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { ContaVisite } from "@/components/layout/conta-visite";
 import { FilterSyncProvider } from "@/lib/filter-sync-context";
 import { SITE_NAME, SITE_URL } from "@/lib/metadata";
 import "./globals.css";
@@ -76,6 +77,7 @@ export default function RootLayout({
           {children}
         </div>
         <Footer />
+        <ContaVisite />
         </FilterSyncProvider>
       </body>
     </html>

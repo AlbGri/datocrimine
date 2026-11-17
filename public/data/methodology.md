@@ -372,6 +372,8 @@ Questo progetto non afferma di mostrare "la criminalità in Italia", ma solo i d
 
 **Questo progetto mostra cosa è possibile vedere con i dati disponibili. L'assenza di dati migliori non è limite statistico: è responsabilità istituzionale.**
 
+**Visite.** Il sito conta le visite con [GoatCounter](https://www.goatcounter.com), senza cookie e senza raccogliere dati personali. Per ogni pagina aperta arrivano a GoatCounter l'indirizzo della pagina, il sito da cui si è arrivati e la dimensione dello schermo; dall'indirizzo IP GoatCounter ricava il paese, ma non lo conserva. Servono solo a capire quali pagine vengono lette. Nessun altro servizio esterno riceve dati da chi visita il sito.
+
 ## Nota sul processo di sviluppo
 
 Questo progetto è stato sviluppato con **VS Code** e **[Claude Code](https://docs.anthropic.com/en/docs/claude-code)** (Anthropic, modello Claude Opus), in una modalità di **interazione continua tra analista e modello**. La scelta è deliberata: costruire una dashboard statistica **non è un problema di ingegneria del software risolvibile in autonomia** da un agente. Ogni grafico richiede **decisioni metodologiche** — quale indicatore esporre, a quale scala, con quale contesto — che sono il **contenuto intellettuale del lavoro**, non dettagli implementativi.
