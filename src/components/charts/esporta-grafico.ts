@@ -35,6 +35,7 @@ type Traccia = {
   type?: string;
   name?: string;
   orientation?: "h" | "v";
+  yaxis?: string;
   x?: (string | number)[];
   y?: (string | number)[];
   locations?: string[];
@@ -47,6 +48,8 @@ export function righeDaFigura(figura: Figura): Righe {
   const tracce = figura.data as Traccia[];
   const { xaxis, yaxis } = figura.layout;
   const conSerie = tracce.length > 1;
+  // Con due assi l'unita' cambia da serie a serie: la dice il nome della serie
+  const dueAssi = tracce.some((t) => t.yaxis === "y2");
   const righe: Righe = [];
   let intestazione: string[] = [];
   for (const t of tracce) {
@@ -60,7 +63,7 @@ export function righeDaFigura(figura: Figura): Righe {
     const valori = (orizzontale ? t.x : t.y) ?? [];
     const nomeVoci =
       titoloAsse(orizzontale ? yaxis : xaxis) || (typeof voci[0] === "number" ? "Anno" : "Voce");
-    intestazione = [nomeVoci, titoloAsse(orizzontale ? xaxis : yaxis) || "Valore"];
+    intestazione = [nomeVoci, (!dueAssi && titoloAsse(orizzontale ? xaxis : yaxis)) || "Valore"];
     const serie = conSerie ? [t.name ?? ""] : [];
     voci.forEach((v, i) => righe.push([...serie, v, valori[i] ?? ""]));
   }
@@ -85,7 +88,7 @@ export async function immagineDaFigura(figura: Figura, testi: Testi): Promise<st
   const { legend, xaxis } = figura.layout;
   const sottoAsse = titoloAsse(xaxis) ? 75 : 50;
   const legendaSotto = figura.layout.showlegend !== false && (legend?.y ?? 1) < 0;
-  const piede = 40;
+  const piede = 58;
   const alto = (margine.t ?? 20) + testa;
   const basso = sottoAsse + (legendaSotto ? 50 : 0) + piede;
   const altezza = Math.max(675, (figura.layout.height ?? 450) + testa + piede);
@@ -116,6 +119,7 @@ export async function immagineDaFigura(figura: Figura, testi: Testi): Promise<st
       ...(figura.layout.annotations ?? []),
       {
         text: testi.piede,
+        align: "left",
         showarrow: false,
         xref: "paper",
         yref: "paper",

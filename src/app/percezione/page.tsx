@@ -3,6 +3,7 @@ import Link from "next/link";
 import { pageMetadata } from "@/lib/metadata";
 import { PERIODO_DELITTI } from "@/lib/config";
 import { ChartPercezioneVsDati } from "@/components/charts/chart-percezione-vs-dati";
+import { Grafico } from "@/components/charts/grafico";
 
 export const metadata: Metadata = pageMetadata(
   "Percezione della sicurezza",
@@ -27,7 +28,15 @@ export default function Percezione() {
         </Link>
         .
       </p>
-      <ChartPercezioneVsDati />
+      <Grafico
+        id="percezione"
+        titolo={`Percezione del rischio di criminalità e delitti denunciati, Italia, ${PERIODO_DELITTI}`}
+        sottotitolo="Quota di famiglie che vedono un rischio alto nella zona (asse di sinistra) e delitti ogni 1.000 abitanti (asse di destra)"
+        fonte="percezione"
+        altezza={560}
+      >
+        <ChartPercezioneVsDati />
+      </Grafico>
     </main>
   );
 }

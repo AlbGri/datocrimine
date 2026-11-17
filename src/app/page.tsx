@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/metadata";
 import { SintesiNazionale } from "@/components/charts/sintesi-nazionale";
 import { ChartTrendNazionale } from "@/components/charts/chart-trend-nazionale";
-import { CollapsibleSection } from "@/components/ui/collapsible-section";
+import { Grafico } from "@/components/charts/grafico";
 import { Fila, Riquadro } from "@/components/ui/riquadro";
 import {
   PERIODO_DELITTI,
@@ -181,14 +181,15 @@ export default function Home() {
         </Link>
       </p>
 
-      <CollapsibleSection
+      <Grafico
         id="andamento"
-        title={`Trend Delitti Denunciati in Italia (${PERIODO_DELITTI})`}
-        description="Andamento dei delitti denunciati per tipologia di reato"
-        defaultOpen
+        titolo={`Delitti denunciati, Italia, ${PERIODO_DELITTI}`}
+        sottotitolo="Totale o per tipologia di reato, ogni 1.000 abitanti o in numero"
+        fonte="delitti"
+        altezza={560}
       >
         <ChartTrendNazionale />
-      </CollapsibleSection>
+      </Grafico>
     </main>
   );
 }

@@ -4,7 +4,6 @@ import { useFetchData } from "@/lib/use-fetch-data";
 import {
   COLORS,
   CHART_HEIGHT,
-  PLOTLY_CONFIG,
   PLOTLY_FONT,
   COVID_SHAPES,
   getCovidAnnotations,
@@ -14,10 +13,8 @@ import {
   ANNO_PRIMO,
   ANNO_ULTIMO,
 } from "@/lib/config";
-import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
 
 interface PercezioneVsDati {
@@ -48,8 +45,8 @@ export function ChartPercezioneVsDati() {
         </AlertDescription>
       </Alert>
 
-      <ChartFullscreenWrapper ariaDescription={`Grafico percezione insicurezza vs tasso delitti denunciati dal ${ANNO_PRIMO} al ${ANNO_ULTIMO}: dal 2015 al 2020 entrambe le serie calano, dal 2021 risalgono`}>
-        <Plot
+      <Plot
+          descrizione={`Grafico percezione insicurezza vs tasso delitti denunciati dal ${ANNO_PRIMO} al ${ANNO_ULTIMO}: dal 2015 al 2020 entrambe le serie calano, dal 2021 risalgono`}
           data={[
             {
               x: anni,
@@ -73,7 +70,6 @@ export function ChartPercezioneVsDati() {
             },
           ]}
           layout={{
-            separators: PLOTLY_IT_SEPARATORS,
             xaxis: getAxisYear(isMobile),
             yaxis: { ...AXIS_FIXED,
               title: { text: "% Percezione rischio", font: { color: COLORS.secondary, size: PLOTLY_FONT.axisTitle } },
@@ -86,10 +82,7 @@ export function ChartPercezioneVsDati() {
               overlaying: "y" as const,
               side: "right",
             },
-            dragmode: false,
             hovermode: "closest" as const,
-            plot_bgcolor: "rgba(0,0,0,0)",
-            paper_bgcolor: "rgba(0,0,0,0)",
             height: isMobile ? 300 : CHART_HEIGHT,
             margin: isMobile ? { l: 45, r: 45, t: 40, b: 60 } : { l: 50, r: 50, t: 30, b: 50 },
             legend: getLegendMultiSeries(isMobile),
@@ -112,11 +105,7 @@ export function ChartPercezioneVsDati() {
               },
             ],
           }}
-          config={PLOTLY_CONFIG}
-          useResizeHandler
-          className="w-full"
         />
-      </ChartFullscreenWrapper>
 
     </div>
   );

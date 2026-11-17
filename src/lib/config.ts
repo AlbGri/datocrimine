@@ -203,6 +203,10 @@ export const PLOTLY_CONFIG: Partial<Plotly.Config> = {
 export const FONTI = {
   delitti: "ISTAT, delitti denunciati dalle forze di polizia all'autorità giudiziaria (DCCV_DELITTIPS)",
   autori: "ISTAT, autori denunciati o arrestati e vittime di delitto (DCCV_AUTVITTPS)",
+  percezione:
+    "ISTAT, indagine Multiscopo (famiglie che vedono rischio di criminalità nella zona) e delitti denunciati (DCCV_DELITTIPS)",
+  numeroOscuro:
+    "ISTAT, indagini Reati contro la persona e contro la proprietà 2015-2016 e 2022-2023, violenza contro le donne 2025",
 } as const;
 export type Fonte = keyof typeof FONTI;
 

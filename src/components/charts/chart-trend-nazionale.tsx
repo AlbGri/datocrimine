@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useNotaGrafico, useSceltaGrafico } from "@/components/charts/grafico";
+import { useParametro } from "@/lib/use-parametro";
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
   COLORS,
   CHART_HEIGHT,
   CHART_HEIGHT_MINI,
-  PLOTLY_CONFIG,
   PLOTLY_FONT,
   COVID_SHAPES,
   getCovidAnnotations,
@@ -14,14 +15,15 @@ import {
   getAxisYear,
   getLegendMultiSeries,
   varTriennale,
-  TRIENNALE_PERIODI,
+  TRIENNIO_INIZIALE,
+  TRIENNIO_FINALE,
+  PERIODO_DELITTI,
   ANNO_PRIMO,
   ANNO_ULTIMO,
 } from "@/lib/config";
-import { fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { fmtPctSigned } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
 import { NotaIngiurie } from "@/components/charts/nota-ingiurie";
 import { Pulsante, SEGMENTO } from "@/components/ui/pulsante";
@@ -65,7 +67,9 @@ type ViewMode = "totale" | "tipologia";
 type Metrica = "tasso" | "assoluto";
 
 export function ChartTrendNazionale() {
-  const [view, setView] = useState<ViewMode>("totale");
+  const [vista, setVista] = useParametro("vista", ["Totale", "Per tipologia"]);
+  const view: ViewMode = vista === "Totale" ? "totale" : "tipologia";
+  const setView = (v: ViewMode) => setVista(v === "totale" ? "Totale" : "Per tipologia");
   const [metrica, setMetrica] = useState<Metrica>("tasso");
   const [showCategorie, setShowCategorie] = useState(false);
   const isMobile = useIsMobile();
@@ -77,11 +81,29 @@ export function ChartTrendNazionale() {
     "/data/delitti_categorie.json"
   );
 
+  const isAssoluto = metrica === "assoluto";
+  const isTipologia = view === "tipologia";
+  const calcVar = (cat: string) =>
+    categorie
+      ? varTriennale(
+          categorie.filter((d) => d.Categoria === cat).map((d) => ({ anno: d.Anno, tasso: isAssoluto ? d.Delitti : d.Tasso_per_1000 }))
+        )
+      : null;
+  const varFurti = calcVar("Furti");
+  const varTruffe = calcVar("Truffe e Frodi");
+  useNotaGrafico(
+    isTipologia && varFurti !== null && varTruffe !== null
+      ? `Dalla media ${TRIENNIO_INIZIALE.join("-")} alla media ${TRIENNIO_FINALE.join("-")}: furti ${fmtPctSigned(varFurti)}, truffe e frodi ${fmtPctSigned(varTruffe)}`
+      : null,
+  );
+  useSceltaGrafico(
+    `Delitti denunciati${isTipologia ? " per tipologia" : ""}, Italia, ${PERIODO_DELITTI}`,
+    isTipologia ? { vista } : {},
+  );
+
   if (loading || loadingCat) return <div className="h-[250px] sm:h-[450px] animate-pulse bg-muted rounded" />;
   if (error) return <p className="text-destructive">Errore: {error}</p>;
   if (!data) return null;
-
-  const isAssoluto = metrica === "assoluto";
 
   const traceTotale = [
     {
@@ -113,16 +135,6 @@ export function ChartTrendNazionale() {
     };
   });
 
-  const calcVar = (cat: string) =>
-    categorie
-      ? varTriennale(
-          categorie.filter((d) => d.Categoria === cat).map((d) => ({ anno: d.Anno, tasso: isAssoluto ? d.Delitti : d.Tasso_per_1000 }))
-        )
-      : null;
-  const varFurti = calcVar("Furti");
-  const varTruffe = calcVar("Truffe e Frodi");
-
-  const isTipologia = view === "tipologia";
   const showToggle = !!categorie;
 
   return (
@@ -185,18 +197,14 @@ export function ChartTrendNazionale() {
         </div>
       )}
 
-      <ChartFullscreenWrapper ariaDescription={isTipologia ? `Grafico trend delitti per tipologia in Italia dal ${ANNO_PRIMO} al ${ANNO_ULTIMO}: furti in calo, truffe in crescita costante` : `Grafico trend tasso delitti denunciati per 1.000 abitanti in Italia dal ${ANNO_PRIMO} al ${ANNO_ULTIMO}`}>
         <Plot
+          descrizione={isTipologia ? `Grafico trend delitti per tipologia in Italia dal ${ANNO_PRIMO} al ${ANNO_ULTIMO}: furti in calo, truffe in crescita costante` : `Grafico trend tasso delitti denunciati per 1.000 abitanti in Italia dal ${ANNO_PRIMO} al ${ANNO_ULTIMO}`}
           key={`${metrica}-${view}`}
           data={isTipologia ? traceTipologia : traceTotale}
           layout={{
-            separators: PLOTLY_IT_SEPARATORS,
             xaxis: getAxisYear(isMobile),
             yaxis: { ...AXIS_FIXED, title: { text: isAssoluto ? "Delitti denunciati" : "Tasso per 1.000 ab.", font: { size: PLOTLY_FONT.axisTitle } }, ...(isAssoluto && { tickformat: "~s", hoverformat: ",.0f" }) },
-            dragmode: false,
             hovermode: "closest" as const,
-            plot_bgcolor: "rgba(0,0,0,0)",
-            paper_bgcolor: "rgba(0,0,0,0)",
             height: isMobile ? CHART_HEIGHT_MINI : CHART_HEIGHT,
             margin: isMobile ? { l: 45, r: 20, t: 20, b: 60 } : { l: 50, r: 20, t: 20, b: 50 },
             legend: isTipologia
@@ -206,19 +214,10 @@ export function ChartTrendNazionale() {
             shapes: COVID_SHAPES,
             annotations: getCovidAnnotations(isMobile),
           }}
-          config={PLOTLY_CONFIG}
-          useResizeHandler
-          className="w-full"
         />
-      </ChartFullscreenWrapper>
 
       {!isTipologia && <NotaIngiurie />}
 
-      {isTipologia && varFurti !== null && varTruffe !== null && (
-        <p className="text-sm text-muted-foreground text-center">
-          <strong>Variazioni ({TRIENNALE_PERIODI}):</strong> Furti {fmtPctSigned(varFurti)} | Truffe e Frodi {fmtPctSigned(varTruffe)}
-        </p>
-      )}
     </div>
   );
 }

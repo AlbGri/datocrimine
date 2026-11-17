@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { COLORS, SERIE, CHART_HEIGHT_SMALL, PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
-import { PLOTLY_IT_SEPARATORS, fmtPct, fmtSigned } from "@/lib/format";
+import { COLORS, SERIE, CHART_HEIGHT_SMALL, AXIS_FIXED } from "@/lib/config";
+import { fmtPct, fmtSigned } from "@/lib/format";
 import propensione from "@/data/propensione_denuncia.json";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
 import { Plot } from "@/components/charts/plot";
+import { Grafico } from "@/components/charts/grafico";
 
 const URL_REPORT_2025 =
   "https://www.istat.it/wp-content/uploads/2025/06/Report_REATI-CONTRO-LA-PERSONA-E-LA-PROPRIETA_VITTIME-ED-EVENTI.pdf";
@@ -96,104 +96,94 @@ export function ChartNumeroOscuro() {
         </AlertDescription>
       </Alert>
 
-      <ChartFullscreenWrapper ariaDescription={`Grafico numero oscuro: percentuale di reati denunciati vs non denunciati per tipologia. Violenza da partner denunciata solo nell'${fmtPct(pct("Violenza da partner", "Italia", "2025"), 0)} dei casi`}>
+      <Grafico
+        id="quota"
+        titolo="Quota di reati denunciati dalle vittime, Italia"
+        sottotitolo="Edizione più recente dell'indagine per ogni reato: 2022-2023, violenza da partner 2025"
+        fonte="numeroOscuro"
+        altezza={450}
+      >
         <Plot
-          data={[
-            {
-              name: "Denunciati (dati visibili)",
-              y: categorie,
-              x: pctDenunciati,
-              orientation: "h" as const,
-              type: "bar",
-              marker: { color: COLORS.primary },
-              text: pctDenunciati.map((v) => fmtPct(v, 0)),
-              textposition: "inside" as const,
-              hovertemplate: "<b>%{y}</b><br>%{fullData.name}: %{x}%<extra></extra>",
-            },
-            {
-              name: "Non denunciati (numero oscuro)",
-              y: categorie,
-              x: pctNonDenunciati,
-              orientation: "h" as const,
-              type: "bar",
-              marker: { color: COLORS.grigioAltro },
-              text: pctNonDenunciati.map((v) => fmtPct(v, 0)),
-              textposition: "inside" as const,
-              hovertemplate: "<b>%{y}</b><br>%{fullData.name}: %{x}%<extra></extra>",
-            },
-          ]}
-          layout={{
-            barmode: "stack",
-            xaxis: { ...AXIS_FIXED, title: { text: "Percentuale (%)" }, range: [0, 100] },
-            yaxis: { ...AXIS_FIXED },
-            height: CHART_HEIGHT_SMALL,
-            legend: { orientation: "h" as const, y: -0.22 },
-            margin: { t: 20, l: 150, r: 20, b: 60 },
-            dragmode: false,
-            plot_bgcolor: "rgba(0,0,0,0)",
-            paper_bgcolor: "rgba(0,0,0,0)",
-            separators: PLOTLY_IT_SEPARATORS,
-          }}
-          config={PLOTLY_CONFIG}
-          useResizeHandler
-          className="w-full"
-        />
-      </ChartFullscreenWrapper>
+            descrizione={`Grafico numero oscuro: percentuale di reati denunciati vs non denunciati per tipologia. Violenza da partner denunciata solo nell'${fmtPct(pct("Violenza da partner", "Italia", "2025"), 0)} dei casi`}
+            data={[
+              {
+                name: "Denunciati (dati visibili)",
+                y: categorie,
+                x: pctDenunciati,
+                orientation: "h" as const,
+                type: "bar",
+                marker: { color: COLORS.primary },
+                text: pctDenunciati.map((v) => fmtPct(v, 0)),
+                textposition: "inside" as const,
+                hovertemplate: "<b>%{y}</b><br>%{fullData.name}: %{x}%<extra></extra>",
+              },
+              {
+                name: "Non denunciati (numero oscuro)",
+                y: categorie,
+                x: pctNonDenunciati,
+                orientation: "h" as const,
+                type: "bar",
+                marker: { color: COLORS.grigioAltro },
+                text: pctNonDenunciati.map((v) => fmtPct(v, 0)),
+                textposition: "inside" as const,
+                hovertemplate: "<b>%{y}</b><br>%{fullData.name}: %{x}%<extra></extra>",
+              },
+            ]}
+            layout={{
+              barmode: "stack",
+              xaxis: { ...AXIS_FIXED, title: { text: "Percentuale (%)" }, range: [0, 100] },
+              yaxis: { ...AXIS_FIXED },
+              height: CHART_HEIGHT_SMALL,
+              legend: { orientation: "h" as const, y: -0.22 },
+              margin: { t: 20, l: 150, r: 20, b: 60 },
+            }}
+          />
+      </Grafico>
 
-      <div className="space-y-3">
-        <h3 className="text-lg font-semibold text-primary">
-          Come cambia la propensione alla denuncia nel tempo
-        </h3>
-        <p className="text-muted-foreground">
-          Confronto tra le due edizioni dell&apos;indagine ISTAT per i reati
-          comparabili.
-        </p>
-      </div>
-
-      <ChartFullscreenWrapper ariaDescription="Grafico confronto propensione alla denuncia tra 2015-2016 e 2022-2023 per frodi, aggressioni e scippi">
+      <Grafico
+        id="nel-tempo"
+        titolo="Quota di reati denunciati dalle vittime, Italia, 2015-2016 e 2022-2023"
+        sottotitolo="I reati confrontabili fra le due edizioni dell'indagine"
+        fonte="numeroOscuro"
+        altezza={450}
+      >
         <Plot
-          data={[
-            {
-              name: "2015-2016",
-              x: catConfronto,
-              y: pct2016,
-              type: "bar",
-              marker: { color: COLORS.grigioAltro },
-              text: pct2016.map((v) => fmtPct(v)),
-              textposition: "outside" as const,
-              hovertemplate: "<b>%{x}</b><br>%{fullData.name}: %{y:.1f}%<extra></extra>",
-            },
-            {
-              name: "2022-2023",
-              x: catConfronto,
-              y: pct2023,
-              type: "bar",
-              marker: { color: COLORS.primary },
-              text: pct2023.map((v) => fmtPct(v)),
-              textposition: "outside" as const,
-              hovertemplate: "<b>%{x}</b><br>%{fullData.name}: %{y:.1f}%<extra></extra>",
-            },
-          ]}
-          layout={{
-            barmode: "group",
-            xaxis: { ...AXIS_FIXED },
-            yaxis: { ...AXIS_FIXED,
-              title: { text: "% vittime che hanno denunciato" },
-              range: [0, 100],
-            },
-            height: 350,
-            legend: { orientation: "h" as const, y: -0.22 },
-            margin: { t: 20, l: 50, r: 20, b: 60 },
-            dragmode: false,
-            plot_bgcolor: "rgba(0,0,0,0)",
-            paper_bgcolor: "rgba(0,0,0,0)",
-            separators: PLOTLY_IT_SEPARATORS,
-          }}
-          config={PLOTLY_CONFIG}
-          useResizeHandler
-          className="w-full"
-        />
-      </ChartFullscreenWrapper>
+            descrizione="Grafico confronto propensione alla denuncia tra 2015-2016 e 2022-2023 per frodi, aggressioni e scippi"
+            data={[
+              {
+                name: "2015-2016",
+                x: catConfronto,
+                y: pct2016,
+                type: "bar",
+                marker: { color: COLORS.grigioAltro },
+                text: pct2016.map((v) => fmtPct(v)),
+                textposition: "outside" as const,
+                hovertemplate: "<b>%{x}</b><br>%{fullData.name}: %{y:.1f}%<extra></extra>",
+              },
+              {
+                name: "2022-2023",
+                x: catConfronto,
+                y: pct2023,
+                type: "bar",
+                marker: { color: COLORS.primary },
+                text: pct2023.map((v) => fmtPct(v)),
+                textposition: "outside" as const,
+                hovertemplate: "<b>%{x}</b><br>%{fullData.name}: %{y:.1f}%<extra></extra>",
+              },
+            ]}
+            layout={{
+              barmode: "group",
+              xaxis: { ...AXIS_FIXED },
+              yaxis: { ...AXIS_FIXED,
+                title: { text: "% vittime che hanno denunciato" },
+                range: [0, 100],
+              },
+              height: 350,
+              legend: { orientation: "h" as const, y: -0.22 },
+              margin: { t: 20, l: 50, r: 20, b: 60 },
+            }}
+          />
+      </Grafico>
 
       <p>
         &Egrave; <strong>raddoppiata</strong> la quota di aggressioni che le vittime denunciano (da {p("Aggressioni", "Italia", "2015-2016")} a {p("Aggressioni", "Italia", "2022-2023")}). &Egrave; invece{" "}
@@ -204,95 +194,90 @@ export function ChartNumeroOscuro() {
 
       <hr />
 
-      <div className="space-y-3">
-        <h3 className="text-lg font-semibold text-primary">
-          Chi denuncia di più? La propensione per territorio (2022-2023)
-        </h3>
-        <p className="text-muted-foreground">
-          La propensione alla denuncia varia per tipo di reato e territorio. Il
-          luogo comune &quot;il Sud denuncia meno&quot; non regge all&apos;analisi
-          disaggregata. La linea tratteggiata indica la media nazionale.
-        </p>
-      </div>
+      <p className="text-muted-foreground">
+        La propensione alla denuncia varia per tipo di reato e territorio. Il luogo comune
+        &quot;il Sud denuncia meno&quot; non regge all&apos;analisi disaggregata.
+      </p>
 
-      <div className="flex items-center gap-2">
-        <button
-          onClick={() => setShowMacro((v) => !v)}
-          className="text-muted-foreground hover:text-foreground text-sm flex items-center gap-1 transition-colors"
-          aria-expanded={showMacro}
-          aria-label="Mostra dettaglio macro-categorie"
-        >
-          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border border-current text-xs font-medium">i</span>
-          <span>{showMacro ? "Nascondi categorie" : "Cosa include ogni categoria?"}</span>
-        </button>
-      </div>
+      <Grafico
+        id="per-area"
+        titolo="Quota di reati denunciati dalle vittime, per area, 2022-2023"
+        sottotitolo="La linea tratteggiata è la media italiana"
+        fonte="numeroOscuro"
+        altezza={500}
+      >
 
-      {showMacro && (
-        <div className="grid gap-2 sm:grid-cols-2 text-sm">
-          {Object.entries(MACRO_DETTAGLIO).map(([cat, dettaglio], i) => (
-            <div key={cat} className="rounded-md border border-border p-2">
-              <span className="font-medium" style={{ color: coloriMacro[i] }}>{cat}</span>
-              <span className="text-muted-foreground">: {dettaglio}</span>
-            </div>
-          ))}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowMacro((v) => !v)}
+            className="text-muted-foreground hover:text-foreground text-sm flex items-center gap-1 transition-colors"
+            aria-expanded={showMacro}
+            aria-label="Mostra dettaglio macro-categorie"
+          >
+            <span className="inline-flex items-center justify-center w-5 h-5 rounded-full border border-current text-xs font-medium">i</span>
+            <span>{showMacro ? "Nascondi categorie" : "Cosa include ogni categoria?"}</span>
+          </button>
         </div>
-      )}
 
-      <ChartFullscreenWrapper ariaDescription="Grafico propensione alla denuncia per macro-area geografica e tipo di reato, 2022-2023. Il Sud denuncia più della media per reati violenti e contro la proprietà">
+        {showMacro && (
+          <div className="grid gap-2 sm:grid-cols-2 text-sm">
+            {Object.entries(MACRO_DETTAGLIO).map(([cat, dettaglio], i) => (
+              <div key={cat} className="rounded-md border border-border p-2">
+                <span className="font-medium" style={{ color: coloriMacro[i] }}>{cat}</span>
+                <span className="text-muted-foreground">: {dettaglio}</span>
+              </div>
+            ))}
+          </div>
+        )}
+
         <Plot
-          data={[
-            ...Object.entries(macroCat2023).map(([cat, vals], i) => ({
-              name: cat,
-              x: macroaree,
-              y: vals,
-              type: "bar" as const,
-              marker: { color: coloriMacro[i] },
-              text: vals.map((v) => fmtPct(v)),
-              textposition: "outside" as const,
-              textfont: { size: 10 },
-              hovertemplate: "<b>%{fullData.name}</b><br>%{x}: %{y:.1f}%<extra></extra>",
-            })),
-          ]}
-          layout={{
-            barmode: "group",
-            xaxis: { ...AXIS_FIXED },
-            yaxis: { ...AXIS_FIXED,
-              title: { text: "% vittime che hanno denunciato" },
-              range: [0, 85],
-            },
-            height: CHART_HEIGHT_SMALL,
-            legend: { orientation: "h" as const, y: -0.22 },
-            margin: { t: 20, l: 50, r: 50, b: 60 },
-            dragmode: false,
-            plot_bgcolor: "rgba(0,0,0,0)",
-            paper_bgcolor: "rgba(0,0,0,0)",
-            separators: PLOTLY_IT_SEPARATORS,
-            shapes: Object.values(mediaNazionale2023).map((val, i) => ({
-              type: "line" as const,
-              xref: "paper" as const,
-              yref: "y" as const,
-              x0: 0,
-              x1: 1,
-              y0: val,
-              y1: val,
-              line: { color: coloriMacro[i], width: 1, dash: "dot" as const },
-            })),
-            annotations: Object.entries(mediaNazionale2023).map(([, val], i) => ({
-              xref: "paper" as const,
-              yref: "y" as const,
-              x: 1,
-              y: val,
-              xanchor: "left" as const,
-              text: fmtPct(val),
-              showarrow: false,
-              font: { size: 9, color: coloriMacro[i] },
-            })),
-          }}
-          config={PLOTLY_CONFIG}
-          useResizeHandler
-          className="w-full"
-        />
-      </ChartFullscreenWrapper>
+            descrizione="Grafico propensione alla denuncia per macro-area geografica e tipo di reato, 2022-2023. Il Sud denuncia più della media per reati violenti e contro la proprietà"
+            data={[
+              ...Object.entries(macroCat2023).map(([cat, vals], i) => ({
+                name: cat,
+                x: macroaree,
+                y: vals,
+                type: "bar" as const,
+                marker: { color: coloriMacro[i] },
+                text: vals.map((v) => fmtPct(v)),
+                textposition: "outside" as const,
+                textfont: { size: 10 },
+                hovertemplate: "<b>%{fullData.name}</b><br>%{x}: %{y:.1f}%<extra></extra>",
+              })),
+            ]}
+            layout={{
+              barmode: "group",
+              xaxis: { ...AXIS_FIXED },
+              yaxis: { ...AXIS_FIXED,
+                title: { text: "% vittime che hanno denunciato" },
+                range: [0, 85],
+              },
+              height: CHART_HEIGHT_SMALL,
+              legend: { orientation: "h" as const, y: -0.22 },
+              margin: { t: 20, l: 50, r: 50, b: 60 },
+              shapes: Object.values(mediaNazionale2023).map((val, i) => ({
+                type: "line" as const,
+                xref: "paper" as const,
+                yref: "y" as const,
+                x0: 0,
+                x1: 1,
+                y0: val,
+                y1: val,
+                line: { color: coloriMacro[i], width: 1, dash: "dot" as const },
+              })),
+              annotations: Object.entries(mediaNazionale2023).map(([, val], i) => ({
+                xref: "paper" as const,
+                yref: "y" as const,
+                x: 1,
+                y: val,
+                xanchor: "left" as const,
+                text: fmtPct(val),
+                showarrow: false,
+                font: { size: 9, color: coloriMacro[i] },
+              })),
+            }}
+          />
+      </Grafico>
 
       <p>
         Il <strong>Sud</strong> denuncia più della media nazionale per reati
@@ -320,8 +305,8 @@ export function ChartNumeroOscuro() {
         {reatiStorico.map((reato) => (
           <div key={reato} className="space-y-2">
             <h4 className="text-sm font-semibold">{reato}</h4>
-            <ChartFullscreenWrapper ariaDescription={`Grafico confronto propensione alla denuncia per ${reato} tra 2015-2016 e 2022-2023 per macro-area`}>
-              <Plot
+            <Plot
+                descrizione={`Grafico confronto propensione alla denuncia per ${reato} tra 2015-2016 e 2022-2023 per macro-area`}
                 data={[
                   {
                     name: "2015-2016",
@@ -354,16 +339,8 @@ export function ChartNumeroOscuro() {
                   height: 280,
                   legend: { orientation: "h" as const, y: -0.28 },
                   margin: { t: 10, l: 50, r: 20, b: 60 },
-                  dragmode: false,
-                  plot_bgcolor: "rgba(0,0,0,0)",
-                  paper_bgcolor: "rgba(0,0,0,0)",
-                  separators: PLOTLY_IT_SEPARATORS,
                 }}
-                config={PLOTLY_CONFIG}
-                useResizeHandler
-                className="w-full"
               />
-            </ChartFullscreenWrapper>
           </div>
         ))}
 
