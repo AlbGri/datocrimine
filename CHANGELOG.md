@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-17 — Mappe e classifiche
+- Le mappe delle regioni usano gradini di colore con i confini scritti in legenda, uguali per tutti gli anni: un colore vuol dire la stessa fascia in ogni anno
+- La mappa delle variazioni del Report è in blu (calo) e ruggine (aumento), non più in verde e rosso: il colore dice la direzione, non se è un bene o un male
+- Nella classifica delle regioni un quadratino col colore della mappa aiuta a ritrovare ogni regione
+- Sul telefono il pulsante "Mappa" non è più giallo; nella mappa del sito la pagina in cui ti trovi si vede meglio
+
 ## 2026-11-17 — Dati che mancano
 - Nuova pagina "Dati che mancano", in Capire i dati: cosa fanno altri paesi per stimare i reati non denunciati, cosa fa l'Italia e la posizione di chi cura il sito, dichiarata come opinione, con una fonte accanto a ogni fatto. Prima era una sezione della Metodologia, ora corretta sulle fonti primarie
 - La Metodologia parla solo dei limiti dei dati e si apre con l'indice delle sezioni
