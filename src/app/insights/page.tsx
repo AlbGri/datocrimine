@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useMemo, lazy, Suspense } from "react";
+import { useState, useMemo, useRef, lazy, Suspense } from "react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { CollapsibleSection } from "@/components/ui/collapsible-section";
+import { AzioniGrafico } from "@/components/charts/grafico";
+import type { Fonte } from "@/lib/config";
 import type { InsightChartConfig } from "@/components/charts/insight-mini-chart";
 import insightsData from "@/data/insights.json";
 import insightsMeta from "@/data/insights_meta.json";
@@ -256,21 +257,22 @@ export default function Insights() {
           )}
         </div>
       ) : (
-        CATEGORY_ORDER.map((cat, i) => {
+        CATEGORY_ORDER.map((cat) => {
           const items = INSIGHTS.filter((ins) => ins.category === cat);
           return (
-            <CollapsibleSection
-              key={cat}
-              title={CATEGORIES[cat].label}
-              description={CATEGORIES[cat].description}
-              defaultOpen={i === 0}
-            >
+            <section key={cat} className="space-y-3">
+              <div>
+                <h2 className="text-xl sm:text-2xl font-semibold text-primary">
+                  {CATEGORIES[cat].label}
+                </h2>
+                <p className="mt-1 text-sm text-muted-foreground">{CATEGORIES[cat].description}</p>
+              </div>
               <div className="space-y-6">
                 {items.map((insight) => (
                   <InsightCard key={insight.id} insight={insight} />
                 ))}
               </div>
-            </CollapsibleSection>
+            </section>
           );
         })
       )}
@@ -520,6 +522,7 @@ function InsightCard({
 }) {
   const [showChart, setShowChart] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const grafico = useRef<HTMLDivElement>(null);
 
   return (
     <div id={insight.id} className="rounded-lg border p-4 space-y-2 scroll-mt-20">
@@ -557,7 +560,7 @@ function InsightCard({
             {showChart ? "Nascondi grafico" : "Mostra il grafico"}
           </button>
           {showChart && (
-            <div className="mt-2">
+            <div className="mt-2 space-y-2" ref={grafico}>
               <Suspense
                 fallback={
                   <div className="h-[300px] animate-pulse bg-muted rounded" />
@@ -565,6 +568,13 @@ function InsightCard({
               >
                 <InsightMiniChart config={insight.chart} ariaLabel={`Grafico: ${insight.title}`} />
               </Suspense>
+              <AzioniGrafico
+                corpo={grafico}
+                ancora={insight.id}
+                titolo={insight.title}
+                sottotitolo={insight.period}
+                fonte={fonteDelFile(insight.chart.file)}
+              />
               {insight.chartInfo && (
                 <div className="mt-1">
                   <button
@@ -587,6 +597,12 @@ function InsightCard({
       )}
     </div>
   );
+}
+
+function fonteDelFile(file: string): Fonte {
+  if (file.startsWith("autori_vittime")) return "autori";
+  if (file.startsWith("percezione")) return "percezione";
+  return "delitti";
 }
 
 function GenderNote({ children }: { children: React.ReactNode }) {

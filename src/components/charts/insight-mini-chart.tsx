@@ -1,10 +1,8 @@
 "use client";
 
 import { useFetchData } from "@/lib/use-fetch-data";
-import { COLORS, PLOTLY_CONFIG, PLOTLY_FONT, AXIS_FIXED, getAxisYear, COVID_SHAPES, COVID_ANNOTATIONS, CHART_HEIGHT_MINI } from "@/lib/config";
-import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { COLORS, PLOTLY_FONT, AXIS_FIXED, getAxisYear, COVID_SHAPES, COVID_ANNOTATIONS, CHART_HEIGHT_MINI } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
 
 /* ================================================================
@@ -275,10 +273,6 @@ export function InsightMiniChart({ config, ariaLabel }: { config: InsightChartCo
       ...(hasDualY ? { side: "left" as const } : {}),
     },
     margin: { t: 10, l: 55, r: hasDualY ? 55 : 20, b: 40 },
-    dragmode: false,
-    plot_bgcolor: "rgba(0,0,0,0)",
-    paper_bgcolor: "rgba(0,0,0,0)",
-    separators: PLOTLY_IT_SEPARATORS,
     shapes: COVID_SHAPES,
     annotations: COVID_ANNOTATIONS,
     legend: {
@@ -303,14 +297,10 @@ export function InsightMiniChart({ config, ariaLabel }: { config: InsightChartCo
   }
 
   return (
-    <ChartFullscreenWrapper ariaDescription={ariaLabel ?? "Grafico insight"}>
-      <Plot
+    <Plot
+        descrizione={ariaLabel ?? "Grafico insight"}
         data={traces}
         layout={layout}
-        config={PLOTLY_CONFIG}
-        useResizeHandler
-        className="w-full"
       />
-    </ChartFullscreenWrapper>
   );
 }

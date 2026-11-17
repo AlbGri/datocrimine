@@ -1,17 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback } from "react";
 import Link from "next/link";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { AXIS_FIXED, CHART_HEIGHT, CHART_HEIGHT_SMALL, CHART_HEIGHT_MAP, CHART_HEIGHT_MINI, PLOTLY_CONFIG, NUTS_TO_ISTAT, COLORS, getAxisYear, ANNO_PRIMO, SCALA_DIV, COLORE_BORDO, CLASSI_VARIAZIONE_PCT, classeDi, scalaAGradini } from "@/lib/config";
-import { fmtNum, fmtPctSigned, fmtSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { AXIS_FIXED, CHART_HEIGHT, CHART_HEIGHT_SMALL, CHART_HEIGHT_MAP, CHART_HEIGHT_MINI, NUTS_TO_ISTAT, COLORS, getAxisYear, ANNO_PRIMO, SCALA_DIV, COLORE_BORDO, CLASSI_VARIAZIONE_PCT, classeDi, scalaAGradini } from "@/lib/config";
+import { fmtNum, fmtPctSigned, fmtSigned } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Card, CardContent } from "@/components/ui/card";
 import { NotaIngiurie } from "@/components/charts/nota-ingiurie";
 import { fraseReport } from "@/lib/sintesi";
 import delittiItalia from "../../../public/data/delitti_italia.json";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
+import { Grafico, useDatiGrafico } from "@/components/charts/grafico";
+import { useParametro } from "@/lib/use-parametro";
 import { Pulsante } from "@/components/ui/pulsante";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -139,10 +140,8 @@ function ChartContributi({ dati, anno }: { dati: Contributi; anno: number }) {
   ];
 
   return (
-    <ChartFullscreenWrapper
-      ariaDescription={`Grafico a barre orizzontali: delitti denunciati in più e in meno per reato, ${anno} rispetto al ${base}. ${voci.length} reati più una barra con i restanti`}
-    >
-      <Plot
+    <Plot
+        descrizione={`Grafico a barre orizzontali: delitti denunciati in più e in meno per reato, ${anno} rispetto al ${base}. ${voci.length} reati più una barra con i restanti`}
         data={[
           {
             type: "bar",
@@ -155,7 +154,6 @@ function ChartContributi({ dati, anno }: { dati: Contributi; anno: number }) {
           },
         ]}
         layout={{
-          separators: PLOTLY_IT_SEPARATORS,
           height: isMobile ? CHART_HEIGHT_SMALL : CHART_HEIGHT,
           xaxis: {
             ...AXIS_FIXED,
@@ -170,15 +168,8 @@ function ChartContributi({ dati, anno }: { dati: Contributi; anno: number }) {
             automargin: true,
           },
           margin: { t: 10, l: isMobile ? 120 : 200, r: 20, b: 50 },
-          dragmode: false,
-          plot_bgcolor: "rgba(0,0,0,0)",
-          paper_bgcolor: "rgba(0,0,0,0)",
         }}
-        config={PLOTLY_CONFIG}
-        useResizeHandler
-        className="w-full"
       />
-    </ChartFullscreenWrapper>
   );
 }
 
@@ -238,8 +229,9 @@ function SezioneContributi({
   contributi: Contributi[];
   anno: number;
 }) {
-  const [indice, setIndice] = useState(0);
-  const dati = contributi[indice];
+  const basi = contributi.map((c) => String(c.anno_base));
+  const [base, setBase] = useParametro("confronto", basi);
+  const dati = contributi.find((c) => String(c.anno_base) === base);
   if (!dati) return null;
 
   return (
@@ -248,8 +240,8 @@ function SezioneContributi({
         Cosa &egrave; cambiato
       </h2>
       <div className="flex flex-wrap gap-1.5" role="group" aria-label="Anno di confronto">
-        {contributi.map((c, i) => (
-          <Pulsante key={c.anno_base} onClick={() => setIndice(i)} premuto={indice === i}>
+        {contributi.map((c) => (
+          <Pulsante key={c.anno_base} onClick={() => setBase(String(c.anno_base))} premuto={base === String(c.anno_base)}>
             Rispetto al {c.anno_base}
           </Pulsante>
         ))}
@@ -261,7 +253,16 @@ function SezioneContributi({
         valore assoluto. La barra grigia somma i restanti reati, cos&igrave; le
         barre insieme danno la variazione totale.
       </p>
-      <ChartContributi dati={dati} anno={anno} />
+      <Grafico
+        id="contributi"
+        livello={3}
+        titolo={`Delitti denunciati in più e in meno per reato, ${anno} rispetto al ${dati.anno_base}`}
+        fonte="delitti"
+        parametri={{ confronto: dati.anno_base }}
+        altezza={450}
+      >
+        <ChartContributi dati={dati} anno={anno} />
+      </Grafico>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
         <ListaContributi titolo="Aumenti maggiori" voci={dati.aumenti} />
         <ListaContributi titolo="Cali maggiori" voci={dati.cali} />
@@ -283,6 +284,13 @@ function ChartMappaVariazione({
     loading: geoLoading,
   } = useFetchData<GeoJSON>("/data/geojson_regioni_italia.geojson");
 
+  // Il CSV generico prenderebbe le classi di colore: qui servono le variazioni
+  const righeCsv = useCallback(() => [
+    ["Regione", `Tasso ${anno - 1}`, `Tasso ${anno}`, "Variazione %"],
+    ...regioni.map((r) => [r.Territorio, r.tasso_precedente, r.tasso_corrente, r.variazione_pct]),
+  ], [regioni, anno]);
+  useDatiGrafico(righeCsv);
+
   if (geoLoading)
     return (
       <div className="h-[350px] sm:h-[550px] animate-pulse bg-muted rounded" />
@@ -301,10 +309,8 @@ function ChartMappaVariazione({
   ]);
 
   return (
-    <ChartFullscreenWrapper
-      ariaDescription={`Mappa Italia con variazione percentuale tasso delitti per regione, ${anno} vs ${anno - 1}`}
-    >
-      <Plot
+    <Plot
+        descrizione={`Mappa Italia con variazione percentuale tasso delitti per regione, ${anno} vs ${anno - 1}`}
         data={[
           {
             type: "choropleth",
@@ -332,7 +338,6 @@ function ChartMappaVariazione({
           } as any,
         ]}
         layout={{
-          separators: PLOTLY_IT_SEPARATORS,
           geo: {
             projection: { type: "mercator", scale: 1 },
             scope: "europe",
@@ -348,14 +353,8 @@ function ChartMappaVariazione({
           },
           height: isMobile ? 350 : CHART_HEIGHT_MAP,
           margin: { t: 0, b: 0, l: 0, r: 0 },
-          dragmode: false,
-          paper_bgcolor: "rgba(0,0,0,0)",
         }}
-        config={PLOTLY_CONFIG}
-        useResizeHandler
-        className="w-full"
       />
-    </ChartFullscreenWrapper>
   );
 }
 
@@ -368,10 +367,8 @@ function ChartRipartizioni({
 }) {
 
   return (
-    <ChartFullscreenWrapper
-      ariaDescription={`Grafico a barre: variazione tasso delitti per ripartizione, ${anno} vs ${anno - 1}`}
-    >
-      <Plot
+    <Plot
+        descrizione={`Grafico a barre: variazione tasso delitti per ripartizione, ${anno} vs ${anno - 1}`}
         data={[
           {
             type: "bar",
@@ -387,7 +384,6 @@ function ChartRipartizioni({
           },
         ]}
         layout={{
-          separators: PLOTLY_IT_SEPARATORS,
           height: CHART_HEIGHT_MINI,
           xaxis: { ...AXIS_FIXED },
           yaxis: {
@@ -397,15 +393,8 @@ function ChartRipartizioni({
             zerolinecolor: COLORS.grigioAltro,
           },
           margin: { t: 20, l: 50, r: 20, b: 40 },
-          dragmode: false,
-          plot_bgcolor: "rgba(0,0,0,0)",
-          paper_bgcolor: "rgba(0,0,0,0)",
         }}
-        config={PLOTLY_CONFIG}
-        useResizeHandler
-        className="w-full"
       />
-    </ChartFullscreenWrapper>
   );
 }
 
@@ -423,10 +412,8 @@ function ChartPercezione({ anno }: { anno: number }) {
   const percezione = data.map((d) => d.Percezione_pct);
 
   return (
-    <ChartFullscreenWrapper
-      ariaDescription={`Grafico percezione insicurezza vs tasso delitti reale, ${ANNO_PRIMO}-${anno}`}
-    >
-      <Plot
+    <Plot
+        descrizione={`Grafico percezione insicurezza vs tasso delitti reale, ${ANNO_PRIMO}-${anno}`}
         data={[
           {
             x: anni,
@@ -467,7 +454,6 @@ function ChartPercezione({ anno }: { anno: number }) {
           },
         ]}
         layout={{
-          separators: PLOTLY_IT_SEPARATORS,
           height: CHART_HEIGHT,
           xaxis: getAxisYear(isMobile),
           yaxis: {
@@ -490,15 +476,8 @@ function ChartPercezione({ anno }: { anno: number }) {
             xanchor: "center",
           },
           margin: { t: 20, l: 50, r: 50, b: 60 },
-          dragmode: false,
-          plot_bgcolor: "rgba(0,0,0,0)",
-          paper_bgcolor: "rgba(0,0,0,0)",
         }}
-        config={PLOTLY_CONFIG}
-        useResizeHandler
-        className="w-full"
       />
-    </ChartFullscreenWrapper>
   );
 }
 
@@ -539,7 +518,15 @@ export function ReportContent({ anno, data }: { anno: string; data: ReportData }
           Variazione del tasso di delitti denunciati per 1.000 abitanti rispetto
           al {annoNum - 1}. Ruggine = aumento, blu = calo.
         </p>
-        <ChartMappaVariazione regioni={data.variazione_regioni} anno={annoNum} />
+        <Grafico
+          id="mappa"
+          livello={3}
+          titolo={`Variazione del tasso di delitti denunciati per regione, ${annoNum} rispetto al ${annoNum - 1}`}
+          fonte="delitti"
+          altezza={CHART_HEIGHT_MAP}
+        >
+          <ChartMappaVariazione regioni={data.variazione_regioni} anno={annoNum} />
+        </Grafico>
         <div className="text-sm space-y-1">
           <p>
             <strong>Maggiore aumento:</strong>{" "}
@@ -574,10 +561,18 @@ export function ReportContent({ anno, data }: { anno: string; data: ReportData }
           Come cambia il tasso di delitti denunciati nelle tre grandi
           ripartizioni territoriali. I tassi sono medie pesate per popolazione.
         </p>
-        <ChartRipartizioni
-          ripartizioni={data.variazione_ripartizioni}
-          anno={annoNum}
-        />
+        <Grafico
+          id="ripartizioni"
+          livello={3}
+          titolo={`Variazione del tasso di delitti denunciati per ripartizione, ${annoNum} rispetto al ${annoNum - 1}`}
+          fonte="delitti"
+          altezza={350}
+        >
+          <ChartRipartizioni
+            ripartizioni={data.variazione_ripartizioni}
+            anno={annoNum}
+          />
+        </Grafico>
         <div className="text-sm space-y-1">
           {data.variazione_ripartizioni.map((r) => (
             <p key={r.ripartizione}>
@@ -630,7 +625,15 @@ export function ReportContent({ anno, data }: { anno: string; data: ReportData }
             di insicurezza (% famiglie che percepiscono rischio). Anno{" "}
             {annoNum} evidenziato.
           </p>
-          <ChartPercezione anno={annoNum} />
+          <Grafico
+            id="percezione"
+            livello={3}
+            titolo={`Percezione del rischio di criminalità e delitti denunciati, Italia, dal ${ANNO_PRIMO}`}
+            fonte="percezione"
+            altezza={450}
+          >
+            <ChartPercezione anno={annoNum} />
+          </Grafico>
           <p className="text-sm">
             Nel {annoNum} il {data.percezione.percezione_pct}% delle famiglie
             percepisce un rischio di criminalit&agrave; nella propria zona,

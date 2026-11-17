@@ -1,13 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { ChevronRight } from "lucide-react";
 
 interface CollapsibleSectionProps {
   title: string;
   description?: string;
   defaultOpen?: boolean;
-  id?: string;
   children: React.ReactNode;
 }
 
@@ -15,24 +14,13 @@ export function CollapsibleSection({
   title,
   description,
   defaultOpen = false,
-  id,
   children,
 }: CollapsibleSectionProps) {
-  const ref = useRef<HTMLDetailsElement>(null);
   // I figli si montano alla prima apertura: una sezione chiusa non scarica dati ne' disegna grafici
   const [montata, setMontata] = useState(defaultOpen);
-  // Un link a /pagina#id apre la sezione: la home porta alla tabella delle province gia' aperta
-  useEffect(() => {
-    if (id && ref.current && window.location.hash === `#${id}`) {
-      ref.current.open = true;
-      ref.current.scrollIntoView();
-    }
-  }, [id]);
 
   return (
     <details
-      ref={ref}
-      id={id}
       open={defaultOpen || undefined}
       onToggle={(e) => e.currentTarget.open && setMontata(true)}
       className="group"

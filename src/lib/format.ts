@@ -10,11 +10,6 @@ export function fmtNum(value: number, decimals: number = 0): string {
   });
 }
 
-/** Numero per i CSV, per Excel in italiano: 1234.5 → "1234,5" (senza punto delle migliaia) */
-export function csvNum(value: number, decimals: number): string {
-  return value.toFixed(decimals).replace(".", ",");
-}
-
 /** Percentuale: 12.3 → "12,3%" */
 export function fmtPct(value: number, decimals: number = 1): string {
   return `${fmtNum(value, decimals)}%`;
@@ -44,7 +39,7 @@ export function fmtData(iso: string): string {
 /**
  * Separatori Plotly per formato italiano.
  * Primo carattere = separatore decimale, secondo = separatore migliaia.
- * Da aggiungere nel layout di ogni grafico Plotly.
+ * Li mette Plot in ogni grafico.
  */
 export const PLOTLY_IT_SEPARATORS = ",.";
 
