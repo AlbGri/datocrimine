@@ -7,9 +7,11 @@ import { AXIS_FIXED, CHART_HEIGHT, CHART_HEIGHT_SMALL, CHART_HEIGHT_MAP, CHART_H
 import { fmtNum, fmtPctSigned, fmtSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Card, CardContent } from "@/components/ui/card";
+import { NotaIngiurie } from "@/components/charts/nota-ingiurie";
+import { fraseReport } from "@/lib/sintesi";
+import delittiItalia from "../../../public/data/delitti_italia.json";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
-import { SintesiNazionale } from "@/components/charts/sintesi-nazionale";
 import { Pulsante } from "@/components/ui/pulsante";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,14 +19,6 @@ type GeoJSON = any;
 
 interface ReportData {
   anno: number;
-  executive_summary: {
-    tasso_totale: number;
-    tasso_precedente: number;
-    variazione_pct: number;
-    tasso_pre_covid: number;
-    popolazione: number;
-    delitti_totali: number;
-  };
   contributi: Contributi[];
   variazione_regioni: {
     REF_AREA: string;
@@ -116,57 +110,6 @@ function TrendLabel({ trend, inizio }: { trend: string | null; inizio: number })
 // ---------------------------------------------------------------------------
 // Sezioni del report
 // ---------------------------------------------------------------------------
-
-function ExecutiveSummary({
-  data,
-}: {
-  data: ReportData["executive_summary"];
-}) {
-  const items = [
-    {
-      label: "Delitti denunciati",
-      value: fmtNum(data.delitti_totali),
-    },
-    {
-      label: "Tasso per 1.000 ab.",
-      value: fmtNum(data.tasso_totale, 1),
-      subtitle: `anno prec.: ${fmtNum(data.tasso_precedente, 1)}`,
-    },
-    {
-      label: "Variazione anno",
-      value: fmtPctSigned(data.variazione_pct),
-    },
-    {
-      label: "Tasso 2019",
-      value: fmtNum(data.tasso_pre_covid, 1),
-      subtitle: "prima del COVID",
-    },
-  ];
-
-  return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
-      {items.map((item) => (
-        <Card key={item.label}>
-          <CardContent className="py-0 px-2 sm:px-6 text-center">
-            <p className="text-xs sm:text-sm text-muted-foreground">
-              {item.label}
-            </p>
-            <p
-              className="text-xl sm:text-2xl font-bold"
-            >
-              {item.value}
-            </p>
-            {"subtitle" in item && item.subtitle && (
-              <p className="text-xs text-muted-foreground">
-                {item.subtitle}
-              </p>
-            )}
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  );
-}
 
 function ChartContributi({ dati, anno }: { dati: Contributi; anno: number }) {
   const isMobile = useIsMobile();
@@ -577,11 +520,7 @@ export function ReportContent({ anno }: { anno: string }) {
       <main>
         <div className="space-y-6">
           <div className="h-10 animate-pulse bg-muted rounded w-2/3" />
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="h-[72px] animate-pulse bg-muted rounded" />
-            ))}
-          </div>
+          <div className="h-20 animate-pulse bg-muted rounded" />
           <div className="h-[400px] animate-pulse bg-muted rounded" />
         </div>
       </main>
@@ -598,7 +537,10 @@ export function ReportContent({ anno }: { anno: string }) {
 
   if (!data) return null;
 
-  const { executive_summary: es } = data;
+  const apertura = fraseReport(
+    delittiItalia.map((d) => ({ anno: d.Anno, delitti: d.Delitti, tasso: d.Tasso_per_1000 })),
+    annoNum,
+  );
 
   return (
     <main className="space-y-10">
@@ -606,27 +548,13 @@ export function ReportContent({ anno }: { anno: string }) {
         <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em]">
           Criminalit&agrave; in Italia {annoNum}
         </h1>
-        <div className="mt-2">
-          <SintesiNazionale anno={annoNum} />
+        <div className="mt-2 space-y-1">
+          <p className="text-base sm:text-lg">
+            {apertura} Qui sotto cosa &egrave; cambiato nell&apos;anno, per reato e per territorio.
+          </p>
+          <NotaIngiurie />
         </div>
       </header>
-
-      {/* 1. Executive Summary */}
-      <section className="space-y-3">
-        <h2 className="text-xl sm:text-2xl font-semibold text-primary">
-          Sintesi
-        </h2>
-        <ExecutiveSummary data={es} />
-        <p>
-          Nel {annoNum} sono stati denunciati{" "}
-          <strong>{fmtNum(es.delitti_totali)}</strong> delitti
-          in Italia, con un tasso di{" "}
-          <strong>{fmtNum(es.tasso_totale, 1)}</strong> per 1.000 abitanti (
-          <VariazioneIndicator value={es.variazione_pct} /> rispetto al{" "}
-          {annoNum - 1}). Nel 2019, ultimo anno prima del COVID, era{" "}
-          {fmtNum(es.tasso_pre_covid, 1)}.
-        </p>
-      </section>
 
       {/* 2. Cosa e' cambiato */}
       <SezioneContributi contributi={data.contributi} anno={annoNum} />

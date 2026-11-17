@@ -88,3 +88,40 @@ export function fraseSintesi(
 
   return frasi.join(" ");
 }
+
+/**
+ * Frase d'apertura del report: l'anno, la variazione sul precedente e il confronto fra trienni,
+ * cosi' chi arriva diretto al report ha anche il lungo periodo.
+ *
+ * Args:
+ *   serie: delitti e tassi per 1.000 abitanti, un elemento per anno.
+ *   anno: anno del report.
+ *
+ * Returns:
+ *   La frase, o null se manca l'anno o il precedente.
+ */
+export function fraseReport(
+  serie: { anno: number; delitti: number; tasso: number }[],
+  anno: number,
+): string | null {
+  const corrente = serie.find((d) => d.anno === anno);
+  const precedente = serie.find((d) => d.anno === anno - 1);
+  if (!corrente || !precedente) return null;
+
+  const annuale = variazione(precedente.tasso, corrente.tasso);
+  let frase =
+    `Nel ${anno} sono stati denunciati ${fmtNum(corrente.delitti)} delitti, ` +
+    `${fmtNum(corrente.tasso, 1)} ogni 1.000 abitanti: ${fmtPctSigned(annuale)} sul ${anno - 1}`;
+
+  // Trienni sovrapposti non dicono niente: il confronto parte quando sono separati
+  const finale = [anno - 2, anno] as const;
+  const lungo = finale[0] > TRIENNIO_INIZIALE[1] ? varTriennale(serie, finale) : null;
+  if (lungo !== null) {
+    const contrasto = annuale > 0 !== lungo > 0;
+    frase +=
+      `, ${contrasto ? "mentre" : "e"} il tasso medio ${finale.join("-")} ` +
+      `${contrasto ? "resta" : "è"} più ${lungo < 0 ? "basso" : "alto"} ${delPct(Math.abs(lungo))} ` +
+      `di quello ${TRIENNIO_INIZIALE.join("-")}`;
+  }
+  return `${frase}.`;
+}

@@ -203,10 +203,11 @@ export const TRIENNIO_TITOLO = `Media ${TRIENNIO_INIZIALE.join("-")} vs ${TRIENN
 /** Variazione % media triennale: media del triennio finale vs media del triennio iniziale.
  *  Piu robusto del confronto puntuale perche smussa outlier annuali. */
 export function varTriennale(
-  values: { anno: number; tasso: number }[]
+  values: { anno: number; tasso: number }[],
+  finale: readonly [number, number] = TRIENNIO_FINALE,
 ): number | null {
   const [i0, i1] = TRIENNIO_INIZIALE;
-  const [f0, f1] = TRIENNIO_FINALE;
+  const [f0, f1] = finale;
   const primi = values.filter((v) => v.anno >= i0 && v.anno <= i1);
   const ultimi = values.filter((v) => v.anno >= f0 && v.anno <= f1);
   if (primi.length < 2 || ultimi.length < 2) return null;
