@@ -172,7 +172,7 @@ export default function PersoneDenunciate() {
           pu&ograve; comparire pi&ugrave; volte se coinvolta in pi&ugrave; procedimenti.
           Il dato provinciale &egrave; disponibile solo dal 2022.
           Per approfondimenti si rimanda alla{" "}
-          <Link href="/metodologia" className="underline">nota metodologica</Link>.
+          <Link href="/metodologia" className="rimando">nota metodologica</Link>.
       </div>
     </main>
   );

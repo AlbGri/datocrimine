@@ -85,3 +85,15 @@
     outline-offset: 2px;
   }
 }
+
+/* Link nel testo: grassetto scuro con mezzo rigo di giallo sotto (sul chiaro il giallo non si legge come testo) */
+@utility rimando {
+  color: var(--foreground);
+  font-weight: 700;
+  text-decoration: none;
+  background-image: linear-gradient(transparent 58%, var(--evidenza) 58%);
+  &:hover {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+}

@@ -275,7 +275,7 @@ function ListaContributi({
             {d.insight_id && (
               <Link
                 href={`/insights#${d.insight_id}`}
-                className="text-xs text-primary hover:underline mt-0.5 inline-block"
+                className="text-xs rimando mt-0.5 inline-block"
               >
                 Approfondimento negli Insights &rarr;
               </Link>
@@ -765,14 +765,14 @@ export function ReportContent({ anno }: { anno: string }) {
           Per approfondimenti su fonti, metodi e limiti dei dati, vedi la{" "}
           <Link
             href="/metodologia"
-            className="text-primary underline hover:no-underline"
+            className="rimando"
           >
             pagina Metodologia
           </Link>{" "}
           e la{" "}
           <Link
             href="/guida"
-            className="text-primary underline hover:no-underline"
+            className="rimando"
           >
             Guida alla Lettura
           </Link>

@@ -392,7 +392,7 @@ export function ChartNumeroOscuro() {
           href={fonti.sicurezza_2015_2016.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="underline"
+          className="rimando"
         >
           ISTAT Reati contro la persona 2015-2016 (Prospetto 6)
         </a>
@@ -401,7 +401,7 @@ export function ChartNumeroOscuro() {
           href={fonti.sicurezza_2022_2023.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="underline"
+          className="rimando"
         >
           ISTAT Sicurezza dei Cittadini 2022-2023 (Tavola 6)
         </a>
@@ -410,7 +410,7 @@ export function ChartNumeroOscuro() {
           href={URL_REPORT_2025}
           target="_blank"
           rel="noopener noreferrer"
-          className="underline"
+          className="rimando"
         >
           ISTAT Report Reati 2025 (PDF)
         </a>
@@ -419,7 +419,7 @@ export function ChartNumeroOscuro() {
           href={fonti.violenza_donne_2025.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="underline"
+          className="rimando"
         >
           ISTAT Violenza contro le donne 2025
         </a>

@@ -26,7 +26,7 @@ export default function DatiECodice() {
             href="https://github.com/AlbGri/datocrimine"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary underline hover:no-underline"
+            className="rimando"
           >
             github.com/AlbGri/datocrimine
           </a>
@@ -53,7 +53,7 @@ export default function DatiECodice() {
                     href="https://esploradati.istat.it/databrowser/#/it/dw/categories/IT1,Z0840JUS,1.0/JUS_CRIMINAL/DCCV_DELITTIPS/IT1,73_67_DF_DCCV_DELITTIPS_1,1.0"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary underline hover:no-underline"
+                    className="rimando"
                   >
                     DCCV_DELITTIPS
                   </a>
@@ -69,7 +69,7 @@ export default function DatiECodice() {
                     href="https://esploradati.istat.it/databrowser/#/it/dw/categories/IT1,Z0840JUS,1.0/JUS_CRIMINAL/DCCV_AUTVITTPS/IT1,73_230_DF_DCCV_AUTVITTPS_7,1.0"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-primary underline hover:no-underline"
+                    className="rimando"
                   >
                     DCCV_AUTVITTPS
                   </a>
@@ -238,7 +238,7 @@ python scripts/generate_report.py`}</code>
               href="https://www.gnu.org/licenses/agpl-3.0.html"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary underline hover:no-underline"
+              className="rimando"
             >
               AGPL-3.0
             </a>
@@ -249,7 +249,7 @@ python scripts/generate_report.py`}</code>
               href="https://creativecommons.org/licenses/by-nc-nd/4.0/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary underline hover:no-underline"
+              className="rimando"
             >
               CC BY-NC-ND 4.0
             </a>
@@ -260,7 +260,7 @@ python scripts/generate_report.py`}</code>
               href="https://creativecommons.org/licenses/by/3.0/it/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-primary underline hover:no-underline"
+              className="rimando"
             >
               CC BY 3.0 IT
             </a>{" "}

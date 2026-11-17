@@ -28,7 +28,7 @@ export default function Home() {
         I dati si riferiscono ai delitti denunciati alle Forze dell&apos;ordine
         e non rappresentano la totalit&agrave; dei crimini commessi. Per
         approfondire il divario tra denunce e realt&agrave;, vedi la sezione{" "}
-        <a href="#numero-oscuro" className="underline hover:no-underline">
+        <a href="#numero-oscuro" className="rimando">
           Il Numero Oscuro
         </a>
         .

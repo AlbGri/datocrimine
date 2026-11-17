@@ -296,7 +296,7 @@ export default function Insights() {
                   href="https://en.wikipedia.org/wiki/Mann%E2%80%93Kendall_trend_test"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline hover:no-underline"
+                  className="rimando"
                 >
                   Test di Mann-Kendall
                 </a>
@@ -312,7 +312,7 @@ export default function Insights() {
                   href="https://en.wikipedia.org/wiki/Theil%E2%80%93Sen_estimator"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline hover:no-underline"
+                  className="rimando"
                 >
                   Stimatore Theil-Sen
                 </a>
@@ -343,7 +343,7 @@ export default function Insights() {
                   href="https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline hover:no-underline"
+                  className="rimando"
                 >
                   Correlazione di Spearman
                 </a>
@@ -390,7 +390,7 @@ export default function Insights() {
                 href="https://en.wikipedia.org/wiki/False_discovery_rate#Benjamini%E2%80%93Hochberg_procedure"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline hover:no-underline"
+                className="rimando"
               >
                 Benjamini-Hochberg (FDR)
               </a>
@@ -436,7 +436,7 @@ export default function Insights() {
               href="https://github.com/AlbGri/datocrimine/blob/main/scripts/generate_insights.py"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline hover:no-underline"
+              className="rimando"
             >
               scripts/generate_insights.py
             </a>
@@ -446,7 +446,7 @@ export default function Insights() {
               href="https://github.com/AlbGri/datocrimine/blob/main/docs/insights_report.md"
               target="_blank"
               rel="noopener noreferrer"
-              className="underline hover:no-underline"
+              className="rimando"
             >
               insights_report.md
             </a>

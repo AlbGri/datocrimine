@@ -238,7 +238,7 @@ export default function Guida() {
           Se trovi errori nei dati, nei calcoli o nella comunicazione, scrivi a{" "}
           <a
             href="mailto:datocrimine@albgri.com?subject=Segnalazione%20DatoCrimine"
-            className="text-primary underline hover:no-underline"
+            className="rimando"
           >
             datocrimine@albgri.com
           </a>{" "}
@@ -247,7 +247,7 @@ export default function Guida() {
             href="https://github.com/AlbGri/datocrimine/issues"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary underline hover:no-underline"
+            className="rimando"
           >
             issue su GitHub
           </a>{" "}

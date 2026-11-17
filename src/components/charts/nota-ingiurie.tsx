@@ -5,7 +5,7 @@ export function NotaIngiurie() {
     <p className="text-sm text-muted-foreground">
       Totale al netto delle ingiurie, depenalizzate nel 2016: così gli anni si confrontano a parità
       di reati.{" "}
-      <Link href="/metodologia" className="underline hover:text-foreground">
+      <Link href="/metodologia" className="rimando">
         Dettagli nella Metodologia
       </Link>
     </p>

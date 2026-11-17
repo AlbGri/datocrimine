@@ -33,7 +33,7 @@ const components = {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-primary underline hover:no-underline"
+      className="rimando"
     >
       {children}
     </a>
