@@ -38,7 +38,7 @@ export function MappaSito() {
       <nav
         id="mappa"
         aria-label="Mappa del sito"
-        className={`sticky top-[58px] max-h-[calc(100vh-70px)] overflow-auto text-[0.92rem] max-[760px]:fixed max-[760px]:inset-x-0 max-[760px]:top-auto max-[760px]:bottom-0 max-[760px]:z-40 max-[760px]:max-h-[72vh] max-[760px]:rounded-t-xl max-[760px]:border-t-2 max-[760px]:border-foreground max-[760px]:bg-card max-[760px]:px-4 max-[760px]:pt-3 max-[760px]:pb-[70px] ${aperta ? "" : "max-[760px]:invisible"}`}
+        className={`sticky top-[58px] max-h-[calc(100vh-70px)] overflow-auto pl-px text-[0.92rem] max-[760px]:fixed max-[760px]:inset-x-0 max-[760px]:top-auto max-[760px]:bottom-0 max-[760px]:z-40 max-[760px]:max-h-[72vh] max-[760px]:rounded-t-xl max-[760px]:border-t-2 max-[760px]:border-foreground max-[760px]:bg-card max-[760px]:px-4 max-[760px]:pt-3 max-[760px]:pb-[70px] ${aperta ? "" : "max-[760px]:invisible"}`}
       >
         <h2 className="mb-1.5 text-[1.05rem] font-medium text-muted-foreground">Mappa del sito</h2>
         <ul>
