@@ -29,7 +29,7 @@ export function Header() {
       : pathname === href;
 
   return (
-    <header className="border-b bg-background sticky top-0 z-50">
+    <header className="border-b bg-card sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex h-14 items-center justify-between">
           <Link href="/" className="text-lg font-bold whitespace-nowrap">

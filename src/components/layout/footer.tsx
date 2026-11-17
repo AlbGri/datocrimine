@@ -10,7 +10,7 @@ const FOOTER_LINKS = [
 
 export function Footer() {
   return (
-    <footer className="border-t bg-muted/50 mt-12">
+    <footer className="border-t mt-12">
       <div className="mx-auto max-w-7xl px-4 py-6 text-center text-sm text-muted-foreground space-y-3">
         <nav className="flex justify-center gap-4 flex-wrap" aria-label="Link di approfondimento">
           {FOOTER_LINKS.map((link) => (
