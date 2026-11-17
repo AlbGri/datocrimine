@@ -113,7 +113,7 @@ export default function Home() {
           id="numero-oscuro"
           titolo="Il numero oscuro"
           href="/numero-oscuro"
-          nota="Quanti reati non arrivano a una denuncia, per tipo di reato."
+          nota="Quanti reati non arrivano a una denuncia."
         />
       </Fila>
 
