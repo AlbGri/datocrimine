@@ -7,38 +7,49 @@ const SOTTOTIPI_REATO = new Set<string>(Object.values(gerarchiaReati).flat());
 export const isVoceAutonoma = (codice: string) =>
   codice !== "TOT" && !SOTTOTIPI_REATO.has(codice);
 
+/** Serie dei grafici dello stile comune, in ordine fisso (albgri-stile, STILE_COMUNE.md sez. 7):
+ *  blu petrolio, ruggine, viola, verde bosco, prugna, turchese, ocra, mattone */
+export const SERIE = [
+  "#1d85b0", "#c06325", "#5e3d9e", "#317a45", "#912e6e", "#009f98", "#9d6d1c", "#843b3e",
+] as const;
+const [S1, S2, S3, S4, S5, S6, S7] = SERIE;
+
+// Il colore segue la voce, non la posizione: la stessa voce ha lo stesso colore in ogni grafico
 export const COLORS = {
-  primary: "#2E86AB",
-  secondary: "#E63946",
+  primary: S1,
+  secondary: S2,
 
-  furti: "#1f77b4",
-  violenze: "#d62728",
-  truffe: "#ff7f0e",
-  rapine: "#8B4513",
-  droga: "#9467bd",
-  altro: "#7f7f7f",
-  ingiurie: "#17becf",
+  furti: S1,
+  truffe: S2,
+  violenze: S3,
+  rapine: S4,
+  droga: S5,
+  ingiurie: S6,
+  altro: "#8a8796",
 
-  omicidi: "#d62728",
-  tentati_omicidi: "#ff7f0e",
-  violenze_sessuali: "#8B008B",
-  atti_minori: "#e377c2",
-  rapine_abitazione: "#bcbd22",
-  sequestri: "#17becf",
+  omicidi: S1,
+  tentati_omicidi: S2,
+  violenze_sessuali: S3,
+  rapine_abitazione: S4,
+  atti_minori: S5,
+  sequestri: S6,
 
-  // Demografici
-  stranieri: "#E63946",
-  maschi: "#2563eb",
-  femmine: "#db2777",
-  minori: "#7c3aed",
+  nord: S1,
+  centro: S2,
+  sud: S3,
 
-  // Strutturali
-  mediaNazionale: "#dc2626",
-  verdeCalo: "#16a34a",
-  grigioMedia: "#999999",
-  grigioAltro: "#9ca3af",
-  grigioTesto: "#6b7280",
-  testoScuro: "#333",
+  // Persone denunciate
+  tasso: S1,
+  stranieri: S6,
+  maschi: S3,
+  femmine: S7,
+  minori: S4,
+
+  // Strutturali, dai neutri dello stile comune
+  mediaNazionale: "#26242b",
+  grigioAltro: "#8a8796",
+  grigioTesto: "#625f69",
+  testoScuro: "#26242b",
 } as const;
 
 export const COLORI_ALLARME: Record<string, string> = {
@@ -53,7 +64,7 @@ export const COLORI_ALLARME: Record<string, string> = {
 export type MetricaProfilo = "tasso" | "pct_stranieri" | "pct_maschi" | "pct_femmine" | "pct_minori";
 
 export const METRICHE_PROFILO: { value: MetricaProfilo; label: string; color: string }[] = [
-  { value: "tasso", label: "Tasso per 100k ab.", color: COLORS.maschi },
+  { value: "tasso", label: "Tasso per 100k ab.", color: COLORS.tasso },
   { value: "pct_stranieri", label: "% stranieri", color: COLORS.stranieri },
   { value: "pct_maschi", label: "% maschi", color: COLORS.maschi },
   { value: "pct_femmine", label: "% femmine", color: COLORS.femmine },
@@ -70,7 +81,7 @@ export const BREAKDOWN_LINES = [
 export const COVID_PERIOD = {
   start: 2019.8,
   end: 2021.2,
-  color: "rgba(200, 200, 200, 0.2)",
+  color: "rgba(202, 204, 215, 0.35)",
   label: "COVID-19",
 } as const;
 

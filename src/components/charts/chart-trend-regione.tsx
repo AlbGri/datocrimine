@@ -123,7 +123,7 @@ export function ChartTrendRegione() {
               mode: "lines" as const,
               name: "Media nazionale",
               hovertemplate: "<b>%{fullData.name}</b>: %{y:.2f} per 1.000 ab.<extra></extra>",
-              line: { width: 2, color: COLORS.grigioMedia, dash: "dash" as const },
+              line: { width: 2, color: COLORS.mediaNazionale, dash: "dash" as const },
             }] : []),
           ]}
           key={metrica}
@@ -131,8 +131,8 @@ export function ChartTrendRegione() {
             separators: PLOTLY_IT_SEPARATORS,
             dragmode: false as const,
             hovermode: "x unified" as const,
-            plot_bgcolor: "white",
-            paper_bgcolor: "white",
+            plot_bgcolor: "rgba(0,0,0,0)",
+            paper_bgcolor: "rgba(0,0,0,0)",
             height: CHART_HEIGHT_SMALL,
             xaxis: getAxisYear(isMobile),
             yaxis: { ...AXIS_FIXED, title: { text: isAssoluto ? "Delitti denunciati" : "Tasso per 1.000 ab.", font: { size: PLOTLY_FONT.axisTitle } }, ...(isAssoluto && { tickformat: "~s", hoverformat: ",.0f" }) },

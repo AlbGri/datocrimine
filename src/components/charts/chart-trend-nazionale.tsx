@@ -107,7 +107,7 @@ export function ChartTrendNazionale() {
       hovertemplate: isAssoluto
         ? "<b>%{fullData.name}</b><br>Anno: %{x}<br>Delitti: %{y:,.0f}<extra></extra>"
         : "<b>%{fullData.name}</b><br>Anno: %{x}<br>%{y:.2f} per 1.000 ab.<extra></extra>",
-      line: { width: 2, color: COLORI_CATEGORIE[cat] ?? COLORS.grigioMedia },
+      line: { width: 2, color: COLORI_CATEGORIE[cat] ?? COLORS.altro },
       marker: { size: isMobile ? 4 : 6 },
     };
   });
@@ -208,8 +208,8 @@ export function ChartTrendNazionale() {
             yaxis: { ...AXIS_FIXED, title: { text: isAssoluto ? "Delitti denunciati" : "Tasso per 1.000 ab.", font: { size: PLOTLY_FONT.axisTitle } }, ...(isAssoluto && { tickformat: "~s", hoverformat: ",.0f" }) },
             dragmode: false,
             hovermode: "closest" as const,
-            plot_bgcolor: "white",
-            paper_bgcolor: "white",
+            plot_bgcolor: "rgba(0,0,0,0)",
+            paper_bgcolor: "rgba(0,0,0,0)",
             height: isMobile ? CHART_HEIGHT_MINI : CHART_HEIGHT,
             margin: isMobile ? { l: 45, r: 20, t: 20, b: 60 } : { l: 50, r: 20, t: 20, b: 50 },
             legend: isTipologia

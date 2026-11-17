@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { COLORS, CHART_HEIGHT_SMALL, PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
+import { COLORS, SERIE, CHART_HEIGHT_SMALL, PLOTLY_CONFIG, AXIS_FIXED } from "@/lib/config";
 import { PLOTLY_IT_SEPARATORS, fmtPct, fmtSigned } from "@/lib/format";
 import propensione from "@/data/propensione_denuncia.json";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -53,7 +53,7 @@ const macroCat2023 = Object.fromEntries(
 const mediaNazionale2023 = Object.fromEntries(
   categorieMacro.map((cat) => [cat, pct(cat, "Italia", "2022-2023")]),
 );
-const coloriMacro = [COLORS.primary, COLORS.secondary, COLORS.truffe, COLORS.droga];
+const coloriMacro = SERIE.slice(0, 4);
 
 // Confronto storico per macroarea, tutti i singoli reati
 const reatiStorico = [
@@ -116,7 +116,7 @@ export function ChartNumeroOscuro() {
               x: pctNonDenunciati,
               orientation: "h" as const,
               type: "bar",
-              marker: { color: "#d3d3d3" },
+              marker: { color: COLORS.grigioAltro },
               text: pctNonDenunciati.map((v) => fmtPct(v, 0)),
               textposition: "inside" as const,
               hovertemplate: "<b>%{y}</b><br>%{fullData.name}: %{x}%<extra></extra>",
@@ -130,8 +130,8 @@ export function ChartNumeroOscuro() {
             legend: { orientation: "h" as const, y: -0.22 },
             margin: { t: 20, l: 150, r: 20, b: 60 },
             dragmode: false,
-            plot_bgcolor: "white",
-            paper_bgcolor: "white",
+            plot_bgcolor: "rgba(0,0,0,0)",
+            paper_bgcolor: "rgba(0,0,0,0)",
             separators: PLOTLY_IT_SEPARATORS,
           }}
           config={PLOTLY_CONFIG}
@@ -158,7 +158,7 @@ export function ChartNumeroOscuro() {
               x: catConfronto,
               y: pct2016,
               type: "bar",
-              marker: { color: "#b0c4de" },
+              marker: { color: COLORS.grigioAltro },
               text: pct2016.map((v) => fmtPct(v)),
               textposition: "outside" as const,
               hovertemplate: "<b>%{x}</b><br>%{fullData.name}: %{y:.1f}%<extra></extra>",
@@ -185,8 +185,8 @@ export function ChartNumeroOscuro() {
             legend: { orientation: "h" as const, y: -0.22 },
             margin: { t: 20, l: 50, r: 20, b: 60 },
             dragmode: false,
-            plot_bgcolor: "white",
-            paper_bgcolor: "white",
+            plot_bgcolor: "rgba(0,0,0,0)",
+            paper_bgcolor: "rgba(0,0,0,0)",
             separators: PLOTLY_IT_SEPARATORS,
           }}
           config={PLOTLY_CONFIG}
@@ -267,8 +267,8 @@ export function ChartNumeroOscuro() {
             legend: { orientation: "h" as const, y: -0.22 },
             margin: { t: 20, l: 50, r: 50, b: 60 },
             dragmode: false,
-            plot_bgcolor: "white",
-            paper_bgcolor: "white",
+            plot_bgcolor: "rgba(0,0,0,0)",
+            paper_bgcolor: "rgba(0,0,0,0)",
             separators: PLOTLY_IT_SEPARATORS,
             shapes: Object.values(mediaNazionale2023).map((val, i) => ({
               type: "line" as const,
@@ -331,7 +331,7 @@ export function ChartNumeroOscuro() {
                     x: macroaree,
                     y: storico2016[reato],
                     type: "bar",
-                    marker: { color: "#b0c4de" },
+                    marker: { color: COLORS.grigioAltro },
                     text: fmtAst(storico2016[reato], asterischi2016[reato]),
                     textposition: "outside" as const,
                     hovertemplate: "<b>%{x}</b><br>%{fullData.name}: %{y:.1f}%<extra></extra>",
@@ -358,8 +358,8 @@ export function ChartNumeroOscuro() {
                   legend: { orientation: "h" as const, y: -0.28 },
                   margin: { t: 10, l: 50, r: 20, b: 60 },
                   dragmode: false,
-                  plot_bgcolor: "white",
-                  paper_bgcolor: "white",
+                  plot_bgcolor: "rgba(0,0,0,0)",
+                  paper_bgcolor: "rgba(0,0,0,0)",
                   separators: PLOTLY_IT_SEPARATORS,
                 }}
                 config={PLOTLY_CONFIG}

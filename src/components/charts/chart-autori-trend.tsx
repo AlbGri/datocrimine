@@ -167,8 +167,8 @@ export function ChartAutoriTrend({ dataType }: Props) {
             },
             dragmode: false,
             hovermode: "closest" as const,
-            plot_bgcolor: "white",
-            paper_bgcolor: "white",
+            plot_bgcolor: "rgba(0,0,0,0)",
+            paper_bgcolor: "rgba(0,0,0,0)",
             height: isMobile ? 300 : CHART_HEIGHT,
             margin: isMobile
               ? { l: 45, r: 45, t: 40, b: 60 }

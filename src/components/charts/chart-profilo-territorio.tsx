@@ -317,8 +317,8 @@ export function ChartProfiloTerritorio({ dataType }: Props) {
             height: isMobile ? CHART_HEIGHT_RANKING_MOBILE : Math.max(CHART_HEIGHT_RANKING, nBars * 28),
             margin: { l: isMobile ? 140 : 200, r: 70, t: 10, b: 40 },
             dragmode: false,
-            plot_bgcolor: "white",
-            paper_bgcolor: "white",
+            plot_bgcolor: "rgba(0,0,0,0)",
+            paper_bgcolor: "rgba(0,0,0,0)",
             showlegend: true,
             legend: { orientation: "h" as const, y: -0.15, x: 0.5, xanchor: "center" as const },
           }}

@@ -97,8 +97,8 @@ export function ChartRankingRegioni({ anno }: Props) {
           height: isMobile ? CHART_HEIGHT_RANKING_MOBILE : CHART_HEIGHT_RANKING,
           margin: { l: isMobile ? 120 : 180, r: 50, t: 10, b: 40 },
           dragmode: false,
-          plot_bgcolor: "white",
-          paper_bgcolor: "white",
+          plot_bgcolor: "rgba(0,0,0,0)",
+          paper_bgcolor: "rgba(0,0,0,0)",
         }}
         config={PLOTLY_CONFIG}
         useResizeHandler

@@ -1,7 +1,7 @@
 "use client";
 
 import { useFetchData } from "@/lib/use-fetch-data";
-import { PLOTLY_CONFIG, PLOTLY_FONT, AXIS_FIXED, getAxisYear, COVID_SHAPES, COVID_ANNOTATIONS, CHART_HEIGHT_MINI } from "@/lib/config";
+import { COLORS, PLOTLY_CONFIG, PLOTLY_FONT, AXIS_FIXED, getAxisYear, COVID_SHAPES, COVID_ANNOTATIONS, CHART_HEIGHT_MINI } from "@/lib/config";
 import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -57,9 +57,9 @@ export type InsightChartConfig = {
    ================================================================ */
 
 const RIPARTIZIONE_COLORS: Record<string, string> = {
-  Nord: "#2E86AB",
-  Centro: "#ff7f0e",
-  "Sud e Isole": "#E63946",
+  Nord: COLORS.nord,
+  Centro: COLORS.centro,
+  "Sud e Isole": COLORS.sud,
 };
 
 function buildRipartizioneTraces(
@@ -130,7 +130,7 @@ function buildDivergenzaTraces(
 
   const upper = medie.map((m, i) => m + stdDevs[i]);
   const lower = medie.map((m, i) => m - stdDevs[i]);
-  const color = template.color || "#2E86AB";
+  const color = template.color || COLORS.primary;
 
   // Converti hex in rgba per il fill semitrasparente
   const hexToRgba = (hex: string, alpha: number) => {
@@ -276,8 +276,8 @@ export function InsightMiniChart({ config, ariaLabel }: { config: InsightChartCo
     },
     margin: { t: 10, l: 55, r: hasDualY ? 55 : 20, b: 40 },
     dragmode: false,
-    plot_bgcolor: "white",
-    paper_bgcolor: "white",
+    plot_bgcolor: "rgba(0,0,0,0)",
+    paper_bgcolor: "rgba(0,0,0,0)",
     separators: PLOTLY_IT_SEPARATORS,
     shapes: COVID_SHAPES,
     annotations: COVID_ANNOTATIONS,

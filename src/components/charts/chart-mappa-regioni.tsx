@@ -224,8 +224,8 @@ export function ChartMappaRegioni({ anno }: Props) {
             height: isMobile ? 350 : CHART_HEIGHT_MAP,
             margin: { r: 0, t: 10, l: 0, b: 50 },
             dragmode: false,
-            plot_bgcolor: "white",
-            paper_bgcolor: "white",
+            plot_bgcolor: "rgba(0,0,0,0)",
+            paper_bgcolor: "rgba(0,0,0,0)",
           }}
           config={PLOTLY_CONFIG}
           useResizeHandler

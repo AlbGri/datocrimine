@@ -183,11 +183,7 @@ function ChartContributi({ dati, anno }: { dati: Contributi; anno: number }) {
     dati.altri.differenza,
     ...dati.aumenti.slice().reverse().map((d) => d.differenza),
   ];
-  const colors = values.map((v, i) =>
-    reati[i] === etichettaAltri
-      ? COLORS.grigioAltro
-      : v >= 0 ? COLORS.secondary : COLORS.verdeCalo
-  );
+  const colors = reati.map((r) => (r === etichettaAltri ? COLORS.grigioAltro : COLORS.primary));
   const hover = (d: VoceContributo) =>
     `<b>${d.reato}</b><br>Differenza: ${fmtSigned(d.differenza, 0)} (${fmtPctSigned(d.variazione_pct)})<br>` +
     `Delitti ${base}: ${fmtNum(d.delitti_base)}<br>Delitti ${anno}: ${fmtNum(d.delitti_corrente)}<br>` +
@@ -222,7 +218,7 @@ function ChartContributi({ dati, anno }: { dati: Contributi; anno: number }) {
             // Su telefono l'area delle barre e' stretta e il titolo verrebbe tagliato
             title: { text: isMobile ? "" : `Differenza rispetto al ${base}` },
             zeroline: true,
-            zerolinecolor: "#999",
+            zerolinecolor: COLORS.grigioAltro,
             zerolinewidth: 1,
           },
           yaxis: {
@@ -231,8 +227,8 @@ function ChartContributi({ dati, anno }: { dati: Contributi; anno: number }) {
           },
           margin: { t: 10, l: isMobile ? 120 : 200, r: 20, b: 50 },
           dragmode: false,
-          plot_bgcolor: "white",
-          paper_bgcolor: "white",
+          plot_bgcolor: "rgba(0,0,0,0)",
+          paper_bgcolor: "rgba(0,0,0,0)",
         }}
         config={PLOTLY_CONFIG}
         useResizeHandler
@@ -381,9 +377,9 @@ function ChartMappaVariazione({
             z: values,
             featureidkey: "properties.reg_istat_code_num",
             colorscale: [
-              [0, COLORS.verdeCalo],
+              [0, "#16a34a"],
               [0.5, "#f5f5f5"],
-              [1, COLORS.mediaNazionale],
+              [1, "#dc2626"],
             ],
             zmin: -maxAbs,
             zmax: maxAbs,
@@ -416,12 +412,12 @@ function ChartMappaVariazione({
             showland: false,
             showlakes: false,
             showcountries: false,
-            bgcolor: "white",
+            bgcolor: "rgba(0,0,0,0)",
           },
           height: isMobile ? 350 : CHART_HEIGHT_MAP,
           margin: { t: 0, b: 0, l: 0, r: 0 },
           dragmode: false,
-          paper_bgcolor: "white",
+          paper_bgcolor: "rgba(0,0,0,0)",
         }}
         config={PLOTLY_CONFIG}
         useResizeHandler
@@ -438,9 +434,6 @@ function ChartRipartizioni({
   ripartizioni: ReportData["variazione_ripartizioni"];
   anno: number;
 }) {
-  const colors = ripartizioni.map((r) =>
-    r.variazione_pct >= 0 ? COLORS.secondary : COLORS.verdeCalo
-  );
 
   return (
     <ChartFullscreenWrapper
@@ -452,7 +445,7 @@ function ChartRipartizioni({
             type: "bar",
             x: ripartizioni.map((r) => r.ripartizione),
             y: ripartizioni.map((r) => r.variazione_pct),
-            marker: { color: colors },
+            marker: { color: COLORS.primary },
             text: ripartizioni.map(
               (r) => fmtPctSigned(r.variazione_pct)
             ),
@@ -469,12 +462,12 @@ function ChartRipartizioni({
             ...AXIS_FIXED,
             title: { text: "Variazione %" },
             zeroline: true,
-            zerolinecolor: "#999",
+            zerolinecolor: COLORS.grigioAltro,
           },
           margin: { t: 20, l: 50, r: 20, b: 40 },
           dragmode: false,
-          plot_bgcolor: "white",
-          paper_bgcolor: "white",
+          plot_bgcolor: "rgba(0,0,0,0)",
+          paper_bgcolor: "rgba(0,0,0,0)",
         }}
         config={PLOTLY_CONFIG}
         useResizeHandler
@@ -515,7 +508,7 @@ function ChartPercezione({ anno }: { anno: number }) {
               size: anni.map((a) => (a === anno ? 12 : 6)),
               line: {
                 color: anni.map((a) =>
-                  a === anno ? "#000" : COLORS.secondary
+                  a === anno ? COLORS.testoScuro : COLORS.secondary
                 ),
                 width: anni.map((a) => (a === anno ? 2 : 0)),
               },
@@ -534,7 +527,7 @@ function ChartPercezione({ anno }: { anno: number }) {
               size: anni.map((a) => (a === anno ? 12 : 6)),
               color: COLORS.primary,
               line: {
-                color: anni.map((a) => (a === anno ? "#000" : COLORS.primary)),
+                color: anni.map((a) => (a === anno ? COLORS.testoScuro : COLORS.primary)),
                 width: anni.map((a) => (a === anno ? 2 : 0)),
               },
             },
@@ -566,8 +559,8 @@ function ChartPercezione({ anno }: { anno: number }) {
           },
           margin: { t: 20, l: 50, r: 50, b: 60 },
           dragmode: false,
-          plot_bgcolor: "white",
-          paper_bgcolor: "white",
+          plot_bgcolor: "rgba(0,0,0,0)",
+          paper_bgcolor: "rgba(0,0,0,0)",
         }}
         config={PLOTLY_CONFIG}
         useResizeHandler
