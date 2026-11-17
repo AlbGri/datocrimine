@@ -4,8 +4,6 @@ import { pageMetadata } from "@/lib/metadata";
 import { KpiSummary } from "@/components/charts/kpi-summary";
 import { SintesiNazionale } from "@/components/charts/sintesi-nazionale";
 import { ChartTrendNazionale } from "@/components/charts/chart-trend-nazionale";
-import { ChartPercezioneVsDati } from "@/components/charts/chart-percezione-vs-dati";
-import { ChartNumeroOscuro } from "@/components/charts/chart-numero-oscuro";
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
 import { PERIODO_DELITTI, ANNO_ULTIMO } from "@/lib/config";
 
@@ -24,13 +22,14 @@ export default function Home() {
 
       <SintesiNazionale />
 
-      <p className="text-sm text-muted-foreground">
+      {/* id: i vecchi link a /#numero-oscuro arrivano qui */}
+      <p id="numero-oscuro" className="text-sm text-muted-foreground">
         I dati si riferiscono ai delitti denunciati alle Forze dell&apos;ordine
         e non rappresentano la totalit&agrave; dei crimini commessi. Per
-        approfondire il divario tra denunce e realt&agrave;, vedi la sezione{" "}
-        <a href="#numero-oscuro" className="rimando">
-          Il Numero Oscuro
-        </a>
+        approfondire il divario tra denunce e realt&agrave;, vedi{" "}
+        <Link href="/numero-oscuro" className="rimando">
+          Il numero oscuro
+        </Link>
         .
       </p>
 
@@ -64,25 +63,6 @@ export default function Home() {
         defaultOpen
       >
         <ChartTrendNazionale />
-      </CollapsibleSection>
-
-      <hr />
-
-      <CollapsibleSection
-        title={`Percezione della Sicurezza vs Delitti Denunciati (${PERIODO_DELITTI})`}
-        description="Confronto tra percezione di insicurezza e dati reali sulle denunce"
-      >
-        <ChartPercezioneVsDati />
-      </CollapsibleSection>
-
-      <hr />
-
-      <CollapsibleSection
-        id="numero-oscuro"
-        title="Il Numero Oscuro: Cosa Non Vediamo"
-        description="Propensione alla denuncia per tipo di reato e territorio"
-      >
-        <ChartNumeroOscuro />
       </CollapsibleSection>
     </main>
   );

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
   CHART_HEIGHT_MAP,
@@ -140,7 +141,11 @@ export function ChartMappaRegioni({ anno }: Props) {
           con alta presenza turistica o pendolarismo mostrano tassi elevati
           perch&eacute; il denominatore &egrave; la popolazione residente, non quella
           effettiva. La propensione alla denuncia varia per tipo di reato e
-          territorio (vedi la sezione Il Numero Oscuro nella pagina Il contesto). I dati mostrano
+          territorio (vedi{" "}
+          <Link href="/numero-oscuro" className="rimando">
+            Il numero oscuro
+          </Link>
+          ). I dati mostrano
           delitti denunciati, non criminalit&agrave; reale.
         </AlertDescription>
       </Alert>

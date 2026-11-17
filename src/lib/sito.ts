@@ -20,6 +20,8 @@ export const MAPPA: (Pagina | Gruppo)[] = [
   {
     titolo: "Capire i dati",
     pagine: [
+      { titolo: "Percezione della sicurezza", href: "/percezione" },
+      { titolo: "Il numero oscuro", href: "/numero-oscuro" },
       { titolo: "Guida alla lettura", href: "/guida" },
       { titolo: "Metodologia", href: "/metodologia" },
       { titolo: "Analisi statistiche", href: "/insights" },
