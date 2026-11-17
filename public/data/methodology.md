@@ -27,15 +27,12 @@ I dati provengono dal portale ufficiale ISTAT ([esploradati.istat.it](https://es
 
 ### Criticità dataset AUTVITTPS
 
-**Copertura temporale e territoriale:**
+**Copertura temporale e territoriale (autori / vittime):**
 
-| Dato | Autori (OFFEND) | Vittime (VICTIM) |
-|------|-----------------|------------------|
-| TOT nazionale | 2007-2022 | Non disponibile* |
-| Reati singoli nazionale | 2007-2024 | 2007-2024 |
-| Regioni (reati singoli) | 2007-2024 | 2007-2024 |
-| Province (reati singoli) | 2022-2024 | 2022-2024 |
-| Province (TOT) | Solo 2022 | Non disponibile* |
+- Totale nazionale: autori 2007-2022, vittime non disponibile*
+- Reati singoli, Italia e regioni: 2007-2024 per autori e vittime
+- Reati singoli, province: 2022-2024 per autori e vittime
+- Totale provinciale: autori solo 2022, vittime non disponibile*
 
 *\*Una stessa persona può essere vittima di più reati: il totale vittime non è calcolabile sommando i singoli reati.*
 
