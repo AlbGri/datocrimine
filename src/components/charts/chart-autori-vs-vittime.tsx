@@ -2,10 +2,9 @@
 
 import { useMemo } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { PLOTLY_CONFIG, PLOTLY_FONT, AXIS_FIXED, COLORS, MIN_CASI } from "@/lib/config";
-import { fmtNum, PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { PLOTLY_FONT, AXIS_FIXED, COLORS, MIN_CASI, ANNO_REATI_AUTORI } from "@/lib/config";
+import { fmtNum } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
 
 interface ReatiRecord {
@@ -70,14 +69,8 @@ export function ChartAutoriVsVittime() {
 
   return (
     <div className="space-y-2">
-      <p className="text-sm text-muted-foreground">
-        Rapporto tra autori denunciati e vittime per ogni reato (2022).
-        Valori &gt; 1 indicano pi&ugrave; autori che vittime (tipico di reati con co-autori),
-        valori &lt; 1 indicano pi&ugrave; vittime che autori identificati.
-      </p>
-
-      <ChartFullscreenWrapper ariaDescription="Grafico rapporto autori su vittime per tipo di reato, 2022">
-        <Plot
+      <Plot
+          descrizione={`Grafico rapporto autori su vittime per tipo di reato, ${ANNO_REATI_AUTORI}`}
           data={[
             {
               type: "bar",
@@ -97,7 +90,6 @@ export function ChartAutoriVsVittime() {
             },
           ]}
           layout={{
-            separators: PLOTLY_IT_SEPARATORS,
             xaxis: {
               ...AXIS_FIXED,
               title: { text: "Rapporto Autori / Vittime" },
@@ -126,15 +118,8 @@ export function ChartAutoriVsVittime() {
                 line: { color: "gray", width: 1.5, dash: "dash" },
               },
             ],
-            dragmode: false,
-            plot_bgcolor: "rgba(0,0,0,0)",
-            paper_bgcolor: "rgba(0,0,0,0)",
           }}
-          config={PLOTLY_CONFIG}
-          useResizeHandler
-          className="w-full"
         />
-      </ChartFullscreenWrapper>
 
       <p className="text-xs text-muted-foreground">
         Scala logaritmica. Linea tratteggiata = parit&agrave; (1 autore per 1 vittima).{" "}

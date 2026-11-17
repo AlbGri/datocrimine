@@ -1,10 +1,12 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useMemo, useCallback } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { VICTIM_DEFAULT } from "@/lib/config";
-import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 import { fmtNum, fmtPctSigned } from "@/lib/format";
+import { useDatiGrafico, useSceltaGrafico } from "@/components/charts/grafico";
+import { useReatoScelto } from "@/lib/use-parametro";
+import { CHI, type DataType } from "@/lib/persone";
 
 interface ProvinciaRecord {
   data_type: "OFFEND" | "VICTIM";
@@ -22,16 +24,14 @@ interface ProvinciaRecord {
 }
 
 interface Props {
-  dataType: "OFFEND" | "VICTIM";
+  dataType: DataType;
+  regione: string;
 }
 
-export function ChartAutoriTrendProvincia({ dataType }: Props) {
+export function ChartAutoriTrendProvincia({ dataType, regione }: Props) {
   const { data, loading, error } = useFetchData<ProvinciaRecord[]>(
     "/data/autori_vittime_province.json"
   );
-  const [codiceReato, setCodiceReato] = useState(VICTIM_DEFAULT);
-  const [regioneSelezionata, setRegioneSelezionata] = useState("");
-  const setRegioneStable = useCallback((v: string) => setRegioneSelezionata(v), []);
 
   // Solo reati con dati multi-anno (escludi TOT che ha solo 2022)
   const reatiDisponibili = useMemo(() => {
@@ -54,28 +54,9 @@ export function ChartAutoriTrendProvincia({ dataType }: Props) {
     return entries.sort((a, b) => a.nome.localeCompare(b.nome, "it"));
   }, [data, dataType]);
 
-  const effectiveReato = useMemo(() => {
-    if (reatiDisponibili.some((r) => r.codice === codiceReato)) return codiceReato;
-    return reatiDisponibili[0]?.codice ?? "CULPINJU";
-  }, [codiceReato, reatiDisponibili]);
-
-  const regioni = useMemo(() => {
-    if (!data) return [];
-    const set = new Set<string>();
-    for (const r of data) {
-      if (r.data_type === dataType && r.codice_reato === effectiveReato) {
-        set.add(r.regione);
-      }
-    }
-    return Array.from(set).sort((a, b) => a.localeCompare(b, "it"));
-  }, [data, dataType, effectiveReato]);
-
-  const { handleSync } = useFilterSync("regione", regioneSelezionata || regioni[0] || "", setRegioneStable);
-
-  const effectiveRegione = useMemo(() => {
-    if (regioni.includes(regioneSelezionata)) return regioneSelezionata;
-    return regioni[0] ?? "";
-  }, [regioneSelezionata, regioni]);
+  const reato = useReatoScelto(reatiDisponibili, VICTIM_DEFAULT);
+  const effectiveReato = reato.codice;
+  const effectiveRegione = regione;
 
   // Anni disponibili per il reato selezionato
   const anniDisponibili = useMemo(() => {
@@ -128,6 +109,22 @@ export function ChartAutoriTrendProvincia({ dataType }: Props) {
       .sort((a, b) => a.provincia.localeCompare(b.provincia));
   }, [data, dataType, effectiveReato, effectiveRegione, anniDisponibili]);
 
+  const periodo = anniDisponibili.length
+    ? `${anniDisponibili[0]}-${anniDisponibili[anniDisponibili.length - 1]}`
+    : "";
+  useSceltaGrafico(`${reato.nome}, ${CHI[dataType].titolo} per provincia, ${regione}, ${periodo}`, {
+    reato: reato.nome,
+  });
+  const righeCsv = useCallback(() => [
+    ["Provincia", ...anniDisponibili.map(String), "Var. %"],
+    ...tabellaData.map((p) => [
+      p.provincia,
+      ...anniDisponibili.map((a) => p.perAnno.get(a) ?? ""),
+      p.variazione !== null ? Number(p.variazione.toFixed(1)) : "",
+    ]),
+  ], [tabellaData, anniDisponibili]);
+  useDatiGrafico(righeCsv);
+
   if (loading)
     return <div className="h-64 animate-pulse bg-muted rounded" />;
   if (error) return <p className="text-destructive">Errore: {error}</p>;
@@ -143,30 +140,12 @@ export function ChartAutoriTrendProvincia({ dataType }: Props) {
           <select
             id="trend-prov-reato"
             value={effectiveReato}
-            onChange={(e) => setCodiceReato(e.target.value)}
+            onChange={(e) => reato.imposta(e.target.value)}
             className="border rounded-md px-3 py-2 text-sm bg-background"
           >
             {reatiDisponibili.map((r) => (
               <option key={r.codice} value={r.codice}>
                 {r.nome}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="trend-prov-regione" className="text-sm font-medium mb-1 flex items-center">
-            Regione
-            <SyncButton onClick={() => handleSync()} />
-          </label>
-          <select
-            id="trend-prov-regione"
-            value={effectiveRegione}
-            onChange={(e) => setRegioneSelezionata(e.target.value)}
-            className="border rounded-md px-3 py-2 text-sm bg-background"
-          >
-            {regioni.map((r) => (
-              <option key={r} value={r}>
-                {r}
               </option>
             ))}
           </select>

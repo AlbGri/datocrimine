@@ -1,11 +1,10 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
 import {
   COLORS,
   CHART_HEIGHT_SMALL,
-  PLOTLY_CONFIG,
   PLOTLY_FONT,
   COVID_SHAPES,
   getCovidAnnotations,
@@ -14,16 +13,18 @@ import {
   getLegendMultiSeries,
   BREAKDOWN_LINES,
   VICTIM_DEFAULT,
+  PERIODO_AUTORI,
 } from "@/lib/config";
-import { fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { fmtPctSigned } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { NotaIngiuriePersone } from "@/components/charts/nota-ingiurie";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
-import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 import { Plot } from "@/components/charts/plot";
+import { useNotaGrafico, useSceltaGrafico } from "@/components/charts/grafico";
+import { useReatoScelto } from "@/lib/use-parametro";
+import { CHI, type DataType } from "@/lib/persone";
 
 interface RegioneRecord {
-  data_type: "OFFEND" | "VICTIM";
+  data_type: DataType;
   codice_regione: string;
   regione: string;
   codice_reato: string;
@@ -42,20 +43,19 @@ interface RegioneRecord {
 }
 
 interface Props {
-  dataType: "OFFEND" | "VICTIM";
+  dataType: DataType;
+  regione: string;
 }
 
 type Metrica = "tasso" | "assoluto";
 
-export function ChartAutoriTrendRegione({ dataType }: Props) {
+export function ChartAutoriTrendRegione({ dataType, regione }: Props) {
   const isMobile = useIsMobile();
   const { data, loading, error } = useFetchData<RegioneRecord[]>(
     "/data/autori_vittime_regioni.json"
   );
-  const [regione, setRegione] = useState("");
-  const setRegioneStable = useCallback((v: string) => setRegione(v), []);
-  const [codiceReato, setCodiceReato] = useState("TOT");
   const [metrica, setMetrica] = useState<Metrica>("tasso");
+  const isAssoluto = metrica === "assoluto";
 
   const reatiDisponibili = useMemo(() => {
     if (!data) return [];
@@ -76,25 +76,8 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
     });
   }, [data, dataType]);
 
-  const effectiveReato = useMemo(() => {
-    if (reatiDisponibili.some((r) => r.codice === codiceReato)) return codiceReato;
-    if (reatiDisponibili.some((r) => r.codice === VICTIM_DEFAULT)) return VICTIM_DEFAULT;
-    return reatiDisponibili[0]?.codice ?? "TOT";
-  }, [codiceReato, reatiDisponibili]);
-
-  const regioni = useMemo(() => {
-    if (!data) return [];
-    const set = new Set<string>();
-    for (const r of data) {
-      if (r.data_type === dataType && r.codice_reato === effectiveReato) {
-        set.add(r.regione);
-      }
-    }
-    return Array.from(set).sort((a, b) => a.localeCompare(b, "it"));
-  }, [data, dataType, effectiveReato]);
-
-  const effectiveRegione = regione || regioni[0] || "";
-  const { handleSync } = useFilterSync("regione", effectiveRegione, setRegioneStable);
+  const reato = useReatoScelto(reatiDisponibili, VICTIM_DEFAULT);
+  const effectiveReato = reato.codice;
 
   // Media nazionale ponderata per il tasso
   const mediaNazionaleTasso = useMemo(() => {
@@ -117,26 +100,45 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
     return map;
   }, [data, dataType, effectiveReato]);
 
+  const regioneData = (data ?? [])
+    .filter(
+      (r) =>
+        r.data_type === dataType &&
+        r.regione === regione &&
+        r.codice_reato === effectiveReato
+    )
+    .sort((a, b) => a.anno - b.anno);
+  const conTasso = regioneData.filter((r) => r.tasso !== null);
+
+  // Variazione primo-ultimo anno
+  const serie = isAssoluto
+    ? regioneData.map((r) => ({ anno: r.anno, valore: r.totale }))
+    : conTasso.map((r) => ({ anno: r.anno, valore: r.tasso! }));
+  const primo = serie[0];
+  const ultimo = serie[serie.length - 1];
+  const variazione =
+    serie.length >= 2 && primo.valore > 0 ? ((ultimo.valore - primo.valore) / primo.valore) * 100 : null;
+
+  useNotaGrafico(
+    variazione === null
+      ? null
+      : `${regione}: ${fmtPctSigned(variazione)} dal ${primo.anno} al ${ultimo.anno}, ${isAssoluto ? "numero assoluto" : "tasso per 100k ab."}`,
+  );
+  const periodo = regioneData.length
+    ? `${regioneData[0].anno}-${regioneData[regioneData.length - 1].anno}`
+    : PERIODO_AUTORI;
+  useSceltaGrafico(`${reato.nome}, ${CHI[dataType].titolo}, ${regione}, ${periodo}`, {
+    reato: reato.nome,
+  });
+
   if (loading)
     return <div className="h-[400px] animate-pulse bg-muted rounded" />;
   if (error) return <p className="text-destructive">Errore: {error}</p>;
   if (!data) return null;
 
-  const isAssoluto = metrica === "assoluto";
-  const selected = regione || regioni[0] || "";
-  const regioneData = data
-    .filter(
-      (r) =>
-        r.data_type === dataType &&
-        r.regione === selected &&
-        r.codice_reato === effectiveReato
-    )
-    .sort((a, b) => a.anno - b.anno);
-
   const anni = regioneData.map((r) => r.anno);
 
   // Tasso regione + media nazionale su asse sinistro
-  const conTasso = regioneData.filter((r) => r.tasso !== null);
   const anniTasso = conTasso.map((r) => r.anno);
   const valoriTasso = conTasso.map((r) => r.tasso);
   const mediaNazArr = anniTasso.map((a) =>
@@ -152,7 +154,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
       x: isAssoluto ? anni : anniTasso,
       y: isAssoluto ? regioneData.map((r) => r.totale) : valoriTasso,
       mode: "lines+markers" as const,
-      name: selected,
+      name: regione,
       hovertemplate: hoverTpl,
       line: { width: 3, color: COLORS.primary },
       marker: { size: 6 },
@@ -187,30 +189,6 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
     });
   }
 
-  // Variazione primo-ultimo anno
-  let variazione: number | null = null;
-  let annoInizio: number | null = null;
-  let annoFine: number | null = null;
-  if (isAssoluto) {
-    if (regioneData.length >= 2) {
-      const primo = regioneData[0];
-      const ultimo = regioneData[regioneData.length - 1];
-      if (primo.totale > 0) {
-        variazione = ((ultimo.totale - primo.totale) / primo.totale) * 100;
-        annoInizio = primo.anno;
-        annoFine = ultimo.anno;
-      }
-    }
-  } else if (conTasso.length >= 2) {
-    const primo = conTasso[0];
-    const ultimo = conTasso[conTasso.length - 1];
-    if (primo.tasso! > 0) {
-      variazione = ((ultimo.tasso! - primo.tasso!) / primo.tasso!) * 100;
-      annoInizio = primo.anno;
-      annoFine = ultimo.anno;
-    }
-  }
-
   return (
     <div className="space-y-3">
       <div className="flex items-end gap-4 flex-wrap">
@@ -221,30 +199,12 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
           <select
             id="trend-reg-reato"
             value={effectiveReato}
-            onChange={(e) => setCodiceReato(e.target.value)}
+            onChange={(e) => reato.imposta(e.target.value)}
             className="border rounded-md px-3 py-2 text-sm bg-background"
           >
             {reatiDisponibili.map((r) => (
               <option key={r.codice} value={r.codice}>
                 {r.nome}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="trend-reg-regione" className="text-sm font-medium mb-1 flex items-center">
-            Regione
-            <SyncButton onClick={() => handleSync()} />
-          </label>
-          <select
-            id="trend-reg-regione"
-            value={selected}
-            onChange={(e) => setRegione(e.target.value)}
-            className="border rounded-md px-3 py-2 text-sm bg-background"
-          >
-            {regioni.map((r) => (
-              <option key={r} value={r}>
-                {r}
               </option>
             ))}
           </select>
@@ -265,62 +225,41 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
         </div>
       </div>
 
-      <ChartFullscreenWrapper
-        ariaDescription={`Trend ${effectiveReato} per ${selected} vs media nazionale con composizione %`}
-      >
-        <Plot
-          key={metrica}
-          data={traces}
-          layout={{
-            separators: PLOTLY_IT_SEPARATORS,
-            dragmode: false as const,
-            hovermode: "closest" as const,
-            plot_bgcolor: "rgba(0,0,0,0)",
-            paper_bgcolor: "rgba(0,0,0,0)",
-            height: CHART_HEIGHT_SMALL,
-            xaxis: getAxisYear(isMobile),
-            yaxis: {
-              ...AXIS_FIXED,
-              title: {
-                text: isAssoluto ? (dataType === "OFFEND" ? "Autori denunciati" : "Vittime") : "Tasso per 100k ab.",
-                font: { color: COLORS.primary, size: PLOTLY_FONT.axisTitle },
-              },
-              ...(isAssoluto && { tickformat: "~s", hoverformat: ",.0f" }),
-              tickfont: { color: COLORS.primary },
-              side: "left",
+      <Plot
+        descrizione={`Trend ${reato.nome} per ${regione} vs media nazionale con composizione %`}
+        key={metrica}
+        data={traces}
+        layout={{
+          hovermode: "closest" as const,
+          height: CHART_HEIGHT_SMALL,
+          xaxis: getAxisYear(isMobile),
+          yaxis: {
+            ...AXIS_FIXED,
+            title: {
+              text: isAssoluto ? CHI[dataType].etichetta : "Tasso per 100k ab.",
+              font: { color: COLORS.primary, size: PLOTLY_FONT.axisTitle },
             },
-            yaxis2: {
-              ...AXIS_FIXED,
-              title: { text: "%", font: { size: PLOTLY_FONT.axisTitle } },
-              overlaying: "y" as const,
-              side: "right",
-              range: [0, 100],
-              showgrid: false,
-            },
-            legend: getLegendMultiSeries(isMobile),
-            margin: isMobile
-              ? { l: 45, r: 45, t: 40, b: 60 }
-              : { l: 60, r: 60, t: 30, b: 80 },
-            shapes: COVID_SHAPES,
-            annotations: getCovidAnnotations(isMobile),
-          }}
-          config={PLOTLY_CONFIG}
-          useResizeHandler
-          className="w-full"
-        />
-      </ChartFullscreenWrapper>
+            ...(isAssoluto && { tickformat: "~s", hoverformat: ",.0f" }),
+            tickfont: { color: COLORS.primary },
+            side: "left",
+          },
+          yaxis2: {
+            ...AXIS_FIXED,
+            title: { text: "%", font: { size: PLOTLY_FONT.axisTitle } },
+            overlaying: "y" as const,
+            side: "right",
+            range: [0, 100],
+            showgrid: false,
+          },
+          legend: getLegendMultiSeries(isMobile),
+          margin: isMobile
+            ? { l: 45, r: 45, t: 40, b: 60 }
+            : { l: 60, r: 60, t: 30, b: 80 },
+          shapes: COVID_SHAPES,
+          annotations: getCovidAnnotations(isMobile),
+        }}
+      />
 
-      {variazione !== null && annoInizio !== null && annoFine !== null && (
-        <p className="text-sm text-muted-foreground">
-          <strong>
-            {selected} ({annoInizio}-{annoFine}):
-          </strong>{" "}
-          <span className="text-foreground">
-            {fmtPctSigned(variazione)}
-          </span>{" "}
-          {isAssoluto ? "numero assoluto" : "tasso per 100k ab."}
-        </p>
-      )}
       {effectiveReato === "TOT" && <NotaIngiuriePersone />}
     </div>
   );

@@ -2,11 +2,13 @@
 
 import { useState, useMemo } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { COLORS, PLOTLY_CONFIG, PLOTLY_FONT, AXIS_FIXED, MetricaProfilo, METRICHE_PROFILO, MIN_CASI, TOP_N, isVoceAutonoma, ANNO_ULTIMO_AUTORI } from "@/lib/config";
-import { fmtNum, fmtPct, PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { COLORS, PLOTLY_FONT, AXIS_FIXED, MetricaProfilo, METRICHE_PROFILO, MIN_CASI, TOP_N, isVoceAutonoma, ANNO_ULTIMO_AUTORI } from "@/lib/config";
+import { fmtNum, fmtPct } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
+import { useSceltaGrafico } from "@/components/charts/grafico";
+import { useParametro } from "@/lib/use-parametro";
+import { CHI } from "@/lib/persone";
 
 interface TrendRecord {
   data_type: "OFFEND" | "VICTIM";
@@ -59,7 +61,6 @@ export function ChartProfiloNazionale({ dataType }: Props) {
     "/data/delitti_italia.json"
   );
   const [metrica, setMetrica] = useState<Metrica>("tasso");
-  const [selectedAnno, setSelectedAnno] = useState<number | null>(null);
   const [expanded, setExpanded] = useState(false);
 
   const popMap = useMemo(() => {
@@ -83,10 +84,14 @@ export function ChartProfiloNazionale({ dataType }: Props) {
     return Array.from(set).sort((a, b) => b - a);
   }, [data, dataType, metrica, popMap]);
 
-  const anno =
-    selectedAnno && anniDisponibili.includes(selectedAnno)
-      ? selectedAnno
-      : anniDisponibili[0] ?? ANNO_ULTIMO_AUTORI;
+  const anniTesto = anniDisponibili.map(String);
+  const [annoTesto, setAnno] = useParametro("anno", anniTesto, anniTesto[0] ?? String(ANNO_ULTIMO_AUTORI));
+  const anno = Number(annoTesto);
+  const etichettaMetrica = METRICHE.find((m) => m.value === metrica)!.label;
+  useSceltaGrafico(
+    `${CHI[dataType].soggetto} per reato, Italia, ${anno}${metrica === "tasso" ? "" : `, ${etichettaMetrica}`}`,
+    { anno },
+  );
 
   const loading = l1 || l2;
   const error = e1 || e2;
@@ -223,7 +228,7 @@ export function ChartProfiloNazionale({ dataType }: Props) {
           <select
             id="profilo-naz-anno"
             value={anno}
-            onChange={(e) => setSelectedAnno(Number(e.target.value))}
+            onChange={(e) => setAnno(e.target.value)}
             className="border rounded-md px-3 py-2 text-sm bg-background"
           >
             {anniDisponibili.map((a) => (
@@ -235,10 +240,8 @@ export function ChartProfiloNazionale({ dataType }: Props) {
         </div>
       </div>
 
-      <ChartFullscreenWrapper
-        ariaDescription={`Profilo criminale nazionale, ${metricaConfig.label} ${subjectLabel} per tipo di reato, ${anno}`}
-      >
         <Plot
+          descrizione={`Profilo criminale nazionale, ${metricaConfig.label} ${subjectLabel} per tipo di reato, ${anno}`}
           data={[
             {
               type: "bar",
@@ -281,7 +284,6 @@ export function ChartProfiloNazionale({ dataType }: Props) {
             },
           ]}
           layout={{
-            separators: PLOTLY_IT_SEPARATORS,
             xaxis: {
               ...AXIS_FIXED,
               title: { text: metricaConfig.label },
@@ -299,15 +301,8 @@ export function ChartProfiloNazionale({ dataType }: Props) {
               t: 10,
               b: 40,
             },
-            dragmode: false,
-            plot_bgcolor: "rgba(0,0,0,0)",
-            paper_bgcolor: "rgba(0,0,0,0)",
           }}
-          config={PLOTLY_CONFIG}
-          useResizeHandler
-          className="w-full"
         />
-      </ChartFullscreenWrapper>
 
       {needsGrouping && (
         <button

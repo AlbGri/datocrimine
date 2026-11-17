@@ -4,7 +4,6 @@ import { Barra } from "@/components/layout/barra";
 import { MappaSito } from "@/components/layout/mappa-sito";
 import { Piede } from "@/components/layout/piede";
 import { ContaVisite } from "@/components/layout/conta-visite";
-import { FilterSyncProvider } from "@/lib/filter-sync-context";
 import { SITE_NAME, SITE_URL } from "@/lib/metadata";
 import { ANNO_PRIMO_AUTORI, ANNO_ULTIMO } from "@/lib/config";
 import "./globals.css";
@@ -76,7 +75,6 @@ export default function RootLayout({
       <body
         className={`${testo.variable} ${titoli.variable} antialiased`}
       >
-        <FilterSyncProvider>
         <Barra />
         <div className="grid grid-cols-[216px_minmax(0,1fr)] items-start gap-x-[18px] px-4 pt-3.5 pb-5 max-[760px]:grid-cols-[minmax(0,1fr)] max-[760px]:px-3 max-[760px]:pt-2.5 max-[760px]:pb-[60px]">
           <MappaSito />
@@ -86,7 +84,6 @@ export default function RootLayout({
           </div>
         </div>
         <ContaVisite />
-        </FilterSyncProvider>
       </body>
     </html>
   );

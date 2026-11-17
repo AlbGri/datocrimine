@@ -2,8 +2,11 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
-import { fmtNum, fmtPct, csvNum } from "@/lib/format";
+import { fmtNum, fmtPct } from "@/lib/format";
+import { VICTIM_DEFAULT } from "@/lib/config";
+import { useDatiGrafico, useSceltaGrafico } from "@/components/charts/grafico";
+import { useParametro, useReatoScelto } from "@/lib/use-parametro";
+import { CHI, type DataType } from "@/lib/persone";
 import { IntestazioneOrdinabile } from "@/components/ui/intestazione-ordinabile";
 
 interface ProvinciaRecord {
@@ -22,7 +25,7 @@ interface ProvinciaRecord {
 }
 
 interface Props {
-  dataType: "OFFEND" | "VICTIM";
+  dataType: DataType;
 }
 
 type SortKey =
@@ -42,71 +45,38 @@ export function ChartAutoriTabellaProvince({ dataType }: Props) {
   const [regioneSelezionata, setRegioneSelezionata] = useState(
     "Tutte le regioni"
   );
-  const setRegioneStable = useCallback((v: string) => setRegioneSelezionata(v), []);
-  const [reatoSelezionato, setReatoSelezionato] = useState("TOT");
-  const [annoSelezionato, setAnnoSelezionato] = useState(2022);
   const [sortKey, setSortKey] = useState<SortKey>("provincia");
   const [sortDir, setSortDir] = useState<SortDir>("asc");
 
-  // Anni disponibili per reato e dataType selezionati
-  const anniDisponibili = useMemo(() => {
-    if (!data) return [2022];
-    const set = new Set<number>();
-    for (const r of data) {
-      if (r.data_type === dataType) set.add(r.anno);
-    }
-    return Array.from(set).sort((a, b) => a - b);
-  }, [data, dataType]);
-
-  // Se anno selezionato non disponibile, usa il piu' recente
-  const effectiveAnno = useMemo(() => {
-    if (anniDisponibili.includes(annoSelezionato)) return annoSelezionato;
-    return anniDisponibili[anniDisponibili.length - 1] ?? 2022;
-  }, [annoSelezionato, anniDisponibili]);
-
-  // Reset reato quando cambia dataType
-  const effectiveReato = useMemo(() => {
-    if (dataType === "OFFEND") return reatoSelezionato;
-    // VICTIM non ha TOT: default al reato con piu' vittime totali
-    if (reatoSelezionato === "TOT" && data) {
-      const totPerReato = new Map<string, number>();
-      for (const r of data) {
-        if (r.data_type === "VICTIM" && r.anno === effectiveAnno) {
-          totPerReato.set(
-            r.codice_reato,
-            (totPerReato.get(r.codice_reato) ?? 0) + r.totale
-          );
-        }
-      }
-      const sorted = [...totPerReato.entries()].sort((a, b) => b[1] - a[1]);
-      return sorted[0]?.[0] ?? reatoSelezionato;
-    }
-    return reatoSelezionato;
-  }, [dataType, reatoSelezionato, data, effectiveAnno]);
-
   const reatiDisponibili = useMemo(() => {
     if (!data) return [];
-    const info = new Map<string, { nome: string; totale: number }>();
+    const info = new Map<string, string>();
     for (const r of data) {
-      if (r.data_type === dataType && r.anno === effectiveAnno) {
-        const prev = info.get(r.codice_reato);
-        if (prev) {
-          prev.totale += r.totale;
-        } else {
-          info.set(r.codice_reato, { nome: r.reato, totale: r.totale });
-        }
-      }
+      if (r.data_type === dataType && !info.has(r.codice_reato)) info.set(r.codice_reato, r.reato);
     }
-    // TOT sempre primo, poi in ordine alfabetico
-    const entries: [string, string][] = Array.from(info.entries()).map(
-      ([codice, { nome }]) => [codice, nome]
-    );
-    return entries.sort((a, b) => {
-      if (a[0] === "TOT") return -1;
-      if (b[0] === "TOT") return 1;
-      return a[1].localeCompare(b[1], "it");
+    return Array.from(info, ([codice, nome]) => ({ codice, nome })).sort((a, b) => {
+      if (a.codice === "TOT") return -1;
+      if (b.codice === "TOT") return 1;
+      return a.nome.localeCompare(b.nome, "it");
     });
-  }, [data, dataType, effectiveAnno]);
+  }, [data, dataType]);
+
+  // VICTIM non ha TOT
+  const reato = useReatoScelto(reatiDisponibili, VICTIM_DEFAULT);
+  const effectiveReato = reato.codice;
+
+  // Anni del reato scelto: il totale per provincia esiste solo per il primo anno
+  const anniDisponibili = useMemo(() => {
+    if (!data) return [];
+    const set = new Set<number>();
+    for (const r of data) {
+      if (r.data_type === dataType && r.codice_reato === effectiveReato) set.add(r.anno);
+    }
+    return Array.from(set).sort((a, b) => a - b);
+  }, [data, dataType, effectiveReato]);
+  const anniTesto = anniDisponibili.map(String);
+  const [annoTesto, setAnno] = useParametro("anno", anniTesto, anniTesto[anniTesto.length - 1]);
+  const effectiveAnno = Number(annoTesto);
 
   const regioni = useMemo(() => {
     if (!data) return [];
@@ -116,8 +86,6 @@ export function ChartAutoriTabellaProvince({ dataType }: Props) {
     }
     return Array.from(set).sort((a, b) => a.localeCompare(b, "it"));
   }, [data, dataType]);
-
-  const { handleSync } = useFilterSync("regione", regioneSelezionata, setRegioneStable);
 
   const handleSort = useCallback(
     (key: SortKey) => {
@@ -167,43 +135,28 @@ export function ChartAutoriTabellaProvince({ dataType }: Props) {
     });
   }, [data, dataType, effectiveReato, effectiveAnno, regioneSelezionata, sortKey, sortDir]);
 
-  if (loading)
-    return <div className="h-64 animate-pulse bg-muted rounded" />;
-  if (error) return <p className="text-destructive">Errore: {error}</p>;
-  if (!data) return null;
-
-  const handleDownloadCsv = () => {
-    const header = [
-      "Provincia",
-      "Regione",
-      "Totale",
-      "Stranieri",
-      "% Stranieri",
-      "Minori",
-      "% Minori",
-    ];
-    const rows = righe.map((r) => [
+  useSceltaGrafico(`${reato.nome}, ${CHI[dataType].titolo} per provincia, ${effectiveAnno}`, {
+    reato: reato.nome,
+    anno: effectiveAnno,
+  });
+  const righeCsv = useCallback(() => [
+    ["Provincia", "Regione", "Totale", "Stranieri", "% Stranieri", "Minori", "% Minori"],
+    ...righe.map((r) => [
       r.provincia,
       r.regione,
       r.totale,
       r.stranieri,
-      csvNum(r.pct_stranieri, 1),
+      Number(r.pct_stranieri.toFixed(1)),
       r.minori,
-      r.pct_minori != null ? csvNum(r.pct_minori, 1) : "",
-    ]);
-    const csv = [header, ...rows].map((row) => row.join(";")).join("\n");
-    const blob = new Blob(["\uFEFF" + csv], {
-      type: "text/csv;charset=utf-8;",
-    });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `province_${dataType.toLowerCase()}_${effectiveReato}_${effectiveAnno}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
+      r.pct_minori != null ? Number(r.pct_minori.toFixed(1)) : "",
+    ]),
+  ], [righe]);
+  useDatiGrafico(righeCsv);
 
-
+  if (loading)
+    return <div className="h-64 animate-pulse bg-muted rounded" />;
+  if (error) return <p className="text-destructive">Errore: {error}</p>;
+  if (!data) return null;
 
   return (
     <div className="space-y-4">
@@ -218,23 +171,19 @@ export function ChartAutoriTabellaProvince({ dataType }: Props) {
           <select
             id="reato-prov-select"
             value={effectiveReato}
-            onChange={(e) => setReatoSelezionato(e.target.value)}
+            onChange={(e) => reato.imposta(e.target.value)}
             className="border rounded-md px-3 py-2 text-sm bg-background"
           >
-            {reatiDisponibili.map(([codice, nome]) => (
-              <option key={codice} value={codice}>
-                {nome}
+            {reatiDisponibili.map((r) => (
+              <option key={r.codice} value={r.codice}>
+                {r.nome}
               </option>
             ))}
           </select>
         </div>
         <div>
-          <label
-            htmlFor="regione-prov-select"
-            className="text-sm font-medium mb-1 flex items-center"
-          >
+          <label htmlFor="regione-prov-select" className="block text-sm font-medium mb-1">
             Filtra per regione
-            <SyncButton onClick={() => handleSync()} />
           </label>
           <select
             id="regione-prov-select"
@@ -261,7 +210,7 @@ export function ChartAutoriTabellaProvince({ dataType }: Props) {
             <select
               id="anno-prov-select"
               value={effectiveAnno}
-              onChange={(e) => setAnnoSelezionato(Number(e.target.value))}
+              onChange={(e) => setAnno(e.target.value)}
               className="border rounded-md px-3 py-2 text-sm bg-background"
             >
               {anniDisponibili.map((a) => (
@@ -272,12 +221,6 @@ export function ChartAutoriTabellaProvince({ dataType }: Props) {
             </select>
           </div>
         )}
-        <button
-          onClick={handleDownloadCsv}
-          className="border rounded-md px-3 py-2 text-sm bg-background hover:bg-muted transition-colors"
-        >
-          Scarica CSV
-        </button>
       </div>
 
       <div className="overflow-x-auto max-h-[250px] overflow-y-auto border rounded-lg">

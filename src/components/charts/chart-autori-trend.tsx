@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { COLORS, CHART_HEIGHT, PLOTLY_CONFIG, PLOTLY_FONT, COVID_SHAPES, getCovidAnnotations, AXIS_FIXED, getAxisYear, getLegendMultiSeries, BREAKDOWN_LINES, VICTIM_DEFAULT, ANNO_ULTIMO_AUTORI } from "@/lib/config";
+import { COLORS, CHART_HEIGHT, PLOTLY_FONT, COVID_SHAPES, getCovidAnnotations, AXIS_FIXED, getAxisYear, getLegendMultiSeries, BREAKDOWN_LINES, VICTIM_DEFAULT, ANNO_ULTIMO_AUTORI } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
-import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { NotaIngiuriePersone } from "@/components/charts/nota-ingiurie";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
+import { useSceltaGrafico } from "@/components/charts/grafico";
+import { useReatoScelto } from "@/lib/use-parametro";
+import { CHI } from "@/lib/persone";
 
 interface TrendRecord {
   data_type: "OFFEND" | "VICTIM";
@@ -34,7 +35,6 @@ export function ChartAutoriTrend({ dataType }: Props) {
   const { data, loading, error } = useFetchData<TrendRecord[]>(
     "/data/autori_vittime_trend.json"
   );
-  const [codiceReato, setCodiceReato] = useState("TOT");
 
   // Lista reati disponibili per il data_type selezionato
   const reatiDisponibili = useMemo(() => {
@@ -62,13 +62,9 @@ export function ChartAutoriTrend({ dataType }: Props) {
     });
   }, [data, dataType]);
 
-  // Se il reato selezionato non esiste per questo dataType, fallback
-  const effectiveReato = useMemo(() => {
-    if (reatiDisponibili.some((r) => r.codice === codiceReato)) return codiceReato;
-    // VICTIM non ha TOT: preferisci un reato con serie lunga
-    if (reatiDisponibili.some((r) => r.codice === VICTIM_DEFAULT)) return VICTIM_DEFAULT;
-    return reatiDisponibili[0]?.codice ?? "TOT";
-  }, [codiceReato, reatiDisponibili]);
+  // VICTIM non ha TOT: si parte da un reato con serie lunga
+  const reato = useReatoScelto(reatiDisponibili, VICTIM_DEFAULT);
+  const effectiveReato = reato.codice;
 
   const filtered = useMemo(() => {
     if (!data) return [];
@@ -77,6 +73,11 @@ export function ChartAutoriTrend({ dataType }: Props) {
       .sort((a, b) => a.anno - b.anno);
   }, [data, dataType, effectiveReato]);
 
+  const anni = filtered.map((d) => d.anno);
+  const annoMin = anni[0];
+  const annoMax = anni[anni.length - 1];
+  useSceltaGrafico(`${reato.nome}, ${CHI[dataType].titolo}, Italia, ${annoMin}-${annoMax}`, { reato: reato.nome });
+
   if (loading)
     return (
       <div className="h-[250px] sm:h-[450px] animate-pulse bg-muted rounded" />
@@ -84,10 +85,6 @@ export function ChartAutoriTrend({ dataType }: Props) {
   if (error) return <p className="text-destructive">Errore: {error}</p>;
   if (!data || filtered.length === 0) return null;
 
-  const anni = filtered.map((d) => d.anno);
-  const reatoLabel = filtered[0]?.reato ?? effectiveReato;
-  const annoMin = anni[0];
-  const annoMax = anni[anni.length - 1];
 
   // Linea totale
   const traces: Plotly.Data[] = [
@@ -131,7 +128,7 @@ export function ChartAutoriTrend({ dataType }: Props) {
           <select
             id="trend-reato-select"
             value={effectiveReato}
-            onChange={(e) => setCodiceReato(e.target.value)}
+            onChange={(e) => reato.imposta(e.target.value)}
             className="border rounded-md px-3 py-2 text-sm bg-background"
           >
             {reatiDisponibili.map((r) => (
@@ -143,8 +140,8 @@ export function ChartAutoriTrend({ dataType }: Props) {
         </div>
       </div>
 
-      <ChartFullscreenWrapper ariaDescription={`Grafico trend ${dataType === "OFFEND" ? "autori" : "vittime"} ${reatoLabel} ${annoMin}-${annoMax}`}>
         <Plot
+          descrizione={`Grafico trend ${CHI[dataType].titolo} ${reato.nome} ${annoMin}-${annoMax}`}
           data={traces}
           layout={{
             xaxis: getAxisYear(isMobile),
@@ -165,24 +162,16 @@ export function ChartAutoriTrend({ dataType }: Props) {
               range: [0, 100],
               showgrid: false,
             },
-            dragmode: false,
             hovermode: "closest" as const,
-            plot_bgcolor: "rgba(0,0,0,0)",
-            paper_bgcolor: "rgba(0,0,0,0)",
             height: isMobile ? 300 : CHART_HEIGHT,
             margin: isMobile
               ? { l: 45, r: 45, t: 40, b: 60 }
               : { l: 60, r: 60, t: 30, b: 50 },
             legend: getLegendMultiSeries(isMobile),
-            separators: PLOTLY_IT_SEPARATORS,
             shapes: COVID_SHAPES,
             annotations: getCovidAnnotations(isMobile),
           }}
-          config={PLOTLY_CONFIG}
-          useResizeHandler
-          className="w-full"
         />
-      </ChartFullscreenWrapper>
 
       {effectiveReato === "TOT" && <NotaIngiuriePersone />}
       {effectiveReato === "TOT" && annoMax < ANNO_ULTIMO_AUTORI && (

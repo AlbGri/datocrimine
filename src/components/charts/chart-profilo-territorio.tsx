@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { PLOTLY_CONFIG, AXIS_FIXED, MetricaProfilo, METRICHE_PROFILO, COLORS, MIN_CASI, TOP_N, isVoceAutonoma, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE, ANNO_ULTIMO_AUTORI } from "@/lib/config";
-import { fmtNum, fmtPct, fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { AXIS_FIXED, MetricaProfilo, METRICHE_PROFILO, COLORS, MIN_CASI, TOP_N, isVoceAutonoma, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE, ANNO_ULTIMO_AUTORI } from "@/lib/config";
+import { fmtNum, fmtPct, fmtPctSigned } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
-import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 import { Plot } from "@/components/charts/plot";
+import { useSceltaGrafico } from "@/components/charts/grafico";
+import { useParametro } from "@/lib/use-parametro";
+import { CHI, type DataType } from "@/lib/persone";
 
 interface RegioneRecord {
   data_type: "OFFEND" | "VICTIM";
@@ -32,7 +33,8 @@ type Metrica = MetricaProfilo;
 const METRICHE = METRICHE_PROFILO;
 
 interface Props {
-  dataType: "OFFEND" | "VICTIM";
+  dataType: DataType;
+  regione: string;
 }
 
 interface ChartItem {
@@ -45,31 +47,13 @@ interface ChartItem {
   altroCount?: number;
 }
 
-export function ChartProfiloTerritorio({ dataType }: Props) {
+export function ChartProfiloTerritorio({ dataType, regione }: Props) {
   const isMobile = useIsMobile();
   const { data, loading, error } = useFetchData<RegioneRecord[]>(
     "/data/autori_vittime_regioni.json"
   );
-  const [selectedRegione, setSelectedRegione] = useState<string | null>(null);
-  const setRegioneStable = useCallback((v: string) => setSelectedRegione(v), []);
-  const [selectedAnno, setSelectedAnno] = useState<number | null>(null);
   const [metrica, setMetrica] = useState<Metrica>("tasso");
   const [expanded, setExpanded] = useState(false);
-
-  const regioni = useMemo(() => {
-    if (!data) return [];
-    const set = new Set<string>();
-    for (const r of data) {
-      if (r.data_type === dataType) set.add(r.regione);
-    }
-    return Array.from(set).sort((a, b) => a.localeCompare(b, "it"));
-  }, [data, dataType]);
-
-  const regione = selectedRegione && regioni.includes(selectedRegione)
-    ? selectedRegione
-    : regioni[0] ?? "Abruzzo";
-
-  const { handleSync } = useFilterSync("regione", regione, setRegioneStable);
 
   const anniDisponibili = useMemo(() => {
     if (!data) return [];
@@ -85,9 +69,14 @@ export function ChartProfiloTerritorio({ dataType }: Props) {
     return Array.from(set).sort((a, b) => b - a);
   }, [data, dataType, regione, metrica]);
 
-  const anno = selectedAnno && anniDisponibili.includes(selectedAnno)
-    ? selectedAnno
-    : anniDisponibili[0] ?? ANNO_ULTIMO_AUTORI;
+  const anniTesto = anniDisponibili.map(String);
+  const [annoTesto, setAnno] = useParametro("anno", anniTesto, anniTesto[0] ?? String(ANNO_ULTIMO_AUTORI));
+  const anno = Number(annoTesto);
+  const etichettaMetrica = METRICHE.find((m) => m.value === metrica)!.label;
+  useSceltaGrafico(
+    `${CHI[dataType].soggetto} per reato, ${regione}, ${anno}${metrica === "tasso" ? "" : `, ${etichettaMetrica}`}`,
+    { anno },
+  );
 
   if (loading)
     return <div className="h-[400px] sm:h-[550px] animate-pulse bg-muted rounded" />;
@@ -227,30 +216,13 @@ export function ChartProfiloTerritorio({ dataType }: Props) {
         </div>
 
         <div>
-          <label htmlFor="profilo-regione" className="text-sm font-medium mb-1 flex items-center">
-            Regione
-            <SyncButton onClick={() => handleSync()} />
-          </label>
-          <select
-            id="profilo-regione"
-            value={regione}
-            onChange={(e) => setSelectedRegione(e.target.value)}
-            className="border rounded-md px-3 py-2 text-sm bg-background"
-          >
-            {regioni.map((r) => (
-              <option key={r} value={r}>{r}</option>
-            ))}
-          </select>
-        </div>
-
-        <div>
           <label htmlFor="profilo-anno" className="block text-sm font-medium mb-1">
             Anno
           </label>
           <select
             id="profilo-anno"
             value={anno}
-            onChange={(e) => setSelectedAnno(Number(e.target.value))}
+            onChange={(e) => setAnno(e.target.value)}
             className="border rounded-md px-3 py-2 text-sm bg-background"
           >
             {anniDisponibili.map((a) => (
@@ -260,10 +232,8 @@ export function ChartProfiloTerritorio({ dataType }: Props) {
         </div>
       </div>
 
-      <ChartFullscreenWrapper
-        ariaDescription={`Profilo criminale ${regione}, ${metricaConfig.label} per tipo di reato, ${anno}`}
-      >
-        <Plot
+      <Plot
+          descrizione={`Profilo criminale ${regione}, ${metricaConfig.label} per tipo di reato, ${anno}`}
           data={[
             {
               type: "bar",
@@ -308,7 +278,6 @@ export function ChartProfiloTerritorio({ dataType }: Props) {
             },
           ]}
           layout={{
-            separators: PLOTLY_IT_SEPARATORS,
             xaxis: {
               ...AXIS_FIXED,
               title: { text: metricaConfig.label },
@@ -316,17 +285,10 @@ export function ChartProfiloTerritorio({ dataType }: Props) {
             yaxis: { ...AXIS_FIXED, automargin: true },
             height: isMobile ? CHART_HEIGHT_RANKING_MOBILE : Math.max(CHART_HEIGHT_RANKING, nBars * 28),
             margin: { l: isMobile ? 140 : 200, r: 70, t: 10, b: 40 },
-            dragmode: false,
-            plot_bgcolor: "rgba(0,0,0,0)",
-            paper_bgcolor: "rgba(0,0,0,0)",
             showlegend: true,
             legend: { orientation: "h" as const, y: -0.15, x: 0.5, xanchor: "center" as const },
           }}
-          config={PLOTLY_CONFIG}
-          useResizeHandler
-          className="w-full"
         />
-      </ChartFullscreenWrapper>
 
       {needsGrouping && (
         <button

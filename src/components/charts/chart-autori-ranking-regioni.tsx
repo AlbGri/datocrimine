@@ -2,11 +2,13 @@
 
 import { useState, useMemo } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { PLOTLY_CONFIG, AXIS_FIXED, COLORS, METRICHE_PROFILO, VICTIM_DEFAULT, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE, MEDIA_ANNOTATION_FONT } from "@/lib/config";
-import { fmtNum, fmtPct, PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { AXIS_FIXED, COLORS, METRICHE_PROFILO, VICTIM_DEFAULT, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE, MEDIA_ANNOTATION_FONT } from "@/lib/config";
+import { fmtNum, fmtPct } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
+import { useSceltaGrafico } from "@/components/charts/grafico";
+import { useParametro, useReatoScelto } from "@/lib/use-parametro";
+import { CHI } from "@/lib/persone";
 
 interface RegioneRecord {
   data_type: "OFFEND" | "VICTIM";
@@ -38,8 +40,6 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
   const { data, loading, error } = useFetchData<RegioneRecord[]>(
     "/data/autori_vittime_regioni.json"
   );
-  const [codiceReato, setCodiceReato] = useState("TOT");
-  const [anno, setAnno] = useState(2022);
   const [metrica, setMetrica] = useState<Metrica>("tasso");
   const reatiDisponibili = useMemo(() => {
     if (!data) return [];
@@ -60,11 +60,8 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
     });
   }, [data, dataType]);
 
-  const effectiveReato = useMemo(() => {
-    if (reatiDisponibili.some((r) => r.codice === codiceReato)) return codiceReato;
-    if (reatiDisponibili.some((r) => r.codice === VICTIM_DEFAULT)) return VICTIM_DEFAULT;
-    return reatiDisponibili[0]?.codice ?? "TOT";
-  }, [codiceReato, reatiDisponibili]);
+  const reato = useReatoScelto(reatiDisponibili, VICTIM_DEFAULT);
+  const effectiveReato = reato.codice;
 
   const anniDisponibili = useMemo(() => {
     if (!data) return [];
@@ -77,17 +74,11 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
     return Array.from(set).sort((a, b) => a - b);
   }, [data, dataType, effectiveReato]);
 
-  const effectiveAnno = useMemo(() => {
-    if (anniDisponibili.includes(anno)) return anno;
-    return anniDisponibili[anniDisponibili.length - 1] ?? 2022;
-  }, [anno, anniDisponibili]);
+  const anniTesto = anniDisponibili.map(String);
+  const [annoTesto, setAnno] = useParametro("anno", anniTesto, anniTesto[anniTesto.length - 1]);
+  const effectiveAnno = Number(annoTesto);
 
-  if (loading)
-    return <div className="h-[400px] sm:h-[550px] animate-pulse bg-muted rounded" />;
-  if (error) return <p className="text-destructive">Errore: {error}</p>;
-  if (!data) return null;
-
-  const filtered = data.filter(
+  const filtered = (data ?? []).filter(
     (r) =>
       r.data_type === dataType &&
       r.codice_reato === effectiveReato &&
@@ -101,6 +92,24 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
     if ((metrica === "pct_maschi" || metrica === "pct_femmine") && !hasSesso) return "pct_stranieri";
     return metrica;
   })();
+
+  const METRICA_LABELS: Record<Metrica, string> = {
+    pct_stranieri: "% stranieri",
+    pct_minori: "% minori",
+    pct_maschi: "% maschi",
+    pct_femmine: "% femmine",
+    tasso: "Tasso per 100k ab.",
+  };
+  const etichettaMetrica = METRICA_LABELS[effectiveMetrica];
+  useSceltaGrafico(
+    `${reato.nome}, ${CHI[dataType].titolo} per regione, ${effectiveAnno}${effectiveMetrica === "tasso" ? "" : `, ${etichettaMetrica}`}`,
+    { reato: reato.nome, anno: effectiveAnno },
+  );
+
+  if (loading)
+    return <div className="h-[400px] sm:h-[550px] animate-pulse bg-muted rounded" />;
+  if (error) return <p className="text-destructive">Errore: {error}</p>;
+  if (!data) return null;
 
   const getValue = (r: RegioneRecord) => {
     switch (effectiveMetrica) {
@@ -144,14 +153,6 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
     }
   }
 
-  const METRICA_LABELS: Record<Metrica, string> = {
-    pct_stranieri: "% stranieri",
-    pct_minori: "% minori",
-    pct_maschi: "% maschi",
-    pct_femmine: "% femmine",
-    tasso: "Tasso per 100k ab.",
-  };
-  const etichettaMetrica = METRICA_LABELS[effectiveMetrica];
   const decimali = 1;
 
   const maxVal = Math.max(...valori, 0.1);
@@ -169,7 +170,7 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
           <select
             id="ranking-reg-reato"
             value={effectiveReato}
-            onChange={(e) => setCodiceReato(e.target.value)}
+            onChange={(e) => reato.imposta(e.target.value)}
             className="border rounded-md px-3 py-2 text-sm bg-background"
           >
             {reatiDisponibili.map((r) => (
@@ -210,7 +211,7 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
             <select
               id="ranking-reg-anno"
               value={effectiveAnno}
-              onChange={(e) => setAnno(Number(e.target.value))}
+              onChange={(e) => setAnno(e.target.value)}
               className="border rounded-md px-3 py-2 text-sm bg-background"
             >
               {anniDisponibili.map((a) => (
@@ -221,10 +222,8 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
         )}
       </div>
 
-      <ChartFullscreenWrapper
-        ariaDescription={`Classifica regioni per ${etichettaMetrica}, ${filtered[0]?.reato ?? effectiveReato}, ${effectiveAnno}`}
-      >
         <Plot
+          descrizione={`Classifica regioni per ${etichettaMetrica}, ${reato.nome}, ${effectiveAnno}`}
           data={[
             {
               type: "bar",
@@ -254,7 +253,6 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
             },
           ]}
           layout={{
-            separators: PLOTLY_IT_SEPARATORS,
             xaxis: {
               ...AXIS_FIXED,
               title: { text: etichettaMetrica },
@@ -285,15 +283,8 @@ export function ChartAutoriRankingRegioni({ dataType }: Props) {
             ],
             height: isMobile ? CHART_HEIGHT_RANKING_MOBILE : CHART_HEIGHT_RANKING,
             margin: { l: isMobile ? 130 : 180, r: 60, t: 10, b: 40 },
-            dragmode: false,
-            plot_bgcolor: "rgba(0,0,0,0)",
-            paper_bgcolor: "rgba(0,0,0,0)",
           }}
-          config={PLOTLY_CONFIG}
-          useResizeHandler
-          className="w-full"
         />
-      </ChartFullscreenWrapper>
     </div>
   );
 }

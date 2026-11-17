@@ -15,9 +15,17 @@ import {
   type Righe,
 } from "./esporta-grafico";
 
+type Parametri = Record<string, string | number>;
+
+interface Scelta {
+  titolo: string;
+  parametri: Parametri;
+}
+
 interface Registro {
   nota: (testo: string | null) => void;
   dati: (righe: (() => Righe) | null) => void;
+  scelta: (scelta: Scelta | null) => void;
 }
 
 const RegistroGrafico = createContext<Registro | null>(null);
@@ -40,14 +48,28 @@ export function useDatiGrafico(righe: () => Righe) {
   }, [registro, righe]);
 }
 
+/**
+ * Per i grafici con selettori propri (reato, anno): il titolo con le scelte fatte, che sostituisce
+ * quello della pagina, e i parametri che il link aggiunge a quelli di pagina
+ */
+export function useSceltaGrafico(titolo: string, parametri: Parametri) {
+  const registro = useContext(RegistroGrafico);
+  const chiave = JSON.stringify(parametri);
+  useEffect(() => {
+    registro?.scelta({ titolo, parametri: JSON.parse(chiave) });
+    return () => registro?.scelta(null);
+  }, [registro, titolo, chiave]);
+}
+
 interface GraficoProps {
   /** Ancora della sezione, usata dal link */
   id: string;
+  /** Titolo nell'HTML statico; un grafico con selettori propri lo sostituisce (useSceltaGrafico) */
   titolo: string;
   sottotitolo?: string;
   fonte: Fonte;
   /** I filtri di pagina che definiscono questo grafico, scritti nel link */
-  parametri?: Record<string, string | number>;
+  parametri?: Parametri;
   /** Altezza del segnaposto prima che il grafico entri nello schermo */
   altezza: number;
   /** Falso per le tabelle, che non hanno un'immagine da scaricare */
@@ -58,10 +80,10 @@ interface GraficoProps {
 /** Contenitore di ogni grafico e tabella: titolo, fonte, scarica immagine, copia link, scarica dati */
 export function Grafico({
   id,
-  titolo,
+  titolo: titoloPagina,
   sottotitolo,
   fonte,
-  parametri,
+  parametri: parametriPagina,
   altezza,
   immagine = true,
   children,
@@ -70,11 +92,14 @@ export function Grafico({
   const [visibile, setVisibile] = useState(false);
   const [nota, setNota] = useState<string | null>(null);
   const [righe, setRighe] = useState<(() => Righe) | null>(null);
+  const [scelta, setScelta] = useState<Scelta | null>(null);
   const [avviso, setAvviso] = useState("");
   const registro = useMemo<Registro>(
-    () => ({ nota: setNota, dati: (r) => setRighe(() => r) }),
+    () => ({ nota: setNota, dati: (r) => setRighe(() => r), scelta: setScelta }),
     [],
   );
+  const titolo = scelta?.titolo ?? titoloPagina;
+  const parametri = { ...parametriPagina, ...scelta?.parametri };
 
   // Dati e grafico solo quando la sezione si avvicina allo schermo: le pagine sono aperte e lunghe
   useEffect(() => {
@@ -96,7 +121,7 @@ export function Grafico({
   const figura = () => corpo.current?.querySelector<Figura>(".js-plotly-plot") ?? null;
   const indirizzo = () => {
     const query = new URLSearchParams(
-      Object.entries(parametri ?? {}).map(([k, v]) => [k, slug(String(v))]),
+      Object.entries(parametri).map(([k, v]) => [k, slug(String(v))]),
     ).toString();
     return `${SITE_URL}${window.location.pathname}${query ? `?${query}` : ""}#${id}`;
   };
