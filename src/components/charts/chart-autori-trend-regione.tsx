@@ -17,6 +17,7 @@ import {
 } from "@/lib/config";
 import { fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
+import { NotaIngiuriePersone } from "@/components/charts/nota-ingiurie";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 import { Plot } from "@/components/charts/plot";
@@ -320,6 +321,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
           {isAssoluto ? "numero assoluto" : "tasso per 100k ab."}
         </p>
       )}
+      {effectiveReato === "TOT" && <NotaIngiuriePersone />}
     </div>
   );
 }

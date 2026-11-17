@@ -17,6 +17,7 @@ import {
 } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { NotaIngiuriePersone } from "@/components/charts/nota-ingiurie";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
 
@@ -195,6 +196,7 @@ export function ChartAutoriTrend({ dataType }: Props) {
         />
       </ChartFullscreenWrapper>
 
+      {effectiveReato === "TOT" && <NotaIngiuriePersone />}
       {effectiveReato === "TOT" && annoMax < 2024 && (
         <p className="text-xs text-muted-foreground">
           La serie si ferma al {annoMax} perch&eacute; il dato aggregato (totale per tutti i reati)
