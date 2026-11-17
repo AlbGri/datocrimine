@@ -41,7 +41,7 @@ const components = {
   strong: ({ children }: P) => <strong className="font-bold">{children}</strong>,
   hr: () => <hr className="my-6" />,
   blockquote: ({ children }: P) => (
-    <blockquote className="border-l-4 border-muted pl-4 italic mt-2">
+    <blockquote className="rounded-md border bg-muted px-4 py-3 italic mt-2 [&>p]:mt-0">
       {children}
     </blockquote>
   ),
