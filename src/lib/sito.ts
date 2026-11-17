@@ -26,6 +26,7 @@ export const MAPPA: (Pagina | Gruppo)[] = [
       { titolo: "Metodologia", href: "/metodologia" },
       { titolo: "Analisi statistiche", href: "/insights" },
       { titolo: "Dati e codice", href: "/dati-e-codice" },
+      { titolo: "Chi c'è dietro", href: "/progetto" },
     ],
   },
 ];

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { pageMetadata } from "@/lib/metadata";
 import { PERIODO_DELITTI, PERIODO_AUTORI, ANNO_PRIMO, ANNO_PRIMO_AUTORI } from "@/lib/config";
 
@@ -230,31 +231,13 @@ export default function Guida() {
 
       <hr />
 
-      <section className="space-y-3">
-        <h2 className="text-xl sm:text-2xl font-semibold text-primary">
-          Segnalazione errori
-        </h2>
-        <p>
-          Se trovi errori nei dati, nei calcoli o nella comunicazione, scrivi a{" "}
-          <a
-            href="mailto:datocrimine@albgri.com?subject=Segnalazione%20DatoCrimine"
-            className="rimando"
-          >
-            datocrimine@albgri.com
-          </a>{" "}
-          oppure apri una{" "}
-          <a
-            href="https://github.com/AlbGri/datocrimine/issues"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rimando"
-          >
-            issue su GitHub
-          </a>{" "}
-          (serve un account).
-        </p>
-        <p>Ogni segnalazione viene presa seriamente e valutata.</p>
-      </section>
+      <p>
+        Per segnalare un errore:{" "}
+        <Link href="/progetto#segnalazioni" className="rimando">
+          Chi c&apos;è dietro
+        </Link>
+        .
+      </p>
     </main>
   );
 }

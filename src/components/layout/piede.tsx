@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { DatiAggiornati } from "@/components/layout/dati-aggiornati";
 
 export function Piede() {
@@ -13,7 +14,7 @@ export function Piede() {
         <a href="https://github.com/AlbGri/datocrimine/issues" target="_blank" rel="noopener noreferrer">
           su GitHub
         </a>{" "}
-        ·{" "}
+        · <Link href="/progetto">Chi c&apos;è dietro</Link> ·{" "}
         <a href="https://github.com/AlbGri/datocrimine" target="_blank" rel="noopener noreferrer">
           Codice
         </a>{" "}
