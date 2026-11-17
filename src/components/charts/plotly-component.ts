@@ -9,3 +9,6 @@ import scattergeo from "plotly.js/lib/scattergeo";
 Plotly.register([bar, choropleth, scattergeo]);
 
 export default createPlotlyComponent(Plotly);
+
+// Per l'immagine scaricata: stesso modulo del grafico, nessuna seconda copia di Plotly
+export { Plotly };

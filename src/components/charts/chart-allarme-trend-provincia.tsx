@@ -1,13 +1,11 @@
 "use client";
 
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { COLORS, COLORI_ALLARME, CHART_HEIGHT_SMALL, PLOTLY_CONFIG, PLOTLY_FONT, COVID_SHAPES, COVID_ANNOTATIONS, AXIS_FIXED, getAxisYear, LEGEND_BOTTOM_LEFT, varTriennale, TRIENNALE_PERIODI, PERIODO_DELITTI } from "@/lib/config";
-import { fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { COLORS, COLORI_ALLARME, CHART_HEIGHT_SMALL, PLOTLY_FONT, COVID_SHAPES, COVID_ANNOTATIONS, AXIS_FIXED, getAxisYear, LEGEND_BOTTOM_LEFT, varTriennale, notaTriennale, PERIODO_DELITTI } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
-import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 import { Plot } from "@/components/charts/plot";
+import { useNotaGrafico } from "@/components/charts/grafico";
 
 interface AllarmeProvincia {
   REF_AREA: string;
@@ -22,46 +20,25 @@ interface AllarmeProvincia {
 
 interface Props {
   reato: string;
+  regione: string;
+  provincia: string;
 }
 
 type Metrica = "tasso" | "assoluto";
 
-export function ChartAllarmeTrendProvincia({ reato }: Props) {
+export function ChartAllarmeTrendProvincia({ reato, regione, provincia }: Props) {
   const isMobile = useIsMobile();
   const { data, loading } = useFetchData<AllarmeProvincia[]>(
     "/data/reati_allarme_sociale_province.json"
   );
-  const [regione, setRegione] = useState<string>("");
-  const [provincia, setProvincia] = useState<string>("");
   const [metrica, setMetrica] = useState<Metrica>("tasso");
-  const setRegioneStable = useCallback((v: string) => { setRegione(v); setProvincia(""); }, []);
-
-  const regioni = useMemo(() => {
-    if (!data) return [];
-    return [...new Set(data.map((d) => d.Regione))].sort((a, b) => a.localeCompare(b, "it"));
-  }, [data]);
-
-  const selectedRegione = regione || regioni[0] || "";
-  const { handleSync } = useFilterSync("regione", selectedRegione, setRegioneStable);
-
-  const province = useMemo(() => {
-    if (!data) return [];
-    return [...new Set(
-      data
-        .filter((d) => d.Regione === selectedRegione && d.Reato === reato)
-        .map((d) => d.Territorio)
-    )].sort((a, b) => a.localeCompare(b, "it"));
-  }, [data, selectedRegione, reato]);
-
-  const selectedProvincia = province.includes(provincia)
-    ? provincia
-    : province[0] || "";
+  const isAssoluto = metrica === "assoluto";
 
   // Media regionale ponderata per anno per il reato selezionato
   const mediaRegionale = useMemo(() => {
     if (!data) return new Map<number, number>();
     const reatoRegione = data.filter(
-      (d) => d.Regione === selectedRegione && d.Reato === reato
+      (d) => d.Regione === regione && d.Reato === reato
     );
     const anni = [...new Set(reatoRegione.map((d) => d.Anno))];
     const map = new Map<number, number>();
@@ -72,149 +49,89 @@ export function ChartAllarmeTrendProvincia({ reato }: Props) {
       map.set(anno, totPop > 0 ? (totDel / totPop) * 100_000 : 0);
     }
     return map;
-  }, [data, selectedRegione, reato]);
+  }, [data, regione, reato]);
+
+  const provData = useMemo(
+    () =>
+      (data ?? [])
+        .filter((d) => d.Territorio === provincia && d.Reato === reato)
+        .sort((a, b) => a.Anno - b.Anno),
+    [data, provincia, reato],
+  );
+
+  useNotaGrafico(
+    notaTriennale(
+      provincia,
+      varTriennale(provData.map((d) => ({ anno: d.Anno, tasso: isAssoluto ? d.Delitti : d.Tasso_per_100k }))),
+    ),
+  );
 
   if (loading)
     return <div className="h-[400px] animate-pulse bg-muted rounded" />;
   if (!data) return null;
-
-  const isAssoluto = metrica === "assoluto";
-
-  const provData = data
-    .filter(
-      (d) => d.Territorio === selectedProvincia && d.Reato === reato
-    )
-    .sort((a, b) => a.Anno - b.Anno);
 
   const anni = provData.map((d) => d.Anno);
   const mediaRegArr = anni.map((a) =>
     Number((mediaRegionale.get(a) ?? 0).toFixed(2))
   );
 
-  const varProvincia = varTriennale(
-    provData.map((d) => ({ anno: d.Anno, tasso: isAssoluto ? d.Delitti : d.Tasso_per_100k }))
-  );
-
   const lineColor = COLORI_ALLARME[reato] ?? COLORS.primary;
 
   return (
     <div className="space-y-3">
-      <div className="flex flex-wrap gap-4">
-        <div>
-          <label
-            htmlFor="allarme-prov-regione-select"
-            className="text-sm font-medium mb-1 flex items-center"
-          >
-            Regione
-            <SyncButton onClick={() => handleSync()} />
-          </label>
-          <select
-            id="allarme-prov-regione-select"
-            value={selectedRegione}
-            onChange={(e) => {
-              setRegione(e.target.value);
-              setProvincia("");
-            }}
-            className="border rounded-md px-3 py-2 text-sm bg-background"
-          >
-            {regioni.map((r) => (
-              <option key={r} value={r}>
-                {r}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label
-            htmlFor="allarme-prov-provincia-select"
-            className="block text-sm font-medium mb-1"
-          >
-            Provincia
-          </label>
-          <select
-            id="allarme-prov-provincia-select"
-            value={selectedProvincia}
-            onChange={(e) => setProvincia(e.target.value)}
-            className="border rounded-md px-3 py-2 text-sm bg-background"
-          >
-            {province.map((p) => (
-              <option key={p} value={p}>
-                {p}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label htmlFor="allarme-prov-metrica" className="block text-sm font-medium mb-1">
-            Metrica
-          </label>
-          <select
-            id="allarme-prov-metrica"
-            value={metrica}
-            onChange={(e) => setMetrica(e.target.value as Metrica)}
-            className="border rounded-md px-3 py-2 text-sm bg-background"
-          >
-            <option value="tasso">Tasso per 100k ab.</option>
-            <option value="assoluto">Numero assoluto</option>
-          </select>
-        </div>
+      <div>
+        <label htmlFor="allarme-prov-metrica" className="block text-sm font-medium mb-1">
+          Metrica
+        </label>
+        <select
+          id="allarme-prov-metrica"
+          value={metrica}
+          onChange={(e) => setMetrica(e.target.value as Metrica)}
+          className="border rounded-md px-3 py-2 text-sm bg-background"
+        >
+          <option value="tasso">Tasso per 100k ab.</option>
+          <option value="assoluto">Numero assoluto</option>
+        </select>
       </div>
 
-      <ChartFullscreenWrapper ariaDescription={`Grafico trend ${reato} per ${selectedProvincia} vs media ${selectedRegione}, ${PERIODO_DELITTI}`}>
-        <Plot
-          data={[
-            {
-              x: anni,
-              y: provData.map((d) => isAssoluto ? d.Delitti : d.Tasso_per_100k),
-              mode: "lines+markers" as const,
-              name: selectedProvincia,
-              hovertemplate: isAssoluto
-                ? "<b>%{fullData.name}</b>: %{y:,.0f}<extra></extra>"
-                : "<b>%{fullData.name}</b>: %{y:.2f} per 100k ab.<extra></extra>",
-              line: { width: 3, color: lineColor },
-              marker: { size: 6 },
-            },
-            ...(!isAssoluto ? [{
-              x: anni,
-              y: mediaRegArr,
-              mode: "lines" as const,
-              name: `Media ${selectedRegione}`,
-              hovertemplate: "<b>%{fullData.name}</b>: %{y:.2f} per 100k ab.<extra></extra>",
-              line: { width: 2, color: COLORS.mediaNazionale, dash: "dash" as const },
-            }] : []),
-          ]}
-          key={metrica}
-          layout={{
-            separators: PLOTLY_IT_SEPARATORS,
-            dragmode: false as const,
-            hovermode: "x unified" as const,
-            plot_bgcolor: "rgba(0,0,0,0)",
-            paper_bgcolor: "rgba(0,0,0,0)",
-            height: CHART_HEIGHT_SMALL,
-            xaxis: getAxisYear(isMobile),
-            yaxis: { ...AXIS_FIXED,
-              title: { text: isAssoluto ? "Delitti denunciati" : "Tasso per 100k ab.", font: { size: PLOTLY_FONT.axisTitle } },
-              ...(isAssoluto && { tickformat: "~s", hoverformat: ",.0f" }),
-            },
-            legend: LEGEND_BOTTOM_LEFT,
-            margin: { l: 50, r: 20, t: 20, b: 55 },
-            shapes: COVID_SHAPES,
-            annotations: COVID_ANNOTATIONS,
-          }}
-          config={PLOTLY_CONFIG}
-          useResizeHandler
-          className="w-full"
-        />
-      </ChartFullscreenWrapper>
-
-      {varProvincia !== null && (
-        <p className="text-sm text-muted-foreground">
-          <strong>{selectedProvincia} ({TRIENNALE_PERIODI}):</strong>{" "}
-          <span className="text-foreground">
-            {fmtPctSigned(varProvincia)}
-          </span>
-        </p>
-      )}
+      <Plot
+        descrizione={`Grafico trend ${reato} per ${provincia} vs media ${regione}, ${PERIODO_DELITTI}`}
+        data={[
+          {
+            x: anni,
+            y: provData.map((d) => isAssoluto ? d.Delitti : d.Tasso_per_100k),
+            mode: "lines+markers" as const,
+            name: provincia,
+            hovertemplate: isAssoluto
+              ? "<b>%{fullData.name}</b>: %{y:,.0f}<extra></extra>"
+              : "<b>%{fullData.name}</b>: %{y:.2f} per 100k ab.<extra></extra>",
+            line: { width: 3, color: lineColor },
+            marker: { size: 6 },
+          },
+          ...(!isAssoluto ? [{
+            x: anni,
+            y: mediaRegArr,
+            mode: "lines" as const,
+            name: `Media ${regione}`,
+            hovertemplate: "<b>%{fullData.name}</b>: %{y:.2f} per 100k ab.<extra></extra>",
+            line: { width: 2, color: COLORS.mediaNazionale, dash: "dash" as const },
+          }] : []),
+        ]}
+        key={metrica}
+        layout={{
+          hovermode: "x unified" as const,
+          height: CHART_HEIGHT_SMALL,
+          xaxis: getAxisYear(isMobile),
+          yaxis: { ...AXIS_FIXED,
+            title: { text: isAssoluto ? "Delitti denunciati" : "Tasso per 100k ab.", font: { size: PLOTLY_FONT.axisTitle } },
+            ...(isAssoluto && { tickformat: "~s", hoverformat: ",.0f" }),
+          },
+          legend: LEGEND_BOTTOM_LEFT,
+          margin: { l: 50, r: 20, t: 20, b: 55 },
+          shapes: COVID_SHAPES,
+          annotations: COVID_ANNOTATIONS,
+        }}
+      />
     </div>
   );
 }

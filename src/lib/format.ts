@@ -48,7 +48,17 @@ export function fmtData(iso: string): string {
  */
 export const PLOTLY_IT_SEPARATORS = ",.";
 
-/** Nome in indirizzo: "Rapine in abitazione" → "rapine-in-abitazione" */
+/** "Bergamo" → "provincia di Bergamo"; le province autonome hanno gia' il nome intero */
+export function nomeProvincia(provincia: string): string {
+  return provincia.startsWith("Provincia") ? provincia : `provincia di ${provincia}`;
+}
+
+/** Nome in indirizzo: "Rapine in abitazione" → "rapine-in-abitazione", "Forlì-Cesena" → "forli-cesena" */
 export function slug(testo: string): string {
-  return testo.toLowerCase().replace(/[^a-z]+/g, "-");
+  return testo
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }

@@ -2,10 +2,8 @@
 
 import { useState, useMemo } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { COLORS, COLORI_ALLARME, CHART_HEIGHT_SMALL, PLOTLY_CONFIG, PLOTLY_FONT, COVID_SHAPES, COVID_ANNOTATIONS, AXIS_FIXED, getAxisYear, LEGEND_BOTTOM_LEFT, PERIODO_DELITTI } from "@/lib/config";
-import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { COLORS, COLORI_ALLARME, CHART_HEIGHT_SMALL, PLOTLY_FONT, COVID_SHAPES, COVID_ANNOTATIONS, AXIS_FIXED, getAxisYear, LEGEND_BOTTOM_LEFT, PERIODO_DELITTI } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
 
 interface ReatoAllarme {
@@ -80,16 +78,12 @@ export function ChartAllarmeTrendNazionale({ reatoSelezionato }: Props) {
         </div>
       </div>
 
-      <ChartFullscreenWrapper ariaDescription={`Grafico trend nazionale reati allarme sociale ${PERIODO_DELITTI}, evidenziato: ${reatoSelezionato}`}>
-        <Plot
+      <Plot
+          descrizione={`Grafico trend nazionale reati allarme sociale ${PERIODO_DELITTI}, evidenziato: ${reatoSelezionato}`}
           key={metrica}
           data={traces}
           layout={{
-            separators: PLOTLY_IT_SEPARATORS,
-            dragmode: false as const,
           hovermode: "closest" as const,
-          plot_bgcolor: "rgba(0,0,0,0)",
-          paper_bgcolor: "rgba(0,0,0,0)",
           height: CHART_HEIGHT_SMALL,
           xaxis: getAxisYear(isMobile),
           yaxis: { ...AXIS_FIXED, title: { text: isAssoluto ? "Delitti denunciati" : "Tasso per 100k ab.", font: { size: PLOTLY_FONT.axisTitle } }, ...(isAssoluto && { tickformat: "~s", hoverformat: ",.0f" }) },
@@ -98,11 +92,7 @@ export function ChartAllarmeTrendNazionale({ reatoSelezionato }: Props) {
           shapes: COVID_SHAPES,
           annotations: COVID_ANNOTATIONS,
         }}
-        config={PLOTLY_CONFIG}
-        useResizeHandler
-        className="w-full"
       />
-    </ChartFullscreenWrapper>
     </div>
   );
 }

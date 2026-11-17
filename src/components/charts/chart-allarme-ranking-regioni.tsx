@@ -1,10 +1,9 @@
 "use client";
 
 import { useFetchData } from "@/lib/use-fetch-data";
-import { COLORS, COLORI_ALLARME, PLOTLY_CONFIG, AXIS_FIXED, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE, MEDIA_ANNOTATION_FONT } from "@/lib/config";
-import { fmtNum, PLOTLY_IT_SEPARATORS } from "@/lib/format";
+import { COLORS, COLORI_ALLARME, AXIS_FIXED, CHART_HEIGHT_RANKING, CHART_HEIGHT_RANKING_MOBILE, MEDIA_ANNOTATION_FONT } from "@/lib/config";
+import { fmtNum } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
-import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
 import { Plot } from "@/components/charts/plot";
 
 interface AllarmeRegione {
@@ -46,8 +45,8 @@ export function ChartAllarmeRankingRegioni({ anno, reato }: Props) {
   const barColor = COLORI_ALLARME[reato] ?? COLORS.primary;
 
   return (
-    <ChartFullscreenWrapper ariaDescription={`Classifica regioni per ${reato}, tasso per 100.000 abitanti, anno ${anno}`}>
       <Plot
+        descrizione={`Classifica regioni per ${reato}, tasso per 100.000 abitanti, anno ${anno}`}
         data={[
           {
             type: "bar",
@@ -62,7 +61,6 @@ export function ChartAllarmeRankingRegioni({ anno, reato }: Props) {
           },
         ]}
         layout={{
-          separators: PLOTLY_IT_SEPARATORS,
           xaxis: { ...AXIS_FIXED,
             title: { text: "Tasso per 100k ab." },
             range: [0, Math.max(...tassi) * 1.2],
@@ -92,14 +90,7 @@ export function ChartAllarmeRankingRegioni({ anno, reato }: Props) {
           ],
           height: isMobile ? CHART_HEIGHT_RANKING_MOBILE : CHART_HEIGHT_RANKING,
           margin: { l: isMobile ? 120 : 180, r: 60, t: 10, b: 40 },
-          dragmode: false,
-          plot_bgcolor: "rgba(0,0,0,0)",
-          paper_bgcolor: "rgba(0,0,0,0)",
         }}
-        config={PLOTLY_CONFIG}
-        useResizeHandler
-        className="w-full"
       />
-    </ChartFullscreenWrapper>
   );
 }

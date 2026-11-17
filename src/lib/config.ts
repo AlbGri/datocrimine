@@ -1,5 +1,6 @@
 import gerarchiaReati from "../../public/data/reati_gerarchia.json";
 import datiMeta from "@/data/dati_meta.json";
+import { fmtPctSigned } from "@/lib/format";
 
 // I sottotipi ISTAT (es. furti con destrezza) sono gia' contati nel padre (furti):
 // nei confronti fra reati si mostra solo il padre
@@ -198,6 +199,12 @@ export const PLOTLY_CONFIG: Partial<Plotly.Config> = {
   },
 };
 
+/** Fonti citate sotto ogni grafico e dentro l'immagine scaricata */
+export const FONTI = {
+  delitti: "ISTAT, delitti denunciati dalle forze di polizia all'autorità giudiziaria (DCCV_DELITTIPS)",
+} as const;
+export type Fonte = keyof typeof FONTI;
+
 /** Layout legenda sotto il grafico, orizzontale, allineata a sinistra */
 export const LEGEND_BOTTOM_LEFT = {
   x: 0, y: -0.2, xanchor: "left" as const, orientation: "h" as const,
@@ -257,6 +264,12 @@ export function varTriennale(
 export const TRIENNALE_LABEL = "Var. triennale";
 const anno2 = (anno: number) => `'${String(anno).slice(2)}`;
 export const TRIENNALE_PERIODI = `${TRIENNIO_INIZIALE.map(anno2).join("-")} vs ${TRIENNIO_FINALE.map(anno2).join("-")}`;
+
+/** Riga sotto un andamento, che entra anche nell'immagine scaricata */
+export function notaTriennale(territorio: string, variazione: number | null): string | null {
+  if (variazione === null) return null;
+  return `${territorio}: ${fmtPctSigned(variazione)} dalla media ${TRIENNIO_INIZIALE.join("-")} alla media ${TRIENNIO_FINALE.join("-")}`;
+}
 
 export const COVID_SHAPES = [
   {

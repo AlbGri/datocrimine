@@ -9,6 +9,10 @@
       "numeri": ["4,5%", "4.500", "20%", "50%", "80%", "5%"],
       "perche": "esempi di lettura dei dati, non dati"
     },
+    "src/components/charts/grafico.tsx": {
+      "numeri": ["100%"],
+      "perche": "il grafico si prepara un'altezza di schermo prima di entrarvi, non e' un dato"
+    },
     "src/components/charts/chart-numero-oscuro.tsx": {
       "numeri": ["35%"],
       "perche": "soglia ISTAT dell'errore campionario per l'asterisco"

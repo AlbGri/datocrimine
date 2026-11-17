@@ -5,8 +5,8 @@ import { useFetchData } from "@/lib/use-fetch-data";
 import { varTriennale, TRIENNALE_LABEL, TRIENNIO_TITOLO } from "@/lib/config";
 import { IntestazioneOrdinabile } from "@/components/ui/intestazione-ordinabile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
-import { fmtNum, csvNum } from "@/lib/format";
+import { fmtNum } from "@/lib/format";
+import { useDatiGrafico } from "@/components/charts/grafico";
 
 interface ReatoAllarme {
   REF_AREA: string;
@@ -32,7 +32,6 @@ export function ChartAllarmeTabellaProvince({ anno, reato }: Props) {
     "/data/reati_allarme_sociale_province.json"
   );
   const [regioneSelezionata, setRegioneSelezionata] = useState("Tutte le regioni");
-  const setRegioneStable = useCallback((v: string) => setRegioneSelezionata(v), []);
   const [sortKey, setSortKey] = useState<SortKey>("Tasso_per_100k");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
 
@@ -45,8 +44,6 @@ export function ChartAllarmeTabellaProvince({ anno, reato }: Props) {
     const set = new Set(dataReato.map((d) => d.Regione));
     return Array.from(set).sort((a, b) => a.localeCompare(b, "it"));
   }, [dataReato]);
-
-  const { handleSync } = useFilterSync("regione", regioneSelezionata, setRegioneStable);
 
   const handleSort = useCallback((key: SortKey) => {
     if (key === sortKey) {
@@ -122,31 +119,22 @@ export function ChartAllarmeTabellaProvince({ anno, reato }: Props) {
     });
   }, [dataReato, anno, regioneSelezionata, sortKey, sortDir]);
 
+  const righeCsv = useCallback(() => [
+    ["Provincia", "Regione", `Tasso ${anno}`, `${TRIENNALE_LABEL} (%)`, `Delitti ${anno}`, "Popolazione"],
+    ...righe.map((r) => [
+      r.Territorio,
+      r.Regione,
+      Number(r.Tasso_per_100k.toFixed(2)),
+      r.varNum != null ? Number(r.varNum.toFixed(1)) : "",
+      r.Delitti,
+      r.Popolazione,
+    ]),
+  ], [righe, anno]);
+  useDatiGrafico(righeCsv);
+
   if (loading) return <div className="h-64 animate-pulse bg-muted rounded" />;
   if (error) return <p className="text-destructive">Errore: {error}</p>;
   if (!data) return null;
-
-  const handleDownloadCsv = () => {
-    const header = ["Provincia", "Regione", `Tasso ${anno}`, `${TRIENNALE_LABEL} (%)`, `Delitti ${anno}`, "Popolazione"];
-    const rows = righe.map((r) => [
-      r.Territorio,
-      r.Regione,
-      csvNum(r.Tasso_per_100k, 2),
-      r.varNum != null ? csvNum(r.varNum, 1) : "",
-      r.Delitti,
-      r.Popolazione,
-    ]);
-    const csv = [header, ...rows].map((row) => row.join(";")).join("\n");
-    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `allarme_${reato.replace(/\s/g, "_")}_${anno}${regioneSelezionata !== "Tutte le regioni" ? "_" + regioneSelezionata.replace(/\s/g, "_") : ""}.csv`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-
 
   return (
     <div className="space-y-4">
@@ -159,14 +147,9 @@ export function ChartAllarmeTabellaProvince({ anno, reato }: Props) {
         </AlertDescription>
       </Alert>
 
-      <div className="flex items-end gap-4 flex-wrap">
-        <div>
-          <label
-            htmlFor="regione-allarme-select"
-            className="text-sm font-medium mb-1 flex items-center"
-          >
+      <div>
+          <label htmlFor="regione-allarme-select" className="block text-sm font-medium mb-1">
             Filtra per regione
-            <SyncButton onClick={() => handleSync()} />
           </label>
           <select
             id="regione-allarme-select"
@@ -181,13 +164,6 @@ export function ChartAllarmeTabellaProvince({ anno, reato }: Props) {
               </option>
             ))}
           </select>
-        </div>
-        <button
-          onClick={handleDownloadCsv}
-          className="border rounded-md px-3 py-2 text-sm bg-background hover:bg-muted transition-colors"
-        >
-          Scarica CSV
-        </button>
       </div>
 
       <div className="overflow-x-auto max-h-[250px] overflow-y-auto border rounded-lg">
