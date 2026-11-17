@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-17 — Grafici da condividere
+- Ogni grafico ha un titolo che dice cosa, dove e quando, la fonte sotto e tre pulsanti: scarica l'immagine (con titolo, fonte e indirizzo dentro), copia il link, scarica i dati
+- Il link riapre la stessa vista: reato, regione, provincia e anno scelti restano nell'indirizzo
+- Le sezioni delle pagine sono aperte, con l'indice "In questa pagina"; i grafici si caricano mentre si scorre
+- Regione e provincia si scelgono una volta in cima alla pagina, al posto del pulsante "Applica a tutti i grafici"
+- Trentino-Alto Adige e Valle d'Aosta hanno lo stesso nome in tutti i dati: scegliendole, tabelle e grafici delle province non restano vuoti
+
 ## 2026-11-17 — Aumenti e cali letti allo stesso modo
 - Guida, Metodologia, Numero oscuro, Report e alcune analisi statistiche non danno più per certe le cause dei cambiamenti: un aumento delle denunce può voler dire più reati, più denunce o entrambe le cose, e lo stesso vale per i cali
 - Violenze sessuali: si cita l'indagine ISTAT 2025 sulla violenza contro le donne, che trova vittime e comportamenti di denuncia stabili rispetto al 2014, con i suoi limiti
