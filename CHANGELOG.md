@@ -1,5 +1,8 @@
 # Changelog
 
+## 2026-11-17 — Testi subito nella pagina
+- Report, Metodologia, Dati che mancano e la frase in cima alla home sono già scritti nella pagina: si leggono senza aspettare il caricamento, e li leggono anche i motori di ricerca e le anteprime dei link
+
 ## 2026-11-17 — Mappe e classifiche
 - Le mappe delle regioni usano gradini di colore con i confini scritti in legenda, uguali per tutti gli anni: un colore vuol dire la stessa fascia in ogni anno
 - La mappa delle variazioni del Report è in blu (calo) e ruggine (aumento), non più in verde e rosso: il colore dice la direzione, non se è un bene o un male

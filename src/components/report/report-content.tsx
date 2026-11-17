@@ -17,7 +17,7 @@ import { Pulsante } from "@/components/ui/pulsante";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type GeoJSON = any;
 
-interface ReportData {
+export interface ReportData {
   anno: number;
   contributi: Contributi[];
   variazione_regioni: {
@@ -506,34 +506,8 @@ function ChartPercezione({ anno }: { anno: number }) {
 // Report principale
 // ---------------------------------------------------------------------------
 
-export function ReportContent({ anno }: { anno: string }) {
+export function ReportContent({ anno, data }: { anno: string; data: ReportData }) {
   const annoNum = parseInt(anno, 10);
-  const { data, loading, error } = useFetchData<ReportData>(
-    `/data/report_${anno}.json`
-  );
-
-  if (loading)
-    return (
-      <main>
-        <div className="space-y-6">
-          <div className="h-10 animate-pulse bg-muted rounded w-2/3" />
-          <div className="h-20 animate-pulse bg-muted rounded" />
-          <div className="h-[400px] animate-pulse bg-muted rounded" />
-        </div>
-      </main>
-    );
-
-  if (error)
-    return (
-      <main>
-        <p className="text-destructive">
-          Errore nel caricamento del report: {error}
-        </p>
-      </main>
-    );
-
-  if (!data) return null;
-
   const apertura = fraseReport(
     delittiItalia.map((d) => ({ anno: d.Anno, delitti: d.Delitti, tasso: d.Tasso_per_1000 })),
     annoNum,

@@ -1,6 +1,6 @@
-"use client";
-
-import { useState, useEffect, ReactNode } from "react";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { ReactNode } from "react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 
@@ -74,44 +74,9 @@ const components = {
   ),
 };
 
-/** Pagina di testo letta da un markdown di public/; con `indice` elenca in cima i titoli di secondo livello. */
+/** Pagina di testo da un markdown di public/, letto in costruzione perche' il testo sia nell'HTML; con `indice` elenca in cima i titoli di secondo livello. */
 export function PaginaMarkdown({ src, indice = false }: { src: string; indice?: boolean }) {
-  const [content, setContent] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetch(src)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.text();
-      })
-      .then(setContent)
-      .catch((err: Error) => setError(err.message));
-  }, [src]);
-
-  // Il testo arriva dopo il caricamento: l'ancora dell'indirizzo va raggiunta a mano
-  useEffect(() => {
-    if (content && window.location.hash) {
-      document.getElementById(decodeURIComponent(window.location.hash.slice(1)))?.scrollIntoView();
-    }
-  }, [content]);
-
-  if (error) {
-    return (
-      <main>
-        <p className="text-destructive">Errore nel caricamento: {error}</p>
-      </main>
-    );
-  }
-
-  if (!content) {
-    return (
-      <main>
-        <p className="text-muted-foreground">Caricamento...</p>
-      </main>
-    );
-  }
-
+  const content = readFileSync(join(process.cwd(), "public", src), "utf-8");
   const [titolo, ...resto] = content.split("\n");
   const sezioni = content
     .split("\n")
