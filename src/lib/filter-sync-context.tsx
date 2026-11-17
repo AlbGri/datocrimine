@@ -82,6 +82,7 @@ export function SyncButton({
       type="button"
       onClick={onClick}
       title="Applica a tutti i grafici"
+      aria-label="Applica a tutti i grafici"
       className="ml-1.5 inline-flex items-center justify-center rounded p-0.5 text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
     >
       <svg

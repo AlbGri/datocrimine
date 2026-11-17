@@ -3,6 +3,7 @@
 import { useState, useMemo, useCallback } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { varTriennale, TRIENNALE_LABEL, TRIENNIO_TITOLO } from "@/lib/config";
+import { IntestazioneOrdinabile } from "@/components/ui/intestazione-ordinabile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 import { fmtNum, csvNum } from "@/lib/format";
@@ -140,14 +141,7 @@ export function ChartTabellaProvince({ anno }: Props) {
     URL.revokeObjectURL(url);
   };
 
-  const sortIcon = (key: SortKey) => {
-    if (sortKey !== key) return <span className="text-muted-foreground/40 ml-1">&#8693;</span>;
-    return sortDir === "asc"
-      ? <span className="ml-1">&#9650;</span>
-      : <span className="ml-1">&#9660;</span>;
-  };
 
-  const thClass = "py-2 px-3 font-semibold cursor-pointer select-none hover:text-foreground transition-colors";
 
   return (
     <div className="space-y-4">
@@ -195,24 +189,24 @@ export function ChartTabellaProvince({ anno }: Props) {
         <table className="w-full text-sm border-collapse">
           <thead>
             <tr className="border-b bg-muted sticky top-0">
-              <th className={`text-left ${thClass}`} onClick={() => handleSort("Territorio")}>
-                Provincia{sortIcon("Territorio")}
-              </th>
-              <th className={`text-left ${thClass}`} onClick={() => handleSort("Regione")}>
-                Regione{sortIcon("Regione")}
-              </th>
-              <th className={`text-right ${thClass}`} onClick={() => handleSort("Tasso_per_1000")}>
-                Tasso {anno}{sortIcon("Tasso_per_1000")}
-              </th>
-              <th className={`text-right ${thClass}`} onClick={() => handleSort("variazione")} title={TRIENNIO_TITOLO}>
-                {TRIENNALE_LABEL}{sortIcon("variazione")}
-              </th>
-              <th className={`text-right ${thClass}`} onClick={() => handleSort("Delitti")}>
-                Delitti {anno}{sortIcon("Delitti")}
-              </th>
-              <th className={`text-right ${thClass}`} onClick={() => handleSort("Popolazione")}>
-                Popolazione{sortIcon("Popolazione")}
-              </th>
+              <IntestazioneOrdinabile attiva={sortKey === "Territorio"} verso={sortDir} onOrdina={() => handleSort("Territorio")}>
+                Provincia
+              </IntestazioneOrdinabile>
+              <IntestazioneOrdinabile attiva={sortKey === "Regione"} verso={sortDir} onOrdina={() => handleSort("Regione")}>
+                Regione
+              </IntestazioneOrdinabile>
+              <IntestazioneOrdinabile attiva={sortKey === "Tasso_per_1000"} verso={sortDir} onOrdina={() => handleSort("Tasso_per_1000")} destra>
+                Tasso {anno}
+              </IntestazioneOrdinabile>
+              <IntestazioneOrdinabile attiva={sortKey === "variazione"} verso={sortDir} onOrdina={() => handleSort("variazione")} destra title={TRIENNIO_TITOLO}>
+                {TRIENNALE_LABEL}
+              </IntestazioneOrdinabile>
+              <IntestazioneOrdinabile attiva={sortKey === "Delitti"} verso={sortDir} onOrdina={() => handleSort("Delitti")} destra>
+                Delitti {anno}
+              </IntestazioneOrdinabile>
+              <IntestazioneOrdinabile attiva={sortKey === "Popolazione"} verso={sortDir} onOrdina={() => handleSort("Popolazione")} destra>
+                Popolazione
+              </IntestazioneOrdinabile>
             </tr>
           </thead>
           <tbody>
@@ -228,7 +222,7 @@ export function ChartTabellaProvince({ anno }: Props) {
                   title={r.controtendenza ? "Controtendenza rispetto alla regione" : undefined}
                 >
                   {r.variazione !== "-" ? `${r.variazione}%` : "-"}
-                  {r.controtendenza && <span className="ml-1" aria-label="controtendenza">&#9888;</span>}
+                  {r.controtendenza && <span className="ml-1" role="img" aria-label="controtendenza">&#9888;</span>}
                 </td>
                 <td className="py-2 px-3 text-right">
                   {fmtNum(r.Delitti)}
@@ -241,6 +235,9 @@ export function ChartTabellaProvince({ anno }: Props) {
           </tbody>
         </table>
       </div>
+      {righe.some((r) => r.controtendenza) && (
+        <p className="text-sm text-muted-foreground">&#9888; Controtendenza rispetto alla regione</p>
+      )}
       <NotaIngiurie />
     </div>
   );

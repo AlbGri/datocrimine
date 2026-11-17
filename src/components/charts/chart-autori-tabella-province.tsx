@@ -4,6 +4,7 @@ import { useState, useMemo, useCallback } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 import { fmtNum, fmtPct, csvNum } from "@/lib/format";
+import { IntestazioneOrdinabile } from "@/components/ui/intestazione-ordinabile";
 
 interface ProvinciaRecord {
   data_type: "OFFEND" | "VICTIM";
@@ -202,18 +203,7 @@ export function ChartAutoriTabellaProvince({ dataType }: Props) {
     URL.revokeObjectURL(url);
   };
 
-  const sortIcon = (key: SortKey) => {
-    if (sortKey !== key)
-      return <span className="text-muted-foreground/40 ml-1">&#8693;</span>;
-    return sortDir === "asc" ? (
-      <span className="ml-1">&#9650;</span>
-    ) : (
-      <span className="ml-1">&#9660;</span>
-    );
-  };
 
-  const thClass =
-    "py-2 px-3 font-semibold cursor-pointer select-none hover:text-foreground transition-colors";
 
   return (
     <div className="space-y-4">
@@ -294,48 +284,27 @@ export function ChartAutoriTabellaProvince({ dataType }: Props) {
         <table className="w-full text-sm border-collapse">
           <thead>
             <tr className="border-b bg-muted sticky top-0">
-              <th
-                className={`text-left ${thClass}`}
-                onClick={() => handleSort("provincia")}
-              >
-                Provincia{sortIcon("provincia")}
-              </th>
-              <th
-                className={`text-left ${thClass}`}
-                onClick={() => handleSort("regione")}
-              >
-                Regione{sortIcon("regione")}
-              </th>
-              <th
-                className={`text-right ${thClass}`}
-                onClick={() => handleSort("totale")}
-              >
-                Totale{sortIcon("totale")}
-              </th>
-              <th
-                className={`text-right ${thClass}`}
-                onClick={() => handleSort("stranieri")}
-              >
-                Stranieri{sortIcon("stranieri")}
-              </th>
-              <th
-                className={`text-right ${thClass}`}
-                onClick={() => handleSort("pct_stranieri")}
-              >
-                % Stranieri{sortIcon("pct_stranieri")}
-              </th>
-              <th
-                className={`text-right ${thClass}`}
-                onClick={() => handleSort("minori")}
-              >
-                Minori{sortIcon("minori")}
-              </th>
-              <th
-                className={`text-right ${thClass}`}
-                onClick={() => handleSort("pct_minori")}
-              >
-                % Minori{sortIcon("pct_minori")}
-              </th>
+              <IntestazioneOrdinabile attiva={sortKey === "provincia"} verso={sortDir} onOrdina={() => handleSort("provincia")}>
+                Provincia
+              </IntestazioneOrdinabile>
+              <IntestazioneOrdinabile attiva={sortKey === "regione"} verso={sortDir} onOrdina={() => handleSort("regione")}>
+                Regione
+              </IntestazioneOrdinabile>
+              <IntestazioneOrdinabile attiva={sortKey === "totale"} verso={sortDir} onOrdina={() => handleSort("totale")} destra>
+                Totale
+              </IntestazioneOrdinabile>
+              <IntestazioneOrdinabile attiva={sortKey === "stranieri"} verso={sortDir} onOrdina={() => handleSort("stranieri")} destra>
+                Stranieri
+              </IntestazioneOrdinabile>
+              <IntestazioneOrdinabile attiva={sortKey === "pct_stranieri"} verso={sortDir} onOrdina={() => handleSort("pct_stranieri")} destra>
+                % Stranieri
+              </IntestazioneOrdinabile>
+              <IntestazioneOrdinabile attiva={sortKey === "minori"} verso={sortDir} onOrdina={() => handleSort("minori")} destra>
+                Minori
+              </IntestazioneOrdinabile>
+              <IntestazioneOrdinabile attiva={sortKey === "pct_minori"} verso={sortDir} onOrdina={() => handleSort("pct_minori")} destra>
+                % Minori
+              </IntestazioneOrdinabile>
             </tr>
           </thead>
           <tbody>
