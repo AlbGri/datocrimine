@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-17 — Report, analisi statistiche e pulsanti
+- Il Report si apre con il dato dell'anno e il confronto di lungo periodo in una frase, poi subito con cosa è cambiato; non ripete più la home
+- Analisi statistiche: l'avvertenza sta in una riga, i filtri sono raccolti in "Filtra le schede" e in ogni scheda il dato principale è in grassetto
+- Territori: un'etichetta dice a cosa servono gli anni in cima alla pagina
+- Pulsanti con la stessa veste in tutto il sito
+- Lo script che controlla se l'ISTAT ha pubblicato anni nuovi è nel repository
+
 ## 2026-11-17 — Nuova veste e mappa del sito
 - Al posto del menu c'è la mappa del sito: sul computer a sinistra, sul telefono dal pulsante "Mappa" in basso a destra. In cima a ogni pagina il percorso dice dove ti trovi
 - La home si apre con riquadri che danno già il dato e portano alle pagine: i numeri principali, la tua provincia, i sei reati di allarme sociale, le pagine che spiegano i dati
