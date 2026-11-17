@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-11-17 — Dati che mancano
+- Nuova pagina "Dati che mancano", in Capire i dati: cosa fanno altri paesi per stimare i reati non denunciati, cosa fa l'Italia e la posizione di chi cura il sito, dichiarata come opinione, con una fonte accanto a ogni fatto. Prima era una sezione della Metodologia, ora corretta sulle fonti primarie
+- La Metodologia parla solo dei limiti dei dati e si apre con l'indice delle sezioni
+
 ## 2026-11-17 — Report, analisi statistiche e pulsanti
 - Il Report si apre con il dato dell'anno e il confronto di lungo periodo in una frase, poi subito con cosa è cambiato; non ripete più la home
 - Analisi statistiche: l'avvertenza sta in una riga, i filtri sono raccolti in "Filtra le schede" e in ogni scheda il dato principale è in grassetto

@@ -28,22 +28,12 @@
     {"testo": "24,1%", "valore": 24.1, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Frodi/truffe", "area": "Italia", "edizione": "2022-2023"}, "campo": "pct"},
     {"testo": "18,4%", "valore": 18.4, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Frodi/truffe", "area": "Italia", "edizione": "2015-2016"}, "campo": "pct"},
     {"testo": "~11%", "valore": 10.5, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Violenza da partner", "area": "Italia", "edizione": "2025"}, "campo": "pct"},
-    {"testo": "10,5%", "valore": 10.5, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Violenza da partner", "area": "Italia", "edizione": "2025"}, "campo": "pct"},
     {"testo": "52,6%", "valore": 52.6, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Reati proprietà individuale", "area": "Sud", "edizione": "2022-2023"}, "campo": "pct"},
     {"testo": "44,7%", "valore": 44.7, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Reati proprietà individuale", "area": "Italia", "edizione": "2022-2023"}, "campo": "pct"},
     {"testo": "58,6%", "valore": 58.6, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Reati violenti", "area": "Sud", "edizione": "2022-2023"}, "campo": "pct"},
     {"testo": "41,6%", "valore": 41.6, "file": "src/data/propensione_denuncia.json", "filtro": {"reato": "Reati violenti", "area": "Italia", "edizione": "2022-2023"}, "campo": "pct"}
   ],
   "esterni": [
-    {"testo": "~35.000", "fonte": "Crime Survey for England and Wales, dimensione del campione annuale"},
-    {"testo": "~160.000", "fonte": "National Crime Victimization Survey (USA), persone intervistate ogni anno"},
-    {"testo": "~29.000", "fonte": "ISTAT, Indagine sulla sicurezza dei cittadini 2022-2023, dimensione del campione"},
-    {"testo": "12,6%", "fonte": "https://www.istat.it/comunicato-stampa/la-violenza-contro-le-donne-dentro-e-fuori-la-famiglia-primi-risultati-anno-2025/"},
-    {"testo": "28,8", "fonte": "https://www.ons.gov.uk/aboutus/transparencyandgovernance/freedomofinformationfoi/costsforthecrimesurveyforenglandandwalescontract"},
-    {"testo": "5,8", "fonte": "28,8 milioni di sterline su 5 anni"},
-    {"testo": "182.343", "fonte": "https://www.ons.gov.uk/aboutus/transparencyandgovernance/freedomofinformationfoi/costsforthecrimesurveyforenglandandwalescontract"},
-    {"testo": "0,03%", "fonte": "stima: costo annuo di un'indagine annuale sul budget del Ministero dell'Interno 2025 (circa 31 miliardi)"},
-    {"testo": "0,12", "fonte": "stima: lo stesso costo diviso per la popolazione residente"},
     {"testo": "0,2", "fonte": "docs/confronto-sole24ore.md"},
     {"testo": "1,5%", "fonte": "docs/confronto-sole24ore.md"}
   ],

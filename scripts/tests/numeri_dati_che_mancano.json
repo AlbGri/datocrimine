@@ -1,0 +1,18 @@
+{
+  "nota": "Numeri di public/data/dati-che-mancano.md, con lo stesso formato di numeri_metodologia.json.",
+  "fatti": [],
+  "esterni": [
+    {"testo": "31.000", "fonte": "https://www.ons.gov.uk/peoplepopulationandcommunity/crimeandjustice/methodologies/userguidetocrimestatisticsforenglandandwales"},
+    {"testo": "42%", "fonte": "https://www.ons.gov.uk/peoplepopulationandcommunity/crimeandjustice/methodologies/crimeinenglandandwalesqmi"},
+    {"testo": "240.000", "fonte": "https://bjs.ojp.gov/data-collection/ncvs"},
+    {"testo": "150.000", "fonte": "https://bjs.ojp.gov/data-collection/ncvs"},
+    {"testo": "60.000", "fonte": "https://www.bka.de/DE/UnsereAufgaben/Forschung/ForschungsprojekteUndErgebnisse/Dunkelfeldforschung/SKiD/Methodik/methodik_node.html"},
+    {"testo": "92,8%", "fonte": "https://www.bka.de/DE/Presse/Listenseite_Pressemitteilungen/2026/Presse2026/260420_PM_PKS_SKiD.html?nn=27906"},
+    {"testo": "25%", "fonte": "https://www.bka.de/DE/Presse/Listenseite_Pressemitteilungen/2026/Presse2026/260420_PM_PKS_SKiD.html?nn=27906"},
+    {"testo": "6,2%", "fonte": "https://www.bka.de/DE/Presse/Listenseite_Pressemitteilungen/2026/Presse2026/260420_PM_PKS_SKiD.html?nn=27906"},
+    {"testo": "29.317", "fonte": "https://www.istat.it/wp-content/uploads/2024/11/Report_Percezione-della-sicurezza_2022-23.pdf"},
+    {"testo": "19.518", "fonte": "https://www.istat.it/wp-content/uploads/2025/11/Accessi-PS-donne_violenza_2025.pdf"},
+    {"testo": "1.142.000", "fonte": "https://www.consip.it/bandi-di-gara/gare-e-avvisi/gara-capicati-sicurezza-cittadini-per-istat"}
+  ],
+  "liberi": []
+}

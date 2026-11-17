@@ -83,6 +83,8 @@ La differenza tra reati commessi e reati denunciati (il "numero oscuro") varia s
 
 Il numero oscuro varia nel tempo: un aumento delle denunce può indicare maggiore propensione a denunciare (positivo), non necessariamente più reati. Il raddoppio delle denunce per aggressioni tra 2015-2016 e 2022-2023 ne è un esempio. Le due edizioni dell'indagine comparabili sono l'[Indagine 2015-2016](https://www.istat.it/it/files/2019/02/Reati-contro-la-persona-e-contro-la-proprieta.pdf) e quella 2022-2023.
 
+L'indagine esce ogni 5-7 anni; il confronto con altri paesi, con la posizione dell'autore, è nella pagina [Dati che mancano](/dati-che-mancano).
+
 ### Propensione alla denuncia per territorio
 
 L'Indagine ISTAT sulla Sicurezza dei Cittadini 2022-2023 ([Tavola 6](https://www.istat.it/comunicato-stampa/reati-contro-la-persona-e-contro-la-proprieta-vittime-ed-eventi-2022-2023/)) disaggrega la propensione alla denuncia per macroarea geografica e tipo di reato. I dati sfatano il luogo comune "il Sud denuncia meno": il Sud denuncia più della media nazionale per reati contro la proprietà, reati violenti e reati contro i veicoli, mentre Nord-est e Isole denunciano meno per quasi tutte le categorie.
@@ -182,123 +184,6 @@ Il **divario tra percezione e dati registrati** è documentato e normale. La per
 - **Narrazioni politiche**
 
 Questi fattori sono legittimi e non rendono la percezione "sbagliata". Il progetto mira a visualizzare questa differenza senza giudizi di valore.
-
-## Limiti strutturali: cosa l'Italia potrebbe misurare ma non fa
-
-> La sezione seguente non descrive la metodologia del progetto ma il contesto istituzionale italiano sulla raccolta e pubblicazione dei dati di criminalità. È inclusa perché i limiti dei dati disponibili non sono limiti tecnici ma scelte politiche, e comprenderli è necessario per interpretare correttamente tutto ciò che il progetto mostra.
-
-Questo progetto è limitato ai dati delle denunce non per scelta metodologica, ma perché l'Italia non pubblica dati che altri paesi rendono disponibili.
-
-### Cosa pubblicano UK, USA, Germania (e Italia no)
-
-**Regno Unito:**
-- Crime Survey for England and Wales (CSEW): indagine vittimizzazione annuale su ~35.000 famiglie
-- Dati pubblicati entro 6 mesi, disaggregati per tipologia e territorio
-- Stima numero oscuro per ogni categoria di reato
-
-**Stati Uniti:**
-- National Crime Victimization Survey (NCVS): ~160.000 persone intervistate annualmente dal 1973
-- Pubblicazione trimestrale, dati aperti e linkabili
-- Database FBI integrato con esiti processuali
-
-**Germania:**
-- Dunkelfeldforschung (ricerche numero oscuro) periodiche su scala nazionale
-- Dati sanitari aggregati su violenze (Polizeiliche Kriminalstatistik + dati ospedalieri)
-- Confronto diretto denunce vs vittimizzazioni
-
-### Cosa l'Italia non pubblica (ma potrebbe)
-
-1. **Indagini vittimizzazione annuali**
-   - ISTAT le fa ogni 5-7 anni (ultima 2022-2023, precedente 2015-2016)
-   - Campione più piccolo (~29.000 individui vs 35k famiglie UK)
-   - Non sempre pubblicati dati disaggregati per anno e territorio
-
-2. **Dati sanitari aggregati**
-   - Accessi Pronto Soccorso per violenze esistono ma NON sono pubblici
-   - Database decessi (ReNCaM) esiste con cause dettagliate
-   - Database violenze ospedaliere? No
-   - Motivazione ufficiale: privacy/GDPR
-   - Realtà: dati aggregati per regione/anno non violano privacy. È scelta politica.
-
-3. **Esiti processuali linkabili**
-   - Ministero Giustizia pubblica statistiche ma:
-     - Con 3-5 anni di ritardo
-     - Non linkabili a dataset ISTAT (chiavi diverse)
-     - Formato non standard, difficile analisi temporale
-
-4. **Database integrato Interno-Giustizia-Sanità**
-   - Tecnicamente possibile (abbiamo anagrafe tributaria, sanitaria unificata)
-   - Il sistema VIVA (ISTAT/Pari Opportunità) è un primo passo, ma limitato ai centri antiviolenza: non integra denunce, esiti processuali né dati sanitari
-
-### Perché l'Italia non li pubblica
-
-**Non sono limiti tecnici.** L'Italia ha:
-- Database nazionale decessi con cause (ReNCaM)
-- Tessera sanitaria con accessi PS tracciati
-- Sistema informatico Ministero Interno per denunce
-- Sistema SICP Ministero Giustizia per processi
-
-**Difficoltà oggettive (ma non insormontabili):**
-
-La frammentazione del SSN in 21 sistemi regionali con codifiche sanitarie disomogenee rende la raccolta centralizzata dei dati PS più complessa che nel NHS britannico (centralizzato). Il protocollo "Codice Rosa" per le vittime di violenza in Pronto Soccorso è stato adottato a macchia di leopardo. Il [sistema informativo VIVA](https://www.istat.it/statistiche-per-temi/focus/violenza-sulle-donne/) dell'ISTAT, sviluppato con il Dipartimento Pari Opportunità, monitora centri antiviolenza e case rifugio ma non integra dati di denunce, esiti processuali o accessi sanitari. Queste sono complicazioni reali, non scuse: altri paesi con strutture federali (Germania, USA) le hanno superate.
-
-**Le ragioni di fondo sono però politiche:**
-
-1. **Accountability**: dati reali = governi valutabili su risultati
-   - Esempio: ISTAT stima che il 12,6% delle donne abbia subito violenza da partner ([indagine 2025](https://www.istat.it/comunicato-stampa/la-violenza-contro-le-donne-dentro-e-fuori-la-famiglia-primi-risultati-anno-2025/)), ma solo il 10,5% denuncia. Pubblicare stime annuali di vittimizzazione accanto alle denunce creerebbe pressione immediata su servizi sociali, centri antiviolenza, fondi
-   - Il risultato è che non si misura e non si è obbligati ad agire
-
-2. **Inerzia burocratica**: ogni ministero protegge proprio territorio
-   - Interno: denunce
-   - Giustizia: processi
-   - Salute: PS
-   - Zero coordinamento, zero incentivi a condividere
-
-3. **Costo politico percepito**: nessun governo vuole titoli
-   - "Tasso di denuncia violenza domestica: 10,5%" (dato ISTAT reale)
-   - "Italia: indagini vittimizzazione ogni 5-7 anni, UK ogni anno dal 1982"
-   - Preferiscono parlare di "aumento denunce" (spin positivo: fiducia cittadini)
-
-4. **Assenza pressione pubblica**: cittadini/media non chiedono questi dati
-   - Campagne su sicurezza basate su percezione, non evidenze
-   - Dibattito politico su "emergenza criminalità" usa aneddoti, non statistiche comparative
-
-### Conseguenze dell'opacità
-
-- **Politiche inefficaci**: allocazione risorse su percezione (es. più polizia in centro) invece che su dati (es. violenze domestiche periferie)
-- **Dibattito distorto**: media/politici parlano di "aumento criminalità" citando denunce (dato quasi inutile per crimini con numero oscuro alto)
-- **Non comparabilità internazionale**: impossibile valutare performance Italia vs paesi trasparenti
-- **Mancanza accountability**: nessuno può misurare efficacia politiche sicurezza senza dati pre/post
-
-### Costi pubblicazione dati
-
-UK CSEW: il [contratto fieldwork 2024-2029](https://www.ons.gov.uk/aboutus/transparencyandgovernance/freedomofinformationfoi/costsforthecrimesurveyforenglandandwalescontract) vale £28,8 milioni su 5 anni (~£5,8 milioni/anno solo per le interviste). I costi interni ONS per elaborazione e pubblicazione non sono pubblici.
-- 182.343 interviste previste nel quinquennio, modalità mista (face-to-face + telefono)
-- ROI: politiche basate su evidenze, non percezione
-
-Italia equivalente: con un investimento analogo (~€7 milioni/anno per il solo fieldwork)
-- <0,03% del [budget Ministero Interno](https://www.rgs.mef.gov.it/VERSIONE-I/attivita_istituzionali/formazione_e_gestione_del_bilancio/bilancio_di_previsione/bilancio_finanziario/BF_2025_2027/index.html) (~€31 miliardi in competenza 2025)
-- Meno di €0,12 per abitante/anno
-
-### Cosa si potrebbe fare
-
-**Minimo (costo quasi zero):**
-1. ISTAT indagine vittimizzazione annuale (non ogni 5 anni)
-2. Pubblicare dati PS violenze aggregati per regione/anno (già raccolti)
-3. Ministero Giustizia: esiti denunce linkabili con dati ISTAT
-
-**Ottimale (costo 10-15 milioni/anno):**
-1. Database integrato Interno-Giustizia-Sanità
-2. Indagine vittimizzazione su campione UK-size (50k famiglie)
-3. Dashboard pubblico con confronti internazionali
-4. Audit annuale indipendente qualità dati
-
-**Confronto UK:**
-- 1973: inizia NCVS (USA)
-- 1982: inizia CSEW (UK)
-- 2026: Italia ancora dipendente solo da denunce
-
-**Ritardo: 40+ anni.**
 
 ## Confronti territoriali
 

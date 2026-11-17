@@ -24,6 +24,7 @@ export const MAPPA: (Pagina | Gruppo)[] = [
       { titolo: "Il numero oscuro", href: "/numero-oscuro" },
       { titolo: "Guida alla lettura", href: "/guida" },
       { titolo: "Metodologia", href: "/metodologia" },
+      { titolo: "Dati che mancano", href: "/dati-che-mancano" },
       { titolo: "Analisi statistiche", href: "/insights" },
       { titolo: "Dati e codice", href: "/dati-e-codice" },
       { titolo: "Chi c'è dietro", href: "/progetto" },
