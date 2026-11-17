@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Alegreya, Atkinson_Hyperlegible_Next } from "next/font/google";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
+import { Barra } from "@/components/layout/barra";
+import { MappaSito } from "@/components/layout/mappa-sito";
+import { Piede } from "@/components/layout/piede";
 import { ContaVisite } from "@/components/layout/conta-visite";
 import { FilterSyncProvider } from "@/lib/filter-sync-context";
 import { SITE_NAME, SITE_URL } from "@/lib/metadata";
@@ -76,11 +77,14 @@ export default function RootLayout({
         className={`${testo.variable} ${titoli.variable} antialiased`}
       >
         <FilterSyncProvider>
-        <Header />
-        <div className="min-h-[calc(100vh-3.5rem)]">
-          {children}
+        <Barra />
+        <div className="grid grid-cols-[216px_minmax(0,1fr)] items-start gap-x-[18px] px-4 pt-3.5 pb-5 max-[760px]:grid-cols-[minmax(0,1fr)] max-[760px]:px-3 max-[760px]:pt-2.5 max-[760px]:pb-[60px]">
+          <MappaSito />
+          <div className="min-w-0">
+            {children}
+            <Piede />
+          </div>
         </div>
-        <Footer />
         <ContaVisite />
         </FilterSyncProvider>
       </body>

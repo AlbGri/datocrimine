@@ -582,7 +582,7 @@ export function ReportContent({ anno }: { anno: string }) {
 
   if (loading)
     return (
-      <main className="mx-auto max-w-4xl px-4 py-4 sm:py-8">
+      <main>
         <div className="space-y-6">
           <div className="h-10 animate-pulse bg-muted rounded w-2/3" />
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
@@ -597,7 +597,7 @@ export function ReportContent({ anno }: { anno: string }) {
 
   if (error)
     return (
-      <main className="mx-auto max-w-4xl px-4 py-4 sm:py-8">
+      <main>
         <p className="text-destructive">
           Errore nel caricamento del report: {error}
         </p>
@@ -609,7 +609,7 @@ export function ReportContent({ anno }: { anno: string }) {
   const { executive_summary: es } = data;
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-4 sm:py-8 space-y-10">
+    <main className="space-y-10">
       <header>
         <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em]">
           Criminalit&agrave; in Italia {annoNum}

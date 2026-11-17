@@ -166,7 +166,7 @@ export default function Insights() {
   const hasFilter = categoryFilter !== null || dimensionFilter !== null;
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-4 sm:py-8 space-y-8">
+    <main className="space-y-8">
       {/* Header */}
       <div className="space-y-3">
         <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em]">Insights</h1>

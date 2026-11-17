@@ -40,7 +40,7 @@ export default function ReatiAllarmeSociale() {
   const quota = allarme && italia ? quotaSulTotale(allarme, italia) : null;
 
   return (
-    <main className="mx-auto max-w-7xl px-4 py-4 sm:py-8 space-y-6 sm:space-y-10">
+    <main className="space-y-6 sm:space-y-10">
       <div>
         <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em]">
           Reati di Allarme Sociale

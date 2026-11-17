@@ -71,7 +71,7 @@ export default function Metodologia() {
 
   if (error) {
     return (
-      <main className="mx-auto max-w-4xl px-4 py-4 sm:py-8">
+      <main>
         <p className="text-destructive">Errore nel caricamento: {error}</p>
       </main>
     );
@@ -79,14 +79,14 @@ export default function Metodologia() {
 
   if (!content) {
     return (
-      <main className="mx-auto max-w-4xl px-4 py-4 sm:py-8">
+      <main>
         <p className="text-muted-foreground">Caricamento...</p>
       </main>
     );
   }
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-4 sm:py-8">
+    <main>
       <article className="space-y-0">
         <ReactMarkdown components={components}>{content}</ReactMarkdown>
       </article>
