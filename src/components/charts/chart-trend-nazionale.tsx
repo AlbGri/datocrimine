@@ -15,6 +15,8 @@ import {
   getLegendMultiSeries,
   varTriennale,
   TRIENNALE_PERIODI,
+  ANNO_PRIMO,
+  ANNO_ULTIMO,
 } from "@/lib/config";
 import { fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
@@ -196,7 +198,7 @@ export function ChartTrendNazionale() {
         </div>
       )}
 
-      <ChartFullscreenWrapper ariaDescription={isTipologia ? "Grafico trend delitti per tipologia in Italia dal 2014 al 2024: furti in calo, truffe in crescita costante" : "Grafico trend tasso delitti denunciati per 1.000 abitanti in Italia dal 2014 al 2024"}>
+      <ChartFullscreenWrapper ariaDescription={isTipologia ? `Grafico trend delitti per tipologia in Italia dal ${ANNO_PRIMO} al ${ANNO_ULTIMO}: furti in calo, truffe in crescita costante` : `Grafico trend tasso delitti denunciati per 1.000 abitanti in Italia dal ${ANNO_PRIMO} al ${ANNO_ULTIMO}`}>
         <Plot
           key={`${metrica}-${view}`}
           data={isTipologia ? traceTipologia : traceTotale}

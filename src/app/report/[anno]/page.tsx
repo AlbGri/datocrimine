@@ -1,7 +1,8 @@
 import { ReportContent } from "@/components/report/report-content";
+import { ANNI_REPORT } from "@/lib/report-anni";
 
 export function generateStaticParams() {
-  return [{ anno: "2024" }];
+  return ANNI_REPORT.map((anno) => ({ anno }));
 }
 
 export default async function ReportPage({

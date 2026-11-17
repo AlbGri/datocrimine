@@ -2,19 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import {
-  COLORS,
-  CHART_HEIGHT,
-  PLOTLY_CONFIG,
-  PLOTLY_FONT,
-  COVID_SHAPES,
-  getCovidAnnotations,
-  AXIS_FIXED,
-  getAxisYear,
-  getLegendMultiSeries,
-  BREAKDOWN_LINES,
-  VICTIM_DEFAULT,
-} from "@/lib/config";
+import { COLORS, CHART_HEIGHT, PLOTLY_CONFIG, PLOTLY_FONT, COVID_SHAPES, getCovidAnnotations, AXIS_FIXED, getAxisYear, getLegendMultiSeries, BREAKDOWN_LINES, VICTIM_DEFAULT, ANNO_ULTIMO_AUTORI } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { NotaIngiuriePersone } from "@/components/charts/nota-ingiurie";
@@ -197,11 +185,11 @@ export function ChartAutoriTrend({ dataType }: Props) {
       </ChartFullscreenWrapper>
 
       {effectiveReato === "TOT" && <NotaIngiuriePersone />}
-      {effectiveReato === "TOT" && annoMax < 2024 && (
+      {effectiveReato === "TOT" && annoMax < ANNO_ULTIMO_AUTORI && (
         <p className="text-xs text-muted-foreground">
           La serie si ferma al {annoMax} perch&eacute; il dato aggregato (totale per tutti i reati)
           non &egrave; ancora disponibile per gli anni successivi. Per i singoli reati
-          la serie arriva al 2024.
+          la serie arriva al {ANNO_ULTIMO_AUTORI}.
         </p>
       )}
       {filtered.length <= 5 && (

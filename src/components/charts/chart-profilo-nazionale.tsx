@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { COLORS, PLOTLY_CONFIG, PLOTLY_FONT, AXIS_FIXED, MetricaProfilo, METRICHE_PROFILO, MIN_CASI, TOP_N, isVoceAutonoma } from "@/lib/config";
+import { COLORS, PLOTLY_CONFIG, PLOTLY_FONT, AXIS_FIXED, MetricaProfilo, METRICHE_PROFILO, MIN_CASI, TOP_N, isVoceAutonoma, ANNO_ULTIMO_AUTORI } from "@/lib/config";
 import { fmtNum, fmtPct, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -86,7 +86,7 @@ export function ChartProfiloNazionale({ dataType }: Props) {
   const anno =
     selectedAnno && anniDisponibili.includes(selectedAnno)
       ? selectedAnno
-      : anniDisponibili[0] ?? 2024;
+      : anniDisponibili[0] ?? ANNO_ULTIMO_AUTORI;
 
   const loading = l1 || l2;
   const error = e1 || e2;

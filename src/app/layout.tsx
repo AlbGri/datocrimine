@@ -5,6 +5,7 @@ import { Footer } from "@/components/layout/footer";
 import { ContaVisite } from "@/components/layout/conta-visite";
 import { FilterSyncProvider } from "@/lib/filter-sync-context";
 import { SITE_NAME, SITE_URL } from "@/lib/metadata";
+import { ANNO_PRIMO_AUTORI, ANNO_ULTIMO } from "@/lib/config";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -46,7 +47,7 @@ export default function RootLayout({
       name: "Dati criminalit\u00e0 Italia ISTAT",
       description:
         "Delitti denunciati, autori e vittime per reato, territorio e anno. Fonti: ISTAT DCCV_DELITTIPS e DCCV_AUTVITTPS.",
-      temporalCoverage: "2007/2024",
+      temporalCoverage: `${ANNO_PRIMO_AUTORI}/${ANNO_ULTIMO}`,
       spatialCoverage: {
         "@type": "Place",
         name: "Italia",

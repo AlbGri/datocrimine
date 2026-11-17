@@ -11,6 +11,8 @@ import {
   AXIS_FIXED,
   getAxisYear,
   getLegendMultiSeries,
+  ANNO_PRIMO,
+  ANNO_ULTIMO,
 } from "@/lib/config";
 import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
@@ -46,7 +48,7 @@ export function ChartPercezioneVsDati() {
         </AlertDescription>
       </Alert>
 
-      <ChartFullscreenWrapper ariaDescription="Grafico percezione insicurezza vs tasso delitti denunciati dal 2014 al 2024: la percezione segue dinamiche diverse dai dati reali">
+      <ChartFullscreenWrapper ariaDescription={`Grafico percezione insicurezza vs tasso delitti denunciati dal ${ANNO_PRIMO} al ${ANNO_ULTIMO}: la percezione segue dinamiche diverse dai dati reali`}>
         <Plot
           data={[
             {

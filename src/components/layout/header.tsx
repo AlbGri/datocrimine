@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { ANNO_ULTIMO } from "@/lib/config";
 
 const NAV_ITEMS = [
-  { href: "/report/2024", label: "Report 2024" },
+  { href: `/report/${ANNO_ULTIMO}`, label: `Report ${ANNO_ULTIMO}` },
   { href: "/esplora", label: "Esplora i dati" },
   { href: "/insights", label: "Insights" },
   { href: "/", label: "Il contesto" },

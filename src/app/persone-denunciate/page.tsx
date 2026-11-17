@@ -14,6 +14,7 @@ import { ChartAutoriTrendProvincia } from "@/components/charts/chart-autori-tren
 import Link from "next/link";
 
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
+import { PERIODO_AUTORI } from "@/lib/config";
 
 type DataType = "OFFEND" | "VICTIM";
 
@@ -34,7 +35,7 @@ export default function PersoneDenunciate() {
         </h1>
         <p className="mt-2 text-muted-foreground">
           Autori denunciati/arrestati e vittime di delitto per cittadinanza,
-          et&agrave; e tipo di reato. Fonte: ISTAT DCCV_AUTVITTPS (2007-2024 per singoli
+          et&agrave; e tipo di reato. Fonte: ISTAT DCCV_AUTVITTPS ({PERIODO_AUTORI} per singoli
           reati, 2007-2022 per il totale).
         </p>
         <div className="mt-4 flex gap-2">

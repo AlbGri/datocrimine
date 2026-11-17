@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/metadata";
+import { PERIODO_DELITTI, PERIODO_AUTORI, ANNO_PRIMO, ANNO_PRIMO_AUTORI } from "@/lib/config";
 
 export const metadata: Metadata = pageMetadata(
   "Guida alla Lettura",
@@ -122,9 +123,9 @@ export default function Guida() {
             incendiato)
           </li>
           <li>
-            <strong>Dati 2007-2024</strong>: la sezione Persone Denunciate
-            copre un arco temporale diverso (2007-2024) rispetto alle altre
-            sezioni (2014-2024), perch&eacute; proviene da un dataset ISTAT
+            <strong>Dati {PERIODO_AUTORI}</strong>: la sezione Persone Denunciate
+            copre un arco temporale diverso ({PERIODO_AUTORI}) rispetto alle altre
+            sezioni ({PERIODO_DELITTI}), perch&eacute; proviene da un dataset ISTAT
             separato (DCCV_AUTVITTPS)
           </li>
         </ul>
@@ -210,8 +211,8 @@ export default function Guida() {
             per evitare stigmatizzazione di aree specifiche
           </li>
           <li>
-            <strong>Delitti denunciati dal 2014</strong> - per qualit&agrave; e
-            comparabilit&agrave; delle serie. Autori e vittime dal 2007 (fonte
+            <strong>Delitti denunciati dal {ANNO_PRIMO}</strong> - per qualit&agrave; e
+            comparabilit&agrave; delle serie. Autori e vittime dal {ANNO_PRIMO_AUTORI} (fonte
             diversa)
           </li>
           <li>

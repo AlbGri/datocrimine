@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { varTriennale, TRIENNALE_LABEL } from "@/lib/config";
+import { varTriennale, TRIENNALE_LABEL, TRIENNIO_TITOLO } from "@/lib/config";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useFilterSync, SyncButton } from "@/lib/filter-sync-context";
 import { fmtNum, csvNum } from "@/lib/format";
@@ -209,7 +209,7 @@ export function ChartAllarmeTabellaProvince({ anno, reato }: Props) {
               <th className={`text-right ${thClass}`} onClick={() => handleSort("Tasso_per_100k")}>
                 Tasso {anno}{sortIcon("Tasso_per_100k")}
               </th>
-              <th className={`text-right ${thClass}`} onClick={() => handleSort("variazione")} title="Media 2014-2016 vs 2022-2024">
+              <th className={`text-right ${thClass}`} onClick={() => handleSort("variazione")} title={TRIENNIO_TITOLO}>
                 {TRIENNALE_LABEL}{sortIcon("variazione")}
               </th>
               <th className={`text-right ${thClass}`} onClick={() => handleSort("Delitti")}>

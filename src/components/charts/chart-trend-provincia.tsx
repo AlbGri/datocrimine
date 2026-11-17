@@ -2,19 +2,7 @@
 
 import { useState, useMemo, useCallback } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import {
-  COLORS,
-  CHART_HEIGHT_SMALL,
-  PLOTLY_CONFIG,
-  PLOTLY_FONT,
-  COVID_SHAPES,
-  COVID_ANNOTATIONS,
-  AXIS_FIXED,
-  getAxisYear,
-  LEGEND_BOTTOM_LEFT,
-  varTriennale,
-  TRIENNALE_PERIODI,
-} from "@/lib/config";
+import { COLORS, CHART_HEIGHT_SMALL, PLOTLY_CONFIG, PLOTLY_FONT, COVID_SHAPES, COVID_ANNOTATIONS, AXIS_FIXED, getAxisYear, LEGEND_BOTTOM_LEFT, varTriennale, TRIENNALE_PERIODI, PERIODO_DELITTI } from "@/lib/config";
 import { fmtPctSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -160,7 +148,7 @@ export function ChartTrendProvincia() {
         </div>
       </div>
 
-      <ChartFullscreenWrapper ariaDescription={`Grafico trend delitti denunciati per ${selectedProvincia} vs media ${selectedRegione}, 2014-2024`}>
+      <ChartFullscreenWrapper ariaDescription={`Grafico trend delitti denunciati per ${selectedProvincia} vs media ${selectedRegione}, ${PERIODO_DELITTI}`}>
         <Plot
           data={[
             {

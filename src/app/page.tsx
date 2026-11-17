@@ -7,10 +7,11 @@ import { ChartTrendNazionale } from "@/components/charts/chart-trend-nazionale";
 import { ChartPercezioneVsDati } from "@/components/charts/chart-percezione-vs-dati";
 import { ChartNumeroOscuro } from "@/components/charts/chart-numero-oscuro";
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
+import { PERIODO_DELITTI, ANNO_ULTIMO } from "@/lib/config";
 
 export const metadata: Metadata = pageMetadata(
   "DatoCrimine - Dati ISTAT sulla criminalità in Italia",
-  "Dati e analisi sulla criminalità in Italia 2014-2024 con fonti ufficiali ISTAT",
+  `Dati e analisi sulla criminalità in Italia ${PERIODO_DELITTI} con fonti ufficiali ISTAT`,
   "/",
 );
 
@@ -34,17 +35,17 @@ export default function Home() {
       </p>
 
       <Link
-        href="/report/2024"
+        href={`/report/${ANNO_ULTIMO}`}
         className="block rounded-lg border border-primary/30 bg-primary/5 p-4 sm:p-5 transition-colors hover:bg-primary/10"
       >
         <div className="flex items-center justify-between gap-4">
           <div>
             <p className="text-sm font-medium text-primary">Nuovo</p>
             <p className="text-lg sm:text-xl font-semibold mt-0.5">
-              Report 2024: cosa dicono i dati
+              Report {ANNO_ULTIMO}: cosa dicono i dati
             </p>
             <p className="text-sm text-muted-foreground mt-1">
-              Variazioni, tendenze e mappa regionale del 2024.
+              Variazioni, tendenze e mappa regionale del {ANNO_ULTIMO}.
             </p>
           </div>
           <span className="text-primary text-xl shrink-0" aria-hidden="true">
@@ -58,7 +59,7 @@ export default function Home() {
       <hr />
 
       <CollapsibleSection
-        title="Trend Delitti Denunciati in Italia (2014-2024)"
+        title={`Trend Delitti Denunciati in Italia (${PERIODO_DELITTI})`}
         description="Andamento dei delitti denunciati per tipologia di reato"
         defaultOpen
       >
@@ -68,7 +69,7 @@ export default function Home() {
       <hr />
 
       <CollapsibleSection
-        title="Percezione della Sicurezza vs Delitti Denunciati (2014-2024)"
+        title={`Percezione della Sicurezza vs Delitti Denunciati (${PERIODO_DELITTI})`}
         description="Confronto tra percezione di insicurezza e dati reali sulle denunce"
       >
         <ChartPercezioneVsDati />

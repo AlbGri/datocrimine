@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/metadata";
 import { fmtNum } from "@/lib/format";
 import insightsMeta from "@/data/insights_meta.json";
+import { PERIODO_DELITTI, PERIODO_AUTORI, ANNO_ULTIMO } from "@/lib/config";
 
 export const metadata: Metadata = pageMetadata(
   "Dati e Codice Sorgente",
@@ -59,7 +60,7 @@ export default function DatiECodice() {
                   <br />
                   <span className="text-xs">Delitti denunciati per provincia</span>
                 </td>
-                <td className="py-2 pr-4">2014-2024</td>
+                <td className="py-2 pr-4">{PERIODO_DELITTI}</td>
                 <td className="py-2">Il contesto, Analisi Territoriale, Allarme Sociale</td>
               </tr>
               <tr className="border-b">
@@ -75,7 +76,7 @@ export default function DatiECodice() {
                   <br />
                   <span className="text-xs">Autori denunciati e vittime di delitto</span>
                 </td>
-                <td className="py-2 pr-4">2007-2024</td>
+                <td className="py-2 pr-4">{PERIODO_AUTORI}</td>
                 <td className="py-2">Persone Denunciate</td>
               </tr>
               <tr className="border-b">
@@ -181,7 +182,7 @@ export default function DatiECodice() {
                   JSON in public/data/
                 </td>
                 <td className="py-2 text-xs">
-                  report_2024.json (report annuale interattivo)
+                  report_{ANNO_ULTIMO}.json (report annuale interattivo)
                 </td>
               </tr>
             </tbody>

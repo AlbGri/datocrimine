@@ -8,12 +8,12 @@ import { ChartTrendRegione } from "@/components/charts/chart-trend-regione";
 import { ChartTabellaProvince } from "@/components/charts/chart-tabella-province";
 import { ChartTrendProvincia } from "@/components/charts/chart-trend-provincia";
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
+import { ANNI_DELITTI, ANNO_ULTIMO, PERIODO_DELITTI } from "@/lib/config";
 
-const ANNI = Array.from({ length: 11 }, (_, i) => 2014 + i);
 const PLAY_INTERVAL_MS = 1500;
 
 export default function AnalisiTerritoriale() {
-  const [anno, setAnno] = useState(2024);
+  const [anno, setAnno] = useState(ANNO_ULTIMO);
   const [playing, setPlaying] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -27,15 +27,15 @@ export default function AnalisiTerritoriale() {
 
   const startPlay = useCallback(() => {
     setPlaying(true);
-    setAnno(ANNI[0]);
+    setAnno(ANNI_DELITTI[0]);
     let idx = 0;
     intervalRef.current = setInterval(() => {
       idx++;
-      if (idx >= ANNI.length) {
+      if (idx >= ANNI_DELITTI.length) {
         stopPlay();
         return;
       }
-      setAnno(ANNI[idx]);
+      setAnno(ANNI_DELITTI[idx]);
     }, PLAY_INTERVAL_MS);
   }, [stopPlay]);
 
@@ -67,7 +67,7 @@ export default function AnalisiTerritoriale() {
           >
             {playing ? <Pause className="size-4" aria-hidden="true" /> : <Play className="size-4" aria-hidden="true" />}
           </button>
-          {ANNI.map((a) => (
+          {ANNI_DELITTI.map((a) => (
             <button
               key={a}
               onClick={() => {
@@ -109,7 +109,7 @@ export default function AnalisiTerritoriale() {
       <hr />
 
       <CollapsibleSection
-        title="Trend Regionale (2014-2024)"
+        title={`Trend Regionale (${PERIODO_DELITTI})`}
         description="Andamento temporale per singola regione"
       >
         <ChartTrendRegione />
@@ -127,7 +127,7 @@ export default function AnalisiTerritoriale() {
       <hr />
 
       <CollapsibleSection
-        title="Trend Provinciale (2014-2024)"
+        title={`Trend Provinciale (${PERIODO_DELITTI})`}
         description="Andamento temporale per singola provincia"
       >
         <ChartTrendProvincia />

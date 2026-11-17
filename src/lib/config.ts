@@ -1,4 +1,5 @@
 import gerarchiaReati from "../../public/data/reati_gerarchia.json";
+import datiMeta from "@/data/dati_meta.json";
 
 // I sottotipi ISTAT (es. furti con destrezza) sono gia' contati nel padre (furti):
 // nei confronti fra reati si mostra solo il padre
@@ -170,10 +171,25 @@ export function getAxisYear(isMobile: boolean) {
   return { ...AXIS_FIXED, tickformat: "d", dtick: isMobile ? 2 : 1 };
 }
 
-export const TRIENNIO_INIZIALE = [2014, 2016] as const;
-export const TRIENNIO_FINALE = [2022, 2024] as const;
+// Primo anno dei delitti scelto per qualita' delle serie; l'ultimo lo scrive generate_delittips.py
+export const ANNO_PRIMO = 2014;
+export const ANNO_ULTIMO: number = datiMeta.ultimo_anno;
+export const ANNI_DELITTI = Array.from(
+  { length: ANNO_ULTIMO - ANNO_PRIMO + 1 },
+  (_, i) => ANNO_PRIMO + i,
+);
+export const PERIODO_DELITTI = `${ANNO_PRIMO}-${ANNO_ULTIMO}`;
 
-/** Variazione % media triennale: media(2022-2024) vs media(2014-2016).
+// Persone denunciate: altra fonte ISTAT (AUTVITTPS), con un calendario suo
+export const ANNO_PRIMO_AUTORI = 2007;
+export const ANNO_ULTIMO_AUTORI = 2024;
+export const PERIODO_AUTORI = `${ANNO_PRIMO_AUTORI}-${ANNO_ULTIMO_AUTORI}`;
+
+export const TRIENNIO_INIZIALE = [ANNO_PRIMO, ANNO_PRIMO + 2] as const;
+export const TRIENNIO_FINALE = [ANNO_ULTIMO - 2, ANNO_ULTIMO] as const;
+export const TRIENNIO_TITOLO = `Media ${TRIENNIO_INIZIALE.join("-")} vs ${TRIENNIO_FINALE.join("-")}`;
+
+/** Variazione % media triennale: media del triennio finale vs media del triennio iniziale.
  *  Piu robusto del confronto puntuale perche smussa outlier annuali. */
 export function varTriennale(
   values: { anno: number; tasso: number }[]
@@ -190,7 +206,8 @@ export function varTriennale(
 }
 
 export const TRIENNALE_LABEL = "Var. triennale";
-export const TRIENNALE_PERIODI = "'14-'16 vs '22-'24";
+const anno2 = (anno: number) => `'${String(anno).slice(2)}`;
+export const TRIENNALE_PERIODI = `${TRIENNIO_INIZIALE.map(anno2).join("-")} vs ${TRIENNIO_FINALE.map(anno2).join("-")}`;
 
 export const COVID_SHAPES = [
   {

@@ -10,6 +10,7 @@ import { ChartAllarmeTrendProvincia } from "@/components/charts/chart-allarme-tr
 import { CollapsibleSection } from "@/components/ui/collapsible-section";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { fmtPct } from "@/lib/format";
+import { ANNI_DELITTI, ANNO_ULTIMO, PERIODO_DELITTI } from "@/lib/config";
 
 const REATI = [
   "Atti sessuali con minorenne",
@@ -19,8 +20,6 @@ const REATI = [
   "Tentati omicidi",
   "Violenze sessuali",
 ];
-
-const ANNI = Array.from({ length: 11 }, (_, i) => 2014 + i);
 
 type DelittiAnno = { Anno: number; Delitti: number };
 
@@ -35,7 +34,7 @@ function quotaSulTotale(allarme: DelittiAnno[], italia: DelittiAnno[]) {
 
 export default function ReatiAllarmeSociale() {
   const [reato, setReato] = useState(REATI[0]);
-  const [anno, setAnno] = useState(2024);
+  const [anno, setAnno] = useState(ANNO_ULTIMO);
   const { data: allarme } = useFetchData<DelittiAnno[]>("/data/reati_allarme_sociale.json");
   const { data: italia } = useFetchData<DelittiAnno[]>("/data/delitti_italia.json");
   const quota = allarme && italia ? quotaSulTotale(allarme, italia) : null;
@@ -82,7 +81,7 @@ export default function ReatiAllarmeSociale() {
             Anno
           </legend>
           <div className="flex flex-wrap gap-1" role="group" aria-label="Selezione anno">
-            {ANNI.map((a) => (
+            {ANNI_DELITTI.map((a) => (
               <button
                 key={a}
                 onClick={() => setAnno(a)}
@@ -103,7 +102,7 @@ export default function ReatiAllarmeSociale() {
       <hr />
 
       <CollapsibleSection
-        title={`Trend Nazionale: ${reato} (2014-2024)`}
+        title={`Trend Nazionale: ${reato} (${PERIODO_DELITTI})`}
         description="Andamento temporale del reato selezionato a livello nazionale"
         defaultOpen
       >
@@ -122,7 +121,7 @@ export default function ReatiAllarmeSociale() {
       <hr />
 
       <CollapsibleSection
-        title={`Trend Regionale: ${reato} (2014-2024)`}
+        title={`Trend Regionale: ${reato} (${PERIODO_DELITTI})`}
         description="Andamento temporale per singola regione"
       >
         <ChartAllarmeTrendRegione reato={reato} />
@@ -140,7 +139,7 @@ export default function ReatiAllarmeSociale() {
       <hr />
 
       <CollapsibleSection
-        title={`Trend Provinciale: ${reato} (2014-2024)`}
+        title={`Trend Provinciale: ${reato} (${PERIODO_DELITTI})`}
         description="Andamento temporale per singola provincia"
       >
         <ChartAllarmeTrendProvincia reato={reato} />

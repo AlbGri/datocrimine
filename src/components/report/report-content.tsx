@@ -3,18 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useFetchData } from "@/lib/use-fetch-data";
-import {
-  AXIS_FIXED,
-  CHART_HEIGHT,
-  CHART_HEIGHT_SMALL,
-  CHART_HEIGHT_MAP,
-  CHART_HEIGHT_MINI,
-  PLOTLY_CONFIG,
-  NUTS_TO_ISTAT,
-  COLORS,
-  COLORI_ALLARME,
-  getAxisYear,
-} from "@/lib/config";
+import { AXIS_FIXED, CHART_HEIGHT, CHART_HEIGHT_SMALL, CHART_HEIGHT_MAP, CHART_HEIGHT_MINI, PLOTLY_CONFIG, NUTS_TO_ISTAT, COLORS, COLORI_ALLARME, getAxisYear, ANNO_PRIMO } from "@/lib/config";
 import { fmtNum, fmtPctSigned, fmtSigned, PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Card, CardContent } from "@/components/ui/card";
@@ -519,7 +508,7 @@ function ChartPercezione({ anno }: { anno: number }) {
 
   return (
     <ChartFullscreenWrapper
-      ariaDescription={`Grafico percezione insicurezza vs tasso delitti reale, 2014-${anno}`}
+      ariaDescription={`Grafico percezione insicurezza vs tasso delitti reale, ${ANNO_PRIMO}-${anno}`}
     >
       <Plot
         data={[

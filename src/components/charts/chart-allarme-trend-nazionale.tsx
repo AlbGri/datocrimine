@@ -2,18 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import {
-  COLORS,
-  COLORI_ALLARME,
-  CHART_HEIGHT_SMALL,
-  PLOTLY_CONFIG,
-  PLOTLY_FONT,
-  COVID_SHAPES,
-  COVID_ANNOTATIONS,
-  AXIS_FIXED,
-  getAxisYear,
-  LEGEND_BOTTOM_LEFT,
-} from "@/lib/config";
+import { COLORS, COLORI_ALLARME, CHART_HEIGHT_SMALL, PLOTLY_CONFIG, PLOTLY_FONT, COVID_SHAPES, COVID_ANNOTATIONS, AXIS_FIXED, getAxisYear, LEGEND_BOTTOM_LEFT, PERIODO_DELITTI } from "@/lib/config";
 import { PLOTLY_IT_SEPARATORS } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { ChartFullscreenWrapper } from "@/components/charts/chart-fullscreen-wrapper";
@@ -91,7 +80,7 @@ export function ChartAllarmeTrendNazionale({ reatoSelezionato }: Props) {
         </div>
       </div>
 
-      <ChartFullscreenWrapper ariaDescription={`Grafico trend nazionale reati allarme sociale 2014-2024, evidenziato: ${reatoSelezionato}`}>
+      <ChartFullscreenWrapper ariaDescription={`Grafico trend nazionale reati allarme sociale ${PERIODO_DELITTI}, evidenziato: ${reatoSelezionato}`}>
         <Plot
           key={metrica}
           data={traces}

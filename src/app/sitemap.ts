@@ -1,6 +1,7 @@
 import { execSync } from "node:child_process";
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/metadata";
+import { ANNI_REPORT } from "@/lib/report-anni";
 
 export const dynamic = "force-static";
 
@@ -13,7 +14,7 @@ const PAGINE: [string, Frequenza, number][] = [
   ["/reati-allarme-sociale", "monthly", 0.8],
   ["/persone-denunciate", "monthly", 0.8],
   ["/insights", "monthly", 0.9],
-  ["/report/2024", "yearly", 0.9],
+  ...ANNI_REPORT.map((anno): [string, Frequenza, number] => [`/report/${anno}`, "yearly", 0.9]),
   ["/metodologia", "yearly", 0.5],
   ["/guida", "yearly", 0.5],
   ["/dati-e-codice", "yearly", 0.4],

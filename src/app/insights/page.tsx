@@ -8,6 +8,7 @@ import type { InsightChartConfig } from "@/components/charts/insight-mini-chart"
 import insightsData from "@/data/insights.json";
 import insightsMeta from "@/data/insights_meta.json";
 import { fmtNum, fmtPct } from "@/lib/format";
+import { ANNO_ULTIMO } from "@/lib/config";
 
 const InsightMiniChart = lazy(
   () =>
@@ -462,11 +463,11 @@ export default function Insights() {
       {/* Link al Report */}
       <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm">
         <Link
-          href="/report/2024"
+          href={`/report/${ANNO_ULTIMO}`}
           className="flex items-center justify-between gap-4 hover:underline"
         >
           <span>
-            <strong>Report 2024</strong> &mdash; variazioni, tendenze e mappa
+            <strong>Report {ANNO_ULTIMO}</strong> &mdash; variazioni, tendenze e mappa
             regionale dei delitti denunciati.
           </span>
           <span className="text-primary text-xl shrink-0" aria-hidden="true">
