@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-11-17 — Totale dei delitti al netto delle ingiurie
+- Il totale dei delitti non comprende più le ingiurie, depenalizzate nel 2016: gli anni si confrontano a parità di reati. Il calo di lungo periodo passa da -10,5% a -8,9%; le ingiurie restano visibili nella loro serie
+- Persone denunciate: sotto gli andamenti del totale una nota spiega che fino al 2017 comprende chi era denunciato per ingiuria, e perché non si può togliere
+- Il sito conta le visite con GoatCounter, senza cookie né dati personali; i dettagli sono nella sezione Trasparenza della Metodologia
+
 ## 2026-11-15 — Segnalazioni per email
 - In fondo a ogni pagina e nella Guida c'è l'indirizzo datocrimine@albgri.com per segnalare un errore, oltre a GitHub
 
