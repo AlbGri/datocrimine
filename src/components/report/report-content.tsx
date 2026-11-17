@@ -88,11 +88,7 @@ interface PercezioneRow {
 function VariazioneIndicator({ value }: { value: number }) {
   if (Math.abs(value) < 0.05)
     return <span className="text-muted-foreground">=</span>;
-  return value > 0 ? (
-    <span className="text-red-600">&#9650; {fmtPctSigned(value)}</span>
-  ) : (
-    <span className="text-green-600">&#9660; {fmtPctSigned(value)}</span>
-  );
+  return <span>{fmtPctSigned(value)}</span>;
 }
 
 const TREND_IT: Record<string, string> = {
@@ -107,15 +103,13 @@ function trendToItalian(trend: string | null, inizio: number): string {
 }
 
 function TrendLabel({ trend, inizio }: { trend: string | null; inizio: number }) {
-  const labels: Record<string, { text: string; color: string }> = {
-    increasing: { text: "trend storico: in crescita", color: "text-red-600" },
-    decreasing: { text: "trend storico: in calo", color: "text-green-600" },
-    "no trend": { text: "nessuna tendenza storica netta", color: "text-muted-foreground" },
+  const labels: Record<string, string> = {
+    increasing: "trend storico: in crescita",
+    decreasing: "trend storico: in calo",
+    "no trend": "nessuna tendenza storica netta",
   };
-  const info = trend === null
-    ? { text: `serie troppo breve (dal ${inizio})`, color: "text-muted-foreground" }
-    : labels[trend] ?? { text: trend, color: "text-muted-foreground" };
-  return <span className={`text-xs ${info.color}`}>{info.text}</span>;
+  const text = trend === null ? `serie troppo breve (dal ${inizio})` : labels[trend] ?? trend;
+  return <span className="text-xs text-muted-foreground">{text}</span>;
 }
 
 // ---------------------------------------------------------------------------
@@ -140,7 +134,6 @@ function ExecutiveSummary({
     {
       label: "Variazione anno",
       value: fmtPctSigned(data.variazione_pct),
-      color: data.variazione_pct < 0 ? "text-green-600" : "text-red-600",
     },
     {
       label: "Tasso 2019",
@@ -158,7 +151,7 @@ function ExecutiveSummary({
               {item.label}
             </p>
             <p
-              className={`text-xl sm:text-2xl font-bold ${"color" in item && item.color ? item.color : ""}`}
+              className="text-xl sm:text-2xl font-bold"
             >
               {item.value}
             </p>
@@ -251,22 +244,20 @@ function ChartContributi({ dati, anno }: { dati: Contributi; anno: number }) {
 
 function ListaContributi({
   titolo,
-  colore,
   voci,
 }: {
   titolo: string;
-  colore: string;
   voci: VoceContributo[];
 }) {
   return (
     <div>
-      <h3 className={`font-semibold ${colore} mb-2`}>{titolo}</h3>
+      <h3 className="font-semibold mb-2">{titolo}</h3>
       <ul className="space-y-3">
         {voci.map((d) => (
           <li key={d.codice}>
             <div className="flex flex-wrap items-baseline gap-x-2">
               <span className="font-medium">{d.reato}</span>
-              <span className={`${colore} font-semibold`}>
+              <span className="font-semibold">
                 {fmtSigned(d.differenza, 0)}
               </span>
               <span className="text-xs text-muted-foreground">
@@ -341,8 +332,8 @@ function SezioneContributi({
       </p>
       <ChartContributi dati={dati} anno={anno} />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-        <ListaContributi titolo="Aumenti maggiori" colore="text-red-600" voci={dati.aumenti} />
-        <ListaContributi titolo="Cali maggiori" colore="text-green-600" voci={dati.cali} />
+        <ListaContributi titolo="Aumenti maggiori" voci={dati.aumenti} />
+        <ListaContributi titolo="Cali maggiori" voci={dati.cali} />
       </div>
     </section>
   );

@@ -199,15 +199,7 @@ export function ChartAutoriTrendProvincia({ dataType }: Props) {
                 ))}
                 {anniDisponibili.length >= 2 && (
                   <td
-                    className={`py-2 px-3 text-right font-medium ${
-                      p.variazione === null
-                        ? ""
-                        : p.variazione < 0
-                          ? "text-green-600"
-                          : p.variazione > 0
-                            ? "text-red-600"
-                            : ""
-                    }`}
+                    className="py-2 px-3 text-right font-medium"
                   >
                     {p.variazione !== null
                       ? fmtPctSigned(p.variazione)

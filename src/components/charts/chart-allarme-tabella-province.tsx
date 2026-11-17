@@ -229,13 +229,7 @@ export function ChartAllarmeTabellaProvince({ anno, reato }: Props) {
                   {fmtNum(r.Tasso_per_100k, 2)}
                 </td>
                 <td
-                  className={`py-2 px-3 text-right ${
-                    r.varNum !== null && r.varNum < 0
-                      ? "text-green-600"
-                      : r.varNum !== null && r.varNum > 0
-                        ? "text-red-600"
-                        : ""
-                  }`}
+                  className="py-2 px-3 text-right"
                   title={r.controtendenza ? "Controtendenza rispetto alla regione" : undefined}
                 >
                   {r.variazione !== "-" ? `${r.variazione}%` : "-"}

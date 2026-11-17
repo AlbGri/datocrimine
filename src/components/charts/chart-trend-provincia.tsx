@@ -198,9 +198,7 @@ export function ChartTrendProvincia() {
       {varProvincia !== null && (
         <p className="text-sm text-muted-foreground">
           <strong>{selectedProvincia} ({TRIENNALE_PERIODI}):</strong>{" "}
-          <span
-            className={varProvincia < 0 ? "text-green-600" : "text-red-600"}
-          >
+          <span className="text-foreground">
             {fmtPctSigned(varProvincia)}
           </span>
         </p>

@@ -121,18 +121,15 @@ export function ChartMappaRegioni({ anno }: Props) {
           lat: centroid.lat,
           lon: centroid.lon,
           markerSymbol: diff > 0 ? "triangle-up" : "triangle-down",
-          color: diff > 0 ? COLORS.mediaNazionale : COLORS.verdeCalo,
         };
-      }).filter(Boolean) as { lat: number; lon: number; markerSymbol: string; color: string }[]
+      }).filter(Boolean) as { lat: number; lon: number; markerSymbol: string }[]
     : [];
 
   const varIndicator = (current: number, prev: number | undefined | null) => {
     if (prev == null) return null;
     const diff = current - prev;
     if (Math.abs(diff) < 0.05) return <span className="text-muted-foreground text-xs sm:text-sm ml-1">=</span>;
-    return diff > 0
-      ? <span className="text-red-600 text-xs sm:text-sm ml-1">&#9650;</span>
-      : <span className="text-green-600 text-xs sm:text-sm ml-1">&#9660;</span>;
+    return <span className="text-muted-foreground text-xs sm:text-sm ml-1">{fmtSigned(diff, 1)}</span>;
   };
 
   return (
@@ -188,8 +185,8 @@ export function ChartMappaRegioni({ anno }: Props) {
               marker: {
                 symbol: t.markerSymbol,
                 size: isMobile ? 8 : 11,
-                color: t.color,
-                line: { color: "white", width: 1 },
+                color: "#f4f6fa",
+                line: { color: COLORS.testoScuro, width: 1.5 },
               },
               hoverinfo: "skip",
               showlegend: false,

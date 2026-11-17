@@ -32,7 +32,7 @@ export function KpiSummary() {
     data.map((d) => ({ anno: d.Anno, tasso: d.Tasso_per_1000 }))
   );
 
-  const items: { label: string; value: string; color?: string; subtitle?: string }[] = [
+  const items: { label: string; value: string; subtitle?: string }[] = [
     {
       label: `Delitti denunciati ${ultimo.Anno}`,
       value: fmtNum(ultimo.Delitti),
@@ -47,7 +47,6 @@ export function KpiSummary() {
           {
             label: "Variazione tasso delitti",
             value: fmtPctSigned(varTasso),
-            color: varTasso < 0 ? "text-green-600" : "text-red-600",
             subtitle: `media ${TRIENNALE_PERIODI}`,
           },
         ]
@@ -60,7 +59,7 @@ export function KpiSummary() {
         <Card key={item.label}>
           <CardContent className="py-0 px-2 sm:px-6 text-center">
             <p className="text-xs sm:text-sm text-muted-foreground">{item.label}</p>
-            <p className={`text-xl sm:text-2xl font-bold ${item.color ?? ""}`}>{item.value}</p>
+            <p className={`text-xl sm:text-2xl font-bold`}>{item.value}</p>
             {item.subtitle && (
               <p className="text-xs text-muted-foreground">{item.subtitle}</p>
             )}

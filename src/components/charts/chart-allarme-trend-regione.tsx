@@ -169,9 +169,7 @@ export function ChartAllarmeTrendRegione({ reato }: Props) {
           <strong>
             {selected} ({TRIENNALE_PERIODI}):
           </strong>{" "}
-          <span
-            className={varRegione < 0 ? "text-green-600" : "text-red-600"}
-          >
+          <span className="text-foreground">
             {fmtPctSigned(varRegione)}
           </span>
         </p>

@@ -69,7 +69,7 @@ export function KpiAutoriVittime({ dataType }: KpiProps) {
     const ultimo = trendTot[trendTot.length - 1];
     const varTot = varDaPreCovid(trendTot, ultimo);
 
-    const items: { label: string; value: string; color?: string; subtitle?: string }[] = [
+    const items: { label: string; value: string; subtitle?: string }[] = [
       {
         label: `Totale autori ${ultimo.anno}`,
         value: fmtNum(ultimo.totale),
@@ -92,7 +92,6 @@ export function KpiAutoriVittime({ dataType }: KpiProps) {
             {
               label: "Variazione totale autori",
               value: fmtPctSigned(varTot),
-              color: varTot < 0 ? "text-green-600" : "text-red-600",
               subtitle: `${ultimo.anno} rispetto al ${ANNO_PRE_COVID}, ultimo anno prima del COVID (denunciati, non condannati)`,
             },
           ]
@@ -105,7 +104,7 @@ export function KpiAutoriVittime({ dataType }: KpiProps) {
           <Card key={item.label}>
             <CardContent className="py-0 px-2 sm:px-6 text-center">
               <p className="text-xs sm:text-sm text-muted-foreground">{item.label}</p>
-              <p className={`text-xl sm:text-2xl font-bold ${item.color ?? ""}`}>
+              <p className={`text-xl sm:text-2xl font-bold`}>
                 {item.value}
               </p>
               {item.subtitle && (

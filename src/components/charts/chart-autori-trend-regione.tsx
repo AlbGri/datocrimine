@@ -315,7 +315,7 @@ export function ChartAutoriTrendRegione({ dataType }: Props) {
           <strong>
             {selected} ({annoInizio}-{annoFine}):
           </strong>{" "}
-          <span className={variazione < 0 ? "text-green-600" : "text-red-600"}>
+          <span className="text-foreground">
             {fmtPctSigned(variazione)}
           </span>{" "}
           {isAssoluto ? "numero assoluto" : "tasso per 100k ab."}
