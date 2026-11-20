@@ -16,6 +16,10 @@ import {
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Plot } from "@/components/charts/plot";
+import { fmtSigned } from "@/lib/format";
+
+// Salto della percezione, probabilmente un cambio di metodo ISTAT
+const ANNO_SALTO = 2015;
 
 interface PercezioneVsDati {
   Anno: number;
@@ -36,6 +40,8 @@ export function ChartPercezioneVsDati() {
   if (!data) return null;
 
   const anni = data.map((d) => d.Anno);
+  const salto = data.find((d) => d.Anno === ANNO_SALTO);
+  const primaDelSalto = data.find((d) => d.Anno === ANNO_SALTO - 1);
 
   return (
     <div className="space-y-4">
@@ -89,12 +95,12 @@ export function ChartPercezioneVsDati() {
             shapes: COVID_SHAPES,
             annotations: [
               ...getCovidAnnotations(isMobile),
-              {
-                x: 2015,
-                y: 41.1,
+              ...(salto && primaDelSalto ? [{
+                x: ANNO_SALTO,
+                y: salto.Percezione_pct,
                 xref: "x" as const,
                 yref: "y" as const,
-                text: isMobile ? "+11 p.p." : "+11.1 p.p. sul 2014",
+                text: `${fmtSigned(salto.Percezione_pct - primaDelSalto.Percezione_pct, isMobile ? 0 : 1)} p.p.${isMobile ? "" : ` sul ${ANNO_SALTO - 1}`}`,
                 showarrow: true,
                 arrowhead: 2,
                 arrowsize: 1,
@@ -102,7 +108,7 @@ export function ChartPercezioneVsDati() {
                 ax: isMobile ? 20 : 40,
                 ay: isMobile ? -25 : -35,
                 font: { size: isMobile ? PLOTLY_FONT.tickMobile : PLOTLY_FONT.tick, color: COLORS.grigioTesto },
-              },
+              }] : []),
             ],
           }}
         />
