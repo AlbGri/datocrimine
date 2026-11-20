@@ -1333,7 +1333,7 @@
       "mann-kendall"
     ],
     "period": "2008-2024",
-    "body": "La percentuale di vittime donne di furti con strappo è scesa dall’81% al 54%, quella degli uomini è salita dal 19% al 46%. È la tendenza più regolare dell’intero dataset: in oltre 9 anni su 10 il valore si muove nella stessa direzione. Contemporaneamente, la quota di autori stranieri è salita dal 34% al 61%.",
+    "body": "La percentuale di vittime donne di furti con strappo è scesa dall’81% al 54%, quella degli uomini è salita dal 19% al 46%, con un andamento molto regolare: in oltre 9 anni su 10 la quota si muove nella stessa direzione. Nello stesso periodo le vittime denunciate scendono da 18.739 a 10.930: il calo riguarda le donne, mentre gli uomini vittime aumentano.",
     "chiave": "La percentuale di vittime donne di furti con strappo è scesa dall’81% al 54%",
     "chart": {
       "file": "autori_vittime_trend.json",
@@ -1425,28 +1425,26 @@
         "campo": "monotonicity"
       },
       {
-        "testo": "34%",
-        "valore": 34,
+        "testo": "18.739",
+        "valore": 18739,
         "file": "autori_vittime_trend.json",
         "filtro": {
-          "data_type": "OFFEND",
+          "data_type": "VICTIM",
           "codice_reato": "BAGTHEF"
         },
-        "campo": "pct_stranieri",
-        "anno": 2007,
-        "grafico": false
+        "campo": "totale",
+        "anno": 2008
       },
       {
-        "testo": "61%",
-        "valore": 61,
+        "testo": "10.930",
+        "valore": 10930,
         "file": "autori_vittime_trend.json",
         "filtro": {
-          "data_type": "OFFEND",
+          "data_type": "VICTIM",
           "codice_reato": "BAGTHEF"
         },
-        "campo": "pct_stranieri",
-        "anno": 2024,
-        "grafico": false
+        "campo": "totale",
+        "anno": 2024
       }
     ],
     "candidati": [
