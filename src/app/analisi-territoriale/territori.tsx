@@ -10,6 +10,7 @@ import { ChartTrendProvincia } from "@/components/charts/chart-trend-provincia";
 import { Grafico } from "@/components/charts/grafico";
 import { IndicePagina } from "@/components/ui/indice-pagina";
 import { Pulsante } from "@/components/ui/pulsante";
+import { SceltaAnno } from "@/components/ui/scelta-anno";
 import { useParametro } from "@/lib/use-parametro";
 import { nomeProvincia } from "@/lib/format";
 import { ANNI_DELITTI, CHART_HEIGHT_MAP, CHART_HEIGHT_RANKING, PERIODO_DELITTI } from "@/lib/config";
@@ -101,32 +102,23 @@ export function Territori({ territori }: { territori: Regione[] }) {
             </select>
           </div>
         </div>
-        <fieldset>
-          <legend className="mb-1 block text-sm font-medium">
-            Anno di mappa, classifica e tabella delle province
-          </legend>
-          <div className="flex flex-wrap items-center gap-1.5">
-            <Pulsante
-              onClick={togglePlay}
-              aria-label={playing ? "Pausa animazione anni" : "Avvia animazione anni"}
-              className="self-stretch"
-            >
-              {playing ? <Pause className="size-4" aria-hidden="true" /> : <Play className="size-4" aria-hidden="true" />}
-            </Pulsante>
-            {ANNI.map((a) => (
-              <Pulsante
-                key={a}
-                onClick={() => {
-                  stopPlay();
-                  setAnno(a);
-                }}
-                premuto={annoTesto === a}
-              >
-                {a}
-              </Pulsante>
-            ))}
-          </div>
-        </fieldset>
+        <SceltaAnno
+          legenda="Anno di mappa, classifica e tabella delle province"
+          anni={ANNI}
+          anno={annoTesto}
+          onScelta={(a) => {
+            stopPlay();
+            setAnno(a);
+          }}
+        >
+          <Pulsante
+            onClick={togglePlay}
+            aria-label={playing ? "Pausa animazione anni" : "Avvia animazione anni"}
+            className="self-stretch"
+          >
+            {playing ? <Pause className="size-4" aria-hidden="true" /> : <Play className="size-4" aria-hidden="true" />}
+          </Pulsante>
+        </SceltaAnno>
 
         <IndicePagina sezioni={SEZIONI} />
       </div>

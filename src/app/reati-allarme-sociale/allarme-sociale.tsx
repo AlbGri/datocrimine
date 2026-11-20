@@ -7,7 +7,7 @@ import { ChartAllarmeTabellaProvince } from "@/components/charts/chart-allarme-t
 import { ChartAllarmeTrendProvincia } from "@/components/charts/chart-allarme-trend-provincia";
 import { Grafico } from "@/components/charts/grafico";
 import { IndicePagina } from "@/components/ui/indice-pagina";
-import { Pulsante } from "@/components/ui/pulsante";
+import { SceltaAnno } from "@/components/ui/scelta-anno";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { useParametro } from "@/lib/use-parametro";
 import { fmtPct, nomeProvincia } from "@/lib/format";
@@ -109,18 +109,7 @@ export function AllarmeSociale({ territori }: { territori: Regione[] }) {
           </div>
         </div>
 
-        <fieldset>
-          <legend className="block text-sm font-medium mb-1">
-            Anno di classifica e tabella
-          </legend>
-          <div className="flex flex-wrap gap-1.5">
-            {ANNI.map((a) => (
-              <Pulsante key={a} onClick={() => setAnno(a)} premuto={annoTesto === a}>
-                {a}
-              </Pulsante>
-            ))}
-          </div>
-        </fieldset>
+        <SceltaAnno legenda="Anno di classifica e tabella" anni={ANNI} anno={annoTesto} onScelta={setAnno} />
 
         <IndicePagina sezioni={SEZIONI} />
       </div>
