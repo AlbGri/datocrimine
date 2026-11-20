@@ -5,6 +5,7 @@
 - Pulsanti e intestazioni delle tabelle più facili da toccare; frecce e simbolo di controtendenza disegnati uguali su ogni dispositivo
 - Analisi statistiche fra le voci principali del menu, subito dopo il Report
 - Titoli delle analisi più neutri e leggibili anche da soli
+- Furti con strappo: la scheda dà il numero complessivo delle vittime; nel grafico della percezione il salto del 2015 è scritto con la virgola
 
 ## 2026-11-17 — Grafici da condividere
 - Ogni grafico ha un titolo che dice cosa, dove e quando, la fonte sotto e tre pulsanti: scarica l'immagine (con titolo, fonte e indirizzo dentro), copia il link, scarica i dati
