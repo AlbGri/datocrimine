@@ -1,25 +1,12 @@
 import type { Metadata } from "next";
-import { Alegreya, Atkinson_Hyperlegible_Next } from "next/font/google";
 import { Barra } from "@/components/layout/barra";
 import { MappaSito } from "@/components/layout/mappa-sito";
 import { Piede } from "@/components/layout/piede";
 import { ContaVisite } from "@/components/layout/conta-visite";
 import { SITE_NAME, SITE_URL } from "@/lib/metadata";
 import { ANNO_PRIMO_AUTORI, ANNO_ULTIMO } from "@/lib/config";
+import { testo, titoli } from "@/lib/caratteri";
 import "./globals.css";
-
-// Caratteri dello stile comune, serviti dal sito (nessuna richiesta a Google)
-const testo = Atkinson_Hyperlegible_Next({
-  variable: "--font-testo",
-  subsets: ["latin"],
-  fallback: ["Segoe UI", "Roboto", "sans-serif"],
-});
-
-const titoli = Alegreya({
-  variable: "--font-titoli",
-  subsets: ["latin"],
-  fallback: ["Palatino", "Georgia", "serif"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
