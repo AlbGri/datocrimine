@@ -39,7 +39,7 @@ Apri http://localhost:3000
 I dati ISTAT sono in `public/data/` come JSON, pronti per il frontend.
 
 Per rigenerarli dai CSV sorgente (richiede conda + environment `osservatorio`). I dati grezzi di
-delitti, autori e vittime (circa 185 MB) non sono nel repository: si scaricano dall'ISTAT con i tre
+delitti, autori e vittime (circa 75 MB) non sono nel repository: si scaricano dall'ISTAT con i tre
 script `download_*.py`, che possono richiedere molto tempo perché il servizio accetta poche
 richieste al minuto.
 

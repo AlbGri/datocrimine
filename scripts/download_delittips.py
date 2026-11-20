@@ -42,7 +42,8 @@ DATAFLOWS = {
 START_YEAR = 2014
 END_YEAR = 2024
 
-DOWNLOAD_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+# Solo i dataflow che il sito legge; gli altri restano in DATAFLOWS, da aggiungere qui se servono
+DOWNLOAD_IDS = [1]
 
 # Pausa tra richieste (secondi). ISTAT limita a ~5 query/minuto.
 DELAY = 15.0
@@ -156,7 +157,8 @@ def print_status(out_dir: Path) -> dict:
     log.info("=" * 60)
 
     status = {}
-    for df_id, desc in DATAFLOWS.items():
+    for df_id in DOWNLOAD_IDS:
+        desc = DATAFLOWS[df_id]
         f = out_dir / f"delittips_{df_id}.csv"
         if f.exists() and f.stat().st_size > 0:
             size_mb = f.stat().st_size / 1024 / 1024

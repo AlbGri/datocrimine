@@ -15,7 +15,8 @@ l'intera elaborazione sono nel [README](../README.md#dati).
 | Genera | `delitti_italia.json`, `delitti_regioni.json`, `delitti_province.json`, `delitti_categorie.json`, `delitti_reati_italia.json`, `reati_allarme_sociale*.json`, tasso di `percezione_vs_dati.json` |
 | Scaricato | 17 marzo 2026 |
 
-Lo script scarica tutti i 9 dataflow del dataset; il sito ne usa uno.
+Lo script scarica solo il dataflow 1; gli altri 8 sono elencati nello script, da aggiungere a
+`DOWNLOAD_IDS` se servono.
 
 ## 2. Autori e vittime di delitto (DCCV_AUTVITTPS)
 
@@ -28,7 +29,8 @@ Lo script scarica tutti i 9 dataflow del dataset; il sito ne usa uno.
 | Usato | dataflow 7 (autori) e 8 (vittime): sesso, minori e adulti, cittadinanza, per provincia |
 | Genera | `autori_vittime_trend.json`, `autori_vittime_reati.json`, `autori_vittime_regioni.json`, `autori_vittime_province.json`, `reati_gerarchia.json` |
 
-Lo script scarica tutti gli 8 dataflow del dataset; il sito ne usa due.
+Lo script scarica solo i dataflow 7 e 8; gli altri 6 sono elencati nello script, da aggiungere a
+`DOWNLOAD_IDS` se servono.
 
 ## 3. Percezione del rischio di criminalità
 
