@@ -32,8 +32,8 @@ export function ChartTabellaProvince({ anno }: Props) {
     "/data/delitti_province.json"
   );
   const [regioneSelezionata, setRegioneSelezionata] = useState("Tutte le regioni");
-  const [sortKey, setSortKey] = useState<SortKey>("Tasso_per_1000");
-  const [sortDir, setSortDir] = useState<SortDir>("desc");
+  const [sortKey, setSortKey] = useState<SortKey>("Territorio");
+  const [sortDir, setSortDir] = useState<SortDir>("asc");
 
   const regioni = useMemo(() => {
     if (!data) return [];
@@ -98,9 +98,9 @@ export function ChartTabellaProvince({ anno }: Props) {
       const dir = sortDir === "asc" ? 1 : -1;
       switch (sortKey) {
         case "Territorio":
-          return dir * a.Territorio.localeCompare(b.Territorio);
+          return dir * a.Territorio.localeCompare(b.Territorio, "it");
         case "Regione":
-          return dir * a.Regione.localeCompare(b.Regione);
+          return dir * a.Regione.localeCompare(b.Regione, "it");
         case "Tasso_per_1000":
           return dir * (a.Tasso_per_1000 - b.Tasso_per_1000);
         case "variazione":

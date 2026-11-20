@@ -116,9 +116,9 @@ export function ChartAutoriTabellaProvince({ dataType }: Props) {
       const dir = sortDir === "asc" ? 1 : -1;
       switch (sortKey) {
         case "provincia":
-          return dir * a.provincia.localeCompare(b.provincia);
+          return dir * a.provincia.localeCompare(b.provincia, "it");
         case "regione":
-          return dir * a.regione.localeCompare(b.regione);
+          return dir * a.regione.localeCompare(b.regione, "it");
         case "totale":
           return dir * (a.totale - b.totale);
         case "stranieri":
