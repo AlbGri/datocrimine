@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
 
 /** Intestazione di colonna che ordina la tabella: pulsante raggiungibile da tastiera, verso dichiarato con `aria-sort`. */
 export function IntestazioneOrdinabile({
@@ -28,9 +29,11 @@ export function IntestazioneOrdinabile({
         className="inline-flex min-h-6 items-center font-semibold cursor-pointer select-none hover:text-foreground transition-colors"
       >
         {children}
-        <span aria-hidden="true" className={attiva ? "ml-1" : "ml-1 text-muted-foreground/40"}>
-          {attiva ? (verso === "asc" ? "▲" : "▼") : "⇵"}
-        </span>
+        {attiva ? (
+          verso === "asc" ? <ChevronUp className="ml-1 size-3.5" /> : <ChevronDown className="ml-1 size-3.5" />
+        ) : (
+          <ChevronsUpDown className="ml-1 size-3.5 text-muted-foreground/40" />
+        )}
       </button>
     </th>
   );

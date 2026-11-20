@@ -1,5 +1,6 @@
 "use client";
 
+import { TriangleAlert } from "lucide-react";
 import { useState, useMemo, useCallback } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { varTriennale, TRIENNALE_LABEL, TRIENNIO_TITOLO } from "@/lib/config";
@@ -198,7 +199,7 @@ export function ChartTabellaProvince({ anno }: Props) {
                   title={r.controtendenza ? "Controtendenza rispetto alla regione" : undefined}
                 >
                   {r.variazione !== "-" ? `${r.variazione}%` : "-"}
-                  {r.controtendenza && <span className="ml-1" role="img" aria-label="controtendenza">&#9888;</span>}
+                  {r.controtendenza && <TriangleAlert className="ml-1 inline size-3.5 align-[-2px]" role="img" aria-label="controtendenza" />}
                 </td>
                 <td className="py-2 px-3 text-right">
                   {fmtNum(r.Delitti)}
@@ -212,7 +213,10 @@ export function ChartTabellaProvince({ anno }: Props) {
         </table>
       </div>
       {righe.some((r) => r.controtendenza) && (
-        <p className="text-sm text-muted-foreground">&#9888; Controtendenza rispetto alla regione</p>
+        <p className="flex items-center gap-1 text-sm text-muted-foreground">
+          <TriangleAlert className="size-3.5" />
+          Controtendenza rispetto alla regione
+        </p>
       )}
       <NotaIngiurie />
     </div>
