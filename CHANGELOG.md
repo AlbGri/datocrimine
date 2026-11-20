@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-20 — Tabelle, grafici e vittime
+- Le tabelle delle province si aprono in ordine alfabetico; per tasso si ordinano con un clic sull'intestazione
+- I testi dentro i grafici usano lo stesso carattere del resto del sito
+- Persone denunciate, vista Vittime: al posto del numero di tipologie di reato, i quattro reati con più vittime nell'ultimo anno (furti, truffe e frodi informatiche, danneggiamenti, minacce), ciascuno con la quota di donne
+- Il grafico degli autori denunciati per ogni vittima passa dal 2022 al 2024, l'ultimo anno disponibile
+
 ## 2026-11-20 — Telefono e analisi statistiche
 - Su telefono l'anno si sceglie da un menu a tendina: i pulsanti degli anni non occupano più la prima schermata
 - Pulsanti e intestazioni delle tabelle più facili da toccare; frecce e simbolo di controtendenza disegnati uguali su ogni dispositivo
