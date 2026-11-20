@@ -133,6 +133,11 @@ export default function Home() {
           href="/persone-denunciate"
           nota="Autori e vittime di reato per sesso, età e cittadinanza."
         />
+        <Riquadro
+          titolo="Analisi statistiche"
+          href="/insights"
+          nota="Tendenze verificate con test statistici, una scheda per risultato."
+        />
       </Fila>
 
       <Fila
@@ -161,11 +166,6 @@ export default function Home() {
           nota="Cosa vuol dire un tasso, cosa non si può concludere, domande comuni."
         />
         <Riquadro titolo="Metodologia" href="/metodologia" nota="Fonti, calcoli e limiti dei dati." />
-        <Riquadro
-          titolo="Analisi statistiche"
-          href="/insights"
-          nota="Tendenze verificate con test statistici, una scheda per risultato."
-        />
         <Riquadro
           titolo="Dati e codice"
           href="/dati-e-codice"

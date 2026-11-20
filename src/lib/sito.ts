@@ -17,6 +17,7 @@ export const MAPPA: (Pagina | Gruppo)[] = [
   { titolo: "Reati di allarme sociale", href: "/reati-allarme-sociale" },
   { titolo: "Persone denunciate", href: "/persone-denunciate" },
   { titolo: `Report ${ANNO_ULTIMO}`, href: `/report/${ANNO_ULTIMO}` },
+  { titolo: "Analisi statistiche", href: "/insights" },
   {
     titolo: "Capire i dati",
     pagine: [
@@ -25,7 +26,6 @@ export const MAPPA: (Pagina | Gruppo)[] = [
       { titolo: "Guida alla lettura", href: "/guida" },
       { titolo: "Metodologia", href: "/metodologia" },
       { titolo: "Dati che mancano", href: "/dati-che-mancano" },
-      { titolo: "Analisi statistiche", href: "/insights" },
       { titolo: "Dati e codice", href: "/dati-e-codice" },
       { titolo: "Chi c'è dietro", href: "/progetto" },
     ],
