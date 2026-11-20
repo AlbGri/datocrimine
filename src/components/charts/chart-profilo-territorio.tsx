@@ -293,7 +293,7 @@ export function ChartProfiloTerritorio({ dataType, regione }: Props) {
       {needsGrouping && (
         <button
           onClick={() => setExpanded(!expanded)}
-          className="text-sm text-primary hover:underline"
+          className="min-h-6 text-sm text-primary hover:underline"
         >
           {expanded
             ? "Mostra top 10"

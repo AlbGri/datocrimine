@@ -25,7 +25,7 @@ export function IntestazioneOrdinabile({
       <button
         type="button"
         onClick={onOrdina}
-        className="font-semibold cursor-pointer select-none hover:text-foreground transition-colors"
+        className="inline-flex min-h-6 items-center font-semibold cursor-pointer select-none hover:text-foreground transition-colors"
       >
         {children}
         <span aria-hidden="true" className={attiva ? "ml-1" : "ml-1 text-muted-foreground/40"}>

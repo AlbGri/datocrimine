@@ -551,7 +551,7 @@ function InsightCard({
         <div className="pt-1">
           <button
             onClick={() => setShowChart((v) => !v)}
-            className="text-xs text-primary hover:underline cursor-pointer flex items-center gap-1"
+            className="min-h-6 text-xs text-primary hover:underline cursor-pointer flex items-center gap-1"
           >
             <ChevronRight
               className={`size-3.5 transition-transform duration-200 ${showChart ? "rotate-90" : ""}`}
