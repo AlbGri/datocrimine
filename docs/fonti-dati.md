@@ -69,8 +69,8 @@ il 2019, presente in entrambe, viene da DCIS_POPRES1.
 
 ## 5. Propensione alla denuncia (numero oscuro)
 
-Percentuali trascritte a mano dai report ISTAT nel grafico `src/components/charts/chart-numero-oscuro.tsx`:
-non esistono come file di dati.
+Percentuali trascritte a mano dai report ISTAT in `src/data/propensione_denuncia.json`, letto dal grafico
+del Numero Oscuro e da `scripts/generate_insights.py`.
 
 | Report | Dati usati |
 |--------|------------|
