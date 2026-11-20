@@ -149,7 +149,7 @@
   },
   {
     "id": "truffe",
-    "title": "Truffe e frodi informatiche: il reato del decennio",
+    "title": "Truffe e frodi informatiche: vittime più che raddoppiate, in tutte le regioni",
     "category": "trend",
     "dimensions": [],
     "tests": [
@@ -391,7 +391,7 @@
   },
   {
     "id": "omicidi",
-    "title": "Omicidi volontari in calo strutturale",
+    "title": "Omicidi volontari: autori e vittime in calo lungo tutto il periodo",
     "category": "trend",
     "dimensions": [],
     "tests": [
@@ -643,7 +643,7 @@
   },
   {
     "id": "usura",
-    "title": "Usura: le denunce crollano, ma il sommerso resta",
+    "title": "Usura: autori e vittime denunciati in calo",
     "category": "trend",
     "dimensions": [],
     "tests": [
@@ -739,7 +739,7 @@
   },
   {
     "id": "estorsioni",
-    "title": "Estorsioni: più vittime, meno cittadini stranieri coinvolti",
+    "title": "Estorsioni: vittime in aumento, quota di vittime straniere in calo",
     "category": "trend",
     "dimensions": [
       "stranieri"
@@ -1167,7 +1167,7 @@
   },
   {
     "id": "rapine-stranieri",
-    "title": "Rapine: gli autori stranieri superano la metà dei denunciati",
+    "title": "Rapine: cresce la quota di stranieri fra gli autori denunciati e fra le vittime",
     "category": "demografica",
     "dimensions": [
       "stranieri"
@@ -1323,7 +1323,7 @@
   },
   {
     "id": "furti-strappo",
-    "title": "Furti con strappo: ribaltamento di genere tra le vittime",
+    "title": "Furti con strappo: le vittime donne restano la maggioranza, ma scendono molto",
     "category": "demografica",
     "dimensions": [
       "genere",
@@ -1460,7 +1460,7 @@
   },
   {
     "id": "cybercrimine-genere",
-    "title": "Cybercrimine: convergenza di genere",
+    "title": "Delitti informatici: vittime donne quasi alla pari con gli uomini",
     "category": "demografica",
     "dimensions": [
       "genere"
@@ -1839,7 +1839,7 @@
   },
   {
     "id": "percezione",
-    "title": "Percezione e realtà: trend simili, nesso incerto",
+    "title": "Percezione e denunce: andamenti simili, nesso incerto",
     "category": "anomalie",
     "dimensions": [],
     "tests": [
@@ -1883,7 +1883,7 @@
   },
   {
     "id": "violenze-divergenza",
-    "title": "Violenze sessuali: divergenza regionale crescente",
+    "title": "Violenze sessuali: tassi regionali sempre più diversi fra loro",
     "category": "anomalie",
     "dimensions": [
       "territoriale"
@@ -1946,7 +1946,7 @@
   },
   {
     "id": "reati-fisici-digitali",
-    "title": "Reati fisici e digitali: due velocità investigative",
+    "title": "Autori denunciati per vittima: crescono nelle rapine, calano nei reati informatici",
     "category": "anomalie",
     "dimensions": [],
     "tests": [
@@ -2575,7 +2575,7 @@
   },
   {
     "id": "truffe-nord",
-    "title": "Truffe e frodi informatiche: il Nord corre di più",
+    "title": "Truffe e frodi informatiche: crescono più al Nord che al Sud",
     "category": "territoriali",
     "dimensions": [
       "territoriale"
@@ -2674,7 +2674,7 @@
   },
   {
     "id": "stupefacenti-stranieri",
-    "title": "Autori stranieri per stupefacenti: divario Nord-Sud crescente",
+    "title": "Stupefacenti: la quota di autori stranieri cresce più al Nord, dove risiedono più stranieri",
     "category": "territoriali",
     "dimensions": [
       "stranieri",

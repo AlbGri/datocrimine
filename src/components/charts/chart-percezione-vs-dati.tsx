@@ -41,7 +41,7 @@ export function ChartPercezioneVsDati() {
     <div className="space-y-4">
       <Alert>
         <AlertDescription className="block">
-          <strong>Percezione e realt&agrave;:</strong> dal 2015 al 2020 entrambe le serie calano, dal 2021 risalgono. La correlazione &egrave; positiva, ma il nesso &egrave; incerto: la percezione &egrave; influenzata da copertura mediatica, clima politico e fattori locali che i dati aggregati non catturano.
+          <strong>Percezione e denunce:</strong> dal 2015 al 2020 entrambe le serie calano, dal 2021 risalgono. La correlazione &egrave; positiva, ma il nesso &egrave; incerto: la percezione &egrave; influenzata da copertura mediatica, clima politico e fattori locali che i dati aggregati non catturano.
         </AlertDescription>
       </Alert>
 
