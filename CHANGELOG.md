@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-20 — Telefono e analisi statistiche
+- Su telefono l'anno si sceglie da un menu a tendina: i pulsanti degli anni non occupano più la prima schermata
+- Pulsanti e intestazioni delle tabelle più facili da toccare; frecce e simbolo di controtendenza disegnati uguali su ogni dispositivo
+- Analisi statistiche fra le voci principali del menu, subito dopo il Report
+- Titoli delle analisi più neutri e leggibili anche da soli
+
 ## 2026-11-17 — Grafici da condividere
 - Ogni grafico ha un titolo che dice cosa, dove e quando, la fonte sotto e tre pulsanti: scarica l'immagine (con titolo, fonte e indirizzo dentro), copia il link, scarica i dati
 - Il link riapre la stessa vista: reato, regione, provincia e anno scelti restano nell'indirizzo
