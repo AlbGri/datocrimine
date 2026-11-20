@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { PLOTLY_FONT, AXIS_FIXED, COLORS, MIN_CASI, ANNO_REATI_AUTORI } from "@/lib/config";
+import { PLOTLY_FONT, AXIS_FIXED, COLORS, MIN_CASI, ANNO_ULTIMO_AUTORI } from "@/lib/config";
 import { fmtNum } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Plot } from "@/components/charts/plot";
@@ -70,7 +70,7 @@ export function ChartAutoriVsVittime() {
   return (
     <div className="space-y-2">
       <Plot
-          descrizione={`Grafico rapporto autori su vittime per tipo di reato, ${ANNO_REATI_AUTORI}`}
+          descrizione={`Grafico rapporto autori su vittime per tipo di reato, ${ANNO_ULTIMO_AUTORI}`}
           data={[
             {
               type: "bar",

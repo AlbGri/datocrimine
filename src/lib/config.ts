@@ -244,8 +244,6 @@ export const PERIODO_DELITTI = `${ANNO_PRIMO}-${ANNO_ULTIMO}`;
 export const ANNO_PRIMO_AUTORI = 2007;
 export const ANNO_ULTIMO_AUTORI = 2024;
 export const PERIODO_AUTORI = `${ANNO_PRIMO_AUTORI}-${ANNO_ULTIMO_AUTORI}`;
-/** Anno di autori_vittime_reati.json: ANNO_REF di generate_autori_vittime.py */
-export const ANNO_REATI_AUTORI = 2022;
 
 export const TRIENNIO_INIZIALE = [ANNO_PRIMO, ANNO_PRIMO + 2] as const;
 export const TRIENNIO_FINALE = [ANNO_ULTIMO - 2, ANNO_ULTIMO] as const;

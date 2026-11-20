@@ -34,9 +34,6 @@ from reati import ETICHETTE, GERARCHIA
 
 log = logging.getLogger(__name__)
 
-# Anno di riferimento (ultimo con TOT per OFFEND)
-ANNO_REF = 2022
-
 # Ripartizioni geografiche
 RIPARTIZIONI = {
     "IT": "Italia",
@@ -351,13 +348,22 @@ def generate_reati(
     df_victim: pd.DataFrame,
     out_dir: Path,
 ) -> None:
-    """Genera autori_vittime_reati.json: breakdown per reato, Italia, anno ANNO_REF."""
+    """Genera autori_vittime_reati.json: breakdown per reato, Italia, ultimo anno.
+
+    L'ultimo anno e' il piu' recente con i singoli reati sia per gli autori sia per le
+    vittime: il grafico autori per vittima li confronta nello stesso anno.
+    """
     records = []
+    anno = min(
+        int(df.loc[(df["REF_AREA"] == "IT") & (df["TYPE_CRIME"] != "TOT"), "TIME_PERIOD"].max())
+        for df in (df_offend, df_victim)
+    )
+    log.info("Anno dei dati per reato: %d", anno)
 
     for data_type, df in [("OFFEND", df_offend), ("VICTIM", df_victim)]:
         mask = (
             (df["REF_AREA"] == "IT")
-            & (df["TIME_PERIOD"] == ANNO_REF)
+            & (df["TIME_PERIOD"] == anno)
             & (df["TYPE_CRIME"] != "TOT")
         )
         df_year = df[mask]
@@ -373,6 +379,7 @@ def generate_reati(
                 "data_type": data_type,
                 "codice_reato": crime_code,
                 "reato": ETICHETTE.get(crime_code, crime_code),
+                "anno": anno,
                 **metrics,
             })
 
@@ -393,7 +400,7 @@ def generate_province(
 ) -> None:
     """Genera autori_vittime_province.json: dati provinciali multi-anno.
 
-    TOT disponibile solo per ANNO_REF (2022).
+    TOT disponibile solo per gli autori nel 2022.
     Singoli reati disponibili 2022-2024.
     """
     records = []

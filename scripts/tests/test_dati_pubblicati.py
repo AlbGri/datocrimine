@@ -5,6 +5,7 @@ estraggono gli stessi dati in momenti diversi: la tolleranza lo dichiara caso pe
 """
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -80,3 +81,10 @@ def test_stessi_nomi_di_regione_in_tutti_i_file(file):
     riferimento = set(carica("delitti_regioni.json")["Territorio"])
     assert len(riferimento) == 20
     assert set(carica(file)[FILE_REGIONI[file]]) == riferimento
+
+
+def test_anno_dei_reati_autori_come_nel_sito():
+    """Il titolo del grafico autori per vittima usa ANNO_ULTIMO_AUTORI, scritto a mano in config.ts."""
+    config = (DATA_DIR.parent.parent / "src" / "lib" / "config.ts").read_text(encoding="utf-8")
+    anno_sito = int(re.search(r"ANNO_ULTIMO_AUTORI = (\d{4})", config).group(1))
+    assert set(carica("autori_vittime_reati.json")["anno"]) == {anno_sito}

@@ -16,7 +16,7 @@ import { IndicePagina } from "@/components/ui/indice-pagina";
 import { Pulsante } from "@/components/ui/pulsante";
 import { useParametro } from "@/lib/use-parametro";
 import { nomeProvincia } from "@/lib/format";
-import { ANNO_REATI_AUTORI, ANNO_ULTIMO_AUTORI, CHART_HEIGHT_RANKING, PERIODO_AUTORI } from "@/lib/config";
+import { ANNO_ULTIMO_AUTORI, CHART_HEIGHT_RANKING, PERIODO_AUTORI } from "@/lib/config";
 import { CHI, type DataType } from "@/lib/persone";
 import type { Regione } from "@/lib/territori";
 
@@ -129,7 +129,7 @@ export function PersoneDenunciate({ territori }: { territori: Regione[] }) {
 
       <Grafico
         id="autori-vittime"
-        titolo={`Autori denunciati per ogni vittima, per reato, Italia, ${ANNO_REATI_AUTORI}`}
+        titolo={`Autori denunciati per ogni vittima, per reato, Italia, ${ANNO_ULTIMO_AUTORI}`}
         sottotitolo="Sopra 1 più autori che vittime (reati con più autori), sotto 1 più vittime che autori identificati"
         fonte="autori"
         altezza={600}
