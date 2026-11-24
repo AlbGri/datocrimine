@@ -1,7 +1,6 @@
 # Fonti dei dati
 
-Da dove viene ogni dato del sito, come si riscarica e quale file produce. I comandi per rifare
-l'intera elaborazione sono nel [README](../README.md#dati).
+Da dove viene ogni dato del sito, come si riscarica e quale file produce. I comandi per rifare l'intera elaborazione sono nel [README](../README.md#dati).
 
 ## 1. Delitti denunciati (DCCV_DELITTIPS)
 
@@ -15,8 +14,7 @@ l'intera elaborazione sono nel [README](../README.md#dati).
 | Genera | `delitti_italia.json`, `delitti_regioni.json`, `delitti_province.json`, `delitti_categorie.json`, `delitti_reati_italia.json`, `reati_allarme_sociale*.json`, tasso di `percezione_vs_dati.json` |
 | Scaricato | 17 marzo 2026 |
 
-Lo script scarica solo il dataflow 1; gli altri 8 sono elencati nello script, da aggiungere a
-`DOWNLOAD_IDS` se servono.
+Lo script scarica solo il dataflow 1; gli altri 8 sono elencati nello script, da aggiungere a `DOWNLOAD_IDS` se servono.
 
 ## 2. Autori e vittime di delitto (DCCV_AUTVITTPS)
 
@@ -29,8 +27,7 @@ Lo script scarica solo il dataflow 1; gli altri 8 sono elencati nello script, da
 | Usato | dataflow 7 (autori) e 8 (vittime): sesso, minori e adulti, cittadinanza, per provincia |
 | Genera | `autori_vittime_trend.json`, `autori_vittime_reati.json`, `autori_vittime_regioni.json`, `autori_vittime_province.json`, `reati_gerarchia.json` |
 
-Lo script scarica solo i dataflow 7 e 8; gli altri 6 sono elencati nello script, da aggiungere a
-`DOWNLOAD_IDS` se servono.
+Lo script scarica solo i dataflow 7 e 8; gli altri 6 sono elencati nello script, da aggiungere a `DOWNLOAD_IDS` se servono.
 
 ## 3. Percezione del rischio di criminalità
 
@@ -42,14 +39,11 @@ Lo script scarica solo i dataflow 7 e 8; gli altri 6 sono elencati nello script,
 | Download | manuale, in `data/raw/percezione_criminalita_istat.csv` |
 | Genera | colonna `Percezione_pct` di `percezione_vs_dati.json` |
 
-Il dato 2024 (26,6%) è stato aggiunto a mano da [Noi Italia 2025](https://noi-italia.istat.it/pagina.php?id=3&categoria=9&action=show&L=0):
-non era ancora nel dataset scaricabile.
+Il dato 2024 (26,6%) è stato aggiunto a mano da [Noi Italia 2025](https://noi-italia.istat.it/pagina.php?id=3&categoria=9&action=show&L=0): non era ancora nel dataset scaricabile.
 
 ## 4. Popolazione residente
 
-Serve per i tassi (delitti per 1.000 o per 100.000 abitanti). Due fonti, unite da
-`scripts/generate_popolazione.py` in `data/processed/popolazione_regioni_province.csv`:
-il 2019, presente in entrambe, viene da DCIS_POPRES1.
+Serve per i tassi (delitti per 1.000 o per 100.000 abitanti). Due fonti, unite da `scripts/generate_popolazione.py` in `data/processed/popolazione_regioni_province.csv`: il 2019, presente in entrambe, viene da DCIS_POPRES1.
 
 ### 4a. Ricostruzione intercensuaria, 2014-2018
 
@@ -71,8 +65,7 @@ il 2019, presente in entrambe, viene da DCIS_POPRES1.
 
 ## 5. Propensione alla denuncia (numero oscuro)
 
-Percentuali trascritte a mano dai report ISTAT in `src/data/propensione_denuncia.json`, letto dal grafico
-del Numero Oscuro e da `scripts/generate_insights.py`.
+Percentuali trascritte a mano dai report ISTAT in `src/data/propensione_denuncia.json`, letto dal grafico del Numero Oscuro e da `scripts/generate_insights.py`.
 
 | Report | Dati usati |
 |--------|------------|
@@ -93,18 +86,10 @@ del Numero Oscuro e da `scripts/generate_insights.py`.
 
 ## 7. Dai dati grezzi al sito
 
-1. **Download**: i tre script `download_*.py` per delitti, autori e vittime e popolazione dal 2019;
-   le altre fonti sono già nel repository
-2. **Elaborazione**: `generate_popolazione.py`, `generate_delittips.py` (7 CSV in `data/processed/`
-   e i JSON dei reati di allarme per regioni e province), `generate_autori_vittime.py`,
-   poi `csv_to_json.py`, che converte i CSV in JSON per il sito
-3. **Analisi**: `generate_insights.py` e `generate_report.py`, per ultimi perché leggono i JSON
-   già in `public/data/`
+1. **Download**: i tre script `download_*.py` per delitti, autori e vittime e popolazione dal 2019; le altre fonti sono già nel repository
+2. **Elaborazione**: `generate_popolazione.py`, `generate_delittips.py` (7 CSV in `data/processed/` e i JSON dei reati di allarme per regioni e province), `generate_autori_vittime.py`, poi `csv_to_json.py`, che converte i CSV in JSON per il sito
+3. **Analisi**: `generate_insights.py` e `generate_report.py`, per ultimi perché leggono i JSON già in `public/data/`
 
-Nel grafico dei delitti per tipologia i reati sono raggruppati in 7 categorie che non si
-sovrappongono e sommano al totale: furti, rapine, violenze contro la persona, truffe e frodi,
-droga, altro e ingiurie. Le ingiurie, depenalizzate nel 2016, stanno a parte per non falsare
-l'andamento di "altro".
+Nel grafico dei delitti per tipologia i reati sono raggruppati in 7 categorie che non si sovrappongono e sommano al totale: furti, rapine, violenze contro la persona, truffe e frodi, droga, altro e ingiurie. Le ingiurie, depenalizzate nel 2016, stanno a parte per non falsare l'andamento di "altro".
 
-Il servizio SDMX dell'ISTAT accetta poche richieste al minuto e a volte risponde con errori
-temporanei: gli script aspettano fra una richiesta e l'altra e riprovano.
+Il servizio SDMX dell'ISTAT accetta poche richieste al minuto e a volte risponde con errori temporanei: gli script aspettano fra una richiesta e l'altra e riprovano.

@@ -38,13 +38,9 @@ Apri http://localhost:3000
 
 I dati ISTAT sono in `public/data/` come JSON, pronti per il frontend.
 
-Per rigenerarli dai CSV sorgente (richiede conda + environment `osservatorio`). I dati grezzi di
-delitti, autori e vittime (circa 75 MB) non sono nel repository: si scaricano dall'ISTAT con i tre
-script `download_*.py`, che possono richiedere molto tempo perché il servizio accetta poche
-richieste al minuto.
+Per rigenerarli dai CSV sorgente (richiede conda + environment `osservatorio`). I dati grezzi di delitti, autori e vittime (circa 75 MB) non sono nel repository: si scaricano dall'ISTAT con i tre script `download_*.py`, che possono richiedere molto tempo perché il servizio accetta poche richieste al minuto.
 
-Per sapere se l'ISTAT ha pubblicato anni nuovi rispetto ai dati del sito, senza riscaricare tutto:
-`python scripts/check_istat_updates.py` (riepilogo in `data/raw/check_updates.json`).
+Per sapere se l'ISTAT ha pubblicato anni nuovi rispetto ai dati del sito, senza riscaricare tutto: `python scripts/check_istat_updates.py` (riepilogo in `data/raw/check_updates.json`).
 
 ```bash
 conda activate osservatorio
