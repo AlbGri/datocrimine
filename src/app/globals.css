@@ -39,7 +39,7 @@
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
-/* Valori dello stile comune AlbGri (albgri-stile/_local/STILE_COMUNE.md) - versione 2026-11-24.1
+/* Valori dello stile comune AlbGri (albgri-stile/_local/STILE_COMUNE.md) - versione 2026-11-24.2
    Nomi di shadcn: --background e' --bg, --card --surface, --secondary --surface-2, --foreground --ink,
    --muted-foreground --muted, --border --line, --evidenza --accent, --su-evidenza --on-accent.
    --primary resta il colore del testo: e' usato come tale; il giallo e' --evidenza.
@@ -75,7 +75,7 @@
   --s1: #1d85b0; --s2: #c06325; --s3: #5e3d9e; --s4: #317a45; --s5: #912e6e; --s6: #009f98; --s7: #9d6d1c; --s8: #843b3e;
   --seq1: #d2edfc; --seq2: #8fcae9; --seq3: #45a4d0; --seq4: #097ca6; --seq5: #015473;
   --div1: #026083; --div2: #3294c0; --div3: #90c6e3; --div4: #e4e6ec; --div5: #e4b196; --div6: #be7449; --div7: #814622;
-  /* Di progetto: il grigio tinto di "Altro", con lo stesso contrasto sul fondo nei due temi */
+  /* Il grigio tinto di "Altro", con lo stesso contrasto sul fondo nei due temi */
   --altro: #8a8796;
 }
 

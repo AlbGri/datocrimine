@@ -181,14 +181,9 @@ export function ChartProfiloNazionale({ dataType }: Props) {
   const nomi = displayItems.map((d) => d.reato);
   const valori = displayItems.map((d) => d.value);
 
-  const maxVal = Math.max(...valori, 1);
-  const baseColor = metricaConfig.color;
-  const colors = displayItems.map((d) => {
-    if (d.isAltro) return COLORS.grigioAltro;
-    const ratio = Math.min(d.value / maxVal, 1);
-    const opacity = 0.25 + ratio * 0.75;
-    return baseColor + Math.round(opacity * 255).toString(16).padStart(2, "0");
-  });
+  const colors = displayItems.map((d) =>
+    d.isAltro ? COLORS.grigioAltro : metricaConfig.color
+  );
 
   const nBars = displayItems.length;
   const barHeight = isMobile ? 18 : 22;

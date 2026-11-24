@@ -119,7 +119,7 @@ export function AllarmeSociale({ territori }: { territori: Regione[] }) {
       <Grafico
         id="italia"
         titolo={`${reato}, Italia, ${PERIODO_DELITTI}`}
-        sottotitolo="In chiaro, per confronto, gli altri reati di allarme sociale"
+        sottotitolo="In grigio, per confronto, gli altri reati di allarme sociale"
         fonte="delitti"
         parametri={{ reato }}
         altezza={470}

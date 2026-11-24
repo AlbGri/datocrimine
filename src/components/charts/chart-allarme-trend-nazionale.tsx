@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { useFetchData } from "@/lib/use-fetch-data";
-import { COLORS, COLORI_ALLARME, CHART_HEIGHT_SMALL, PLOTLY_FONT, COVID_SHAPES, COVID_ANNOTATIONS, AXIS_FIXED, getAxisYear, LEGEND_BOTTOM_LEFT, PERIODO_DELITTI } from "@/lib/config";
+import { COLORS, COLORI_ALLARME, CHART_HEIGHT_SMALL, PLOTLY_FONT, COVID_SHAPES, COVID_ANNOTATIONS, AXIS_FIXED, getAxisYear, PERIODO_DELITTI } from "@/lib/config";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Plot } from "@/components/charts/plot";
 
@@ -31,7 +31,10 @@ export function ChartAllarmeTrendNazionale({ reatoSelezionato }: Props) {
 
   const traces = useMemo(() => {
     if (!data) return [];
-    const reati = [...new Set(data.map((d) => d.Reato))];
+    // La voce scelta per ultima, cosi' e' disegnata sopra le altre
+    const reati = [...new Set(data.map((d) => d.Reato))].sort(
+      (a, b) => Number(a === reatoSelezionato) - Number(b === reatoSelezionato),
+    );
     return reati.map((reato) => {
       const filtered = data
         .filter((d) => d.Reato === reato)
@@ -40,17 +43,17 @@ export function ChartAllarmeTrendNazionale({ reatoSelezionato }: Props) {
       return {
         x: filtered.map((d) => d.Anno),
         y: filtered.map((d) => isAssoluto ? d.Delitti : d.Tasso_per_100k),
-        mode: "lines+markers" as const,
+        // Serie di confronto (stile comune, sezione 7): le altre in grigio pieno, il nome al passaggio
+        mode: isSelected ? ("lines+markers" as const) : ("lines" as const),
         name: reato,
         hovertemplate: isAssoluto
           ? "<b>%{fullData.name}</b><br>Anno: %{x}<br>Delitti: %{y:,.0f}<extra></extra>"
           : "<b>%{fullData.name}</b><br>Anno: %{x}<br>%{y:.2f} per 100k ab.<extra></extra>",
         line: {
-          width: isSelected ? 3 : 1.5,
-          color: COLORI_ALLARME[reato] ?? COLORS.altro,
+          width: isSelected ? 3 : 1,
+          color: isSelected ? (COLORI_ALLARME[reato] ?? COLORS.altro) : COLORS.altro,
         },
-        marker: { size: isSelected ? 7 : 4 },
-        opacity: isSelected ? 1 : 0.3,
+        marker: { size: 7 },
       };
     });
   }, [data, reatoSelezionato, isAssoluto]);
@@ -87,7 +90,8 @@ export function ChartAllarmeTrendNazionale({ reatoSelezionato }: Props) {
           height: CHART_HEIGHT_SMALL,
           xaxis: getAxisYear(isMobile),
           yaxis: { ...AXIS_FIXED, title: { text: isAssoluto ? "Delitti denunciati" : "Tasso per 100k ab.", font: { size: PLOTLY_FONT.axisTitle } }, ...(isAssoluto && { tickformat: "~s", hoverformat: ",.0f" }) },
-          legend: LEGEND_BOTTOM_LEFT,
+          // La voce scelta e' nel titolo, le altre al passaggio
+          showlegend: false,
           margin: { l: 50, r: 20, t: 20, b: 55 },
           shapes: COVID_SHAPES,
           annotations: COVID_ANNOTATIONS,
