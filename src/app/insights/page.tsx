@@ -470,12 +470,10 @@ export default function Insights() {
           className="flex items-center justify-between gap-4 hover:underline"
         >
           <span>
-            <strong>Report {ANNO_ULTIMO}</strong> &mdash; variazioni, tendenze e mappa
+            <strong>Report {ANNO_ULTIMO}.</strong> Variazioni, tendenze e mappa
             regionale dei delitti denunciati.
           </span>
-          <span className="text-primary text-xl shrink-0" aria-hidden="true">
-            &rarr;
-          </span>
+          <span className="text-primary font-medium shrink-0">Apri</span>
         </Link>
       </div>
     </main>
