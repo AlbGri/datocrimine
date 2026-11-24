@@ -5,6 +5,8 @@
 - Nel tema scuro anche grafici e mappe hanno il fondo scuro, con colori adatti
 - Le immagini scaricate dei grafici escono sempre chiare, con il titolo nel carattere del sito
 - Nei grafici griglia, testi degli assi e riquadri al passaggio del mouse hanno i colori del resto del sito
+- Reati di allarme sociale: gli altri reati, messi per confronto, sono linee grigie sottili al posto di quelle sbiadite e si leggono anche nel tema scuro; il nome compare al passaggio del mouse
+- Persone denunciate: le barre del profilo nazionale hanno tutte lo stesso colore pieno
 
 ## 2026-11-20 — Tabelle, grafici e vittime
 - Le tabelle delle province si aprono in ordine alfabetico; per tasso si ordinano con un clic sull'intestazione
