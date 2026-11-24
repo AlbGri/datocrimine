@@ -17,9 +17,10 @@ from tests.fatti import ROOT, numeri_dato
 
 AMMESSI = json.loads((Path(__file__).parent / "numeri_pagine.json").read_text(encoding="utf-8"))
 PAGINE = sorted(p for cartella in ("src/app", "src/components") for p in (ROOT / cartella).rglob("*.tsx"))
-# Commenti, classi CSS, formati dei tooltip e colori non sono testo per il lettore
+# Commenti, classi CSS, formati dei tooltip, colori e tracciati SVG non sono testo per il lettore
 NON_TESTO = re.compile(
-    r"/\*.*?\*/|//[^\n]*|className=(\"[^\"]*\"|\{`[^`]*`\})|hovertemplate:\s*\"[^\"]*\"|rgba?\([^)]*\)",
+    r"/\*.*?\*/|//[^\n]*|className=(\"[^\"]*\"|\{`[^`]*`\})|hovertemplate:\s*\"[^\"]*\"|rgba?\([^)]*\)"
+    r"|\bd:\s*\"[^\"]*\"",
     re.S,
 )
 
