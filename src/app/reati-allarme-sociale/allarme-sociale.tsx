@@ -8,6 +8,7 @@ import { ChartAllarmeTrendProvincia } from "@/components/charts/chart-allarme-tr
 import { Grafico } from "@/components/charts/grafico";
 import { IndicePagina } from "@/components/ui/indice-pagina";
 import { SceltaAnno } from "@/components/ui/scelta-anno";
+import { SceltaTerritorio } from "@/components/ui/scelta-territorio";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { useParametro } from "@/lib/use-parametro";
 import { fmtPct, nomeProvincia } from "@/lib/format";
@@ -30,8 +31,8 @@ const ANNI = ANNI_DELITTI.map(String);
 const SEZIONI = [
   { id: "italia", titolo: "Andamento in Italia" },
   { id: "regioni", titolo: "Regioni a confronto" },
-  { id: "regione", titolo: "Andamento della regione" },
   { id: "province", titolo: "Province a confronto" },
+  { id: "regione", titolo: "Andamento della regione" },
   { id: "provincia", titolo: "Andamento della provincia" },
 ];
 
@@ -87,26 +88,6 @@ export function AllarmeSociale({ territori }: { territori: Regione[] }) {
               ))}
             </select>
           </div>
-          <div>
-            <label htmlFor="regione-select" className="block text-sm font-medium mb-1">
-              Regione
-            </label>
-            <select id="regione-select" value={regione} onChange={(e) => setRegione(e.target.value)} className={SELETTORE}>
-              {territori.map((r) => (
-                <option key={r.nome} value={r.nome}>{r.nome}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label htmlFor="provincia-select" className="block text-sm font-medium mb-1">
-              Provincia
-            </label>
-            <select id="provincia-select" value={provincia} onChange={(e) => setProvincia(e.target.value)} className={SELETTORE}>
-              {province.map((p) => (
-                <option key={p} value={p}>{p}</option>
-              ))}
-            </select>
-          </div>
         </div>
 
         <SceltaAnno legenda="Anno di classifica e tabella" anni={ANNI} anno={annoTesto} onScelta={setAnno} />
@@ -143,19 +124,6 @@ export function AllarmeSociale({ territori }: { territori: Regione[] }) {
       <hr />
 
       <Grafico
-        id="regione"
-        titolo={`${reato}, ${regione}, ${PERIODO_DELITTI}`}
-        sottotitolo="A confronto con la media italiana"
-        fonte="delitti"
-        parametri={{ reato, regione }}
-        altezza={470}
-      >
-        <ChartAllarmeTrendRegione reato={reato} regione={regione} />
-      </Grafico>
-
-      <hr />
-
-      <Grafico
         id="province"
         titolo={`${reato} per provincia, ${anno}`}
         sottotitolo="Ogni 100.000 abitanti, con la variazione fra le medie triennali"
@@ -165,6 +133,27 @@ export function AllarmeSociale({ territori }: { territori: Regione[] }) {
         immagine={false}
       >
         <ChartAllarmeTabellaProvince anno={anno} reato={reato} />
+      </Grafico>
+
+      <hr />
+
+      <SceltaTerritorio
+        territori={territori}
+        regione={regione}
+        onRegione={setRegione}
+        provincia={provincia}
+        onProvincia={setProvincia}
+      />
+
+      <Grafico
+        id="regione"
+        titolo={`${reato}, ${regione}, ${PERIODO_DELITTI}`}
+        sottotitolo="A confronto con la media italiana"
+        fonte="delitti"
+        parametri={{ reato, regione }}
+        altezza={470}
+      >
+        <ChartAllarmeTrendRegione reato={reato} regione={regione} />
       </Grafico>
 
       <hr />

@@ -14,6 +14,7 @@ import { ChartAutoriTrendProvincia } from "@/components/charts/chart-autori-tren
 import { Grafico } from "@/components/charts/grafico";
 import { IndicePagina } from "@/components/ui/indice-pagina";
 import { Pulsante } from "@/components/ui/pulsante";
+import { SceltaTerritorio } from "@/components/ui/scelta-territorio";
 import { useParametro } from "@/lib/use-parametro";
 import { nomeProvincia } from "@/lib/format";
 import { ANNO_ULTIMO_AUTORI, CHART_HEIGHT_RANKING, PERIODO_AUTORI } from "@/lib/config";
@@ -27,14 +28,12 @@ const SEZIONI = [
   { id: "reati-italia", titolo: "Reati in Italia" },
   { id: "autori-vittime", titolo: "Autori e vittime" },
   { id: "regioni", titolo: "Regioni a confronto" },
+  { id: "province", titolo: "Province a confronto" },
   { id: "regione", titolo: "Andamento della regione" },
   { id: "reati-regione", titolo: "Reati nella regione" },
-  { id: "province", titolo: "Province a confronto" },
   { id: "province-regione", titolo: "Province della regione" },
   { id: "reati-provincia", titolo: "Reati nella provincia" },
 ];
-
-const SELETTORE = "border rounded-md px-3 py-2 text-sm bg-background";
 
 export function PersoneDenunciate({ territori }: { territori: Regione[] }) {
   const [chiEtichetta, setChi] = useParametro("chi", TIPI.map((t) => CHI[t].etichetta));
@@ -63,28 +62,6 @@ export function PersoneDenunciate({ territori }: { territori: Regione[] }) {
               {CHI[t].etichetta}
             </Pulsante>
           ))}
-        </div>
-        <div className="flex flex-wrap gap-4">
-          <div>
-            <label htmlFor="regione-select" className="block text-sm font-medium mb-1">
-              Regione
-            </label>
-            <select id="regione-select" value={regione} onChange={(e) => setRegione(e.target.value)} className={SELETTORE}>
-              {territori.map((r) => (
-                <option key={r.nome} value={r.nome}>{r.nome}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label htmlFor="provincia-select" className="block text-sm font-medium mb-1">
-              Provincia
-            </label>
-            <select id="provincia-select" value={provincia} onChange={(e) => setProvincia(e.target.value)} className={SELETTORE}>
-              {province.map((p) => (
-                <option key={p} value={p}>{p}</option>
-              ))}
-            </select>
-          </div>
         </div>
         <IndicePagina sezioni={SEZIONI} />
       </div>
@@ -153,6 +130,28 @@ export function PersoneDenunciate({ territori }: { territori: Regione[] }) {
       <hr />
 
       <Grafico
+        id="province"
+        titolo={`${chi.soggetto} per provincia, ${ANNO_ULTIMO_AUTORI}`}
+        sottotitolo="Totale, stranieri e minori; il dato provinciale c'è dal 2022"
+        fonte="autori"
+        parametri={{ chi: chi.etichetta }}
+        altezza={400}
+        immagine={false}
+      >
+        <ChartAutoriTabellaProvince dataType={dataType} />
+      </Grafico>
+
+      <hr />
+
+      <SceltaTerritorio
+        territori={territori}
+        regione={regione}
+        onRegione={setRegione}
+        provincia={provincia}
+        onProvincia={setProvincia}
+      />
+
+      <Grafico
         id="regione"
         titolo={`${chi.soggetto}, ${regione}, ${PERIODO_AUTORI}`}
         sottotitolo="A confronto con la media italiana; le quote sull'asse di destra"
@@ -174,20 +173,6 @@ export function PersoneDenunciate({ territori }: { territori: Regione[] }) {
         altezza={CHART_HEIGHT_RANKING + 80}
       >
         <ChartProfiloTerritorio dataType={dataType} regione={regione} />
-      </Grafico>
-
-      <hr />
-
-      <Grafico
-        id="province"
-        titolo={`${chi.soggetto} per provincia, ${ANNO_ULTIMO_AUTORI}`}
-        sottotitolo="Totale, stranieri e minori; il dato provinciale c'è dal 2022"
-        fonte="autori"
-        parametri={{ chi: chi.etichetta }}
-        altezza={400}
-        immagine={false}
-      >
-        <ChartAutoriTabellaProvince dataType={dataType} />
       </Grafico>
 
       <hr />

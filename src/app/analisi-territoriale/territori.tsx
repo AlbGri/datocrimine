@@ -11,6 +11,7 @@ import { Grafico } from "@/components/charts/grafico";
 import { IndicePagina } from "@/components/ui/indice-pagina";
 import { Pulsante } from "@/components/ui/pulsante";
 import { SceltaAnno } from "@/components/ui/scelta-anno";
+import { SceltaTerritorio } from "@/components/ui/scelta-territorio";
 import { useParametro } from "@/lib/use-parametro";
 import { nomeProvincia } from "@/lib/format";
 import { ANNI_DELITTI, CHART_HEIGHT_MAP, CHART_HEIGHT_RANKING, PERIODO_DELITTI } from "@/lib/config";
@@ -22,12 +23,10 @@ const ANNI = ANNI_DELITTI.map(String);
 const SEZIONI = [
   { id: "mappa", titolo: "Mappa" },
   { id: "regioni", titolo: "Regioni a confronto" },
-  { id: "regione", titolo: "Andamento della regione" },
   { id: "province", titolo: "Province a confronto" },
+  { id: "regione", titolo: "Andamento della regione" },
   { id: "provincia", titolo: "Andamento della provincia" },
 ];
-
-const SELETTORE = "border rounded-md px-3 py-2 text-sm bg-background";
 
 export function Territori({ territori }: { territori: Regione[] }) {
   const [annoTesto, setAnno] = useParametro("anno", ANNI, ANNI[ANNI.length - 1]);
@@ -80,28 +79,6 @@ export function Territori({ territori }: { territori: Regione[] }) {
         <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em]">
           Territori
         </h1>
-        <div className="flex flex-wrap gap-4">
-          <div>
-            <label htmlFor="regione-select" className="block text-sm font-medium mb-1">
-              Regione
-            </label>
-            <select id="regione-select" value={regione} onChange={(e) => setRegione(e.target.value)} className={SELETTORE}>
-              {territori.map((r) => (
-                <option key={r.nome} value={r.nome}>{r.nome}</option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label htmlFor="provincia-select" className="block text-sm font-medium mb-1">
-              Provincia
-            </label>
-            <select id="provincia-select" value={provincia} onChange={(e) => setProvincia(e.target.value)} className={SELETTORE}>
-              {province.map((p) => (
-                <option key={p} value={p}>{p}</option>
-              ))}
-            </select>
-          </div>
-        </div>
         <SceltaAnno
           legenda="Anno di mappa, classifica e tabella delle province"
           anni={ANNI}
@@ -152,19 +129,6 @@ export function Territori({ territori }: { territori: Regione[] }) {
       <hr />
 
       <Grafico
-        id="regione"
-        titolo={`Delitti denunciati, ${regione}, ${PERIODO_DELITTI}`}
-        sottotitolo="A confronto con la media italiana"
-        fonte="delitti"
-        parametri={{ regione }}
-        altezza={500}
-      >
-        <ChartTrendRegione regione={regione} />
-      </Grafico>
-
-      <hr />
-
-      <Grafico
         id="province"
         titolo={`Delitti denunciati per provincia, ${anno}`}
         sottotitolo="Ogni 1.000 abitanti, con la variazione fra le medie triennali"
@@ -174,6 +138,27 @@ export function Territori({ territori }: { territori: Regione[] }) {
         immagine={false}
       >
         <ChartTabellaProvince anno={anno} />
+      </Grafico>
+
+      <hr />
+
+      <SceltaTerritorio
+        territori={territori}
+        regione={regione}
+        onRegione={setRegione}
+        provincia={provincia}
+        onProvincia={setProvincia}
+      />
+
+      <Grafico
+        id="regione"
+        titolo={`Delitti denunciati, ${regione}, ${PERIODO_DELITTI}`}
+        sottotitolo="A confronto con la media italiana"
+        fonte="delitti"
+        parametri={{ regione }}
+        altezza={500}
+      >
+        <ChartTrendRegione regione={regione} />
       </Grafico>
 
       <hr />
