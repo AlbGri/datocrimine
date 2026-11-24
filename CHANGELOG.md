@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-25
+
+### Regione e provincia
+- Territori, Reati di allarme sociale e Persone denunciate: regione e provincia si scelgono dopo le sezioni su tutta Italia, subito prima delle sezioni che le usano. In cima alla pagina sembravano valere anche per i dati nazionali
+- Le province a confronto vengono prima dell'andamento della regione
+
 ## 2026-11-24
 
 ### Tema scuro
