@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Fragment } from "react";
 import { briciole } from "@/lib/sito";
 import { DatiAggiornati } from "@/components/layout/dati-aggiornati";
+import { Tema } from "@/components/layout/tema";
 
 export function Barra() {
   const passi = briciole(usePathname());
@@ -13,8 +14,12 @@ export function Barra() {
       <Link href="/" className="font-serif text-[1.3rem] leading-[1.1] font-bold">
         DatoCrimine
       </Link>
+      {/* Sul telefono nome e tema sulla prima riga, briciole sulla seconda */}
       {passi.length > 0 && (
-        <nav aria-label="Briciole" className="text-[0.9rem] text-muted-foreground">
+        <nav
+          aria-label="Briciole"
+          className="text-[0.9rem] text-muted-foreground max-[760px]:order-1 max-[760px]:basis-full"
+        >
           <Link href="/" className="underline">
             Home
           </Link>
@@ -24,6 +29,7 @@ export function Barra() {
         </nav>
       )}
       <DatiAggiornati className="ml-auto text-[0.9rem] text-muted-foreground max-[760px]:hidden" />
+      <Tema />
     </header>
   );
 }

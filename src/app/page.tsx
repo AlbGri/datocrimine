@@ -56,7 +56,7 @@ export default function Home() {
         </h1>
         <Link
           href={`/report/${ANNO_ULTIMO}`}
-          className="rounded-md border border-foreground bg-evidenza px-3 py-1.5 text-[0.92rem] leading-tight font-bold text-su-evidenza"
+          className="rounded-md border border-segno bg-evidenza px-3 py-1.5 text-[0.92rem] leading-tight font-bold text-su-evidenza"
         >
           Report {ANNO_ULTIMO}: cosa dicono i dati
         </Link>

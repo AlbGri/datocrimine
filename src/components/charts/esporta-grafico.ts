@@ -1,4 +1,7 @@
 import type { Data, Layout, LayoutAxis } from "plotly.js";
+import { COLORS } from "@/lib/config";
+import { testo, titoli } from "@/lib/caratteri";
+import { COLORI_CHIARI, leggiColori, modelloGrafici, traduciColori } from "@/lib/tema";
 
 /** Il div che Plotly disegna: tiene dati e layout del grafico mostrato */
 export interface Figura extends HTMLElement {
@@ -74,63 +77,114 @@ interface Testi {
   titolo: string;
   sottotitolo?: string;
   nota?: string | null;
-  piede: string;
+  /** Righe in fondo all'immagine: fonte e indirizzo */
+  piede: string[];
 }
 
-/** PNG da condividere: il grafico com'e', con titolo, nota, fonte e indirizzo dentro l'immagine */
+// L'immagine esce dal sito (stampa, chat): sempre nei colori del tema chiaro
+const FONDO = COLORS.superficie;
+const GIALLO = "#f6eb61";
+const LATO = 24;
+
+/** Le righe di un testo che stanno nella larghezza data, col carattere gia' impostato */
+function aCapo(ctx: CanvasRenderingContext2D, testo: string, larghezza: number): string[] {
+  const righe: string[] = [];
+  let riga = "";
+  for (const parola of testo.split(" ")) {
+    const prova = riga ? `${riga} ${parola}` : parola;
+    if (riga && ctx.measureText(prova).width > larghezza) {
+      righe.push(riga);
+      riga = parola;
+    } else riga = prova;
+  }
+  return [...righe, riga];
+}
+
+/**
+ * PNG da condividere: il grafico com'e', con titolo, nota, fonte e indirizzo dentro l'immagine.
+ * I testi li scrive il canvas con i caratteri del sito: nell'immagine di Plotly i caratteri del
+ * sito non arrivano e il titolo uscirebbe in un serif generico.
+ */
 export async function immagineDaFigura(figura: Figura, testi: Testi): Promise<string> {
   const { Plotly } = await import("./plotly-component");
   const larghezza = 1200;
+  const utile = larghezza - 2 * LATO;
+  const fontTitolo = `700 28px ${titoli.style.fontFamily}`;
+  const fontTesto = `16px ${testo.style.fontFamily}`;
+  const fontPiede = `13px ${testo.style.fontFamily}`;
+  await Promise.all([fontTitolo, fontTesto].map((f) => document.fonts.load(f)));
+
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d")!;
+  ctx.font = fontTitolo;
+  const righeTitolo = aCapo(ctx, testi.titolo, utile);
+  ctx.font = fontTesto;
+  const righeSotto = [
+    ...(testi.sottotitolo ? aCapo(ctx, testi.sottotitolo, utile).map((r) => [r, COLORS.grigioTesto]) : []),
+    ...(testi.nota ? aCapo(ctx, testi.nota, utile).map((r) => [r, COLORS.testoScuro]) : []),
+  ];
+  ctx.font = fontPiede;
+  const righePiede = testi.piede.flatMap((r) => aCapo(ctx, r, utile));
+  const testa = LATO + righeTitolo.length * 36 + righeSotto.length * 22 + 8;
+  const piede = 8 + righePiede.length * 18 + LATO;
+
+  // Sotto l'asse: etichette, poi la legenda se sta sotto
   const margine = figura.layout.margin ?? {};
-  const sotto = [testi.sottotitolo, testi.nota].filter(Boolean).join("<br>");
-  const testa = 70 + (sotto ? 22 * sotto.split("<br>").length : 0);
-  // Sotto l'asse: etichette, poi la legenda se sta sotto, poi la fonte in fondo all'immagine
   const { legend, xaxis } = figura.layout;
   const sottoAsse = titoloAsse(xaxis) ? 75 : 50;
   const legendaSotto = figura.layout.showlegend !== false && (legend?.y ?? 1) < 0;
-  const piede = 58;
-  const alto = (margine.t ?? 20) + testa;
-  const basso = sottoAsse + (legendaSotto ? 50 : 0) + piede;
-  const altezza = Math.max(675, (figura.layout.height ?? 450) + testa + piede);
+  const alto = margine.t ?? 20;
+  const basso = sottoAsse + (legendaSotto ? 50 : 0);
+  const altezza = Math.max(675 - testa - piede, (figura.layout.height ?? 450) + 50);
   const areaGrafico = altezza - alto - basso;
-  // Margine sinistro effettivo: Plotly lo allarga per le etichette lunghe
-  const sinistra = figura._fullLayout?._size?.l ?? margine.l ?? 50;
 
+  // Il grafico mostrato ha i colori del tema in uso: tornano quelli chiari
+  const attuali = leggiColori();
+  const inChiaro = <T,>(valore: T) => traduciColori(valore, attuali, COLORI_CHIARI);
   const layout: Partial<Layout> = {
-    ...figura.layout,
+    ...inChiaro(figura.layout),
+    template: modelloGrafici(COLORI_CHIARI),
     width: larghezza,
     height: altezza,
-    paper_bgcolor: "#ffffff",
-    plot_bgcolor: "#ffffff",
+    paper_bgcolor: FONDO,
+    plot_bgcolor: FONDO,
     margin: { ...margine, t: alto, b: basso },
     ...(legendaSotto && { legend: { ...legend, y: -sottoAsse / areaGrafico, yanchor: "top" } }),
-    title: {
-      text: `<b>${testi.titolo}</b>`,
-      font: { size: 24 },
-      x: 24 / larghezza,
-      xanchor: "left",
-      xref: "container",
-      y: 1 - 24 / altezza,
-      yanchor: "top",
-      yref: "container",
-      ...(sotto && { subtitle: { text: sotto, font: { size: 16 } } }),
-    },
-    annotations: [
-      ...(figura.layout.annotations ?? []),
-      {
-        text: testi.piede,
-        align: "left",
-        showarrow: false,
-        xref: "paper",
-        yref: "paper",
-        x: 0,
-        xshift: 24 - sinistra,
-        xanchor: "left",
-        y: -(basso - 16) / areaGrafico,
-        yanchor: "bottom",
-        font: { size: 13, color: "#625f69" },
-      },
-    ],
   };
-  return Plotly.toImage({ data: figura.data, layout }, { format: "png", width: larghezza, height: altezza });
+  const grafico = new Image();
+  grafico.src = await Plotly.toImage(
+    { data: inChiaro(figura.data), layout },
+    { format: "png", width: larghezza, height: altezza },
+  );
+  await grafico.decode();
+
+  canvas.width = larghezza;
+  canvas.height = testa + altezza + piede;
+  ctx.fillStyle = FONDO;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  let y = LATO;
+  ctx.font = fontTitolo;
+  for (const riga of righeTitolo) {
+    // Il tratto da evidenziatore sotto il titolo, come nei link del sito: la firma dell'immagine
+    ctx.fillStyle = GIALLO;
+    ctx.fillRect(LATO, y + 18, ctx.measureText(riga).width, 13);
+    ctx.fillStyle = COLORS.testoScuro;
+    ctx.fillText(riga, LATO, y + 27);
+    y += 36;
+  }
+  ctx.font = fontTesto;
+  for (const [riga, colore] of righeSotto) {
+    ctx.fillStyle = colore;
+    ctx.fillText(riga, LATO, y + 16);
+    y += 22;
+  }
+  ctx.drawImage(grafico, 0, testa);
+  y = testa + altezza + 8;
+  ctx.font = fontPiede;
+  ctx.fillStyle = COLORS.grigioTesto;
+  for (const riga of righePiede) {
+    ctx.fillText(riga, LATO, y + 13);
+    y += 18;
+  }
+  return canvas.toDataURL("image/png");
 }

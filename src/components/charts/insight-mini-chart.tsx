@@ -130,14 +130,8 @@ function buildDivergenzaTraces(
   const lower = medie.map((m, i) => m - stdDevs[i]);
   const color = template.color || COLORS.primary;
 
-  // Converti hex in rgba per il fill semitrasparente
-  const hexToRgba = (hex: string, alpha: number) => {
-    const r = parseInt(hex.slice(1, 3), 16);
-    const g = parseInt(hex.slice(3, 5), 16);
-    const b = parseInt(hex.slice(5, 7), 16);
-    return `rgba(${r},${g},${b},${alpha})`;
-  };
-  const fillColor = hexToRgba(color, 0.2);
+  // Fascia trasparente al 20% (33 esadecimale): resta un esadecimale, che il tema scuro sa sostituire
+  const fillColor = `${color}33`;
 
   return [
     // Fascia superiore (bordo area)

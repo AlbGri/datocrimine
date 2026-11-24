@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { COLORS } from "@/lib/config";
 
 /** Minigrafico in SVG scritto in costruzione, con la base a zero: una variazione del 2% resta piatta. */
 function Minigrafico({ valori }: { valori: number[] }) {
   const max = Math.max(...valori);
   const x = (i: number) => (2 + (i * 96) / (valori.length - 1)).toFixed(1);
   const y = (v: number) => (22 - (v * 19) / max).toFixed(1);
-  const tratto = { fill: "none", stroke: COLORS.primary, vectorEffect: "non-scaling-stroke" } as const;
+  const tratto = { fill: "none", stroke: "var(--s1)", vectorEffect: "non-scaling-stroke" } as const;
   return (
     <svg
       viewBox="0 0 100 24"

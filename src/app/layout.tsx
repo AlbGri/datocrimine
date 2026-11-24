@@ -1,10 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Barra } from "@/components/layout/barra";
 import { MappaSito } from "@/components/layout/mappa-sito";
 import { Piede } from "@/components/layout/piede";
 import { ContaVisite } from "@/components/layout/conta-visite";
 import { SITE_NAME, SITE_URL } from "@/lib/metadata";
-import { ANNO_PRIMO_AUTORI, ANNO_ULTIMO } from "@/lib/config";
+import { ANNO_PRIMO_AUTORI, ANNO_ULTIMO, CHIAVE_TEMA, COLORE_BARRA } from "@/lib/config";
 import { testo, titoli } from "@/lib/caratteri";
 import "./globals.css";
 
@@ -13,6 +13,16 @@ export const metadata: Metadata = {
   title: SITE_NAME,
   description: "Dati e analisi sulla criminalit\u00e0 in Italia con fonti ufficiali ISTAT",
 };
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: COLORE_BARRA.chiaro },
+    { media: "(prefers-color-scheme: dark)", color: COLORE_BARRA.scuro },
+  ],
+};
+
+// Il tema scelto si applica prima che la pagina compaia: applicato dopo, nello scuro lampeggerebbe il chiaro
+const SCRIPT_TEMA = `try{var t=localStorage.getItem(${JSON.stringify(CHIAVE_TEMA)});if(t==="scuro"||t==="chiaro")document.documentElement.dataset.tema=t}catch(e){}`;
 
 export default function RootLayout({
   children,
@@ -52,8 +62,10 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="it">
+    // data-tema lo scrive lo script prima di React: non e' una differenza da segnalare
+    <html lang="it" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: SCRIPT_TEMA }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

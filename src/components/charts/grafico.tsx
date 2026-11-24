@@ -185,7 +185,10 @@ export function AzioniGrafico({
   const scaricaImmagine = async () => {
     const f = figura();
     if (!f) return;
-    const piede = `Fonte: ${FONTI[fonte]}.<br>Elaborazione DatoCrimine, ${SITE_URL.replace("https://", "")}${window.location.pathname}`;
+    const piede = [
+      `Fonte: ${FONTI[fonte]}.`,
+      `Elaborazione DatoCrimine, ${SITE_URL.replace("https://", "")}${window.location.pathname}`,
+    ];
     scarica(`${nomeFile}.png`, await immagineDaFigura(f, { titolo, sottotitolo, nota, piede }));
   };
 

@@ -10,7 +10,7 @@ import { MAPPA, isGruppo, type Pagina } from "@/lib/sito";
 const FERMATA =
   "relative pl-5 before:absolute before:left-[5px] before:top-0 before:bottom-0 before:w-0.5 before:bg-border last:before:bottom-auto last:before:h-3.5";
 const VOCE =
-  "block cursor-pointer list-none rounded-[4px] px-1.5 py-1 hover:bg-secondary before:absolute before:rounded-full before:border-2 before:border-muted-foreground before:bg-background aria-[current=page]:font-bold aria-[current=page]:before:-left-px aria-[current=page]:before:top-[7px] aria-[current=page]:before:size-3.5 aria-[current=page]:before:border-[1.5px] aria-[current=page]:before:border-foreground aria-[current=page]:before:bg-evidenza [&::-webkit-details-marker]:hidden";
+  "block cursor-pointer list-none rounded-[4px] px-1.5 py-1 hover:bg-secondary before:absolute before:rounded-full before:border-2 before:border-muted-foreground before:bg-background aria-[current=page]:font-bold aria-[current=page]:before:-left-px aria-[current=page]:before:top-[7px] aria-[current=page]:before:size-3.5 aria-[current=page]:before:border-[1.5px] aria-[current=page]:before:border-segno aria-[current=page]:before:bg-evidenza [&::-webkit-details-marker]:hidden";
 const PALLINO = "before:left-0 before:top-2 before:size-3";
 const PALLINO_PICCOLO = "before:left-0.5 before:top-2.5 before:size-2";
 
@@ -80,7 +80,7 @@ export function MappaSito() {
       >
         {/* Non giallo: il giallo pieno e' "cosa fare". Porta il pallino "sei qui" della mappa */}
         {!aperta && (
-          <span className="mr-1.5 inline-block size-[11px] rounded-full border-[1.5px] border-foreground bg-evidenza align-[-1px]" />
+          <span className="mr-1.5 inline-block size-[11px] rounded-full border-[1.5px] border-segno bg-evidenza align-[-1px]" />
         )}
         {aperta ? "Chiudi" : "Mappa"}
       </button>

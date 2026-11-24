@@ -200,7 +200,7 @@ export function ChartMappaRegioni({ anno }: Props) {
               marker: {
                 symbol: t.markerSymbol,
                 size: isMobile ? 8 : 11,
-                color: "#f4f6fa",
+                color: COLORS.superficie,
                 line: { color: COLORS.testoScuro, width: 1.5 },
               },
               hoverinfo: "skip",

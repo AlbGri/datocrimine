@@ -29,6 +29,7 @@
   --color-card: var(--card);
   --color-evidenza: var(--evidenza);
   --color-su-evidenza: var(--su-evidenza);
+  --color-segno: var(--segno);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -38,9 +39,13 @@
   --radius-4xl: calc(var(--radius) + 16px);
 }
 
-/* Valori dello stile comune AlbGri (albgri-stile/_local/STILE_COMUNE.md), solo tema chiaro.
-   --primary resta il colore del testo: e' usato come tale; il giallo e' --evidenza. */
+/* Valori dello stile comune AlbGri (albgri-stile/_local/STILE_COMUNE.md) - versione 2026-11-24.1
+   Nomi di shadcn: --background e' --bg, --card --surface, --secondary --surface-2, --foreground --ink,
+   --muted-foreground --muted, --border --line, --evidenza --accent, --su-evidenza --on-accent.
+   --primary resta il colore del testo: e' usato come tale; il giallo e' --evidenza.
+   I colori chiari dei grafici sono anche in src/lib/config.ts: li' fanno da nome della voce. */
 :root {
+  color-scheme: light;
   --radius: 6px;
   --background: #e7e9ef;
   --foreground: #26242b;
@@ -62,6 +67,78 @@
   --ring: #26242b;
   --evidenza: #f6eb61;
   --su-evidenza: #26242b;
+  /* Sul chiaro il giallo non si legge come testo: il segno e' l'inchiostro e il giallo un tratto di evidenziatore */
+  --segno: var(--foreground);
+  --sottolinea: none;
+  --evidenzia: linear-gradient(transparent 58%, var(--evidenza) 58%);
+  /* Grafici: serie in ordine fisso, scale delle mappe (seq dal basso, div dal piu' sotto lo zero) */
+  --s1: #1d85b0; --s2: #c06325; --s3: #5e3d9e; --s4: #317a45; --s5: #912e6e; --s6: #009f98; --s7: #9d6d1c; --s8: #843b3e;
+  --seq1: #d2edfc; --seq2: #8fcae9; --seq3: #45a4d0; --seq4: #097ca6; --seq5: #015473;
+  --div1: #026083; --div2: #3294c0; --div3: #90c6e3; --div4: #e4e6ec; --div5: #e4b196; --div6: #be7449; --div7: #814622;
+  /* Di progetto: il grigio tinto di "Altro", con lo stesso contrasto sul fondo nei due temi */
+  --altro: #8a8796;
+}
+
+/* Scuro per scelta salvata (data-tema) oppure, senza scelta, secondo il sistema: i due blocchi restano uguali */
+:root[data-tema="scuro"] {
+  color-scheme: dark;
+  --background: #19171c;
+  --foreground: #e7e7ee;
+  --card: #232025;
+  --card-foreground: #e7e7ee;
+  --popover: #232025;
+  --popover-foreground: #e7e7ee;
+  --primary: #e7e7ee;
+  --primary-foreground: #232025;
+  --secondary: #2b282e;
+  --secondary-foreground: #e7e7ee;
+  --muted: #2b282e;
+  --muted-foreground: #a6a5af;
+  --accent: #2b282e;
+  --accent-foreground: #e7e7ee;
+  --destructive: #f2897e;
+  --border: #3f3b44;
+  --input: #3f3b44;
+  --ring: #f6eb61;
+  --su-evidenza: #19171c;
+  --segno: var(--evidenza);
+  --sottolinea: underline;
+  --evidenzia: none;
+  --s1: #2f98c6; --s2: #d07843; --s3: #805fca; --s4: #56a76a; --s5: #b54481; --s6: #00aaa3; --s7: #b28c32; --s8: #b04d59;
+  --seq1: #1e3c4b; --seq2: #215c78; --seq3: #2a81a8; --seq4: #4caad7; --seq5: #98d4f3;
+  --div1: #8eceef; --div2: #3d9eca; --div3: #1e6c8d; --div4: #383a41; --div5: #8c5331; --div6: #c87d52; --div7: #efb696;
+  --altro: #726f7b;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema="chiaro"]) {
+    color-scheme: dark;
+    --background: #19171c;
+    --foreground: #e7e7ee;
+    --card: #232025;
+    --card-foreground: #e7e7ee;
+    --popover: #232025;
+    --popover-foreground: #e7e7ee;
+    --primary: #e7e7ee;
+    --primary-foreground: #232025;
+    --secondary: #2b282e;
+    --secondary-foreground: #e7e7ee;
+    --muted: #2b282e;
+    --muted-foreground: #a6a5af;
+    --accent: #2b282e;
+    --accent-foreground: #e7e7ee;
+    --destructive: #f2897e;
+    --border: #3f3b44;
+    --input: #3f3b44;
+    --ring: #f6eb61;
+    --su-evidenza: #19171c;
+    --segno: var(--evidenza);
+    --sottolinea: underline;
+    --evidenzia: none;
+    --s1: #2f98c6; --s2: #d07843; --s3: #805fca; --s4: #56a76a; --s5: #b54481; --s6: #00aaa3; --s7: #b28c32; --s8: #b04d59;
+    --seq1: #1e3c4b; --seq2: #215c78; --seq3: #2a81a8; --seq4: #4caad7; --seq5: #98d4f3;
+    --div1: #8eceef; --div2: #3d9eca; --div3: #1e6c8d; --div4: #383a41; --div5: #8c5331; --div6: #c87d52; --div7: #efb696;
+    --altro: #726f7b;
+  }
 }
 
 @layer base {
@@ -86,12 +163,13 @@
   }
 }
 
-/* Link nel testo: grassetto scuro con mezzo rigo di giallo sotto (sul chiaro il giallo non si legge come testo) */
+/* Link nel testo: sul chiaro grassetto scuro con mezzo rigo di giallo sotto, sullo scuro giallo sottolineato */
 @utility rimando {
-  color: var(--foreground);
+  color: var(--segno);
   font-weight: 700;
-  text-decoration: none;
-  background-image: linear-gradient(transparent 58%, var(--evidenza) 58%);
+  text-decoration: var(--sottolinea);
+  text-underline-offset: 2px;
+  background-image: var(--evidenzia);
   &:hover {
     text-decoration: underline;
     text-underline-offset: 2px;

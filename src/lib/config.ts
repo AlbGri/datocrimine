@@ -51,7 +51,13 @@ export const COLORS = {
   grigioAltro: "#8a8796",
   grigioTesto: "#625f69",
   testoScuro: "#26242b",
+  superficie: "#f4f6fa",
 } as const;
+
+/** Tema scelto, salvato nel browser come 'scuro' o 'chiaro'; senza scelta segue il sistema */
+export const CHIAVE_TEMA = "datocrimine/tema";
+/** theme-color: la barra del telefono prende il colore della barra del sito */
+export const COLORE_BARRA = { chiaro: COLORS.superficie, scuro: "#232025" } as const;
 
 /** Scale delle mappe dello stile comune (sez. 7, "Scale delle mappe"), tema chiaro.
  *  Sequenziale dal valore basso all'alto; divergente blu sotto lo zero, ruggine sopra */
@@ -119,7 +125,8 @@ export const BREAKDOWN_LINES = [
 export const COVID_PERIOD = {
   start: 2019.8,
   end: 2021.2,
-  color: "rgba(202, 204, 215, 0.35)",
+  color: COLORE_BORDO,
+  opacita: 0.35,
   label: "COVID-19",
 } as const;
 
@@ -286,6 +293,7 @@ export const COVID_SHAPES = [
     y0: 0,
     y1: 1,
     fillcolor: COVID_PERIOD.color,
+    opacity: COVID_PERIOD.opacita,
     line: { width: 0 },
     layer: "below" as const,
   },
@@ -299,7 +307,7 @@ export const COVID_ANNOTATIONS = [
     yref: "paper" as const,
     text: COVID_PERIOD.label,
     showarrow: false,
-    font: { size: 9, color: "gray" },
+    font: { size: 9, color: COLORS.grigioTesto },
   },
 ];
 

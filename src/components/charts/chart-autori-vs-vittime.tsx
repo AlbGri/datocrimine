@@ -115,7 +115,7 @@ export function ChartAutoriVsVittime() {
                 y0: -0.5,
                 y1: reati.length - 0.5,
                 yref: "y",
-                line: { color: "gray", width: 1.5, dash: "dash" },
+                line: { color: COLORS.grigioTesto, width: 1.5, dash: "dash" },
               },
             ],
           }}
