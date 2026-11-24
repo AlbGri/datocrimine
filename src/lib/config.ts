@@ -8,10 +8,13 @@ const SOTTOTIPI_REATO = new Set<string>(Object.values(gerarchiaReati).flat());
 export const isVoceAutonoma = (codice: string) =>
   codice !== "TOT" && !SOTTOTIPI_REATO.has(codice);
 
+// Colori scritti come valori e non letti da globals.css: Plotly vuole il valore, le immagini
+// scaricate e la barra del telefono nell'HTML costruito vogliono quello chiaro anche nel tema scuro,
+// e tema.ts usa il valore chiaro per trovare il corrispondente scuro
 /** Serie dei grafici dello stile comune, in ordine fisso (albgri-stile, STILE_COMUNE.md sez. 7):
  *  blu petrolio, ruggine, viola, verde bosco, prugna, turchese, ocra, mattone */
 export const SERIE = [
-  "#1d85b0", "#c06325", "#5e3d9e", "#317a45", "#912e6e", "#009f98", "#9d6d1c", "#843b3e",
+  "#1d85b0", "#c06325", "#5e3d9e", "#317a45", "#912e6e", "#009f98", "#9d6d1c", "#843b3e", // stile:consentito
 ] as const;
 const [S1, S2, S3, S4, S5, S6, S7] = SERIE;
 
@@ -26,7 +29,7 @@ export const COLORS = {
   rapine: S4,
   droga: S5,
   ingiurie: S6,
-  altro: "#8a8796",
+  altro: "#8a8796", // stile:consentito
 
   omicidi: S1,
   tentati_omicidi: S2,
@@ -47,26 +50,26 @@ export const COLORS = {
   minori: S4,
 
   // Strutturali, dai neutri dello stile comune
-  mediaNazionale: "#26242b",
-  grigioAltro: "#8a8796",
-  grigioTesto: "#625f69",
-  testoScuro: "#26242b",
-  superficie: "#f4f6fa",
+  mediaNazionale: "#26242b", // stile:consentito
+  grigioAltro: "#8a8796", // stile:consentito
+  grigioTesto: "#625f69", // stile:consentito
+  testoScuro: "#26242b", // stile:consentito
+  superficie: "#f4f6fa", // stile:consentito
 } as const;
 
 /** Tema scelto, salvato nel browser come 'scuro' o 'chiaro'; senza scelta segue il sistema */
 export const CHIAVE_TEMA = "datocrimine/tema";
 /** theme-color: la barra del telefono prende il colore della barra del sito */
-export const COLORE_BARRA = { chiaro: COLORS.superficie, scuro: "#232025" } as const;
+export const COLORE_BARRA = { chiaro: COLORS.superficie, scuro: "#232025" } as const; // stile:consentito
 
 /** Scale delle mappe dello stile comune (sez. 7, "Scale delle mappe"), tema chiaro.
  *  Sequenziale dal valore basso all'alto; divergente blu sotto lo zero, ruggine sopra */
-export const SCALA_SEQ = ["#d2edfc", "#8fcae9", "#45a4d0", "#097ca6", "#015473"] as const;
+export const SCALA_SEQ = ["#d2edfc", "#8fcae9", "#45a4d0", "#097ca6", "#015473"] as const; // stile:consentito
 export const SCALA_DIV = [
-  "#026083", "#3294c0", "#90c6e3", "#e4e6ec", "#e4b196", "#be7449", "#814622",
+  "#026083", "#3294c0", "#90c6e3", "#e4e6ec", "#e4b196", "#be7449", "#814622", // stile:consentito
 ] as const;
 /** Bordo delle regioni nelle mappe (--border): il passo piu' chiaro non si confonde col fondo */
-export const COLORE_BORDO = "#caccd7";
+export const COLORE_BORDO = "#caccd7"; // stile:consentito
 
 // Confini delle classi, uguali per tutti gli anni cosi' gli anni restano confrontabili
 export const CLASSI_TASSO_REGIONI = [30, 35, 40, 45] as const;

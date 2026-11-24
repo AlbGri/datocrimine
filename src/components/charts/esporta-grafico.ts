@@ -83,7 +83,7 @@ interface Testi {
 
 // L'immagine esce dal sito (stampa, chat): sempre nei colori del tema chiaro
 const FONDO = COLORS.superficie;
-const GIALLO = "#f6eb61";
+const GIALLO = "#f6eb61"; // stile:consentito
 const LATO = 24;
 
 /** Le righe di un testo che stanno nella larghezza data, col carattere gia' impostato */
