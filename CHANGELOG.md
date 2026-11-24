@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-11-24 — Tema scuro
+- Un pulsante nella barra passa dal tema chiaro allo scuro e viceversa, e il browser ricorda la scelta. Finché non si sceglie, il sito segue l'impostazione del dispositivo
+- Nel tema scuro anche grafici e mappe hanno il fondo scuro, con colori adatti
+- Le immagini scaricate dei grafici escono sempre chiare, con il titolo nel carattere del sito
+- Nei grafici griglia, testi degli assi e riquadri al passaggio del mouse hanno i colori del resto del sito
+
 ## 2026-11-20 — Tabelle, grafici e vittime
 - Le tabelle delle province si aprono in ordine alfabetico; per tasso si ordinano con un clic sull'intestazione
 - I testi dentro i grafici usano lo stesso carattere del resto del sito
