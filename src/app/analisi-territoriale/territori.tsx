@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Pause, Play } from "lucide-react";
+import { Pause, Play } from "@/components/icone";
 import { ChartMappaRegioni } from "@/components/charts/chart-mappa-regioni";
 import { ChartRankingRegioni } from "@/components/charts/chart-ranking-regioni";
 import { ChartTrendRegione } from "@/components/charts/chart-trend-regione";

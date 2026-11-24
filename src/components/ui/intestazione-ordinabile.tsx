@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
+import { ChevronDown, ChevronUp, ChevronsUpDown } from "@/components/icone";
 
 /** Intestazione di colonna che ordina la tabella: pulsante raggiungibile da tastiera, verso dichiarato con `aria-sort`. */
 export function IntestazioneOrdinabile({

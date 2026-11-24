@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { FileDown, ImageDown, Link2 } from "lucide-react";
+import { FileDown, ImageDown, Link2 } from "@/components/icone";
 import { Pulsante } from "@/components/ui/pulsante";
 import { FONTI, type Fonte } from "@/lib/config";
 import { slug } from "@/lib/format";

@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useRef, lazy, Suspense } from "react";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight } from "@/components/icone";
 import { AzioniGrafico } from "@/components/charts/grafico";
 import type { Fonte } from "@/lib/config";
 import type { InsightChartConfig } from "@/components/charts/insight-mini-chart";
