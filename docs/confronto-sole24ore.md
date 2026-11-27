@@ -1,6 +1,6 @@
-# Confronto dati ISTAT vs Sole 24 Ore - Indice della Criminalita 2025
+# Confronto dati ISTAT vs Sole 24 Ore - Indice della Criminalità 2025
 
-Validazione incrociata dei dati del progetto (fonte ISTAT DCCV_DELITTIPS e DCCV_AUTVITTPS) contro i numeri pubblicati dal Sole 24 Ore nell'[Indice della Criminalita 2025](https://lab24.ilsole24ore.com/indice-della-criminalita/), basato sulla banca dati interforze del Ministero dell'Interno (SDI/SSD).
+Validazione incrociata dei dati del progetto (fonte ISTAT DCCV_DELITTIPS e DCCV_AUTVITTPS) contro i numeri pubblicati dal Sole 24 Ore nell'[Indice della Criminalità 2025](https://lab24.ilsole24ore.com/indice-della-criminalita/), basato sulla banca dati interforze del Ministero dell'Interno (SDI/SSD).
 
 **Data confronto**: marzo 2026
 **Edizione Sole 24 Ore**: 2025 (dati riferiti al 2024)
@@ -13,9 +13,9 @@ Validazione incrociata dei dati del progetto (fonte ISTAT DCCV_DELITTIPS e DCCV_
 | **Dataset delitti** | DCCV_DELITTIPS (DF_1, DF_2, DF_8, DF_9) | Banca dati interforze (esclusiva) |
 | **Dataset autori** | DCCV_AUTVITTPS (DF_7) | Banca dati interforze (esclusiva) |
 | **Formato** | SDMX REST API, scaricabile | Non scaricabile, solo articolo |
-| **Replicabilita** | Completa (script in `scripts/`) | Non replicabile |
+| **Replicabilità** | Completa (script in `scripts/`) | Non replicabile |
 
-I dati ISTAT e quelli del Ministero dell'Interno hanno la stessa origine (denunce delle forze di polizia tramite sistema SDI/SSD). ISTAT riceve i microdati dal Ministero e li elabora per la pubblicazione statistica. Le differenze possono derivare da: tempi diversi di consolidamento, classificazioni marginalmente diverse, popolazioni di riferimento diverse per il calcolo dei tassi.
+I dati ISTAT e quelli del Ministero dell'Interno hanno la stessa origine (denunce delle forze di polizia tramite sistema SDI/SSD). ISTAT riceve i microdati dal Ministero e li elabora per la pubblicazione statistica. Le differenze possono derivare da tempi diversi di consolidamento, classificazioni marginalmente diverse e popolazioni di riferimento diverse per il calcolo dei tassi.
 
 ---
 
@@ -58,8 +58,8 @@ var_2024_vs_2014 = (delitti_2024 - delitti_2014) / delitti_2014 * 100  # -14.70%
 
 ### Note
 
-- Il Sole arrotonda il totale a "2,38 milioni". Il dato ISTAT e piu preciso: 2.399.347.
-- La variazione +1,7% del Sole diverge dal nostro +2,47%. Possibili cause: il Ministero potrebbe aver consolidato il dato 2023 con una cifra diversa rispetto a ISTAT, oppure il Sole usa un perimetro reati leggermente diverso. La direzione del trend e comunque concorde.
+- Il Sole arrotonda il suo totale a "2,38 milioni", mentre il dato ISTAT è 2.399.347, più alto dello 0,8% come in tabella.
+- La variazione +1,7% del Sole diverge dal nostro +2,47%. Il Ministero potrebbe aver consolidato il dato 2023 con una cifra diversa rispetto a ISTAT, oppure il Sole potrebbe usare un perimetro reati leggermente diverso. La direzione del trend è comunque concorde.
 
 ---
 
@@ -81,7 +81,7 @@ Struttura record:
 }
 ```
 
-### Top 5 (province con piu reati per 100k ab.)
+### Top 5 (province con più reati per 100k ab.)
 
 | Rank | Provincia | Sole (tasso/100k) | Progetto (tasso/100k) | Sole (totale) | Progetto (totale) | Scarto tasso | Scarto totale |
 |---|---|---|---|---|---|---|---|
@@ -126,8 +126,8 @@ print(f"Tasso/100k: {milano_2024['Tasso_per_1000'] * 100}")  # 6990.0
 
 ### Note
 
-- Il ranking delle 106 province e identico tra le due fonti.
-- I dati del progetto sono sistematicamente piu alti dello 0,2-1,5%. La differenza piu probabile e nella popolazione usata come denominatore: il progetto calcola i tassi usando la popolazione residente al 1 gennaio (fonte ISTAT DCIS_POPRES1, scaricata e elaborata da `scripts/generate_popolazione.py`), mentre il Sole 24 Ore / Ministero dell'Interno potrebbe usare una stima diversa (es. popolazione media annua).
+- Il ranking delle 106 province è identico tra le due fonti.
+- I dati del progetto sono sistematicamente più alti dello 0,2-1,5%. La differenza più probabile è nella popolazione usata come denominatore. Il progetto calcola i tassi usando la popolazione residente al 1 gennaio (fonte ISTAT DCIS_POPRES1, scaricata e elaborata da `scripts/generate_popolazione.py`), mentre il Sole 24 Ore / Ministero dell'Interno potrebbe usare una stima diversa (es. popolazione media annua).
 - Anche il numeratore (totale delitti) mostra scarti minimi ma consistenti (~+0,5%), suggerendo un perimetro di reati leggermente diverso o dati consolidati in momenti diversi tra le due fonti.
 
 ---
@@ -170,8 +170,8 @@ def variazione(territorio):
 ### Note
 
 - Le variazioni per le province minori (Rimini, Sondrio, Enna, Benevento, Potenza, Oristano) sono quasi identiche (scarto < 0,02 p.p.).
-- Le grandi province mostrano scarti maggiori (0,5-0,9 p.p.), probabilmente perche il numeratore (totale delitti) differisce di piu in valore assoluto tra le due fonti.
-- La direzione (crescita/calo) e sempre concorde.
+- Le grandi province mostrano scarti maggiori (0,5-0,9 p.p.), probabilmente perché il numeratore (totale delitti) differisce di più in valore assoluto tra le due fonti.
+- La direzione (crescita/calo) è sempre concorde.
 
 ---
 
@@ -199,8 +199,8 @@ Codici reato ISTAT:
 
 ### Note
 
-- Il dato delle rapine in pubblica via a Bologna e perfettamente identico (701).
-- I furti con destrezza mostrano scarti minimi (37-39 unita su migliaia), compatibili con rettifiche marginali tra le due fonti.
+- Il dato delle rapine in pubblica via a Bologna è perfettamente identico (701).
+- I furti con destrezza mostrano scarti minimi (37-39 unità su migliaia), compatibili con rettifiche marginali tra le due fonti.
 
 ---
 
@@ -236,11 +236,11 @@ Struttura record:
 | Minori segnalati 2024 | 38.247 | ~36.501 | **Parziale** |
 | Stranieri denunciati 2024 | 287.396 | ~218.105 | **No** |
 
-### Perche i numeri non sono confrontabili
+### Perché i numeri non sono confrontabili
 
-Il Sole usa il dato **TOT** (totale complessivo) del Ministero dell'Interno. ISTAT non pubblica il TOT per gli anni 2023-2024 (criticita nota del dataset DCCV_AUTVITTPS). I numeri sopra sono ottenuti sommando i singoli reati nel JSON, ma questa somma e **strutturalmente inferiore** al totale reale per due motivi:
+Il Sole usa il dato **TOT** (totale complessivo) del Ministero dell'Interno. ISTAT non pubblica il TOT per gli anni 2023-2024 (criticità nota del dataset DCCV_AUTVITTPS). I numeri sopra sono ottenuti sommando i singoli reati nel JSON, ma questa somma è **strutturalmente inferiore** al totale reale per due motivi:
 
-1. **Reati non mutuamente esclusivi**: una persona denunciata per piu reati viene contata una sola volta nel TOT del Ministero, ma piu volte nella somma per reato.
+1. **Reati non mutuamente esclusivi**: una persona denunciata per più reati viene contata una sola volta nel TOT del Ministero, ma più volte nella somma per reato.
 2. **Sottoinsieme di reati**: il dataset ISTAT AUTVITTPS copre un sottoinsieme dei reati totali, non tutti quelli registrati nella banca dati interforze.
 
 Paradossalmente, il primo fattore gonfia la somma e il secondo la riduce, ma il secondo prevale nettamente.
@@ -253,7 +253,7 @@ import json
 with open("public/data/autori_vittime_trend.json") as f:
     data = json.load(f)
 
-# Somma autori 2024 per tutti i reati (NON e il totale reale)
+# Somma autori 2024 per tutti i reati (NON è il totale reale)
 autori_2024 = [d for d in data if d["data_type"] == "OFFEND" and d["anno"] == 2024]
 totale_somma = sum(d["totale"] for d in autori_2024)
 stranieri_somma = sum(d["stranieri"] for d in autori_2024 if d["stranieri"] is not None)
@@ -274,9 +274,9 @@ L'articolo del Sole cita anche affermazioni non numeriche verificabili contro i 
 |---|---|
 | "Quarto anno consecutivo di aumento delle denunce" | Confermato: 2021 < 2022 < 2023 < 2024 nel nostro dataset |
 | "Illeciti oltre i livelli 2018" | Confermato: 2024 (2.399.347) > 2018 (2.340.003) |
-| "Milano: 618 denunce al giorno" | Confermato: 226.860 / 366 = 619,8 (2024 e bisestile) |
+| "Milano: 618 denunce al giorno" | Confermato: 226.860 / 366 = 619,8 (2024 è bisestile) |
 | "Stranieri > 1/3 dei segnalati" | Non verificabile con i nostri dati (TOT assente) |
-| "47,9% crimini nelle 14 citta metropolitane" | Verificabile sommando le 14 province metropolitane dal nostro JSON |
+| "47,9% crimini nelle 14 città metropolitane" | Verificabile sommando le 14 province metropolitane dal nostro JSON |
 
 ---
 
@@ -284,14 +284,14 @@ L'articolo del Sole cita anche affermazioni non numeriche verificabili contro i 
 
 1. **Delitti provinciali (tassi e totali)**: alta coerenza. Ranking identico su 106 province. Scarti sistematici dello 0,2-1,5%, attribuibili a differenze nella popolazione usata come denominatore e/o nel perimetro esatto dei reati conteggiati.
 
-2. **Reati specifici per provincia**: quasi identici. In un caso (rapine Bologna) il dato e perfettamente uguale. Scarti residui nell'ordine di poche decine su migliaia.
+2. **Reati specifici per provincia**: quasi identici. In un caso (rapine Bologna) il dato è perfettamente uguale. Scarti residui nell'ordine di poche decine su migliaia.
 
 3. **Variazioni anno su anno**: direzione sempre concorde. Scarti nelle grandi province (0,5-0,9 p.p.) probabilmente amplificati dalle differenze nei valori assoluti di base.
 
-4. **Persone denunciate**: non confrontabile. Il Ministero dell'Interno fornisce un totale aggregato (828.714) che ISTAT non pubblica per 2023-2024. Questa e una limitazione nota del dataset ISTAT.
+4. **Persone denunciate**: non confrontabile. Il Ministero dell'Interno fornisce un totale aggregato (828.714) che ISTAT non pubblica per 2023-2024. Questa è una limitazione nota del dataset ISTAT.
 
-5. **Affidabilita complessiva**: i dati ISTAT del progetto sono coerenti con la fonte del Ministero dell'Interno usata dal Sole 24 Ore. Le differenze sono marginali, sistematiche e spiegabili. Il ranking provinciale e identico.
+5. **Affidabilità complessiva**: i dati ISTAT del progetto sono coerenti con la fonte del Ministero dell'Interno usata dal Sole 24 Ore. Le differenze sono marginali, sistematiche e spiegabili. Il ranking provinciale è identico.
 
 ---
 
-*Confronto effettuato a marzo 2026. Fonte Sole 24 Ore: [Indice della Criminalita 2025](https://lab24.ilsole24ore.com/indice-della-criminalita/). Fonte ISTAT: DCCV_DELITTIPS e DCCV_AUTVITTPS scaricati via API SDMX REST da esploradati.istat.it.*
+*Confronto effettuato a marzo 2026. Fonte Sole 24 Ore: [Indice della Criminalità 2025](https://lab24.ilsole24ore.com/indice-della-criminalita/). Fonte ISTAT: DCCV_DELITTIPS e DCCV_AUTVITTPS scaricati via API SDMX REST da esploradati.istat.it.*

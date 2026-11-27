@@ -11,13 +11,13 @@ const SEZIONI = [
     href: "/reati-allarme-sociale",
     titolo: "Reati di Allarme Sociale",
     descrizione:
-      "Omicidi, violenze sessuali, rapine e altri reati gravi: trend nazionali e regionali, con dettaglio per territorio.",
+      "Trend nazionali e regionali di omicidi, violenze sessuali, rapine e altri reati gravi, con dettaglio per territorio.",
   },
   {
     href: "/persone-denunciate",
     titolo: "Persone Denunciate",
     descrizione:
-      "Chi sono gli autori e le vittime di reato in Italia: profilo per nazionalit\u00e0, genere ed et\u00e0, dal 2007 a oggi.",
+      "Autori e vittime di reato in Italia per nazionalit\u00e0, genere ed et\u00e0, dal 2007 a oggi.",
   },
 ];
 

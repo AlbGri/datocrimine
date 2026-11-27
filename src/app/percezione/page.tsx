@@ -22,11 +22,11 @@ export default function Percezione() {
         in cui abitano (indagine ISTAT Multiscopo), accanto al tasso dei delitti denunciati. La
         percezione risponde anche ad altro, come copertura dei media, degrado e fiducia nelle
         istituzioni. Il salto fra 2014 e 2015 è probabilmente un cambio di metodo
-        dell&apos;indagine: dettagli in{" "}
+        dell&apos;indagine (dettagli in{" "}
         <Link href="/metodologia" className="rimando">
           Metodologia
         </Link>
-        .
+        ).
       </p>
       <Grafico
         id="percezione"

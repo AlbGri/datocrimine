@@ -392,7 +392,7 @@ class TestTrendStrutturale:
 class TestBuildCaveat:
     def test_bassa_aumento(self):
         result = _build_caveat("SWINCYB", 73980)
-        assert result.startswith("La propensione alla denuncia per questo reato è bassa:")
+        assert result.startswith("Con una propensione alla denuncia bassa,")
         assert "più reati, più denunce" in result
 
     def test_segue_la_differenza_non_la_tendenza(self):
@@ -402,7 +402,7 @@ class TestBuildCaveat:
 
     def test_molto_bassa(self):
         result = _build_caveat("RAPE", 100)
-        assert "è molto bassa:" in result
+        assert "denuncia molto bassa," in result
 
     def test_media_misto(self):
         result = _build_caveat("THEFT", 33483)

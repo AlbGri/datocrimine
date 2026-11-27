@@ -21,13 +21,13 @@ export default function Guida() {
           Cosa significa &quot;per 1.000 abitanti&quot;
         </h2>
         <p>
-          Se leggi <strong>45 delitti per 1.000 abitanti</strong>, significa: in
-          una citt&agrave; di 100.000 persone, ci sono stati circa 4.500 delitti
+          Se leggi <strong>45 delitti per 1.000 abitanti</strong>, vuol dire che
+          in una citt&agrave; di 100.000 persone ci sono stati circa 4.500 delitti
           denunciati in un anno.
         </p>
         <p>
           <strong>Non</strong> significa che il 4,5% della popolazione ha subito
-          un reato: alcuni ne subiscono pi&ugrave; di uno, molti zero.
+          un reato. Alcuni ne subiscono pi&ugrave; di uno, molti zero.
         </p>
         <p>
           Per i reati rari (omicidi, violenze sessuali) si usa il{" "}
@@ -41,23 +41,13 @@ export default function Guida() {
           Come interpretare i trend
         </h2>
         <ul className="list-disc pl-6 space-y-2">
+          <li>La pendenza della linea indica la velocit&agrave; del cambiamento.</li>
+          <li>Confrontare sempre periodi lunghi (5-10 anni), non anno su anno.</li>
           <li>
-            <strong>Pendenza della linea</strong>: indica la velocit&agrave; del
-            cambiamento
+            Il periodo COVID (2020-2021) ha alterato tutti i dati per effetto dei
+            lockdown, non per cambiamenti reali nella criminalit&agrave;.
           </li>
-          <li>
-            <strong>Confrontare sempre periodi lunghi</strong> (5-10 anni), non
-            anno su anno
-          </li>
-          <li>
-            <strong>Attenzione agli outlier</strong>: il periodo COVID
-            (2020-2021) ha alterato tutti i dati per effetto dei lockdown, non
-            per cambiamenti reali nella criminalit&agrave;
-          </li>
-          <li>
-            <strong>Un singolo anno anomalo non fa un trend</strong>: servono
-            almeno 3-4 anni nella stessa direzione per parlare di tendenza
-          </li>
+          <li>Per parlare di tendenza servono almeno 3-4 anni nella stessa direzione.</li>
         </ul>
       </section>
 
@@ -142,10 +132,9 @@ export default function Guida() {
             Perch&eacute; alcuni reati aumentano ma il totale cala?
           </h3>
           <p>
-            La composizione cambia. Esempio: se i furti calano del 20% ma le
-            truffe aumentano del 50%, e i furti erano l&apos;80% del totale
-            mentre le truffe il 5%, il totale pu&ograve; comunque calare. &Egrave; il peso
-            relativo delle categorie che conta.
+            Conta il peso di ogni reato sul totale. Se per esempio i furti calano
+            del 20% ma le truffe aumentano del 50%, e i furti erano l&apos;80% del
+            totale mentre le truffe il 5%, il totale pu&ograve; comunque calare.
           </p>
         </div>
 
@@ -155,7 +144,7 @@ export default function Guida() {
           </h3>
           <p>
             Con estrema cautela. I dati provinciali mascherano una variabilit&agrave;
-            interna enorme: la provincia di Milano include sia zone centrali
+            interna enorme. La provincia di Milano include sia zone centrali
             dense sia comuni rurali con realt&agrave; completamente diverse.
           </p>
         </div>
@@ -165,8 +154,8 @@ export default function Guida() {
             Perch&eacute; le denunce per violenza sessuale aumentano?
           </h3>
           <p>
-            Con i soli dati delle denunce non si pu&ograve; dire: possono essere
-            aumentate le violenze, le denunce o entrambe. L&apos;indagine ISTAT 2025
+            Con i soli dati delle denunce non si pu&ograve; dire se sono aumentate
+            le violenze, le denunce o entrambe. L&apos;indagine ISTAT 2025
             sulla violenza contro le donne trova un numero di donne che hanno subito
             violenza fisica o sessuale negli ultimi cinque anni sostanzialmente stabile
             rispetto al 2014, e comportamenti di denuncia anch&apos;essi stabili.

@@ -175,8 +175,8 @@ export default function Insights() {
       <div className="space-y-3">
         <h1 className="text-[1.55rem] sm:text-[1.9rem] font-bold leading-[1.1] tracking-[-0.01em]">Analisi statistiche</h1>
         <p>
-          Sezione sperimentale: analisi automatiche sui dati delle denunce, che mostrano tendenze e
-          non cause.{" "}
+          Analisi automatiche e sperimentali sui dati delle denunce, che mostrano tendenze e non
+          cause.{" "}
           <a href="#nota-metodologica" className="rimando">
             Come sono fatte
           </a>
@@ -287,7 +287,7 @@ export default function Insights() {
             Gli insight sono estratti tramite analisi statistica automatizzata sui dati ISTAT e
             curati con l&apos;assistenza di intelligenza artificiale. Evidenziano correlazioni e
             trend statisticamente significativi, ma <strong>non implicano causalit&agrave;</strong>.
-            I dati riflettono le denunce alle forze dell&apos;ordine, non i crimini reali: le
+            I dati riflettono le denunce alle forze dell&apos;ordine, non i crimini reali. Le
             variazioni possono dipendere da cambiamenti nella propensione alla denuncia, nelle norme
             o nelle pratiche investigative.
           </p>
@@ -421,10 +421,9 @@ export default function Insights() {
             <li>Serie con meno di {insightsMeta.min_anni} anni di dati disponibili</li>
           </ul>
           <p>
-            Dopo la correzione sono stati scartati i risultati con un effetto
-            troppo piccolo per essere rilevanti: variazioni sotto i{" "}
-            {fmtNum(insightsMeta.min_effetto_pp)} punti percentuali, correlazioni fra reati sotto{" "}
-            {fmtNum(insightsMeta.min_rho, 1)}.
+            Dopo la correzione sono state scartate le variazioni sotto i{" "}
+            {fmtNum(insightsMeta.min_effetto_pp)} punti percentuali e le correlazioni fra reati sotto{" "}
+            {fmtNum(insightsMeta.min_rho, 1)}, effetti troppo piccoli per essere rilevanti.
           </p>
 
           <p>
@@ -433,8 +432,8 @@ export default function Insights() {
             ISTAT) e per contestualizzare i risultati. Dei candidati
             statisticamente significativi dopo correzione FDR, sono stati
             selezionati quelli pi&ugrave; rappresentativi per ciascuna delle 5
-            categorie, privilegiando: effect size rilevante,
-            interpretabilit&agrave; per un pubblico non tecnico, e
+            categorie, privilegiando un effect size rilevante,
+            l&apos;interpretabilit&agrave; per un pubblico non tecnico e la
             diversit&agrave; tematica. La selezione &egrave; editoriale, non
             automatica.
           </p>

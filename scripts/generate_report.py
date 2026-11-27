@@ -52,8 +52,8 @@ CODICE_TO_INSIGHT_ID: dict[str, str] = {
 # Note sui dati di reati specifici, non derivabili dai numeri
 NOTE_MANUALI: dict[str, str] = {
     "OTHCRIM": (
-        "Voce residua dell'ISTAT: raccoglie i delitti che non rientrano nelle altre voci "
-        "e con questi dati non si può scomporre."
+        "Voce residua dell'ISTAT, con i delitti che non rientrano nelle altre voci. "
+        "Con questi dati non si può scomporre."
     ),
 }
 
@@ -130,12 +130,12 @@ def _build_caveat(codice: str, differenza: int) -> str | None:
     livello = (propensione or "").replace("_", " ")
     if interp == "emersione_probabile":
         return (
-            f"La propensione alla denuncia per questo reato è {livello}: l'aumento "
+            f"Con una propensione alla denuncia {livello}, l'aumento "
             "può voler dire più reati, più denunce o entrambe le cose."
         )
     if interp == "calo_ambiguo":
         return (
-            f"La propensione alla denuncia per questo reato è {livello}: il calo "
+            f"Con una propensione alla denuncia {livello}, il calo "
             "può voler dire meno reati, meno denunce o entrambe le cose."
         )
     if interp in ("aumento_misto", "calo_misto"):

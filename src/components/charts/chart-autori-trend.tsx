@@ -183,8 +183,8 @@ export function ChartAutoriTrend({ dataType }: Props) {
       )}
       {filtered.length <= 5 && (
         <p className="text-xs text-muted-foreground">
-          Questo reato ha una serie storica breve ({annoMin}-{annoMax}): il dato ISTAT
-          &egrave; disponibile solo per {filtered.length} anni.
+          Per questo reato il dato ISTAT &egrave; disponibile solo per {filtered.length} anni
+          ({annoMin}-{annoMax}).
         </p>
       )}
     </div>

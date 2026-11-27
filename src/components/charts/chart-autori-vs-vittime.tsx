@@ -122,7 +122,7 @@ export function ChartAutoriVsVittime() {
         />
 
       <p className="text-xs text-muted-foreground">
-        Scala logaritmica. Linea tratteggiata = parit&agrave; (1 autore per 1 vittima).{" "}
+        Scala logaritmica. La linea tratteggiata segna la parit&agrave; (1 autore per 1 vittima).{" "}
         <span style={{ color: COLORS.secondary }}>Arancione</span>: pi&ugrave; vittime che autori.{" "}
         <span style={{ color: COLORS.primary }}>Blu</span>: pi&ugrave; autori che vittime.
         {esclusi > 0 && ` Esclusi ${esclusi} reati con meno di ${MIN_CASI} casi.`}

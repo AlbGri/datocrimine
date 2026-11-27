@@ -90,8 +90,8 @@ export function ChartNumeroOscuro() {
           reati denunciati. L&apos;Indagine ISTAT sulla Sicurezza dei Cittadini
           stima la quota di vittime che denuncia, permettendo di misurare quanto
           le statistiche ufficiali sottostimino la realt&agrave;. I dati
-          provengono dalle edizioni 2015-2016 e 2022-2023 dell&apos;indagine:
-          tra le due rilevazioni la propensione pu&ograve; essere variata e i
+          provengono dalle edizioni 2015-2016 e 2022-2023 dell&apos;indagine.
+          Tra le due rilevazioni la propensione pu&ograve; essere variata e i
           valori non coprono l&apos;intero periodo analizzato dal sito.
         </AlertDescription>
       </Alert>
@@ -189,7 +189,7 @@ export function ChartNumeroOscuro() {
         &Egrave; <strong>raddoppiata</strong> la quota di aggressioni che le vittime denunciano (da {p("Aggressioni", "Italia", "2015-2016")} a {p("Aggressioni", "Italia", "2022-2023")}). &Egrave; invece{" "}
         <strong>calata</strong> la quota di scippi denunciati dalle vittime (da {p("Scippi", "Italia", "2015-2016")} a {p("Scippi", "Italia", "2022-2023")}). Per frodi e truffe la quota{" "}
         <strong>sale di poco</strong> (da {p("Frodi/truffe", "Italia", "2015-2016")} a {p("Frodi/truffe", "Italia", "2022-2023")}). L&apos;indagine misura quanto si
-        denuncia, non perch&eacute;: le cause di questi cambiamenti non si ricavano dai dati.
+        denuncia e non dice perch&eacute; questi valori cambiano.
       </p>
 
       <hr />
@@ -346,11 +346,11 @@ export function ChartNumeroOscuro() {
 
         <p>
           I cambiamenti pi&ugrave; marcati riguardano i{" "}
-          <strong>reati violenti al Centro-Sud</strong>: le aggressioni denunciate
+          <strong>reati violenti al Centro-Sud</strong>. Le aggressioni denunciate
           al Sud passano da {p("Aggressioni", "Sud", "2015-2016")} a {p("Aggressioni", "Sud", "2022-2023")} ({punti("Aggressioni", "Sud")} punti), al Centro{" "}
           da {p("Aggressioni", "Centro", "2015-2016")} a {p("Aggressioni", "Centro", "2022-2023")} ({punti("Aggressioni", "Centro")} punti). Le rapine al Sud passano{" "}
           da {p("Rapine", "Sud", "2015-2016")} a {p("Rapine", "Sud", "2022-2023")} ({punti("Rapine", "Sud")} punti).
-          Al contrario, gli scippi denunciati calano drasticamente al{" "}
+          Al contrario, gli scippi denunciati calano molto al{" "}
           <strong>Nord-ovest</strong> (da {p("Scippi", "Nord-ovest", "2015-2016")} a {p("Scippi", "Nord-ovest", "2022-2023")}) e al{" "}
           <strong>Nord-est</strong> (da {p("Scippi", "Nord-est", "2015-2016")} a {p("Scippi", "Nord-est", "2022-2023")}). I borseggi aumentano
           ovunque tranne che alle Isole. I furti di veicoli crescono fortemente al{" "}

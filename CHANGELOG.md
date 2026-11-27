@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-11-27
+
+### Testi più diretti
+- Testi del sito riscritti con meno due punti ed etichette in grassetto; numeri e affermazioni sui dati restano gli stessi
+- Report: la sezione sulla percezione non chiama più "reale" il tasso dei delitti denunciati, e la quota delle famiglie ha la virgola decimale (26,6%)
+- Metodologia: il rimando ai grafici del numero oscuro porta alla sua pagina, non più alla home
+
 ## 2026-11-25
 
 ### Regione e provincia
@@ -25,7 +32,7 @@
 - Il grafico degli autori denunciati per ogni vittima passa dal 2022 al 2024, l'ultimo anno disponibile
 
 ### Telefono e analisi statistiche
-- Su telefono l'anno si sceglie da un menu a tendina: i pulsanti degli anni non occupano più la prima schermata
+- Su telefono l'anno si sceglie da un menu a tendina, e i pulsanti degli anni non occupano più la prima schermata
 - Pulsanti e intestazioni delle tabelle più facili da toccare; frecce e simbolo di controtendenza disegnati uguali su ogni dispositivo
 - Analisi statistiche fra le voci principali del menu, subito dopo il Report
 - Titoli delle analisi più neutri e leggibili anche da soli
@@ -35,13 +42,13 @@
 
 ### Grafici da condividere
 - Ogni grafico ha un titolo che dice cosa, dove e quando, la fonte sotto e tre pulsanti: scarica l'immagine (con titolo, fonte e indirizzo dentro), copia il link, scarica i dati
-- Il link riapre la stessa vista: reato, regione, provincia e anno scelti restano nell'indirizzo
+- Il link riapre la stessa vista, con reato, regione, provincia e anno scelti nell'indirizzo
 - Le sezioni delle pagine sono aperte, con l'indice "In questa pagina"; i grafici si caricano mentre si scorre
 - Regione e provincia si scelgono una volta in cima alla pagina, al posto del pulsante "Applica a tutti i grafici"
-- Trentino-Alto Adige e Valle d'Aosta hanno lo stesso nome in tutti i dati: scegliendole, tabelle e grafici delle province non restano vuoti
+- Trentino-Alto Adige e Valle d'Aosta hanno lo stesso nome in tutti i dati. Scegliendole, tabelle e grafici delle province non restano vuoti
 
 ### Aumenti e cali letti allo stesso modo
-- Guida, Metodologia, Numero oscuro, Report e alcune analisi statistiche non danno più per certe le cause dei cambiamenti: un aumento delle denunce può voler dire più reati, più denunce o entrambe le cose, e lo stesso vale per i cali
+- Guida, Metodologia, Numero oscuro, Report e alcune analisi statistiche non danno più per certe le cause dei cambiamenti. Un aumento delle denunce può voler dire più reati, più denunce o entrambe le cose, e lo stesso vale per i cali
 - Violenze sessuali: si cita l'indagine ISTAT 2025 sulla violenza contro le donne, che trova vittime e comportamenti di denuncia stabili rispetto al 2014, con i suoi limiti
 
 ### Correzioni ai testi e tabelle da tastiera
@@ -50,16 +57,16 @@
 - Le tabelle delle province si ordinano anche da tastiera, e sotto la tabella una legenda spiega il simbolo di controtendenza
 
 ### Testi subito nella pagina
-- Report, Metodologia, Dati che mancano e la frase in cima alla home sono già scritti nella pagina: si leggono senza aspettare il caricamento, e li leggono anche i motori di ricerca e le anteprime dei link
+- Report, Metodologia, Dati che mancano e la frase in cima alla home sono già scritti nella pagina. Si leggono senza aspettare il caricamento, e li leggono anche i motori di ricerca e le anteprime dei link
 
 ### Mappe e classifiche
-- Le mappe delle regioni usano gradini di colore con i confini scritti in legenda, uguali per tutti gli anni: un colore vuol dire la stessa fascia in ogni anno
-- La mappa delle variazioni del Report è in blu (calo) e ruggine (aumento), non più in verde e rosso: il colore dice la direzione, non se è un bene o un male
+- Le mappe delle regioni usano gradini di colore con i confini scritti in legenda, uguali per tutti gli anni
+- La mappa delle variazioni del Report è in blu (calo) e ruggine (aumento), non più in verde e rosso. Il colore dice la direzione, non se è un bene o un male
 - Nella classifica delle regioni un quadratino col colore della mappa aiuta a ritrovare ogni regione
 - Sul telefono il pulsante "Mappa" non è più giallo; nella mappa del sito la pagina in cui ti trovi si vede meglio
 
 ### Dati che mancano
-- Nuova pagina "Dati che mancano", in Capire i dati: cosa fanno altri paesi per stimare i reati non denunciati, cosa fa l'Italia e la posizione di chi cura il sito, dichiarata come opinione, con una fonte accanto a ogni fatto. Prima era una sezione della Metodologia, ora corretta sulle fonti primarie
+- Nuova pagina "Dati che mancano", in Capire i dati, su cosa fanno altri paesi per stimare i reati non denunciati, cosa fa l'Italia e la posizione di chi cura il sito, dichiarata come opinione, con una fonte accanto a ogni fatto. Prima era una sezione della Metodologia, ora corretta sulle fonti primarie
 - La Metodologia parla solo dei limiti dei dati e si apre con l'indice delle sezioni
 
 ### Report, analisi statistiche e pulsanti
@@ -70,15 +77,15 @@
 - Lo script che controlla se l'ISTAT ha pubblicato anni nuovi è nel repository
 
 ### Nuova veste e mappa del sito
-- Al posto del menu c'è la mappa del sito: sul computer a sinistra, sul telefono dal pulsante "Mappa" in basso a destra. In cima a ogni pagina il percorso dice dove ti trovi
+- Al posto del menu c'è la mappa del sito, a sinistra sul computer e dal pulsante "Mappa" in basso a destra sul telefono. In cima a ogni pagina il percorso dice dove ti trovi
 - La home si apre con riquadri che danno già il dato e portano alle pagine: i numeri principali, la tua provincia, i sei reati di allarme sociale, le pagine che spiegano i dati
 - Percezione della sicurezza e Il numero oscuro hanno una pagina propria; prima erano sezioni chiuse in fondo alla home
-- Nuova pagina "Chi c'è dietro": chi cura il sito e come segnalare un errore
+- Nuova pagina "Chi c'è dietro", con chi cura il sito e come segnalare un errore
 - Reati di allarme sociale si apre sugli omicidi volontari. "Analisi territoriale" ora si chiama Territori e "Insights" Analisi statistiche; gli indirizzi delle pagine non cambiano
 - Nuova veste: caratteri più leggibili, ogni voce dei grafici ha sempre lo stesso colore, aumenti e cali senza verde e rosso
 
 ### Totale dei delitti al netto delle ingiurie
-- Il totale dei delitti non comprende più le ingiurie, depenalizzate nel 2016: gli anni si confrontano a parità di reati. Il calo di lungo periodo passa da -10,5% a -8,9%; le ingiurie restano visibili nella loro serie
+- Il totale dei delitti non comprende più le ingiurie, depenalizzate nel 2016, per confrontare gli anni a parità di reati. Il calo di lungo periodo passa da -10,5% a -8,9%; le ingiurie restano visibili nella loro serie
 - Persone denunciate: sotto gli andamenti del totale una nota spiega che fino al 2017 comprende chi era denunciato per ingiuria, e perché non si può togliere
 - Il sito conta le visite con GoatCounter, senza cookie né dati personali; i dettagli sono nella sezione Trasparenza della Metodologia
 
@@ -105,7 +112,7 @@
 - Corretti in Metodologia e in Dati e codice il numero di reati per livello territoriale e le fonti della popolazione
 
 ### Il quadro in una frase
-- In cima alla home e al report una frase riassume la tendenza: in calo nel lungo periodo, in risalita dal 2021. Si aggiorna da sola con i dati
+- In cima alla home e al report una frase riassume la tendenza, in calo nel lungo periodo e in risalita dal 2021. Si aggiorna da sola con i dati
 - Nel report il riferimento è il tasso del 2019, l'ultimo anno prima del COVID, al posto della media degli anni precedenti
 
 ### CSV leggibili da Excel
@@ -123,7 +130,7 @@
 - Mappa del report senza i confini degli Stati vicini
 
 ### Nuovo nome: DatoCrimine
-- Il sito si chiama DatoCrimine, come il suo indirizzo: "Osservatorio" faceva pensare a un ente pubblico
+- Il sito si chiama DatoCrimine, come il suo indirizzo. Il vecchio nome "Osservatorio" faceva pensare a un ente pubblico
 - Condividendo una pagina, l'anteprima mostra titolo e indirizzo di quella pagina, non quelli della home; il Report 2024 ha di nuovo l'immagine
 - Nuova immagine di anteprima, da 2,3 MB a 11 KB
 
@@ -140,16 +147,16 @@
 - Ogni numero del report è verificato in automatico contro i dati
 
 ### Insight corretti e verificati
-- Corretti i numeri degli insight su reati violenti, patrimoniali e informatici: alcuni reati erano contati due volte. Le vittime di reati violenti calano del 12,9% dal 2007, non crescono
+- Corretti i numeri degli insight su reati violenti, patrimoniali e informatici. Alcuni reati erano contati due volte. Le vittime di reati violenti calano del 12,9% dal 2007, non crescono
 - I grafici per Nord, Centro e Sud usano le medie pesate per popolazione, le stesse dei testi
-- Nuovo insight sul quadro complessivo degli autori stranieri; titoli piu' precisi su rapine, violenze sessuali e omicidi di donne
+- Nuovo insight sul quadro complessivo degli autori stranieri; titoli più precisi su rapine, violenze sessuali e omicidi di donne
 - Tolti due insight che non superano la correzione statistica; la pagina passa da 23 a 21 insight
-- Ogni numero degli insight e' ora verificato in automatico contro i dati
+- Ogni numero degli insight è ora verificato in automatico contro i dati
 
 ### Nomi e categorie dei reati
 - Corretti i nomi di cinque reati nella sezione Persone denunciate (gli incendi boschivi comparivano come "porto abusivo di armi", le ingiurie come "resistenza a pubblico ufficiale"); ogni reato ha ora lo stesso nome in tutte le pagine
 - Grafico dei delitti per tipologia: le categorie sommano al totale, senza reati contati due volte; le ingiurie, depenalizzate nel 2016, sono una categoria a parte
-- Profili per reato: i sottotipi (come i furti in esercizi commerciali) non compaiono piu' accanto alla voce che li contiene
+- Profili per reato: i sottotipi (come i furti in esercizi commerciali) non compaiono più accanto alla voce che li contiene
 
 ## 2026-03-29
 
@@ -157,15 +164,15 @@
 - Colori di stranieri, maschi, femmine e minori distinguibili e uguali su tutto il sito
 - Caratteri e legende dei grafici uniformi, tolti i titoli d'asse ripetuti
 - Insight: corretta la nota sul genere e l'uso di "straniere"
-- Titolo piu' preciso per l'insight sulle truffe al Nord, link fra insight e report nei due sensi, avviso sui limiti dei dati in homepage
+- Titolo più preciso per l'insight sulle truffe al Nord, link fra insight e report nei due sensi, avviso sui limiti dei dati in homepage
 
 ## 2026-03-28
 
 ### Correzioni dopo un controllo completo del sito
 - Corrette le etichette scambiate fra scippi e borseggi (l'insight diventa "furti con strappo")
 - Separatore delle migliaia anche nei tooltip dove mancava
-- Insight sull'usura: linee di autori e vittime non piu' invertite
-- Accessibilita': menu su mobile, grafici degli insight e pulsanti dell'anno leggibili dai lettori di schermo; titolo principale in homepage
+- Insight sull'usura: linee di autori e vittime non più invertite
+- Accessibilità: menu su mobile, grafici degli insight e pulsanti dell'anno leggibili dai lettori di schermo; titolo principale in homepage
 
 ## 2026-03-26/27
 
@@ -182,7 +189,7 @@
 - Numeri in formato italiano su tutto il sito
 - Grafico delle categorie di delitti senza sovrapposizioni (prima alcuni reati contavano due volte)
 - Tooltip del report in italiano
-- Insight su percezione e realta' rivisto: correlazione di Spearman, testo piu' cauto
+- Insight su percezione e realtà rivisto: correlazione di Spearman, testo più cauto
 - Persone denunciate: l'andamento viene prima del profilo
 
 ## 2026-03-23
@@ -205,7 +212,7 @@
 - Rimosso fullscreen grafici Plotly (bug non risolvibile: layout non ripristina dimensioni)
 
 ### Report annuale interattivo
-- Nuova pagina `/report/2024`: executive summary, top crescita/calo autori denunciati, mappa variazione regionale, confronto ripartizioni, reati allarme sociale, percezione vs realta
+- Nuova pagina `/report/2024`: executive summary, top crescita/calo autori denunciati, mappa variazione regionale, confronto ripartizioni, reati allarme sociale, percezione vs realtà
 - Script `scripts/generate_report.py` con CLI `--anno`, produce `public/data/report_{anno}.json`
 - Blocchi narrativi automatici: contesto (YoY vs trend strutturale), caveat (propensione denuncia), nota (contesto esterno), link insight
 - Filtro soglia minima (100 autori) per escludere variazioni % su numeri irrilevanti
@@ -215,7 +222,7 @@
 ### Insights
 - Insights: badge test statistici cliccabili (Mann-Kendall, Spearman, Divergenza, Confronto categorie/territoriale, Rapporto A/V) al posto di alta/media, con scroll alla nota metodologica
 - Insights: filtri per categoria (5) e dimensione (3), vista adattiva raggruppata/piatta
-- Insights: curazione v2 con dati aggiornati, linguaggio accessibile, testi che esplicitano gradualita' dei trend
+- Insights: curazione v2 con dati aggiornati, linguaggio accessibile, testi che esplicitano gradualità dei trend
 
 ## 2026-03-21
 - Insights: fix metodologici v2 (gestione COVID, detrending Spearman, salto massimo, incrocio numero oscuro, rapporto autori/vittime, warning bassa potenza)

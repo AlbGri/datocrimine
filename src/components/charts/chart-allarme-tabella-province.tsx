@@ -141,10 +141,10 @@ export function ChartAllarmeTabellaProvince({ anno, reato }: Props) {
     <div className="space-y-4">
       <Alert>
         <AlertDescription className="block">
-          <strong>Reati rari: cautela necessaria.</strong> Per reati come omicidi
-          o sequestri, province piccole possono avere 0-2 casi/anno. Una singola
-          unit&agrave; di differenza causa variazioni percentuali enormi. Confrontare
-          sempre i valori assoluti e i trend pluriennali.
+          Per reati come omicidi o sequestri, le province piccole possono avere 0-2
+          casi l&apos;anno, e un solo caso in pi&ugrave; o in meno causa variazioni
+          percentuali enormi. Conviene confrontare sempre i valori assoluti e
+          l&apos;andamento di pi&ugrave; anni.
         </AlertDescription>
       </Alert>
 

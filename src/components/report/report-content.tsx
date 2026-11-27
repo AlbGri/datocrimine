@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import Link from "next/link";
 import { useFetchData } from "@/lib/use-fetch-data";
 import { AXIS_FIXED, CHART_HEIGHT, CHART_HEIGHT_SMALL, CHART_HEIGHT_MAP, CHART_HEIGHT_MINI, NUTS_TO_ISTAT, COLORS, getAxisYear, ANNO_PRIMO, SCALA_DIV, COLORE_BORDO, CLASSI_VARIAZIONE_PCT, classeDi, scalaAGradini } from "@/lib/config";
-import { fmtNum, fmtPctSigned, fmtSigned } from "@/lib/format";
+import { fmtNum, fmtPct, fmtPctSigned, fmtSigned } from "@/lib/format";
 import { useIsMobile } from "@/lib/use-is-mobile";
 import { Card, CardContent } from "@/components/ui/card";
 import { NotaIngiurie } from "@/components/charts/nota-ingiurie";
@@ -100,8 +100,8 @@ function trendToItalian(trend: string | null, inizio: number): string {
 
 function TrendLabel({ trend, inizio }: { trend: string | null; inizio: number }) {
   const labels: Record<string, string> = {
-    increasing: "trend storico: in crescita",
-    decreasing: "trend storico: in calo",
+    increasing: "tendenza storica in crescita",
+    decreasing: "tendenza storica in calo",
     "no trend": "nessuna tendenza storica netta",
   };
   const text = trend === null ? `serie troppo breve (dal ${inizio})` : labels[trend] ?? trend;
@@ -248,8 +248,7 @@ function SezioneContributi({
       </div>
       <p>{dati.sintesi}</p>
       <p className="text-sm text-muted-foreground">
-        Delitti denunciati in pi&ugrave; e in meno per reato: i{" "}
-        {dati.aumenti.length} aumenti e i {dati.cali.length} cali maggiori in
+        Le barre mostrano i {dati.aumenti.length} aumenti e i {dati.cali.length} cali maggiori in
         valore assoluto. La barra grigia somma i restanti reati, cos&igrave; le
         barre insieme danno la variazione totale.
       </p>
@@ -413,7 +412,7 @@ function ChartPercezione({ anno }: { anno: number }) {
 
   return (
     <Plot
-        descrizione={`Grafico percezione insicurezza vs tasso delitti reale, ${ANNO_PRIMO}-${anno}`}
+        descrizione={`Grafico percezione insicurezza vs tasso dei delitti denunciati, ${ANNO_PRIMO}-${anno}`}
         data={[
           {
             x: anni,
@@ -516,7 +515,7 @@ export function ReportContent({ anno, data }: { anno: string; data: ReportData }
         </h2>
         <p className="text-sm text-muted-foreground">
           Variazione del tasso di delitti denunciati per 1.000 abitanti rispetto
-          al {annoNum - 1}. Ruggine = aumento, blu = calo.
+          al {annoNum - 1}. In ruggine gli aumenti, in blu i cali.
         </p>
         <Grafico
           id="mappa"
@@ -591,8 +590,8 @@ export function ReportContent({ anno, data }: { anno: string; data: ReportData }
             Reati di allarme sociale
           </h2>
           <p className="text-sm text-muted-foreground">
-            I {data.reati_allarme_sociale.length} reati che generano maggiore allarme nell&apos;opinione
-            pubblica: tasso per 100.000 abitanti e variazione rispetto al{" "}
+            Per i {data.reati_allarme_sociale.length} reati che generano maggiore allarme
+            nell&apos;opinione pubblica, tasso per 100.000 abitanti e variazione rispetto al{" "}
             {annoNum - 1}.
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -618,10 +617,10 @@ export function ReportContent({ anno, data }: { anno: string; data: ReportData }
       {data.percezione && (
         <section className="space-y-3">
           <h2 className="text-xl sm:text-2xl font-semibold text-primary">
-            Percezione vs realt&agrave;
+            Percezione e delitti denunciati
           </h2>
           <p className="text-sm text-muted-foreground">
-            Andamento del tasso di criminalit&agrave; reale e della percezione
+            Andamento del tasso di delitti denunciati e della percezione
             di insicurezza (% famiglie che percepiscono rischio). Anno{" "}
             {annoNum} evidenziato.
           </p>
@@ -635,10 +634,10 @@ export function ReportContent({ anno, data }: { anno: string; data: ReportData }
             <ChartPercezione anno={annoNum} />
           </Grafico>
           <p className="text-sm">
-            Nel {annoNum} il {data.percezione.percezione_pct}% delle famiglie
-            percepisce un rischio di criminalit&agrave; nella propria zona,
-            a fronte di un tasso reale di {fmtNum(data.percezione.tasso_delitti, 1)}{" "}
-            per 1.000 abitanti.
+            Nel {annoNum} il {fmtPct(data.percezione.percezione_pct)} delle famiglie
+            percepisce un rischio di criminalit&agrave; nella propria zona, mentre i
+            delitti denunciati sono {fmtNum(data.percezione.tasso_delitti, 1)} ogni
+            1.000 abitanti.
           </p>
         </section>
       )}
@@ -652,7 +651,7 @@ export function ReportContent({ anno, data }: { anno: string; data: ReportData }
           I dati provengono da ISTAT (DCCV_DELITTIPS e DCCV_AUTVITTPS). I tassi
           sono calcolati sulla popolazione residente. Le variazioni anno su anno
           riflettono cambiamenti nei delitti denunciati, non necessariamente
-          nella criminalit&agrave; reale: la propensione alla denuncia varia per
+          nella criminalit&agrave; reale. La propensione alla denuncia varia per
           tipo di reato e territorio.
         </p>
         <p className="text-sm">

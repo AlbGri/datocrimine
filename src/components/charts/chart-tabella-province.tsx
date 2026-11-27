@@ -136,10 +136,9 @@ export function ChartTabellaProvince({ anno }: Props) {
     <div className="space-y-4">
       <Alert>
         <AlertDescription className="block">
-          <strong>Dati provinciali: limiti importanti.</strong> Province con meno
-          di 150.000 abitanti possono mostrare variabilit&agrave; elevata anno su anno
-          per effetto statistico (pochi eventi = alta variazione percentuale).
-          Guardare trend pluriennali, non singoli anni.
+          Le province con meno di 150.000 abitanti possono mostrare variabilit&agrave;
+          elevata anno su anno per effetto statistico (con pochi eventi la variazione
+          percentuale &egrave; alta). Conviene guardare l&apos;andamento di pi&ugrave; anni.
         </AlertDescription>
       </Alert>
 

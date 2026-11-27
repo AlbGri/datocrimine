@@ -43,7 +43,7 @@
           "contesto": null,
           "caveat": null,
           "insight_id": null,
-          "nota": "Voce residua dell'ISTAT: raccoglie i delitti che non rientrano nelle altre voci e con questi dati non si può scomporre."
+          "nota": "Voce residua dell'ISTAT, con i delitti che non rientrano nelle altre voci. Con questi dati non si può scomporre."
         },
         {
           "codice": "DAMAGE",
@@ -83,7 +83,7 @@
           "trend_strutturale": "decreasing",
           "inizio_serie": 2014,
           "contesto": null,
-          "caveat": "La propensione alla denuncia per questo reato è bassa: l'aumento può voler dire più reati, più denunce o entrambe le cose.",
+          "caveat": "Con una propensione alla denuncia bassa, l'aumento può voler dire più reati, più denunce o entrambe le cose.",
           "insight_id": null,
           "nota": null
         }
@@ -99,7 +99,7 @@
           "trend_strutturale": "increasing",
           "inizio_serie": 2014,
           "contesto": null,
-          "caveat": "La propensione alla denuncia per questo reato è bassa: il calo può voler dire meno reati, meno denunce o entrambe le cose.",
+          "caveat": "Con una propensione alla denuncia bassa, il calo può voler dire meno reati, meno denunce o entrambe le cose.",
           "insight_id": "truffe",
           "nota": null
         },
@@ -113,7 +113,7 @@
           "trend_strutturale": "increasing",
           "inizio_serie": 2014,
           "contesto": null,
-          "caveat": "La propensione alla denuncia per questo reato è bassa: il calo può voler dire meno reati, meno denunce o entrambe le cose.",
+          "caveat": "Con una propensione alla denuncia bassa, il calo può voler dire meno reati, meno denunce o entrambe le cose.",
           "insight_id": null,
           "nota": null
         },
@@ -183,7 +183,7 @@
           "trend_strutturale": "increasing",
           "inizio_serie": 2014,
           "contesto": null,
-          "caveat": "La propensione alla denuncia per questo reato è bassa: l'aumento può voler dire più reati, più denunce o entrambe le cose.",
+          "caveat": "Con una propensione alla denuncia bassa, l'aumento può voler dire più reati, più denunce o entrambe le cose.",
           "insight_id": "truffe",
           "nota": null
         },
@@ -213,7 +213,7 @@
           "contesto": null,
           "caveat": null,
           "insight_id": null,
-          "nota": "Voce residua dell'ISTAT: raccoglie i delitti che non rientrano nelle altre voci e con questi dati non si può scomporre."
+          "nota": "Voce residua dell'ISTAT, con i delitti che non rientrano nelle altre voci. Con questi dati non si può scomporre."
         },
         {
           "codice": "CYBERCRIM",
@@ -225,7 +225,7 @@
           "trend_strutturale": "increasing",
           "inizio_serie": 2014,
           "contesto": null,
-          "caveat": "La propensione alla denuncia per questo reato è bassa: l'aumento può voler dire più reati, più denunce o entrambe le cose.",
+          "caveat": "Con una propensione alla denuncia bassa, l'aumento può voler dire più reati, più denunce o entrambe le cose.",
           "insight_id": null,
           "nota": null
         },
@@ -283,7 +283,7 @@
           "trend_strutturale": "decreasing",
           "inizio_serie": 2014,
           "contesto": null,
-          "caveat": "La propensione alla denuncia per questo reato è bassa: il calo può voler dire meno reati, meno denunce o entrambe le cose.",
+          "caveat": "Con una propensione alla denuncia bassa, il calo può voler dire meno reati, meno denunce o entrambe le cose.",
           "insight_id": null,
           "nota": null
         },
@@ -297,7 +297,7 @@
           "trend_strutturale": "decreasing",
           "inizio_serie": 2014,
           "contesto": null,
-          "caveat": "La propensione alla denuncia per questo reato è bassa: il calo può voler dire meno reati, meno denunce o entrambe le cose.",
+          "caveat": "Con una propensione alla denuncia bassa, il calo può voler dire meno reati, meno denunce o entrambe le cose.",
           "insight_id": null,
           "nota": null
         },

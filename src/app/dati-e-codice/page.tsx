@@ -222,7 +222,7 @@ python scripts/generate_report.py`}</code>
         </pre>
         <p className="text-sm text-muted-foreground">
           I dati grezzi ISTAT (circa 185 MB) non sono nel repository per le
-          dimensioni: si scaricano con i tre script <code>download_*.py</code>. La
+          dimensioni. Si scaricano con i tre script <code>download_*.py</code>. La
           popolazione 2014-2018 (ricostruzione intercensuaria) &egrave; gi&agrave; nel
           repository, in <code>data/raw/popolazione/</code>. I JSON elaborati sono
           gi&agrave; inclusi.

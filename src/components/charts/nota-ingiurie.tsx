@@ -3,8 +3,8 @@ import Link from "next/link";
 export function NotaIngiurie() {
   return (
     <p className="text-sm text-muted-foreground">
-      Totale al netto delle ingiurie, depenalizzate nel 2016: così gli anni si confrontano a parità
-      di reati.{" "}
+      Il totale esclude le ingiurie, depenalizzate nel 2016, per confrontare gli anni a parità di
+      reati.{" "}
       <Link href="/metodologia" className="rimando">
         Dettagli nella Metodologia
       </Link>
@@ -16,8 +16,8 @@ export function NotaIngiurie() {
 export function NotaIngiuriePersone() {
   return (
     <p className="text-sm text-muted-foreground">
-      Fino al 2017 il totale comprende le persone denunciate per ingiuria, depenalizzata nel 2016:
-      parte del calo successivo viene da lì. Non si possono togliere, perché chi è denunciato per
+      Fino al 2017 il totale comprende le persone denunciate per ingiuria, depenalizzata nel 2016,
+      e parte del calo successivo viene da lì. Non si possono togliere, perché chi è denunciato per
       più reati conta una volta sola.
     </p>
   );

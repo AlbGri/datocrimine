@@ -39,11 +39,11 @@ Lo script scarica solo i dataflow 7 e 8; gli altri 6 sono elencati nello script,
 | Download | manuale, in `data/raw/percezione_criminalita_istat.csv` |
 | Genera | colonna `Percezione_pct` di `percezione_vs_dati.json` |
 
-Il dato 2024 (26,6%) è stato aggiunto a mano da [Noi Italia 2025](https://noi-italia.istat.it/pagina.php?id=3&categoria=9&action=show&L=0): non era ancora nel dataset scaricabile.
+Il dato 2024 (26,6%), che non era ancora nel dataset scaricabile, è stato aggiunto a mano da [Noi Italia 2025](https://noi-italia.istat.it/pagina.php?id=3&categoria=9&action=show&L=0).
 
 ## 4. Popolazione residente
 
-Serve per i tassi (delitti per 1.000 o per 100.000 abitanti). Due fonti, unite da `scripts/generate_popolazione.py` in `data/processed/popolazione_regioni_province.csv`: il 2019, presente in entrambe, viene da DCIS_POPRES1.
+Serve per i tassi (delitti per 1.000 o per 100.000 abitanti). Due fonti, unite da `scripts/generate_popolazione.py` in `data/processed/popolazione_regioni_province.csv`. Il 2019, presente in entrambe, viene da DCIS_POPRES1.
 
 ### 4a. Ricostruzione intercensuaria, 2014-2018
 
@@ -92,4 +92,4 @@ Percentuali trascritte a mano dai report ISTAT in `src/data/propensione_denuncia
 
 Nel grafico dei delitti per tipologia i reati sono raggruppati in 7 categorie che non si sovrappongono e sommano al totale: furti, rapine, violenze contro la persona, truffe e frodi, droga, altro e ingiurie. Le ingiurie, depenalizzate nel 2016, stanno a parte per non falsare l'andamento di "altro".
 
-Il servizio SDMX dell'ISTAT accetta poche richieste al minuto e a volte risponde con errori temporanei: gli script aspettano fra una richiesta e l'altra e riprovano.
+Il servizio SDMX dell'ISTAT accetta poche richieste al minuto e a volte risponde con errori temporanei. Gli script aspettano fra una richiesta e l'altra e riprovano.

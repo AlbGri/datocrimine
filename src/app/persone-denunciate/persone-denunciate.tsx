@@ -68,7 +68,7 @@ export function PersoneDenunciate({ territori }: { territori: Regione[] }) {
 
       {dataType === "VICTIM" && (
         <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm">
-            <strong>Nota:</strong> per le vittime il dato aggregato (totale per tutti i reati)
+            Per le vittime il dato aggregato (totale per tutti i reati)
             non &egrave; disponibile. Le analisi sono basate sui singoli reati.
             Una stessa vittima pu&ograve; comparire in pi&ugrave; tipologie.
         </div>
@@ -205,12 +205,10 @@ export function PersoneDenunciate({ territori }: { territori: Regione[] }) {
       <hr />
 
       <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm">
-          <strong>Nota metodologica:</strong> i dati riguardano persone denunciate o
-          arrestate dalle forze dell&apos;ordine, non condannate. Una stessa persona
-          pu&ograve; comparire pi&ugrave; volte se coinvolta in pi&ugrave; procedimenti.
-          Il dato provinciale &egrave; disponibile solo dal 2022.
-          Per approfondimenti si rimanda alla{" "}
-          <Link href="/metodologia" className="rimando">nota metodologica</Link>.
+          I dati riguardano persone denunciate o arrestate dalle forze dell&apos;ordine,
+          non condannate. Una stessa persona pu&ograve; comparire pi&ugrave; volte se
+          coinvolta in pi&ugrave; procedimenti. Dettagli nella{" "}
+          <Link href="/metodologia" className="rimando">Metodologia</Link>.
       </div>
     </main>
   );

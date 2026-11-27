@@ -152,8 +152,7 @@ export function ChartMappaRegioni({ anno }: Props) {
     <div className="space-y-4">
       <Alert>
         <AlertDescription className="block">
-          <strong>Confronti territoriali: cautela necessaria.</strong> Regioni
-          con alta presenza turistica o pendolarismo mostrano tassi elevati
+          Le regioni con alta presenza turistica o pendolarismo mostrano tassi elevati
           perch&eacute; il denominatore &egrave; la popolazione residente, non quella
           effettiva. La propensione alla denuncia varia per tipo di reato e
           territorio (vedi{" "}

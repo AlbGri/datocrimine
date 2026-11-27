@@ -43,8 +43,8 @@ export function fraseSintesi(
   const frasi: string[] = [];
   if (lungo !== null) {
     frasi.push(
-      `Nel lungo periodo i delitti denunciati sono in ${inCalo ? "calo" : "aumento"}: ` +
-        `il tasso medio ${TRIENNIO_FINALE.join("-")} è più ${inCalo ? "basso" : "alto"} ` +
+      `Nel lungo periodo i delitti denunciati sono in ${inCalo ? "calo" : "aumento"}, ` +
+        `con un tasso medio ${TRIENNIO_FINALE.join("-")} più ${inCalo ? "basso" : "alto"} ` +
         `${delPct(Math.abs(lungo))} rispetto al ${TRIENNIO_INIZIALE.join("-")}.`,
     );
   }
@@ -70,7 +70,7 @@ export function fraseSintesi(
   if (anno - inizio >= 2) {
     const verbo = sale ? (inCalo ? "risalgono" : "salgono") : "scendono";
     const pero = lungo !== null && sale === inCalo ? " però" : "";
-    frasi.push(`Dal ${inizio}${pero}${soggetto} ${verbo} ogni anno: nel ${anno} sono ${dato}`);
+    frasi.push(`Dal ${inizio}${pero}${soggetto} ${verbo} ogni anno. Nel ${anno} sono ${dato}`);
   } else {
     frasi.push(`Nel ${anno}${soggetto} sono ${dato}`);
   }
@@ -111,7 +111,7 @@ export function fraseReport(
   const annuale = variazione(precedente.tasso, corrente.tasso);
   let frase =
     `Nel ${anno} sono stati denunciati ${fmtNum(corrente.delitti)} delitti, ` +
-    `${fmtNum(corrente.tasso, 1)} ogni 1.000 abitanti: ${fmtPctSigned(annuale)} sul ${anno - 1}`;
+    `${fmtNum(corrente.tasso, 1)} ogni 1.000 abitanti, ${fmtPctSigned(annuale)} sul ${anno - 1}`;
 
   // Trienni sovrapposti non dicono niente: il confronto parte quando sono separati
   const finale = [anno - 2, anno] as const;

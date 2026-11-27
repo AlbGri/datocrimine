@@ -68,10 +68,9 @@ export function AllarmeSociale({ territori }: { territori: Regione[] }) {
           Reati di Allarme Sociale
         </h1>
         <p className="mt-2 text-muted-foreground">
-          Focus su reati rari ma ad alto impatto: sono una piccola parte dei
-          delitti denunciati
-          {quota && ` (${fmtPct(quota.pct, 2)} nel ${quota.anno})`} ma dominano
-          la percezione pubblica e la copertura mediatica. Tutti i dati si riferiscono a delitti denunciati alle forze
+          Sono reati rari ma ad alto impatto, una piccola parte dei delitti denunciati
+          {quota && ` (${fmtPct(quota.pct, 2)} nel ${quota.anno})`} che domina la
+          percezione pubblica e la copertura mediatica. Tutti i dati si riferiscono a delitti denunciati alle forze
           dell&apos;ordine, non alla criminalit&agrave; reale.
         </p>
       </div>
@@ -172,11 +171,10 @@ export function AllarmeSociale({ territori }: { territori: Regione[] }) {
       <hr />
 
       <div className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm">
-          <strong>Nota metodologica:</strong> tutti i tassi sono calcolati sui
-          delitti denunciati e sulla popolazione residente. Per reati rari (es.
-          omicidi in regioni piccole), poche unit&agrave; di differenza possono
-          causare variazioni percentuali significative. Confrontare sempre i
-          valori assoluti.
+          Tutti i tassi sono calcolati sui delitti denunciati e sulla popolazione
+          residente. Per reati rari, come gli omicidi nelle regioni piccole, poche
+          unit&agrave; di differenza possono causare variazioni percentuali
+          significative. Conviene confrontare sempre i valori assoluti.
       </div>
     </main>
   );
